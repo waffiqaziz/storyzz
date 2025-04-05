@@ -26,37 +26,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600),
         ),
       ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 600),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              // notification switch for mobile only
-              // dark mode switch (shown on all platforms)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.dark_mode_rounded),
-                      const SizedBox(width: 8),
-                      Text(
-                        "Dark Theme",
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ],
-                  ),
-                  Switch(
-                    value: provider.setting?.isDark ?? false,
-                    onChanged: (bool value) {
-                      provider.setTheme(value);
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-            ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 600),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.dark_mode_rounded),
+                        const SizedBox(width: 8),
+                        Text(
+                          "Dark Theme",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
+                    ),
+                    Switch(
+                      value: provider.setting?.isDark ?? false,
+                      onChanged: (bool value) {
+                        provider.setTheme(value);
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+              ],
+            ),
           ),
         ),
       ),

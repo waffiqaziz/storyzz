@@ -19,7 +19,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _initData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initData();
+    });
 
     // scroll listener for pagination
     _scrollController.addListener(_scrollListener);
@@ -29,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final authProvider = context.read<AuthProvider>();
     await authProvider.getUser();
 
-    if (authProvider.user != null) {
+    if (authProvider.user != null && mounted) {
       context.read<StoryProvider>().getStories(user: authProvider.user!);
     }
   }
@@ -55,36 +57,31 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _refreshStories() {
+    final authProvider = context.read<AuthProvider>();
+    if (authProvider.user != null) {
+      context.read<StoryProvider>().refreshStories(user: authProvider.user!);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final authProvider = context.read<AuthProvider>();
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            Icon(Icons.auto_stories),
-            SizedBox(width: 8),
-            Text('Storyzz', style: TextStyle(fontWeight: FontWeight.bold)),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () {
-              final authProvider = context.read<AuthProvider>();
-              if (authProvider.user != null) {
-                context.read<StoryProvider>().refreshStories(
-                  user: authProvider.user!,
-                );
-              }
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () => _logOut(authProvider),
-          ),
-        ],
-        elevation: 0,
+       floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // TODO: Navigate to add story screen
+          if (mounted) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                const SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Text('File saved to xxxxxxxx'),
+                ),
+              );
+          }
+        },
+        child: Icon(Icons.add),
       ),
       body: Consumer2<AuthProvider, StoryProvider>(
         builder: (context, authProvider, storyProvider, child) {
@@ -92,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (authProvider.isLoadingLogin) {
             return Center(child: CircularProgressIndicator());
           }
-
+      
           // error user state
           if (authProvider.errorMessage.isNotEmpty) {
             return Center(
@@ -115,12 +112,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           }
-
+      
           // user not found
           if (authProvider.user == null) {
             return Center(child: Text('User data not available'));
           }
-
+      
           // error story state
           if (storyProvider.errorMessage.isNotEmpty) {
             return Center(
@@ -151,29 +148,79 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           }
-
+      
           return RefreshIndicator(
             onRefresh: () async {
               if (authProvider.user != null) {
                 await storyProvider.refreshStories(user: authProvider.user!);
               }
-              return;
             },
-            child:
-                storyProvider.stories.isEmpty && !storyProvider.isLoading
-                    ? _buildEmptyState()
-                    : _buildStoryList(storyProvider),
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverAppBar(
+                  floating: true,
+                  snap: true,
+                  toolbarHeight: kToolbarHeight,
+                  pinned: false,
+                  primary: true,
+                  forceElevated: false,
+                  title: Row(
+                    children: [
+                      Icon(Icons.auto_stories),
+                      SizedBox(width: 8),
+                      Text(
+                        'Storyzz',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    IconButton(
+                      icon: Icon(Icons.refresh),
+                      onPressed: _refreshStories,
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.logout),
+                      onPressed: () => _logOut(authProvider),
+                    ),
+                  ],
+                  elevation: 0,
+                ),
+      
+                // Show loading indicator if stories are loading
+                if (storyProvider.isLoading && storyProvider.stories.isEmpty)
+                  SliverToBoxAdapter(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ),
+      
+                // Show empty state if no stories
+                if (storyProvider.stories.isEmpty && !storyProvider.isLoading)
+                  _buildEmptyState(),
+      
+                // Show story list
+                if (storyProvider.stories.isNotEmpty)
+                  _buildSliverStoryList(storyProvider),
+      
+                // Show loading indicator at the bottom when loading more
+                if (storyProvider.isLoading && storyProvider.stories.isNotEmpty)
+                  SliverToBoxAdapter(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           );
         },
-      ),
-
-      // add feature
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigate to add story screen
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => AddStoryScreen()));
-        },
-        child: Icon(Icons.add),
       ),
     );
   }
@@ -181,62 +228,69 @@ class _HomeScreenState extends State<HomeScreen> {
   void _logOut(AuthProvider authProvider) async {
     await authProvider.logout(); // handle via router delegate
     widget.onLogout();
-    if (!mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text("Logout success")));
+    if (mounted) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Logout success")));
+    }
   }
 
   Widget _buildEmptyState() {
-    return ListView(
-      children: [
-        SizedBox(height: MediaQuery.of(context).size.height * 0.2),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.auto_stories, size: 80, color: Colors.grey),
-              SizedBox(height: 16),
-              Text(
-                'No stories available',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Pull down to refresh or tap + to add a new story',
-                style: TextStyle(color: Colors.grey[600]),
-              ),
-            ],
-          ),
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.auto_stories, size: 80, color: Colors.grey),
+            SizedBox(height: 16),
+            Text(
+              'No stories available',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Pull down to refresh or tap + to add a new story',
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
-  Widget _buildStoryList(StoryProvider storyProvider) {
-    return ListView.builder(
-      controller: _scrollController,
+  Widget _buildSliverStoryList(StoryProvider storyProvider) {
+    return SliverPadding(
       padding: EdgeInsets.all(16),
-      itemCount:
-          storyProvider.stories.length + (storyProvider.isLoading ? 1 : 0),
-      itemBuilder: (context, index) {
-        if (index == storyProvider.stories.length) {
-          return Center(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            if (index == storyProvider.stories.length &&
+                storyProvider.isLoading) {
+              return Center(
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
 
-        final story = storyProvider.stories[index];
-        return Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 600),
-            child: StoryCard(story: story),
-          ),
-        );
-      },
+            if (index >= storyProvider.stories.length) {
+              return null;
+            }
+
+            final story = storyProvider.stories[index];
+            return Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 600),
+                child: StoryCard(story: story),
+              ),
+            );
+          },
+          childCount:
+              storyProvider.stories.length + (storyProvider.isLoading ? 1 : 0),
+        ),
+      ),
     );
   }
 }
