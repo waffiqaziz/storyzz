@@ -14,7 +14,7 @@ class RegisterScreen extends StatefulWidget {
   });
 
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
@@ -47,18 +47,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
       final result = await authProvider.register(user);
       if (result.data != null && !result.data!.error) {
         widget.onRegister();
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(result.message ?? "Register success")),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(result.message ?? "Register success")),
+          );
+        }
       } else {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(result.message ?? "Register failed"),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(result.message ?? "Register failed"),
+              backgroundColor: Theme.of(context).colorScheme.error,
+            ),
+          );
+        }
       }
     }
   }
@@ -79,11 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // header
-                    Icon(
-                      Icons.person_add_outlined,
-                      size: 80,
-                      color: Theme.of(context).focusColor,
-                    ),
+                    Image.asset('assets/icon/icon.png', height: 80),
                     const SizedBox(height: 16),
                     Text(
                       'Create Account',

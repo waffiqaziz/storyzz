@@ -370,10 +370,14 @@ class MaterialTheme {
         ),
       ),
       snackBarTheme: SnackBarThemeData(
+        backgroundColor: baseTheme.colorScheme.surfaceContainerHigh,
         behavior: SnackBarBehavior.floating,
         elevation: 6,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        contentTextStyle: const TextStyle(fontWeight: FontWeight.w400),
+        contentTextStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          color: baseTheme.colorScheme.onSurface,
+        ),
       ),
     );
   }
@@ -414,10 +418,14 @@ class MaterialTheme {
         ),
       ),
       snackBarTheme: SnackBarThemeData(
+        backgroundColor: baseTheme.colorScheme.surfaceContainerHigh,
         behavior: SnackBarBehavior.floating,
         elevation: 6,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        contentTextStyle: const TextStyle(fontWeight: FontWeight.w400),
+        contentTextStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          color: baseTheme.colorScheme.onSurface,
+        ),
       ),
     );
   }

@@ -30,20 +30,20 @@ class MyRouteInformationParser extends RouteInformationParser<AppRoutePath> {
   }
 
   @override
-  RouteInformation restoreRouteInformation(AppRoutePath path) {
-    if (path.isUnknown) {
+  RouteInformation restoreRouteInformation(AppRoutePath configuration) {
+    if (configuration.isUnknown) {
       return RouteInformation(uri: Uri.parse('/404'));
     }
-    if (path.isLoginScreen) {
+    if (configuration.isLoginScreen) {
       return RouteInformation(uri: Uri.parse('/login'));
     }
-    if (path.isRegisterScreen) {
+    if (configuration.isRegisterScreen) {
       return RouteInformation(uri: Uri.parse('/register'));
     }
-    if (path.isMainScreen) {
+    if (configuration.isMainScreen) {
       // Include the tab index in the URI
       return RouteInformation(
-        uri: Uri.parse('/home?tab=${path.tabIndex ?? 0}'),
+        uri: Uri.parse('/home?tab=${configuration.tabIndex ?? 0}'),
       );
     }
     return RouteInformation(uri: Uri.parse('/'));
