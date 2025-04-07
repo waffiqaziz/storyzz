@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/model/user.dart';
+import 'package:storyzz/core/designsystem/theme.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -101,9 +102,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     // name field
                     TextFormField(
                       controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: 'Full Name',
-                        prefixIcon: Icon(Icons.person_outline),
+                      decoration: customInputDecoration(
+                        label: 'Full Name',
+                        prefixIcon: Icons.person_outline,
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -117,9 +118,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     // email Field
                     TextFormField(
                       controller: _emailController,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        prefixIcon: Icon(Icons.email_outlined),
+                      decoration: customInputDecoration(
+                        label: 'Email',
+                        prefixIcon: Icons.email_outlined,
                       ),
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
@@ -139,9 +140,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     // password field
                     TextFormField(
                       controller: _passwordController,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        prefixIcon: Icon(Icons.lock_outline),
+                      decoration: customInputDecoration(
+                        label: 'Password',
+                        prefixIcon: Icons.lock_outline,
                         suffixIcon: IconButton(
                           icon: Icon(
                             _obscurePassword
@@ -171,9 +172,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     // confirm password field
                     TextFormField(
                       controller: _confirmPasswordController,
-                      decoration: InputDecoration(
-                        labelText: 'Confirm Password',
-                        prefixIcon: Icon(Icons.lock_outline),
+                      decoration: customInputDecoration(
+                        label: 'Confirm Password',
+                        prefixIcon: Icons.lock_outline,
                         suffixIcon: IconButton(
                           icon: Icon(
                             _obscureConfirmPassword

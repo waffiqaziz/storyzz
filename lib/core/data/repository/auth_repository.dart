@@ -69,7 +69,7 @@ class AuthRepository {
     return ApiResult.error(response.message ?? "Unknown error");
   }
 
-  Future<ApiResult<RegisterResponse>> register(User user) async {
+  Future<ApiResult<GeneralResponse>> register(User user) async {
     final response = await _apiServices.register(user);
     if (response.data != null && !response.data!.error) {
       return ApiResult.success(response.data!);

@@ -18,6 +18,9 @@ dependencies:
   intl: ^0.20.2
   flutter_native_splash: ^2.4.5
   readmore: ^3.0.0
+  image_picker: ^1.1.2
+  path: ^1.9.1
+  http_parser: ^4.1.2
 
 flutter_native_splash:
   color: "#ffffff"

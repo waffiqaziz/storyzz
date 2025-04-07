@@ -9,7 +9,7 @@ class MyRouteInformationParser extends RouteInformationParser<AppRoutePath> {
     final uri = Uri.parse(routeInformation.uri.toString());
 
     if (uri.pathSegments.isEmpty) {
-      return AppRoutePath.login();
+      return AppRoutePath.unknown();
     }
 
     if (uri.pathSegments.first == 'login') {
@@ -21,9 +21,15 @@ class MyRouteInformationParser extends RouteInformationParser<AppRoutePath> {
     }
 
     if (uri.pathSegments.first == 'home') {
-      // Check if there's a tab parameter
-      final tabIndex = int.tryParse(uri.queryParameters['tab'] ?? '0') ?? 0;
-      return AppRoutePath.home(tabIndex: tabIndex);
+      return AppRoutePath.home(tabIndex: 0);
+    }
+
+    if (uri.pathSegments.first == 'upload') {
+      return AppRoutePath.home(tabIndex: 1);
+    }
+
+    if (uri.pathSegments.first == 'settings') {
+      return AppRoutePath.home(tabIndex: 2);
     }
 
     return AppRoutePath.unknown();
@@ -41,10 +47,17 @@ class MyRouteInformationParser extends RouteInformationParser<AppRoutePath> {
       return RouteInformation(uri: Uri.parse('/register'));
     }
     if (configuration.isMainScreen) {
-      // Include the tab index in the URI
-      return RouteInformation(
-        uri: Uri.parse('/home?tab=${configuration.tabIndex ?? 0}'),
-      );
+      final tabIndex = configuration.tabIndex ?? 0;
+      if (tabIndex == 0) {
+        return RouteInformation(uri: Uri.parse('/home'));
+      }
+      if (tabIndex == 1) {
+        return RouteInformation(uri: Uri.parse('/upload'));
+      }
+      if (tabIndex == 2) {
+        return RouteInformation(uri: Uri.parse('/settings'));
+      }
+      return RouteInformation(uri: Uri.parse('/'));
     }
     return RouteInformation(uri: Uri.parse('/'));
   }

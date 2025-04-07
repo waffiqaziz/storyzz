@@ -1,6 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb, Uint8List;
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:path/path.dart' as path;
 import 'package:storyzz/core/data/model/user.dart';
 import 'package:storyzz/core/data/networking/responses/login_response.dart';
 import 'package:storyzz/core/data/networking/responses/register_response.dart';
@@ -32,7 +36,7 @@ class ApiServices {
     });
   }
 
-  Future<ApiResult<RegisterResponse>> register(User user) async {
+  Future<ApiResult<GeneralResponse>> register(User user) async {
     return await safeApiCall(() async {
       final response = await httpClient.post(
         Uri.parse("$_baseUrl/register"),
@@ -47,7 +51,7 @@ class ApiServices {
       final json = jsonDecode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return RegisterResponse.fromJson(json);
+        return GeneralResponse.fromJson(json);
       } else {
         // extract error message from response body
         final message = json['message'] ?? 'Unknown error occurred';
@@ -88,5 +92,85 @@ class ApiServices {
         );
       }
     });
+  }
+
+  Future<ApiResult<GeneralResponse>> uploadStory({
+    required String token,
+    required String description,
+    File? photoFile, // for mobile
+    Uint8List? photoBytes, // for web
+    required String fileName, // used in both cases
+    double? lat,
+    double? lon,
+  }) async {
+    return await safeApiCall(() async {
+      final request = http.MultipartRequest(
+        'POST',
+        Uri.parse("$_baseUrl/stories"),
+      );
+
+      request.headers.addAll({'Authorization': 'Bearer $token'});
+      request.fields['description'] = description;
+
+      if (lat != null) request.fields['lat'] = lat.toString();
+      if (lon != null) request.fields['lon'] = lon.toString();
+
+      final extension = path.extension(fileName).toLowerCase();
+      final mime = MediaType(
+        'image',
+        _getImageMimeType(extension),
+      ); // get file extensions
+
+      if (kIsWeb && photoBytes != null) {
+        final multipart = http.MultipartFile.fromBytes(
+          'photo',
+          photoBytes,
+          filename: fileName,
+          contentType: mime,
+        );
+        request.files.add(multipart);
+      } else if (photoFile != null) {
+        final photoStream = http.ByteStream(photoFile.openRead());
+        final photoLength = await photoFile.length();
+
+        final multipart = http.MultipartFile(
+          'photo',
+          photoStream,
+          photoLength,
+          filename: path.basename(photoFile.path),
+          contentType: mime,
+        );
+        request.files.add(multipart);
+      } else {
+        throw Exception('No image data provided');
+      }
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+      final json = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return GeneralResponse.fromJson(json);
+      } else {
+        final message = json['message'] ?? 'Unknown error occurred';
+        throw Exception(message);
+      }
+    });
+  }
+
+  // helper function to determine MIME type from file extension
+  String _getImageMimeType(String filePath) {
+    final extension = path.extension(filePath).toLowerCase();
+    switch (extension) {
+      case '.jpg':
+      case '.jpeg':
+        return 'jpeg';
+      case '.png':
+        return 'png';
+      case '.gif':
+        return 'gif';
+      default:
+        return 'jpeg';
+    }
   }
 }

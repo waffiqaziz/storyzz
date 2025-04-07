@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:storyzz/ui/home/home_screen.dart';
 import 'package:storyzz/ui/home/settings_screen.dart';
+import 'package:storyzz/ui/home/upload_story_screen.dart';
 
 class MainScreen extends StatelessWidget {
   final VoidCallback onLogout;
@@ -26,6 +27,7 @@ class MainScreen extends StatelessWidget {
       index: currentIndex,
       children: [
         HomeScreen(onLogout: onLogout),
+        UploadStoryScreen(),
         SettingsScreen(onLogout: onLogout),
       ],
     );
@@ -44,6 +46,10 @@ class MainScreen extends StatelessWidget {
                       NavigationRailDestination(
                         icon: Icon(Icons.home_filled),
                         label: Text("Home"),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.add_box_outlined),
+                        label: Text("Upload"),
                       ),
                       NavigationRailDestination(
                         icon: Icon(Icons.settings),
@@ -67,6 +73,11 @@ class MainScreen extends StatelessWidget {
                     icon: Icon(Icons.home_filled),
                     label: "Home",
                     tooltip: "Home",
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.add_box_outlined),
+                    label: "Upload",
+                    tooltip: "Upload Story",
                   ),
                   NavigationDestination(
                     icon: Icon(Icons.settings),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/model/user.dart';
+import 'package:storyzz/core/designsystem/theme.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -48,11 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              margin: EdgeInsets.only(
-                bottom: 80, // adjust if needed
-                left: 16,
-                right: 16,
-              ),
+              margin: EdgeInsets.only(left: 16, right: 16),
               content: Text(result.message ?? "Login success"),
             ),
           );
@@ -111,9 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextFormField(
                           enabled: !authProvider.isLoadingLogin,
                           controller: _emailController,
-                          decoration: InputDecoration(
-                            labelText: 'Email',
-                            prefixIcon: Icon(Icons.email_outlined),
+                          decoration: customInputDecoration(
+                            label: 'Email',
+                            prefixIcon: Icons.email_outlined,
                           ),
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
@@ -134,9 +131,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextFormField(
                           enabled: !authProvider.isLoadingLogin,
                           controller: _passwordController,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            prefixIcon: Icon(Icons.lock_outline),
+                          decoration: customInputDecoration(
+                            label: 'Password',
+                            prefixIcon: Icons.lock_outline,
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _obscurePassword
