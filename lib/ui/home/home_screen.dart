@@ -167,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   forceElevated: false,
                   title: Row(
                     children: [
-                      Icon(Icons.auto_stories),
+                      Image.asset('assets/icon/icon.png', height: 30),
                       SizedBox(width: 8),
                       Text(
                         'Storyzz',
@@ -180,9 +180,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icon(Icons.refresh),
                       onPressed: _refreshStories,
                     ),
-                    IconButton(
-                      icon: Icon(Icons.logout),
-                      onPressed: () => _logOut(authProvider),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: IconButton(
+                        icon: Icon(Icons.logout),
+                        onPressed: () => _logOut(authProvider),
+                      ),
                     ),
                   ],
                   elevation: 0,
@@ -282,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
             final story = storyProvider.stories[index];
             return Center(
               child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 600),
+                constraints: BoxConstraints(maxWidth: 475),
                 child: StoryCard(story: story),
               ),
             );

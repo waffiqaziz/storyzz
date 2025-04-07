@@ -17,6 +17,7 @@ dependencies:
   url_launcher: ^6.3.0
   intl: ^0.20.2
   flutter_native_splash: ^2.4.5
+  readmore: ^3.0.0
 
 flutter_native_splash:
   color: "#ffffff"

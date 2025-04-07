@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:readmore/readmore.dart';
 import 'package:storyzz/core/data/networking/responses/stories_response.dart';
 
 class StoryCard extends StatelessWidget {
@@ -47,54 +48,70 @@ class StoryCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Story image with hero animation for smooth transitions
+            // story image with hero animation for smooth transitions
             Hero(
               tag: 'story-image-${story.id}',
               child: ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-                child: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Image.network(
-                    story.photoUrl,
-                    fit: BoxFit.cover,
-                    errorBuilder:
-                        (context, error, stackTrace) => Container(
-                          color: Colors.grey[300],
-                          child: Center(
-                            child: Icon(
-                              Icons.broken_image,
-                              size: 64,
-                              color: Colors.grey[400],
-                            ),
-                          ),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Container(
+                      width: double.infinity,
+                      constraints: BoxConstraints(
+                        // default height before image loads
+                        minHeight: 500,
+                      ),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: 400,
+                          minWidth: double.infinity,
                         ),
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Container(
-                        color: Colors.grey[200],
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            value:
-                                loadingProgress.expectedTotalBytes != null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                    : null,
-                          ),
+                        child: Image.network(
+                          story.photoUrl,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Container(
+                              color: Colors.grey[200],
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  value:
+                                      loadingProgress.expectedTotalBytes != null
+                                          ? loadingProgress
+                                                  .cumulativeBytesLoaded /
+                                              loadingProgress
+                                                  .expectedTotalBytes!
+                                          : null,
+                                ),
+                              ),
+                            );
+                          },
+                          errorBuilder:
+                              (context, error, stackTrace) => Container(
+                                color: Colors.grey[300],
+                                child: Center(
+                                  child: Icon(
+                                    Icons.broken_image,
+                                    size: 64,
+                                    color: Colors.grey[400],
+                                  ),
+                                ),
+                              ),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
 
-            // Story content
+            // story content
             Padding(
               padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Author and time
+                  // author and time
                   Row(
                     children: [
                       CircleAvatar(
@@ -140,14 +157,17 @@ class StoryCard extends StatelessWidget {
                     ],
                   ),
 
-                  // Description
+                  // description
                   Padding(
                     padding: EdgeInsets.only(top: 12),
-                    child: Text(
+                    child: ReadMoreText(
                       story.description,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
+                      trimMode: TrimMode.Line,
+                      trimLines: 2,
+                      trimCollapsedText: 'Show more',
+                      trimExpandedText: 'Show less',
                       style: TextStyle(fontSize: 14),
+                      moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
