@@ -20,39 +20,35 @@ class UploadStoryScreen extends StatefulWidget {
 }
 
 class _UploadStoryScreenState extends State<UploadStoryScreen> {
-  // image picker for mobile and web plaform, camera for mobile platform
+  // image picker for mobile and web platform
   final ImagePicker _picker = ImagePicker();
 
-  // camera for web platform
+  // Camera controller is kept in UI component since it's a hardware resource
   CameraController? _cameraController;
-  List<CameraDescription>? _cameras;
-  bool _isCameraInitialized = false; // flag
-  bool _showCamera = false; // flag for show camera permission
-  bool _requestingPermission = false; // flag for camera web permission
 
   @override
   void dispose() {
-    _cameraController?.dispose();
+    _cleanupCamera();
     super.dispose();
   }
 
   void _cleanupCamera() {
     _cameraController?.dispose();
     _cameraController = null;
-    _isCameraInitialized = false;
-    _showCamera = false;
+
+    // Reset camera state in provider
     if (mounted) {
-      setState(() {});
+      context.read<UploadStoryProvider>().setCameraInitialized(false);
+      context.read<UploadStoryProvider>().setShowCamera(false);
     }
   }
 
   // request camera permission for website
   Future<bool> _requestCameraPermissionWeb() async {
-    if (_requestingPermission) return false;
+    final provider = context.read<UploadStoryProvider>();
+    if (provider.isRequestingPermission) return false;
 
-    setState(() {
-      _requestingPermission = true;
-    });
+    provider.setRequestingPermission(true);
 
     try {
       // request camera permission for web
@@ -65,10 +61,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       final cameras = await availableCameras();
 
       if (cameras.isNotEmpty) {
-        setState(() {
-          _cameras = cameras;
-          _requestingPermission = false;
-        });
+        provider.setCameras(cameras);
+        provider.setRequestingPermission(false);
         return true;
       }
       return false;
@@ -78,27 +72,23 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
           context,
         ).showSnackBar(SnackBar(content: Text('Camera access denied: $e')));
       }
-      setState(() {
-        _requestingPermission = false;
-      });
+      provider.setRequestingPermission(false);
       return false;
     }
   }
 
   Future<void> _initializeCameraWeb() async {
-    if (_cameras != null && _cameras!.isNotEmpty) {
-      _cameraController = CameraController(
-        _cameras![0],
-        ResolutionPreset.medium,
-      );
+    final provider = context.read<UploadStoryProvider>();
+    final cameras = provider.cameras;
+
+    if (cameras != null && cameras.isNotEmpty) {
+      _cameraController = CameraController(cameras[0], ResolutionPreset.medium);
 
       try {
         await _cameraController!.initialize();
         if (mounted) {
-          setState(() {
-            _isCameraInitialized = true;
-            _showCamera = true;
-          });
+          provider.setCameraInitialized(true);
+          provider.setShowCamera(true);
         }
       } catch (e) {
         if (mounted) {
@@ -134,10 +124,9 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
         }
       } else {
         if (mounted) {
-          context.read<UploadStoryProvider>().setImageFile(picture);
-          setState(() {
-            _showCamera = false;
-          });
+          final provider = context.read<UploadStoryProvider>();
+          provider.setImageFile(picture);
+          provider.setShowCamera(false);
         }
       }
     } catch (e) {
@@ -213,12 +202,11 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   }
 
   Future<void> _uploadStory() async {
-    final formProvider = context.read<UploadStoryProvider>();
     final uploadProvider = context.read<UploadStoryProvider>();
     final authProvider = context.read<AuthProvider>();
 
-    final imageFile = formProvider.imageFile;
-    final caption = formProvider.caption;
+    final imageFile = uploadProvider.imageFile;
+    final caption = uploadProvider.caption;
 
     if (imageFile == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -266,7 +254,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Story uploaded successfully!')),
       );
-      formProvider.reset();
+      uploadProvider.reset();
     } else if (uploadProvider.errorMessage != null) {
       ScaffoldMessenger.of(
         context,
@@ -275,7 +263,9 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   }
 
   Widget _buildCameraViewWeb() {
-    if (_requestingPermission) {
+    final provider = context.watch<UploadStoryProvider>();
+
+    if (provider.isRequestingPermission) {
       return const Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -288,7 +278,9 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       );
     }
 
-    if (!_isCameraInitialized || _cameraController == null) {
+    if (!provider.isCameraInitialized ||
+        _cameraController == null ||
+        !_cameraController!.value.isInitialized) {
       return const Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -335,24 +327,30 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
             IconButton(
               icon: const Icon(Icons.flip_camera_android),
               onPressed: () async {
-                if (_cameras != null && _cameras!.length > 1) {
+                final cameras = provider.cameras;
+                if (cameras != null && cameras.length > 1) {
                   final currentLensDirection =
                       _cameraController!.description.lensDirection;
                   CameraDescription newCamera;
 
                   if (currentLensDirection == CameraLensDirection.back) {
-                    newCamera = _cameras!.firstWhere(
+                    newCamera = cameras.firstWhere(
                       (camera) =>
                           camera.lensDirection == CameraLensDirection.front,
-                      orElse: () => _cameras![0],
+                      orElse: () => cameras[0],
                     );
                   } else {
-                    newCamera = _cameras!.firstWhere(
+                    newCamera = cameras.firstWhere(
                       (camera) =>
                           camera.lensDirection == CameraLensDirection.back,
-                      orElse: () => _cameras![0],
+                      orElse: () => cameras[0],
                     );
                   }
+
+                  // temporarily set camera as not initialized while switching
+                  context.read<UploadStoryProvider>().setCameraInitialized(
+                    false,
+                  );
 
                   await _cameraController!.dispose();
                   _cameraController = CameraController(
@@ -362,7 +360,12 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
                   try {
                     await _cameraController!.initialize();
-                    setState(() {});
+                    // mark camera as initialized again
+                    if (mounted) {
+                      context.read<UploadStoryProvider>().setCameraInitialized(
+                        true,
+                      );
+                    }
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Error switching camera: $e')),
@@ -378,6 +381,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   }
 
   Widget _buildImagePlaceholder() {
+    final uploadProvider = context.watch<UploadStoryProvider>();
+
     return Container(
       height: 300,
       width: double.infinity,
@@ -395,7 +400,9 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
             children: [
               ElevatedButton.icon(
                 onPressed:
-                    _requestingPermission ? null : () => _handleCameraButton(),
+                    uploadProvider.isRequestingPermission
+                        ? null
+                        : () => _handleCameraButton(),
                 icon: Icon(
                   Icons.photo_camera,
                   color: Theme.of(context).colorScheme.onTertiary,
@@ -470,9 +477,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final formProvider = context.watch<UploadStoryProvider>();
-    final isUploading = context.watch<UploadStoryProvider>().isLoading;
-    final imageFile = formProvider.imageFile;
+    final uploadProvider = context.watch<UploadStoryProvider>();
+    final imageFile = uploadProvider.imageFile;
+    final isUploading = uploadProvider.isLoading;
+    final showCamera = uploadProvider.showCamera;
 
     return Scaffold(
       appBar: AppBar(
@@ -482,7 +490,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
-          if (imageFile != null && !_showCamera)
+          if (imageFile != null && !showCamera)
             Container(
               margin: const EdgeInsets.only(right: 8.0),
               child: IconButton(
@@ -503,25 +511,25 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    if (_showCamera)
+                    if (showCamera)
                       _buildCameraViewWeb()
                     else
                       _buildImagePreview(imageFile),
                     const SizedBox(height: 16),
-                    if (imageFile != null && !_showCamera) ...[
+                    if (imageFile != null && !showCamera) ...[
                       TextField(
                         decoration: const InputDecoration(
                           hintText: 'Write a caption...',
                         ),
                         maxLines: 3,
                         onChanged: (value) {
-                          formProvider.setCaption(value);
+                          uploadProvider.setCaption(value);
                         },
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton.icon(
                         onPressed:
-                            isUploading ? null : () => formProvider.reset(),
+                            isUploading ? null : () => uploadProvider.reset(),
                         icon: Icon(
                           Icons.refresh,
                           color:
