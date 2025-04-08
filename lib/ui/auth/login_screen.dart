@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              margin: EdgeInsets.only(left: 16, right: 16),
+              margin: EdgeInsets.only(bottom: 16, left: 16, right: 16),
               content: Text(result.message ?? "Login success"),
             ),
           );
