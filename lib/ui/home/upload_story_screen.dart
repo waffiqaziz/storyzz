@@ -51,11 +51,25 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     provider.setRequestingPermission(true);
 
     try {
-      // request camera permission for web
-      await html.window.navigator.mediaDevices!.getUserMedia({
-        'video': true,
+      // Check if running on mobile browser
+      final userAgent = html.window.navigator.userAgent.toLowerCase();
+      final isMobileBrowser =
+          userAgent.contains('mobile') ||
+          userAgent.contains('android') ||
+          userAgent.contains('iphone');
+
+      // Different constraints for mobile browsers
+      final constraints = {
+        'video':
+            isMobileBrowser
+                ? {
+                  'facingMode': 'environment',
+                } // Prefer back camera on mobile browsers
+                : true,
         'audio': false,
-      });
+      };
+
+      await html.window.navigator.mediaDevices!.getUserMedia(constraints);
 
       // get available cameras
       final cameras = await availableCameras();
@@ -67,6 +81,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       }
       return false;
     } catch (e) {
+      // More detailed error logging
+      print('Camera access error: $e');
       if (mounted) {
         ScaffoldMessenger.of(
           context,
