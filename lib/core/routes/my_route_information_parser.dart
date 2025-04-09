@@ -32,6 +32,10 @@ class MyRouteInformationParser extends RouteInformationParser<AppRoutePath> {
       return AppRoutePath.home(tabIndex: 2);
     }
 
+    if (uri.pathSegments.first == 'story' && uri.pathSegments.length == 2) {
+      return AppRoutePath.detailScreen(uri.pathSegments[1]);
+    }
+
     return AppRoutePath.unknown();
   }
 
@@ -45,6 +49,11 @@ class MyRouteInformationParser extends RouteInformationParser<AppRoutePath> {
     }
     if (configuration.isRegisterScreen) {
       return RouteInformation(uri: Uri.parse('/register'));
+    }
+    if (configuration.isDetailScreen) {
+      return RouteInformation(
+        uri: Uri.parse('/story/${configuration.storyId}'),
+      );
     }
     if (configuration.isMainScreen) {
       final tabIndex = configuration.tabIndex ?? 0;

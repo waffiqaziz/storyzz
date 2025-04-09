@@ -13,7 +13,6 @@ import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/provider/story_provider.dart';
 import 'package:storyzz/core/provider/upload_story_provider.dart';
 import 'package:storyzz/core/routes/my_route_delegate.dart';
-import 'package:storyzz/core/utils/helper.dart';
 import 'package:universal_html/html.dart' as html;
 
 class UploadStoryScreen extends StatefulWidget {
@@ -406,9 +405,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       context.read<StoryProvider>().refreshStories(user: authProvider.user!);
 
       // navigate to home screen
-      final routeDelegate =
-          Router.of(context).routerDelegate as MyRouteDelegate;
-      routeDelegate.navigateToHome();
+      context.read<MyRouteDelegate>().navigateToHome();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Story uploaded successfully!')),

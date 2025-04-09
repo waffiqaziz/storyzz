@@ -3,6 +3,8 @@ class AppRoutePath {
   final bool isLoginScreen;
   final bool isRegisterScreen;
   final bool isMainScreen;
+  final bool isDetailScreen;
+  final String? storyId;
   final int? tabIndex;
 
   AppRoutePath.login()
@@ -10,6 +12,8 @@ class AppRoutePath {
       isRegisterScreen = false,
       isMainScreen = false,
       isUnknown = false,
+      isDetailScreen = false,
+      storyId = null,
       tabIndex = null;
 
   AppRoutePath.register()
@@ -17,12 +21,16 @@ class AppRoutePath {
       isRegisterScreen = true,
       isMainScreen = false,
       isUnknown = false,
+      isDetailScreen = false,
+      storyId = null,
       tabIndex = null;
 
   AppRoutePath.home({this.tabIndex = 0}) // default to first tab (home screen)
     : isLoginScreen = false,
       isRegisterScreen = false,
       isMainScreen = true,
+      isDetailScreen = false,
+      storyId = null,
       isUnknown = false;
 
   AppRoutePath.unknown()
@@ -30,5 +38,15 @@ class AppRoutePath {
       isRegisterScreen = false,
       isMainScreen = false,
       isUnknown = true,
+      isDetailScreen = false,
+      storyId = null,
+      tabIndex = null;
+
+  AppRoutePath.detailScreen(this.storyId)
+    : isLoginScreen = false,
+      isRegisterScreen = false,
+      isMainScreen = false,
+      isUnknown = false,
+      isDetailScreen = true,
       tabIndex = null;
 }
