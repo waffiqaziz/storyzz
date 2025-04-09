@@ -9,6 +9,7 @@ import 'package:storyzz/core/data/repository/story_repository.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/provider/settings_provider.dart';
 import 'package:storyzz/core/provider/story_provider.dart';
+import 'package:storyzz/core/provider/upload_story_provider.dart';
 import 'package:storyzz/core/routes/my_route_delegate.dart';
 import 'package:storyzz/core/routes/my_route_information_parser.dart';
 import 'package:storyzz/my_app.dart';
@@ -34,6 +35,10 @@ class AppRoot extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AuthProvider(context.read<AuthRepository>()),
+        ),
+        ChangeNotifierProvider(
+          create:
+              (context) => UploadStoryProvider(context.read<StoryRepository>()),
         ),
         ChangeNotifierProvider(
           create: (context) => StoryProvider(context.read<StoryRepository>()),

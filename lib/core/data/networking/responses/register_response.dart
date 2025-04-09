@@ -1,11 +1,11 @@
-class RegisterResponse {
+class GeneralResponse {
   bool error;
   String message;
 
-  RegisterResponse({required this.error, required this.message});
+  GeneralResponse({required this.error, required this.message});
 
-  factory RegisterResponse.fromJson(Map<String, dynamic> json) =>
-      RegisterResponse(error: json["error"], message: json["message"]);
+  factory GeneralResponse.fromJson(Map<String, dynamic> json) =>
+      GeneralResponse(error: json["error"], message: json["message"]);
 
   Map<String, dynamic> toJson() => {"error": error, "message": message};
 }

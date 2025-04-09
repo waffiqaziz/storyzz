@@ -342,11 +342,11 @@ class MaterialTheme {
         filled: true,
         fillColor: Colors.grey.shade100,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(25),
           borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(25),
           borderSide: BorderSide(color: baseTheme.colorScheme.primary),
         ),
         contentPadding: const EdgeInsets.symmetric(
@@ -365,7 +365,7 @@ class MaterialTheme {
           ),
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(25),
           ),
         ),
       ),
@@ -390,11 +390,11 @@ class MaterialTheme {
         filled: true,
         fillColor: Colors.grey.shade800,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(25),
           borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(25),
           borderSide: BorderSide(color: baseTheme.colorScheme.primary),
         ),
         contentPadding: const EdgeInsets.symmetric(
@@ -413,7 +413,7 @@ class MaterialTheme {
           ),
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(26),
           ),
         ),
       ),
@@ -443,6 +443,26 @@ class MaterialTheme {
   );
 
   List<ExtendedColor> get extendedColors => [];
+}
+
+InputDecoration customInputDecoration({
+  required String label,
+  IconData? prefixIcon,
+  Widget? suffixIcon,
+  EdgeInsets prefixMargin = const EdgeInsets.only(left: 10.0),
+  EdgeInsets suffixMargin = const EdgeInsets.only(right: 8.0),
+}) {
+  return InputDecoration(
+    labelText: label,
+    prefixIcon:
+        prefixIcon != null
+            ? Container(margin: prefixMargin, child: Icon(prefixIcon))
+            : null,
+    suffixIcon:
+        suffixIcon != null
+            ? Container(margin: suffixMargin, child: suffixIcon)
+            : null,
+  );
 }
 
 class ExtendedColor {

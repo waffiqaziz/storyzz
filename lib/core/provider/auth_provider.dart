@@ -85,7 +85,7 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
-  Future<ApiResult<RegisterResponse>> register(User user) async {
+  Future<ApiResult<GeneralResponse>> register(User user) async {
     isLoadingRegister = true;
     notifyListeners();
 

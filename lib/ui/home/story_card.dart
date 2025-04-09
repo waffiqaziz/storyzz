@@ -36,7 +36,7 @@ class StoryCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: () {
-          // Navigate to story detail
+          // TODO: Navigate to story detail
           // Navigator.push(
           //   context,
           //   MaterialPageRoute(
@@ -145,7 +145,7 @@ class StoryCard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      if (story.lat != 0 && story.lon != 0)
+                      if (story.lat != null && story.lon != null)
                         Tooltip(
                           message: 'Location available',
                           child: Icon(
@@ -167,7 +167,10 @@ class StoryCard extends StatelessWidget {
                       trimCollapsedText: 'Show more',
                       trimExpandedText: 'Show less',
                       style: TextStyle(fontSize: 14),
-                      moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      moreStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],

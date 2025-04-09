@@ -21,16 +21,22 @@ This application includes the following key features:
 ### 2. Story Pages
 
 - **Story List**: Displays a list of stories from the API, showing usernames and photos
-- **Story Detail**: Shows detailed information (username, photo, and description) when a story item is tapped
+- ~~**Story Detail**: Shows detailed information (username, photo, and description) when a story item is tapped~~
 
-### 3. Add Story [Under Construction]
+### 3. Add Story
 
-- ~~**Create Story Page**: Interface for users to add new stories~~
-- ~~**Description Field**: Allows users to add a brief description related to the image when creating a new story~~
+- **Create Story**: Interface for users to add new stories
+- **Post Image**: Upload an image, with max size 1MB
+- **Caption**: Allows users to add a brief description related to the image when creating a new story
 
 ### 4. Advanced Navigation
 
 - Implements declarative navigation throughout the application using Flutter's navigation system
+
+### 5. Dark and Light Themes
+
+- Support dark and light themes
+- Adjusted by system or select manually
 
 ## 🛠️ Getting Started
 

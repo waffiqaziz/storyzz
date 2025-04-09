@@ -204,4 +204,12 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
       }
     }
   }
+
+  void navigateToHome({int tabIndex = 0}) {
+    _currentTabIndex = tabIndex;
+    _isMainScreen = true;
+    _isLoginScreen = false;
+    _isRegisterScreen = false;
+    notifyListeners();
+  }
 }

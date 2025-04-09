@@ -67,29 +67,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // TODO: Navigate to add story screen
-          if (mounted) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                const SnackBar(
-                  behavior: SnackBarBehavior.floating,
-                  content: Text('File saved to xxxxxxxx'),
-                ),
-              );
-          }
-        },
-        child: Icon(Icons.add),
-      ),
       body: Consumer2<AuthProvider, StoryProvider>(
         builder: (context, authProvider, storyProvider, child) {
           // loading state
           if (authProvider.isLoadingLogin) {
             return Center(child: CircularProgressIndicator());
           }
-      
+
           // error user state
           if (authProvider.errorMessage.isNotEmpty) {
             return Center(
@@ -112,12 +96,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           }
-      
+
           // user not found
           if (authProvider.user == null) {
             return Center(child: Text('User data not available'));
           }
-      
+
           // error story state
           if (storyProvider.errorMessage.isNotEmpty) {
             return Center(
@@ -142,13 +126,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         storyProvider.refreshStories(user: authProvider.user!);
                       }
                     },
-                    child: Text('RETRY'),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text('RETRY'),
+                    ),
                   ),
                 ],
               ),
             );
           }
-      
+
           return RefreshIndicator(
             onRefresh: () async {
               if (authProvider.user != null) {
@@ -161,8 +148,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverAppBar(
                   floating: true,
                   snap: true,
-                  toolbarHeight: kToolbarHeight,
-                  pinned: false,
                   primary: true,
                   forceElevated: false,
                   title: Row(
@@ -190,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                   elevation: 0,
                 ),
-      
+
                 // Show loading indicator if stories are loading
                 if (storyProvider.isLoading && storyProvider.stories.isEmpty)
                   SliverToBoxAdapter(
@@ -201,15 +186,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-      
+
                 // Show empty state if no stories
                 if (storyProvider.stories.isEmpty && !storyProvider.isLoading)
                   _buildEmptyState(),
-      
+
                 // Show story list
                 if (storyProvider.stories.isNotEmpty)
                   _buildSliverStoryList(storyProvider),
-      
+
                 // Show loading indicator at the bottom when loading more
                 if (storyProvider.isLoading && storyProvider.stories.isNotEmpty)
                   SliverToBoxAdapter(
