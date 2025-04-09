@@ -183,7 +183,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       final isChromeMobile = _isMobileChrome();
       
       // lower the resolution
-      final preset = isChromeMobile ? ResolutionPreset.low : ResolutionPreset.medium;
+      final preset =  ResolutionPreset.medium;
       
       try {
         // find back camera for mobile
