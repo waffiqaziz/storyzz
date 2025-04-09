@@ -13,6 +13,7 @@ import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/provider/story_provider.dart';
 import 'package:storyzz/core/provider/upload_story_provider.dart';
 import 'package:storyzz/core/routes/my_route_delegate.dart';
+import 'package:storyzz/core/utils/helper.dart';
 import 'package:universal_html/html.dart' as html;
 
 class UploadStoryScreen extends StatefulWidget {
@@ -66,16 +67,19 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
     try {
       final isChromeMobile = _isMobileChrome();
-      
+
       // handling for Chrome on mobile
-      final videoConstraints = isChromeMobile 
-          ? {
-              'facingMode': {'exact': 'environment'}, // force to use back camera
-              'width': {'ideal': 720, 'max': 1280},
-              'height': {'ideal': 480, 'max': 720}
-            } 
-          : true;
-      
+      final videoConstraints =
+          isChromeMobile
+              ? {
+                'facingMode': {
+                  'exact': 'environment',
+                }, // force to use back camera
+                'width': {'ideal': 720, 'max': 1280},
+                'height': {'ideal': 480, 'max': 720},
+              }
+              : true;
+
       // request camera permission with specific constraints
       await html.window.navigator.mediaDevices!.getUserMedia({
         'video': videoConstraints,
@@ -93,45 +97,48 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       return false;
     } catch (e) {
       log('Camera access error details: $e');
-      
+
       if (mounted) {
         String errorMessage = 'Camera access denied: $e';
         if (e.toString().contains('notReadable')) {
-          errorMessage = 'Camera is in use by another app or tab. Please close other camera apps and try again.';
+          errorMessage =
+              'Camera is in use by another app or tab. Please close other camera apps and try again.';
         }
-        
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(errorMessage))
-        );
+
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(errorMessage)));
       }
       provider.setRequestingPermission(false);
       return false;
     }
   }
 
+  // use this approach if _initializeCameraWeb not working
   Future<void> _useFallbackCameraInput() async {
     try {
       // create file input with camera capture attribute
-      final inputElement = html.FileUploadInputElement()
-        ..accept = 'image/*'
-        ..setAttribute('capture', 'environment');
-      
+      final inputElement =
+          html.FileUploadInputElement()
+            ..accept = 'image/*'
+            ..setAttribute('capture', 'environment');
+
       // add to DOM temporarily
       html.document.body!.append(inputElement);
-      
+
       // trigger click
       inputElement.click();
-      
+
       // create a completer to handle async file selection
       final completer = Completer<void>();
-      
+
       // listen for changes
       inputElement.onChange.listen((event) async {
         if (inputElement.files!.isNotEmpty) {
           final file = inputElement.files![0];
           final reader = html.FileReader();
           reader.readAsArrayBuffer(file);
-          
+
           reader.onLoad.listen((event) async {
             final bytes = reader.result as Uint8List;
             if (bytes.lengthInBytes > 1048576) {
@@ -163,14 +170,14 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
         // remove from DOM
         inputElement.remove();
       });
-      
+
       return completer.future;
     } catch (e) {
       log('Fallback camera error: $e');
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error accessing camera: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error accessing camera: $e')));
       }
     }
   }
@@ -181,10 +188,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
     if (cameras != null && cameras.isNotEmpty) {
       final isChromeMobile = _isMobileChrome();
-      
+
       // lower the resolution
-      final preset =  ResolutionPreset.medium;
-      
+      final preset = ResolutionPreset.medium;
+
       try {
         // find back camera for mobile
         CameraDescription cameraToUse = cameras[0];
@@ -196,15 +203,15 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
             }
           }
         }
-        
+
         // tnitialize with proper settings
         _cameraController = CameraController(
-          cameraToUse, 
+          cameraToUse,
           preset,
           enableAudio: false,
           imageFormatGroup: ImageFormatGroup.jpeg,
         );
-        
+
         // add timeout to prevent hanging
         await _cameraController!.initialize().timeout(
           const Duration(seconds: 10),
@@ -212,7 +219,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
             throw TimeoutException('Camera initialization timed out');
           },
         );
-        
+
         if (mounted) {
           provider.setCameraInitialized(true);
           provider.setShowCamera(true);
@@ -225,7 +232,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
           );
         }
         _cleanupCamera();
-        
+
         // automatically try fallback on error for mobile Chrome
         if (isChromeMobile) {
           await _useFallbackCameraInput();
@@ -234,7 +241,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     }
   }
 
-  Future<void> _takePicture() async {
+  Future<void> _takePictureWeb() async {
     if (_cameraController == null || !_cameraController!.value.isInitialized) {
       return;
     }
@@ -275,7 +282,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     if (kIsWeb) {
       // check if it's Chrome on Android
       final isChromeMobile = _isMobileChrome();
-      
+
       if (isChromeMobile) {
         try {
           // try standard camera plugin first
@@ -313,7 +320,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     try {
       final pickedFile = await _picker.pickImage(
         source: source,
-        imageQuality: 85,
+        imageQuality: 50,
       );
 
       if (pickedFile != null) {
@@ -465,7 +472,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
               },
             ),
             ElevatedButton(
-              onPressed: _takePicture,
+              onPressed: _takePictureWeb,
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(16),
