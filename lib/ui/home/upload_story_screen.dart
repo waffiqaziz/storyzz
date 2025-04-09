@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:developer' show log;
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -22,8 +25,6 @@ class UploadStoryScreen extends StatefulWidget {
 class _UploadStoryScreenState extends State<UploadStoryScreen> {
   // image picker for mobile and web platform
   final ImagePicker _picker = ImagePicker();
-
-  // Camera controller is kept in UI component since it's a hardware resource
   CameraController? _cameraController;
 
   @override
@@ -36,10 +37,23 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     _cameraController?.dispose();
     _cameraController = null;
 
-    // Reset camera state in provider
+    // reset camera state in provider
     if (mounted) {
       context.read<UploadStoryProvider>().setCameraInitialized(false);
       context.read<UploadStoryProvider>().setShowCamera(false);
+    }
+  }
+
+  bool _isMobileChrome() {
+    if (!kIsWeb) return false;
+
+    try {
+      final userAgent = html.window.navigator.userAgent.toLowerCase();
+      return userAgent.contains('chrome') &&
+          (userAgent.contains('android') || userAgent.contains('mobile'));
+    } catch (e) {
+      log('Error detecting browser: $e');
+      return false;
     }
   }
 
@@ -51,9 +65,20 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     provider.setRequestingPermission(true);
 
     try {
-      // request camera permission for web
+      final isChromeMobile = _isMobileChrome();
+      
+      // handling for Chrome on mobile
+      final videoConstraints = isChromeMobile 
+          ? {
+              'facingMode': {'exact': 'environment'}, // force to use back camera
+              'width': {'ideal': 720, 'max': 1280},
+              'height': {'ideal': 480, 'max': 720}
+            } 
+          : true;
+      
+      // request camera permission with specific constraints
       await html.window.navigator.mediaDevices!.getUserMedia({
-        'video': true,
+        'video': videoConstraints,
         'audio': false,
       });
 
@@ -67,13 +92,86 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       }
       return false;
     } catch (e) {
+      log('Camera access error details: $e');
+      
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Camera access denied: $e')));
+        String errorMessage = 'Camera access denied: $e';
+        if (e.toString().contains('notReadable')) {
+          errorMessage = 'Camera is in use by another app or tab. Please close other camera apps and try again.';
+        }
+        
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage))
+        );
       }
       provider.setRequestingPermission(false);
       return false;
+    }
+  }
+
+  Future<void> _useFallbackCameraInput() async {
+    try {
+      // create file input with camera capture attribute
+      final inputElement = html.FileUploadInputElement()
+        ..accept = 'image/*'
+        ..setAttribute('capture', 'environment');
+      
+      // add to DOM temporarily
+      html.document.body!.append(inputElement);
+      
+      // trigger click
+      inputElement.click();
+      
+      // create a completer to handle async file selection
+      final completer = Completer<void>();
+      
+      // listen for changes
+      inputElement.onChange.listen((event) async {
+        if (inputElement.files!.isNotEmpty) {
+          final file = inputElement.files![0];
+          final reader = html.FileReader();
+          reader.readAsArrayBuffer(file);
+          
+          reader.onLoad.listen((event) async {
+            final bytes = reader.result as Uint8List;
+            if (bytes.lengthInBytes > 1048576) {
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Image is too large. Maximum size is 1MB.'),
+                  ),
+                );
+              }
+            } else {
+              if (mounted) {
+                // create XFile from bytes
+                final path = 'data:image/jpeg;base64,${base64Encode(bytes)}';
+                final xFile = XFile.fromData(
+                  bytes,
+                  name: file.name,
+                  path: path,
+                  mimeType: file.type,
+                );
+                context.read<UploadStoryProvider>().setImageFile(xFile);
+              }
+            }
+            completer.complete();
+          });
+        } else {
+          completer.complete(); // complete even if no file was selected
+        }
+        // remove from DOM
+        inputElement.remove();
+      });
+      
+      return completer.future;
+    } catch (e) {
+      log('Fallback camera error: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error accessing camera: $e')),
+        );
+      }
     }
   }
 
@@ -82,21 +180,56 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     final cameras = provider.cameras;
 
     if (cameras != null && cameras.isNotEmpty) {
-      _cameraController = CameraController(cameras[0], ResolutionPreset.medium);
-
+      final isChromeMobile = _isMobileChrome();
+      
+      // lower the resolution
+      final preset = isChromeMobile ? ResolutionPreset.low : ResolutionPreset.medium;
+      
       try {
-        await _cameraController!.initialize();
+        // find back camera for mobile
+        CameraDescription cameraToUse = cameras[0];
+        if (isChromeMobile && cameras.length > 1) {
+          for (var camera in cameras) {
+            if (camera.lensDirection == CameraLensDirection.back) {
+              cameraToUse = camera;
+              break;
+            }
+          }
+        }
+        
+        // tnitialize with proper settings
+        _cameraController = CameraController(
+          cameraToUse, 
+          preset,
+          enableAudio: false,
+          imageFormatGroup: ImageFormatGroup.jpeg,
+        );
+        
+        // add timeout to prevent hanging
+        await _cameraController!.initialize().timeout(
+          const Duration(seconds: 10),
+          onTimeout: () {
+            throw TimeoutException('Camera initialization timed out');
+          },
+        );
+        
         if (mounted) {
           provider.setCameraInitialized(true);
           provider.setShowCamera(true);
         }
       } catch (e) {
+        log('Camera initialization error: $e');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Error initializing camera: $e')),
           );
         }
         _cleanupCamera();
+        
+        // automatically try fallback on error for mobile Chrome
+        if (isChromeMobile) {
+          await _useFallbackCameraInput();
+        }
       }
     }
   }
@@ -140,10 +273,29 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
   Future<void> _handleCameraButton() async {
     if (kIsWeb) {
-      // for web, request permission and initialize camera only when button is pressed
-      final bool hasPermission = await _requestCameraPermissionWeb();
-      if (hasPermission) {
-        await _initializeCameraWeb();
+      // check if it's Chrome on Android
+      final isChromeMobile = _isMobileChrome();
+      
+      if (isChromeMobile) {
+        try {
+          // try standard camera plugin first
+          final bool hasPermission = await _requestCameraPermissionWeb();
+          if (hasPermission) {
+            await _initializeCameraWeb();
+          } else {
+            // if that fails, use fallback method
+            await _useFallbackCameraInput();
+          }
+        } catch (e) {
+          log('Standard camera access failed, trying fallback: $e');
+          await _useFallbackCameraInput();
+        }
+      } else {
+        // for desktop web, use the original implementation
+        final bool hasPermission = await _requestCameraPermissionWeb();
+        if (hasPermission) {
+          await _initializeCameraWeb();
+        }
       }
     } else {
       // for mobile, use the standard image picker
