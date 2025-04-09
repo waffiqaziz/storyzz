@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:storyzz/core/data/networking/responses/stories_response.dart';
+import 'package:storyzz/core/routes/my_route_delegate.dart';
 
 class StoryCard extends StatelessWidget {
   final ListStory story;
@@ -36,13 +38,7 @@ class StoryCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: () {
-          // TODO: Navigate to story detail
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => StoryDetailScreen(story: story)
-          //   )
-          // );
+          context.read<MyRouteDelegate>().navigateToStoryDetail(story);
         },
         borderRadius: BorderRadius.circular(12),
         child: Column(
