@@ -93,8 +93,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Text(
                       'Sign up to get started',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.grey.shade600,
-                      ),
+                            color: Colors.grey.shade600,
+                          ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 32),
@@ -206,23 +206,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Consumer<AuthProvider>(
                       builder: (context, authProvider, child) {
                         return ElevatedButton(
-                          onPressed:
-                              authProvider.isLoadingRegister
-                                  ? null
-                                  : _handleRegister,
-                          child:
-                              authProvider.isLoadingRegister
-                                  ? SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white,
-                                      ),
+                          onPressed: authProvider.isLoadingRegister
+                              ? null
+                              : _handleRegister,
+                          child: authProvider.isLoadingRegister
+                              ? SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white,
                                     ),
-                                  )
-                                  : Text('REGISTER'),
+                                  ),
+                                )
+                              : Text('REGISTER'),
                         );
                       },
                     ),

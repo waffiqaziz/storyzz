@@ -98,7 +98,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 8),
                         Text(
                           'Sign in to continue',
-                          style: Theme.of(context).textTheme.bodyLarge
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
                               ?.copyWith(color: Colors.grey.shade600),
                           textAlign: TextAlign.center,
                         ),
@@ -164,20 +166,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                            onPressed:
-                                authProvider.isLoadingLogin
-                                    ? null
-                                    : () {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            "This feature only for user interface (UI).",
-                                          ),
+                            onPressed: authProvider.isLoadingLogin
+                                ? null
+                                : () {
+                                    ScaffoldMessenger.of(
+                                      context,
+                                    ).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          "This feature only for user interface (UI).",
                                         ),
-                                      );
-                                    },
+                                      ),
+                                    );
+                                  },
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.symmetric(horizontal: 8),
                               minimumSize: Size(50, 30),
@@ -192,19 +193,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         ElevatedButton(
                           onPressed:
                               authProvider.isLoadingLogin ? null : _handleLogin,
-                          child:
-                              authProvider.isLoadingLogin
-                                  ? SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white,
-                                      ),
+                          child: authProvider.isLoadingLogin
+                              ? SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white,
                                     ),
-                                  )
-                                  : Text('LOGIN'),
+                                  ),
+                                )
+                              : Text('LOGIN'),
                         ),
                         const SizedBox(height: 24),
 
@@ -217,10 +217,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(color: Colors.grey.shade600),
                             ),
                             TextButton(
-                              onPressed:
-                                  authProvider.isLoadingLogin
-                                      ? null
-                                      : widget.onRegister,
+                              onPressed: authProvider.isLoadingLogin
+                                  ? null
+                                  : widget.onRegister,
                               style: TextButton.styleFrom(
                                 padding: EdgeInsets.all(8),
                                 minimumSize: Size(50, 30),

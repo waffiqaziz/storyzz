@@ -26,7 +26,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
   int _currentTabIndex = 0;
 
   MyRouteDelegate(this.authProvider)
-    : _navigatorKey = GlobalKey<NavigatorState>() {
+      : _navigatorKey = GlobalKey<NavigatorState>() {
     _init();
   }
 
@@ -204,7 +204,16 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
           if (MediaQuery.of(context).size.width <= 600)
             MaterialPage(
               key: ValueKey('StoryDetailScreen-${_currentStory!.id}'),
-              child: StoryDetailScreen(story: _currentStory!),
+              child: StoryDetailScreen(
+                story: _currentStory!,
+                onBack: () {
+                  _isStoryDetail = false;
+                  _isMainScreen = true;
+                  _currentStory = null;
+                  _currentStoryId = null;
+                  notifyListeners();
+                },
+              ),
             ),
       ],
       onDidRemovePage: (page) {
@@ -213,8 +222,8 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
           _isLoginScreen = true;
           notifyListeners();
         } else if (page.key.toString().startsWith(
-          'ValueKey<StoryDetailScreen-',
-        )) {
+              'ValueKey<StoryDetailScreen-',
+            )) {
           _isStoryDetail = false;
           _isMainScreen = true;
           _currentStory = null;
@@ -330,7 +339,6 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
       _isMainScreen = false;
       notifyListeners();
     } else {
-      
       // for web dekstop, show dialog without changing navigation state
       showDialog(
         context: context,

@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/provider/story_provider.dart';
 import 'package:storyzz/core/provider/upload_story_provider.dart';
@@ -68,16 +69,15 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       final isChromeMobile = _isMobileChrome();
 
       // handling for Chrome on mobile
-      final videoConstraints =
-          isChromeMobile
-              ? {
-                'facingMode': {
-                  'exact': 'environment',
-                }, // force to use back camera
-                'width': {'ideal': 720, 'max': 1280},
-                'height': {'ideal': 480, 'max': 720},
-              }
-              : true;
+      final videoConstraints = isChromeMobile
+          ? {
+              'facingMode': {
+                'exact': 'environment',
+              }, // force to use back camera
+              'width': {'ideal': 720, 'max': 1280},
+              'height': {'ideal': 480, 'max': 720},
+            }
+          : true;
 
       // request camera permission with specific constraints
       await html.window.navigator.mediaDevices!.getUserMedia({
@@ -98,10 +98,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       log('Camera access error details: $e');
 
       if (mounted) {
-        String errorMessage = 'Camera access denied: $e';
+        String errorMessage =
+            '${AppLocalizations.of(context)!.camera_access_denied} $e';
         if (e.toString().contains('notReadable')) {
-          errorMessage =
-              'Camera is in use by another app or tab. Please close other camera apps and try again.';
+          errorMessage = AppLocalizations.of(context)!.camera_used_by_other;
         }
 
         ScaffoldMessenger.of(
@@ -117,10 +117,9 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   Future<void> _useFallbackCameraInput() async {
     try {
       // create file input with camera capture attribute
-      final inputElement =
-          html.FileUploadInputElement()
-            ..accept = 'image/*'
-            ..setAttribute('capture', 'environment');
+      final inputElement = html.FileUploadInputElement()
+        ..accept = 'image/*'
+        ..setAttribute('capture', 'environment');
 
       // add to DOM temporarily
       html.document.body!.append(inputElement);
@@ -143,8 +142,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
             if (bytes.lengthInBytes > 1048576) {
               if (mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Image is too large. Maximum size is 1MB.'),
+                  SnackBar(
+                    content: Text(
+                      AppLocalizations.of(context)!.image_too_large,
+                    ),
                   ),
                 );
               }
@@ -174,9 +175,13 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     } catch (e) {
       log('Fallback camera error: $e');
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Error accessing camera: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '${AppLocalizations.of(context)!.error_accessing_camera} $e',
+            ),
+          ),
+        );
       }
     }
   }
@@ -227,7 +232,11 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
         log('Camera initialization error: $e');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error initializing camera: $e')),
+            SnackBar(
+              content: Text(
+                '${AppLocalizations.of(context)!.error_initializing_camera} $e',
+              ),
+            ),
           );
         }
         _cleanupCamera();
@@ -256,8 +265,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
         // file too big
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Image is too large. Maximum size is 1MB.'),
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.image_too_large),
             ),
           );
         }
@@ -270,9 +279,13 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Error taking picture: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '${AppLocalizations.of(context)!.error_taking_picture} $e',
+            ),
+          ),
+        );
       }
     }
   }
@@ -339,8 +352,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
           // File too big
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Image is too large. Maximum size is 1MB.'),
+              SnackBar(
+                content: Text(AppLocalizations.of(context)!.image_too_large),
               ),
             );
           }
@@ -352,9 +365,13 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Error picking image: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '${AppLocalizations.of(context)!.error_picking_image} $e',
+            ),
+          ),
+        );
       }
     }
   }
@@ -368,7 +385,18 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
     if (imageFile == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select an image first')),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.please_select_image),
+        ),
+      );
+      return;
+    }
+
+    if (caption.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.please_write_caption),
+        ),
       );
       return;
     }
@@ -408,7 +436,9 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       context.read<MyRouteDelegate>().navigateToHome();
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Story uploaded successfully!')),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.story_upload_success),
+        ),
       );
       uploadProvider.reset();
     } else if (uploadProvider.errorMessage != null) {
@@ -422,13 +452,13 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     final provider = context.watch<UploadStoryProvider>();
 
     if (provider.isRequestingPermission) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             CircularProgressIndicator(),
             SizedBox(height: 16),
-            Text('Requesting camera permission...'),
+            Text(AppLocalizations.of(context)!.request_camera_permission),
           ],
         ),
       );
@@ -437,13 +467,13 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     if (!provider.isCameraInitialized ||
         _cameraController == null ||
         !_cameraController!.value.isInitialized) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             CircularProgressIndicator(),
             SizedBox(height: 16),
-            Text('Initializing camera...'),
+            Text(AppLocalizations.of(context)!.initializing_camera),
           ],
         ),
       );
@@ -505,8 +535,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
                   // temporarily set camera as not initialized while switching
                   context.read<UploadStoryProvider>().setCameraInitialized(
-                    false,
-                  );
+                        false,
+                      );
 
                   await _cameraController!.dispose();
                   _cameraController = CameraController(
@@ -519,13 +549,19 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                     // mark camera as initialized again
                     if (mounted) {
                       context.read<UploadStoryProvider>().setCameraInitialized(
-                        true,
-                      );
+                            true,
+                          );
                     }
                   } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Error switching camera: $e')),
-                    );
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            '${AppLocalizations.of(context)!.error_switching_camera} $e',
+                          ),
+                        ),
+                      );
+                    }
                   }
                 }
               },
@@ -555,16 +591,15 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton.icon(
-                onPressed:
-                    uploadProvider.isRequestingPermission
-                        ? null
-                        : () => _handleCameraButton(),
+                onPressed: uploadProvider.isRequestingPermission
+                    ? null
+                    : () => _handleCameraButton(),
                 icon: Icon(
                   Icons.photo_camera,
                   color: Theme.of(context).colorScheme.onTertiary,
                 ),
                 label: Text(
-                  'Camera',
+                  AppLocalizations.of(context)!.camera,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onTertiary,
                   ),
@@ -585,7 +620,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                   color: Theme.of(context).colorScheme.onSecondary,
                 ),
                 label: Text(
-                  'Gallery',
+                  AppLocalizations.of(context)!.gallery,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),
@@ -624,10 +659,9 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
         ],
       ),
       clipBehavior: Clip.antiAlias,
-      child:
-          kIsWeb
-              ? Image.network(imageFile.path)
-              : Image.file(File(imageFile.path)),
+      child: kIsWeb
+          ? Image.network(imageFile.path)
+          : Image.file(File(imageFile.path)),
     );
   }
 
@@ -641,8 +675,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Upload Story',
+        title: Text(
+          AppLocalizations.of(context)!.upload_story,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
@@ -674,8 +708,9 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                     const SizedBox(height: 16),
                     if (imageFile != null && !showCamera) ...[
                       TextField(
-                        decoration: const InputDecoration(
-                          hintText: 'Write a caption...',
+                        decoration: InputDecoration(
+                          hintText:
+                              AppLocalizations.of(context)!.write_a_caption,
                         ),
                         maxLines: 3,
                         onChanged: (value) {
@@ -688,19 +723,22 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                             isUploading ? null : () => uploadProvider.reset(),
                         icon: Icon(
                           Icons.refresh,
-                          color:
-                              Theme.of(
-                                context,
-                              ).colorScheme.surfaceContainerLowest,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.surfaceContainerLowest,
                         ),
-                        label: const Text('Change Image'),
+                        label: Text(AppLocalizations.of(context)!.change_image),
                       ),
                     ],
                     if (isUploading) ...[
                       const SizedBox(height: 16),
                       const LinearProgressIndicator(),
                       const SizedBox(height: 8),
-                      const Center(child: Text('Uploading story...')),
+                      Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.uploading_story,
+                        ),
+                      ),
                     ],
                   ],
                 ),
