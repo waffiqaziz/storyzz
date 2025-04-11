@@ -5,6 +5,7 @@ import 'package:storyzz/core/routes/app_route_path.dart';
 import 'package:storyzz/core/utils/custom_page_transition.dart';
 import 'package:storyzz/ui/detail/detail_dialog.dart';
 import 'package:storyzz/ui/detail/detail_screen.dart';
+import 'package:storyzz/ui/widgets/dialog_page.dart';
 
 import '../../ui/auth/login_screen.dart';
 import '../../ui/auth/register_screen.dart';
@@ -22,10 +23,11 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
   bool _isRegisterScreen = false;
   bool _isMainScreen = false;
   bool _isStoryDetail = false;
+  bool _isStoryDetailDialog = false;
   String? _currentStoryId;
   ListStory? _currentStory;
 
-  // Add current tab index for bottom navigation
+  // current tab index for bottom navigation
   int _currentTabIndex = 0;
 
   MyRouteDelegate(this.authProvider)
@@ -43,7 +45,6 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
     notifyListeners();
   }
 
-  // Add getter and setter for the current tab
   int get currentTabIndex => _currentTabIndex;
 
   set currentTabIndex(int index) {
@@ -56,12 +57,12 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
 
   @override
   AppRoutePath get currentConfiguration {
-    if (_isStoryDetail && _currentStoryId != null) {
+    // both detail screen and dialog should use the same URL pattern
+    if ((_isStoryDetail || _isStoryDetailDialog) && _currentStoryId != null) {
       return AppRoutePath.detailScreen(_currentStoryId!);
     }
 
     if (_isLoggedIn) {
-      // Add tab information to the route path
       return AppRoutePath.home(tabIndex: _currentTabIndex);
     } else if (_isLoginScreen) {
       return AppRoutePath.login();
@@ -74,9 +75,10 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
 
   @override
   Future<bool> popRoute() async {
-    // if on story detail screen, go back to main screen
-    if (_isStoryDetail) {
+    // handle pop for both story detail screen and dialog, go back to main screen
+    if (_isStoryDetail || _isStoryDetailDialog) {
       _isStoryDetail = false;
+      _isStoryDetailDialog = false;
       _isMainScreen = true;
       _currentStory = null;
       _currentStoryId = null;
@@ -86,7 +88,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
 
     // back button behavior after logged in
     if (_isLoggedIn && _isMainScreen) {
-      // If we're not on the first tab, go back to first tab instead of exiting
+      // if not on the first tab, go back to first tab instead of exiting
       if (_currentTabIndex != 0) {
         _currentTabIndex = 0;
         notifyListeners();
@@ -119,33 +121,30 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
         _isLoginScreen = false;
         _isRegisterScreen = false;
         _isStoryDetail = false;
+        _isStoryDetailDialog = false;
       } else {
         _isMainScreen = false;
         _isLoginScreen = true;
         _isRegisterScreen = false;
         _isStoryDetail = false;
+        _isStoryDetailDialog = false;
       }
     }
 
-    // handle responsive layout transition when on detail screen
-    if (_isStoryDetail && isDesktop) {
-      // when transitioning to desktop while on detail screen,
-      // change to main screen to avoid Navigator issues
-      _isMainScreen = true;
-      _isStoryDetail = false;
-
-      // show the dialog for desktop view after the frame is built
-      if (_currentStory != null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (navigatorKey?.currentContext != null) {
-            showDialog(
-              context: navigatorKey!.currentContext!,
-              barrierColor: Colors.black87,
-              builder: (context) => StoryDetailDialog(story: _currentStory!),
-            );
-          }
-        });
+    // handle responsive layout transition for story detail
+    if (_currentStory != null) {
+      if (isDesktop) {
+        // desktop should use dialog
+        _isStoryDetailDialog = true;
+        _isStoryDetail = false;
+      } else {
+        // mobile should use detail screen
+        _isStoryDetail = true;
+        _isStoryDetailDialog = false;
       }
+    } else {
+      _isStoryDetail = false;
+      _isStoryDetailDialog = false;
     }
 
     return Navigator(
@@ -185,8 +184,9 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
               },
             ),
           ),
-        if (_isMainScreen ||
-            _isStoryDetail) // keep MainScreen in the stack even when showing detail
+
+        // main screen always in the stack when logged in
+        if (_isMainScreen || _isStoryDetail || _isStoryDetailDialog)
           MaterialPage(
             key: ValueKey('MainScreen'),
             child: MainScreen(
@@ -200,26 +200,46 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
                 _isLoggedIn = false;
                 _isMainScreen = false;
                 _isLoginScreen = true;
-                _currentTabIndex = 0; // Reset tab index on logout
+                _currentTabIndex = 0; // reset tab index on logout
+                _currentStory = null;
+                _currentStoryId = null;
                 notifyListeners();
               },
             ),
           ),
 
-        // only add detail screen as an overlay
+        // detail screen for mobile view
         if (_isStoryDetail && _currentStory != null)
-          if (MediaQuery.of(context).size.width <= 600)
-            CustomPageTransition(
-              transitionType: TransitionType.fade,
-              key: ValueKey('StoryDetailScreen-${_currentStory!.id}'),
-              child: StoryDetailScreen(
-                story: _currentStory!,
-                onBack: () {
-                  _isStoryDetail = false;
-                  notifyListeners();
-                },
-              ),
+          CustomPageTransition(
+            transitionType: TransitionType.fade,
+            key: ValueKey('StoryDetailScreen-${_currentStory!.id}'),
+            child: StoryDetailScreen(
+              story: _currentStory!,
+              onBack: () {
+                _isStoryDetail = false;
+                _currentStory = null;
+                _currentStoryId = null;
+                notifyListeners();
+              },
             ),
+          ),
+
+        // detail dialog overlay for desktop view
+        if (_isStoryDetailDialog && _currentStory != null)
+          DialogPage(
+            key: ValueKey('StoryDetailDialog-${_currentStory!.id}'),
+            barrierColor: Colors.black87,
+            barrierDismissible: true,
+            child: StoryDetailDialog(
+              story: _currentStory!,
+              onClose: () {
+                _isStoryDetailDialog = false;
+                _currentStory = null;
+                _currentStoryId = null;
+                notifyListeners();
+              },
+            ),
+          ),
       ],
 
       onDidRemovePage: (page) {
@@ -250,22 +270,25 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
   Future<void> setNewRoutePath(AppRoutePath path) async {
     if (path.isUnknown) {
       _isLoginScreen = true;
+      _isStoryDetailDialog = false;
       _isRegisterScreen = false;
       _isMainScreen = false;
       _isStoryDetail = false;
       _isLoggedIn = false;
+      _currentStory = null;
+      _currentStoryId = null;
       return;
     }
 
     if (path.storyId != null) {
       if (_isLoggedIn) {
-        // due it cant fetch individual story by ID, redirect to home screen
         _isLoginScreen = false;
         _isRegisterScreen = false;
         _isMainScreen = true;
         _isStoryDetail = false;
         _currentStoryId = path.storyId!;
 
+        // due it cant fetch individual story by ID, redirect to home screen
         // show a message after navigation completes
         WidgetsBinding.instance.addPostFrameCallback((_) {
           final context = navigatorKey?.currentContext;
@@ -285,6 +308,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
         _isRegisterScreen = false;
         _isMainScreen = false;
         _isStoryDetail = false;
+        _isStoryDetailDialog = false;
       }
       return;
     }
@@ -294,19 +318,28 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
       _isRegisterScreen = false;
       _isMainScreen = false;
       _isStoryDetail = false;
+      _isStoryDetailDialog = false;
       _isLoggedIn = false;
+      _currentStory = null;
+      _currentStoryId = null;
     } else if (path.isRegisterScreen) {
       _isLoginScreen = false;
       _isRegisterScreen = true;
       _isMainScreen = false;
       _isStoryDetail = false;
+      _isStoryDetailDialog = false;
       _isLoggedIn = false;
+      _currentStory = null;
+      _currentStoryId = null;
     } else if (path.isMainScreen) {
       if (_isLoggedIn) {
         _isLoginScreen = false;
         _isRegisterScreen = false;
         _isMainScreen = true;
         _isStoryDetail = false;
+        _isStoryDetailDialog = false;
+        _currentStory = null;
+        _currentStoryId = null;
 
         // Update tab index if provided in the path
         if (path.tabIndex != null) {
@@ -318,6 +351,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
         _isRegisterScreen = false;
         _isMainScreen = false;
         _isStoryDetail = false;
+        _isStoryDetailDialog = false;
       }
     }
   }
@@ -328,6 +362,9 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
     _isLoginScreen = false;
     _isRegisterScreen = false;
     _isStoryDetail = false;
+    _isStoryDetailDialog = false;
+    _currentStory = null;
+    _currentStoryId = null;
     notifyListeners();
   }
 
@@ -335,28 +372,14 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
     _currentStory = story;
     _currentStoryId = story.id;
 
-    // check if context is available
-    final context = navigatorKey?.currentContext;
-
-    if (context == null) {
-      // if no context, just update the navigation state
-      _isStoryDetail = true;
-      notifyListeners();
-      return;
-    }
-
-    // only change navigation state for mobile views
-    if (MediaQuery.of(context).size.width <= 600) {
-      // add detail screen on top, MainScreen remains in the stack
-      _isStoryDetail = true;
-      notifyListeners();
+    if (MediaQuery.of(navigatorKey!.currentContext!).size.width > 600) {
+      _isStoryDetailDialog = true;
+      _isStoryDetail = false;
     } else {
-      // for web dekstop, show dialog without changing navigation state
-      showDialog(
-        context: context,
-        barrierColor: Colors.black87,
-        builder: (context) => StoryDetailDialog(story: story),
-      );
+      _isStoryDetail = true;
+      _isStoryDetailDialog = false;
     }
+
+    notifyListeners();
   }
 }

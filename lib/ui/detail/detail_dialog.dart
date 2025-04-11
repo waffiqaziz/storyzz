@@ -7,8 +7,13 @@ import '../../core/data/networking/responses/stories_response.dart'
 
 class StoryDetailDialog extends StatelessWidget {
   final ListStory story;
+  final VoidCallback onClose;
 
-  const StoryDetailDialog({super.key, required this.story});
+  const StoryDetailDialog({
+    super.key,
+    required this.story,
+    required this.onClose,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +56,7 @@ class StoryDetailDialog extends StatelessWidget {
                   ),
                   IconButton(
                     icon: Icon(Icons.close),
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: onClose, // use callback
                   ),
                 ],
               ),

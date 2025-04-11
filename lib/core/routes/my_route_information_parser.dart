@@ -9,7 +9,7 @@ class MyRouteInformationParser extends RouteInformationParser<AppRoutePath> {
     final uri = Uri.parse(routeInformation.uri.toString());
 
     if (uri.pathSegments.isEmpty) {
-      return AppRoutePath.unknown();
+      return AppRoutePath.home();
     }
 
     if (uri.pathSegments.first == 'login') {
@@ -21,7 +21,7 @@ class MyRouteInformationParser extends RouteInformationParser<AppRoutePath> {
     }
 
     if (uri.pathSegments.first == 'home') {
-      return AppRoutePath.home(tabIndex: 0);
+      return AppRoutePath.home();
     }
 
     if (uri.pathSegments.first == 'upload') {
