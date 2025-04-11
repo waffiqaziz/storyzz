@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/utils/helper.dart';
 
 import '../../core/data/networking/responses/stories_response.dart'
     show ListStory;
@@ -13,8 +13,6 @@ class StoryDetailDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final dateFormat = DateFormat('MMMM d, yyyy · HH:mm');
-    final formattedDate = dateFormat.format(story.createdAt);
 
     // use MediaQuery to get screen width
     final screenWidth = MediaQuery.of(context).size.width;
@@ -139,7 +137,7 @@ class StoryDetailDialog extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      formattedDate,
+                                      formattedLocalTime(story.createdAt),
                                       style: TextStyle(
                                         color: Colors.grey[600],
                                         fontSize: 14,
