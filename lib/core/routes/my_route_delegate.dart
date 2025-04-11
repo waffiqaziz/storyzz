@@ -212,27 +212,36 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
             CustomPageTransition(
               transitionType: TransitionType.fade,
               key: ValueKey('StoryDetailScreen-${_currentStory!.id}'),
-              child: StoryDetailScreen(story: _currentStory!),
+              child: StoryDetailScreen(
+                story: _currentStory!,
+                onBack: () {
+                  _isStoryDetail = false;
+                  notifyListeners();
+                },
+              ),
             ),
       ],
+
       onDidRemovePage: (page) {
-        if (page.key == ValueKey('RegisterPage')) {
-          _isRegisterScreen = false;
-          _isLoginScreen = true;
-          notifyListeners();
-        } else if (page.key.toString().startsWith(
-          'ValueKey<StoryDetailScreen-',
-        )) {
-          _isStoryDetail = false;
-          _isMainScreen = true;
-          _currentStory = null;
-          _currentStoryId = null;
-          notifyListeners();
-        } else if (page.key.toString().contains('StoryDetailScreen')) {
-          _isStoryDetail = false;
-          _isMainScreen = true;
-          notifyListeners();
-        }
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (page.key == ValueKey('RegisterPage')) {
+            _isRegisterScreen = false;
+            _isLoginScreen = true;
+            notifyListeners();
+          } else if (page.key.toString().startsWith(
+            'ValueKey<StoryDetailScreen-',
+          )) {
+            _isStoryDetail = false;
+            _isMainScreen = true;
+            _currentStory = null;
+            _currentStoryId = null;
+            notifyListeners();
+          } else if (page.key.toString().contains('StoryDetailScreen')) {
+            _isStoryDetail = false;
+            _isMainScreen = true;
+            notifyListeners();
+          }
+        });
       },
     );
   }

@@ -7,8 +7,13 @@ import '../../core/data/networking/responses/stories_response.dart'
 
 class StoryDetailScreen extends StatelessWidget {
   final ListStory story;
+  final VoidCallback onBack;
 
-  const StoryDetailScreen({super.key, required this.story});
+  const StoryDetailScreen({
+    super.key,
+    required this.story,
+    required this.onBack,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +26,7 @@ class StoryDetailScreen extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
+        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: onBack),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -37,7 +37,7 @@ class StoryDetailScreen extends StatelessWidget {
               tag: 'story-image-${story.id}',
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  minHeight: 400,
+                  minHeight: 200,
                   minWidth: double.infinity,
                 ),
                 child: Image.network(
