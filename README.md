@@ -55,24 +55,24 @@ samples, guidance on mobile development, and a full API reference.
 
 <details>
 <summary>📱 Mobile Platform | 🌞 Light Mode</summary>
-<img src="./doc/screenshots/mobile-login.png" width=200 alt="Mobile Login Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/mobile-register.png" width=200 alt="Mobile Register Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/mobile-localization.png" width=200 alt="Mobile Localization Dialog Light Mode">&nbsp;
-<img src="./doc/screenshots/mobile-home.png" width=200 alt="Mobile Home Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/mobile-upload-story.png" width=200 alt="Mobile Upload Story Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/mobile-settings.png" width=200 alt="Mobile Settings Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/mobile-login.png" width=300 alt="Mobile Login Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/mobile-register.png" width=300 alt="Mobile Register Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/mobile-localization.png" width=300 alt="Mobile Localization Dialog Light Mode">&nbsp;
+<img src="./doc/screenshots/mobile-home.png" width=300 alt="Mobile Home Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/mobile-upload-story.png" width=300 alt="Mobile Upload Story Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/mobile-settings.png" width=300 alt="Mobile Settings Screen Light Mode">&nbsp;
 </details>
 
 <br>
 
 <details>
 <summary>📱 Mobile Platform | 🌙 Dark Mode</summary>
-<img src="./doc/screenshots/mobile-login-dark.png" width=200 alt="Mobile Login Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/mobile-register-dark.png" width=200 alt="Mobile Register Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/mobile-localization-dark.png" width=200 alt="Mobile Localization Dialog Dark Mode">&nbsp;
-<img src="./doc/screenshots/mobile-home-dark.png" width=200 alt="Mobile Home Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/mobile-upload-story-dark.png" width=200 alt="Mobile Upload Story Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/mobile-settings-dark.png" width=200 alt="Mobile Settings Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/mobile-login-dark.png" width=300 alt="Mobile Login Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/mobile-register-dark.png" width=300 alt="Mobile Register Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/mobile-localization-dark.png" width=300 alt="Mobile Localization Dialog Dark Mode">&nbsp;
+<img src="./doc/screenshots/mobile-home-dark.png" width=300 alt="Mobile Home Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/mobile-upload-story-dark.png" width=300 alt="Mobile Upload Story Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/mobile-settings-dark.png" width=300 alt="Mobile Settings Screen Dark Mode">&nbsp;
 </details>
 
 <br>
@@ -92,9 +92,9 @@ samples, guidance on mobile development, and a full API reference.
 <details>
 <summary>🌐 Desktop Web Platform | 🌙 Dark Mode</summary>
 <img src="./doc/screenshots/dekstop-login-dark.png" width=400 alt="Desktop Mobile Login Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/dekstop-register-dark.png" width=400 alt="Desktop Mobile Register Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/desktop-register-dark.png" width=400 alt="Desktop Mobile Register Screen Dark Mode">&nbsp;
 <img src="./doc/screenshots/desktop-localization-dark.png" width=400 alt="Desktop Mobile Localization Dialog Dark Mode">&nbsp;
-<img src="./doc/screenshots/dekstop-home-dark.png" width=400 alt="Desktop Mobile Home Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/dekstop-upload-story-dark.png" width=400 alt="Desktop Mobile Upload Story Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/desktop-home-dark.png" width=400 alt="Desktop Mobile Home Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/desktop-upload-story-dark.png" width=400 alt="Desktop Mobile Upload Story Screen Dark Mode">&nbsp;
 <img src="./doc/screenshots/desktop-settings-dark.png" width=400 alt="Desktop Mobile Settings Screen Dark Mode">&nbsp;
 </details>
