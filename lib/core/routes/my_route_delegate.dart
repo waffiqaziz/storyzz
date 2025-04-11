@@ -231,8 +231,6 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
         } else if (page.key.toString().contains('StoryDetailScreen')) {
           _isStoryDetail = false;
           _isMainScreen = true;
-          _currentStory = null;
-          _currentStoryId = null;
           notifyListeners();
         }
       },
