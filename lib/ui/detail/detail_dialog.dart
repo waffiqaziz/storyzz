@@ -38,7 +38,12 @@ class StoryDetailDialog extends StatelessWidget {
           children: [
             // header with close button
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.only(
+                left: 16,
+                right: 8,
+                top: 8,
+                bottom: 8,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -62,39 +67,45 @@ class StoryDetailDialog extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.network(
-                      story.photoUrl,
-                      fit: BoxFit.contain,
-                      width: double.infinity,
-                      height: 350,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Container(
-                          height: 350,
-                          color: Colors.grey[200],
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              value:
-                                  loadingProgress.expectedTotalBytes != null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                      : null,
-                            ),
-                          ),
-                        );
-                      },
-                      errorBuilder:
-                          (context, error, stackTrace) => Container(
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: 400,
+                        minWidth: double.infinity,
+                      ),
+                      child: Image.network(
+                        story.photoUrl,
+                        fit: BoxFit.contain,
+                        width: double.infinity,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Container(
                             height: 350,
-                            color: Colors.grey[300],
+                            color: Colors.grey[200],
                             child: Center(
-                              child: Icon(
-                                Icons.broken_image,
-                                size: 64,
-                                color: Colors.grey[400],
+                              child: CircularProgressIndicator(
+                                value:
+                                    loadingProgress.expectedTotalBytes != null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
                               ),
                             ),
-                          ),
+                          );
+                        },
+                        errorBuilder:
+                            (context, error, stackTrace) => Container(
+                              height: 350,
+                              color: Colors.grey[300],
+                              child: Center(
+                                child: Icon(
+                                  Icons.broken_image,
+                                  size: 64,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                            ),
+                      ),
                     ),
 
                     // content

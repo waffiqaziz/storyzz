@@ -37,8 +37,11 @@ class StoryDetailScreen extends StatelessWidget {
             // Hero image
             Hero(
               tag: 'story-image-${story.id}',
-              child: AspectRatio(
-                aspectRatio: 16 / 9,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: 400,
+                  minWidth: double.infinity,
+                ),
                 child: Image.network(
                   story.photoUrl,
                   fit: BoxFit.contain,
@@ -46,6 +49,10 @@ class StoryDetailScreen extends StatelessWidget {
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Container(
+                      constraints: BoxConstraints(
+                        // default height before image loads
+                        minHeight: 350,
+                      ),
                       color: Colors.grey[200],
                       child: Center(
                         child: CircularProgressIndicator(
