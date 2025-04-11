@@ -25,32 +25,32 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get direct_story_access_not_support =>
-      'Direct story access not supported. Redirected to home.';
+      'Akses langsung ke cerita tidak didukung. Dialihkan ke beranda.';
 
   @override
   String get welcome_back => 'Selamat Datang Kembali';
 
   @override
-  String get sign_in_to_continue => 'Masuk untuk melanjutkan';
+  String get sign_in_to_continue => 'Silakan masuk untuk melanjutkan';
 
   @override
   String get email => 'Email';
 
   @override
-  String get enter_email => 'Tolong masukkan email anda';
+  String get enter_email => 'Mohon masukkan alamat email Anda';
 
   @override
-  String get enter_valid_email => 'Tolong masukkan email yang valid';
+  String get enter_valid_email => 'Mohon masukkan alamat email yang valid';
 
   @override
   String get password => 'Kata Sandi';
 
   @override
-  String get enter_password => 'Tolong masukkan kata sandi anda';
+  String get enter_password => 'Mohon masukkan kata sandi Anda';
 
   @override
   String get password_minimum =>
-      'Kata sandi harus setidaknya memiliki panjang 8 karakter';
+      'Kata sandi harus terdiri dari minimal 8 karakter';
 
   @override
   String get forgot_password => 'Lupa Kata Sandi?';
@@ -62,7 +62,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get login_lower => 'Masuk';
 
   @override
-  String get dont_have_account => 'Belum punya akun?';
+  String get dont_have_account => 'Belum memiliki akun?';
 
   @override
   String get register_lower => 'Daftar';
@@ -71,13 +71,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get register_upper => 'DAFTAR';
 
   @override
-  String get register_success => 'Pembuatan akun berhasil';
+  String get register_success => 'Pendaftaran berhasil';
 
   @override
   String get register_failed => 'Pendaftaran gagal';
 
   @override
-  String get only_for_ui => 'Fitur ini hanya untuk tampilan';
+  String get only_for_ui => 'Fitur ini hanya untuk tampilan antarmuka';
 
   @override
   String get create_account => 'Buat Akun';
@@ -89,19 +89,19 @@ class AppLocalizationsId extends AppLocalizations {
   String get full_name => 'Nama Lengkap';
 
   @override
-  String get enter_full_name => 'Tolong masukkan nama anda';
+  String get enter_full_name => 'Mohon masukkan nama lengkap Anda';
 
   @override
   String get confirm_password => 'Konfirmasi Kata Sandi';
 
   @override
-  String get confirm_your_password => 'Tolong konfirmasi password anda';
+  String get confirm_your_password => 'Mohon konfirmasi kata sandi Anda';
 
   @override
-  String get password_is_not_same => 'Kata sandi tidak sama';
+  String get password_is_not_same => 'Kata sandi tidak sesuai';
 
   @override
-  String get already_have_account => 'Sudah punya akun?';
+  String get already_have_account => 'Sudah memiliki akun?';
 
   @override
   String get dark_theme => 'Tema Gelap';
@@ -110,7 +110,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get language => 'Bahasa';
 
   @override
-  String get view_source_code => 'Lihat Sumber Kode';
+  String get view_source_code => 'Lihat Kode Sumber';
 
   @override
   String get english => 'Inggris';
@@ -128,47 +128,47 @@ class AppLocalizationsId extends AppLocalizations {
   String get location_available => 'Lokasi tersedia';
 
   @override
-  String get latitude => 'Garis lintang';
+  String get latitude => 'Garis Lintang';
 
   @override
-  String get longitude => 'Garis bujur';
+  String get longitude => 'Garis Bujur';
 
   @override
-  String get map_view => 'Peta map';
+  String get map_view => 'Tampilan Peta';
 
   @override
-  String get show_more => 'Lihat lebih';
+  String get show_more => 'Lihat Selengkapnya';
 
   @override
   String get show_less => 'Sembunyikan';
 
   @override
-  String get no_user_data => 'Tidak ada data pengguna';
+  String get no_user_data => 'Data pengguna tidak tersedia';
 
   @override
-  String get error_loading_stories => 'Terjadi kesalahan saat memuat cerita: ';
+  String get error_loading_stories => 'Terjadi kesalahan saat memuat cerita:';
 
   @override
-  String get no_stories => 'Tidak ada cerita tersedia';
+  String get no_stories => 'Tidak ada cerita yang tersedia';
 
   @override
   String get pull_to_refresh =>
-      'Tarik ke bawah untuk menyegarkan atau ketuk + untuk menambahkan cerita baru';
+      'Tarik ke bawah untuk menyegarkan atau ketuk tombol + untuk menambahkan cerita baru';
 
   @override
   String get logout_success => 'Berhasil keluar';
 
   @override
-  String get retry => 'COBA LAGI';
+  String get retry => 'Coba Lagi';
 
   @override
-  String get logout => 'KELUAR';
+  String get logout => 'Keluar';
 
   @override
-  String get login_succes => 'Berhasil masuk!';
+  String get login_succes => 'Berhasil masuk';
 
   @override
-  String get login_failed => 'Gagal masuk. Silakan coba lagi.';
+  String get login_failed => 'Gagal masuk. Silakan coba kembali.';
 
   @override
   String get language_updated => 'Bahasa berhasil diperbarui';
@@ -177,22 +177,22 @@ class AppLocalizationsId extends AppLocalizations {
   String get just_now => 'Baru saja';
 
   @override
-  String get d_ago_singular => 'hari lalu';
+  String get d_ago_singular => 'hari yang lalu';
 
   @override
-  String get d_ago_plural => 'hari lalu';
+  String get d_ago_plural => 'hari yang lalu';
 
   @override
-  String get h_ago_singular => 'jam lalu';
+  String get h_ago_singular => 'jam yang lalu';
 
   @override
-  String get h_ago_plural => 'jam lalu';
+  String get h_ago_plural => 'jam yang lalu';
 
   @override
-  String get m_ago_singular => 'menit lalu';
+  String get m_ago_singular => 'menit yang lalu';
 
   @override
-  String get m_ago_plural => 'menit lalu';
+  String get m_ago_plural => 'menit yang lalu';
 
   @override
   String get camera => 'Kamera';
@@ -205,7 +205,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get image_too_large =>
-      'Ukuran gambar terlalu besar. Ukuran maksimum 1MB.';
+      'Ukuran gambar terlalu besar. Ukuran maksimum adalah 1MB.';
 
   @override
   String get error_taking_picture => 'Terjadi kesalahan saat mengambil gambar:';
@@ -223,26 +223,26 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get error_switching_camera =>
-      'Terjadi kesalahan saat berganti kamera:';
+      'Terjadi kesalahan saat mengganti kamera:';
 
   @override
-  String get camera_access_denied => 'Akses kamera ditolak:';
+  String get camera_access_denied => 'Akses ke kamera ditolak:';
 
   @override
   String get camera_used_by_other =>
-      'Kamera sedang digunakan oleh aplikasi atau tab lain. Harap tutup aplikasi kamera lain dan coba lagi.';
+      'Kamera sedang digunakan oleh aplikasi atau tab lain. Silakan tutup aplikasi kamera lainnya dan coba kembali.';
 
   @override
-  String get please_select_image => 'Tolong pilih gambar terlebih dahulu!';
+  String get please_select_image => 'Mohon pilih gambar terlebih dahulu';
 
   @override
-  String get please_write_caption => 'Maaf, keterangan tidak boleh kosong';
+  String get please_write_caption => 'Mohon isi keterangan terlebih dahulu';
 
   @override
-  String get story_upload_success => 'Unggah cerita berhasil!';
+  String get story_upload_success => 'Cerita berhasil diunggah';
 
   @override
-  String get request_camera_permission => 'Meminta akses kamera...';
+  String get request_camera_permission => 'Meminta izin akses kamera...';
 
   @override
   String get initializing_camera => 'Menyiapkan kamera...';
@@ -251,5 +251,5 @@ class AppLocalizationsId extends AppLocalizations {
   String get write_a_caption => 'Tulis keterangan...';
 
   @override
-  String get uploading_story => 'Mengunggah cerita...';
+  String get uploading_story => 'Sedang mengunggah cerita...';
 }

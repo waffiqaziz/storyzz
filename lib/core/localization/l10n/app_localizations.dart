@@ -131,7 +131,7 @@ abstract class AppLocalizations {
   /// No description provided for @direct_story_access_not_support.
   ///
   /// In id, this message translates to:
-  /// **'Direct story access not supported. Redirected to home.'**
+  /// **'Akses langsung ke cerita tidak didukung. Dialihkan ke beranda.'**
   String get direct_story_access_not_support;
 
   /// No description provided for @welcome_back.
@@ -143,7 +143,7 @@ abstract class AppLocalizations {
   /// No description provided for @sign_in_to_continue.
   ///
   /// In id, this message translates to:
-  /// **'Masuk untuk melanjutkan'**
+  /// **'Silakan masuk untuk melanjutkan'**
   String get sign_in_to_continue;
 
   /// No description provided for @email.
@@ -155,13 +155,13 @@ abstract class AppLocalizations {
   /// No description provided for @enter_email.
   ///
   /// In id, this message translates to:
-  /// **'Tolong masukkan email anda'**
+  /// **'Mohon masukkan alamat email Anda'**
   String get enter_email;
 
   /// No description provided for @enter_valid_email.
   ///
   /// In id, this message translates to:
-  /// **'Tolong masukkan email yang valid'**
+  /// **'Mohon masukkan alamat email yang valid'**
   String get enter_valid_email;
 
   /// No description provided for @password.
@@ -173,13 +173,13 @@ abstract class AppLocalizations {
   /// No description provided for @enter_password.
   ///
   /// In id, this message translates to:
-  /// **'Tolong masukkan kata sandi anda'**
+  /// **'Mohon masukkan kata sandi Anda'**
   String get enter_password;
 
   /// No description provided for @password_minimum.
   ///
   /// In id, this message translates to:
-  /// **'Kata sandi harus setidaknya memiliki panjang 8 karakter'**
+  /// **'Kata sandi harus terdiri dari minimal 8 karakter'**
   String get password_minimum;
 
   /// No description provided for @forgot_password.
@@ -203,7 +203,7 @@ abstract class AppLocalizations {
   /// No description provided for @dont_have_account.
   ///
   /// In id, this message translates to:
-  /// **'Belum punya akun?'**
+  /// **'Belum memiliki akun?'**
   String get dont_have_account;
 
   /// No description provided for @register_lower.
@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// No description provided for @register_success.
   ///
   /// In id, this message translates to:
-  /// **'Pembuatan akun berhasil'**
+  /// **'Pendaftaran berhasil'**
   String get register_success;
 
   /// No description provided for @register_failed.
@@ -233,7 +233,7 @@ abstract class AppLocalizations {
   /// No description provided for @only_for_ui.
   ///
   /// In id, this message translates to:
-  /// **'Fitur ini hanya untuk tampilan'**
+  /// **'Fitur ini hanya untuk tampilan antarmuka'**
   String get only_for_ui;
 
   /// No description provided for @create_account.
@@ -257,7 +257,7 @@ abstract class AppLocalizations {
   /// No description provided for @enter_full_name.
   ///
   /// In id, this message translates to:
-  /// **'Tolong masukkan nama anda'**
+  /// **'Mohon masukkan nama lengkap Anda'**
   String get enter_full_name;
 
   /// No description provided for @confirm_password.
@@ -269,19 +269,19 @@ abstract class AppLocalizations {
   /// No description provided for @confirm_your_password.
   ///
   /// In id, this message translates to:
-  /// **'Tolong konfirmasi password anda'**
+  /// **'Mohon konfirmasi kata sandi Anda'**
   String get confirm_your_password;
 
   /// No description provided for @password_is_not_same.
   ///
   /// In id, this message translates to:
-  /// **'Kata sandi tidak sama'**
+  /// **'Kata sandi tidak sesuai'**
   String get password_is_not_same;
 
   /// No description provided for @already_have_account.
   ///
   /// In id, this message translates to:
-  /// **'Sudah punya akun?'**
+  /// **'Sudah memiliki akun?'**
   String get already_have_account;
 
   /// No description provided for @dark_theme.
@@ -299,7 +299,7 @@ abstract class AppLocalizations {
   /// No description provided for @view_source_code.
   ///
   /// In id, this message translates to:
-  /// **'Lihat Sumber Kode'**
+  /// **'Lihat Kode Sumber'**
   String get view_source_code;
 
   /// No description provided for @english.
@@ -335,25 +335,25 @@ abstract class AppLocalizations {
   /// No description provided for @latitude.
   ///
   /// In id, this message translates to:
-  /// **'Garis lintang'**
+  /// **'Garis Lintang'**
   String get latitude;
 
   /// No description provided for @longitude.
   ///
   /// In id, this message translates to:
-  /// **'Garis bujur'**
+  /// **'Garis Bujur'**
   String get longitude;
 
   /// No description provided for @map_view.
   ///
   /// In id, this message translates to:
-  /// **'Peta map'**
+  /// **'Tampilan Peta'**
   String get map_view;
 
   /// No description provided for @show_more.
   ///
   /// In id, this message translates to:
-  /// **'Lihat lebih'**
+  /// **'Lihat Selengkapnya'**
   String get show_more;
 
   /// No description provided for @show_less.
@@ -365,25 +365,25 @@ abstract class AppLocalizations {
   /// No description provided for @no_user_data.
   ///
   /// In id, this message translates to:
-  /// **'Tidak ada data pengguna'**
+  /// **'Data pengguna tidak tersedia'**
   String get no_user_data;
 
   /// No description provided for @error_loading_stories.
   ///
   /// In id, this message translates to:
-  /// **'Terjadi kesalahan saat memuat cerita: '**
+  /// **'Terjadi kesalahan saat memuat cerita:'**
   String get error_loading_stories;
 
   /// No description provided for @no_stories.
   ///
   /// In id, this message translates to:
-  /// **'Tidak ada cerita tersedia'**
+  /// **'Tidak ada cerita yang tersedia'**
   String get no_stories;
 
   /// No description provided for @pull_to_refresh.
   ///
   /// In id, this message translates to:
-  /// **'Tarik ke bawah untuk menyegarkan atau ketuk + untuk menambahkan cerita baru'**
+  /// **'Tarik ke bawah untuk menyegarkan atau ketuk tombol + untuk menambahkan cerita baru'**
   String get pull_to_refresh;
 
   /// No description provided for @logout_success.
@@ -395,25 +395,25 @@ abstract class AppLocalizations {
   /// No description provided for @retry.
   ///
   /// In id, this message translates to:
-  /// **'COBA LAGI'**
+  /// **'Coba Lagi'**
   String get retry;
 
   /// No description provided for @logout.
   ///
   /// In id, this message translates to:
-  /// **'KELUAR'**
+  /// **'Keluar'**
   String get logout;
 
   /// No description provided for @login_succes.
   ///
   /// In id, this message translates to:
-  /// **'Berhasil masuk!'**
+  /// **'Berhasil masuk'**
   String get login_succes;
 
   /// No description provided for @login_failed.
   ///
   /// In id, this message translates to:
-  /// **'Gagal masuk. Silakan coba lagi.'**
+  /// **'Gagal masuk. Silakan coba kembali.'**
   String get login_failed;
 
   /// No description provided for @language_updated.
@@ -431,37 +431,37 @@ abstract class AppLocalizations {
   /// No description provided for @d_ago_singular.
   ///
   /// In id, this message translates to:
-  /// **'hari lalu'**
+  /// **'hari yang lalu'**
   String get d_ago_singular;
 
   /// No description provided for @d_ago_plural.
   ///
   /// In id, this message translates to:
-  /// **'hari lalu'**
+  /// **'hari yang lalu'**
   String get d_ago_plural;
 
   /// No description provided for @h_ago_singular.
   ///
   /// In id, this message translates to:
-  /// **'jam lalu'**
+  /// **'jam yang lalu'**
   String get h_ago_singular;
 
   /// No description provided for @h_ago_plural.
   ///
   /// In id, this message translates to:
-  /// **'jam lalu'**
+  /// **'jam yang lalu'**
   String get h_ago_plural;
 
   /// No description provided for @m_ago_singular.
   ///
   /// In id, this message translates to:
-  /// **'menit lalu'**
+  /// **'menit yang lalu'**
   String get m_ago_singular;
 
   /// No description provided for @m_ago_plural.
   ///
   /// In id, this message translates to:
-  /// **'menit lalu'**
+  /// **'menit yang lalu'**
   String get m_ago_plural;
 
   /// No description provided for @camera.
@@ -485,7 +485,7 @@ abstract class AppLocalizations {
   /// No description provided for @image_too_large.
   ///
   /// In id, this message translates to:
-  /// **'Ukuran gambar terlalu besar. Ukuran maksimum 1MB.'**
+  /// **'Ukuran gambar terlalu besar. Ukuran maksimum adalah 1MB.'**
   String get image_too_large;
 
   /// No description provided for @error_taking_picture.
@@ -515,43 +515,43 @@ abstract class AppLocalizations {
   /// No description provided for @error_switching_camera.
   ///
   /// In id, this message translates to:
-  /// **'Terjadi kesalahan saat berganti kamera:'**
+  /// **'Terjadi kesalahan saat mengganti kamera:'**
   String get error_switching_camera;
 
   /// No description provided for @camera_access_denied.
   ///
   /// In id, this message translates to:
-  /// **'Akses kamera ditolak:'**
+  /// **'Akses ke kamera ditolak:'**
   String get camera_access_denied;
 
   /// No description provided for @camera_used_by_other.
   ///
   /// In id, this message translates to:
-  /// **'Kamera sedang digunakan oleh aplikasi atau tab lain. Harap tutup aplikasi kamera lain dan coba lagi.'**
+  /// **'Kamera sedang digunakan oleh aplikasi atau tab lain. Silakan tutup aplikasi kamera lainnya dan coba kembali.'**
   String get camera_used_by_other;
 
   /// No description provided for @please_select_image.
   ///
   /// In id, this message translates to:
-  /// **'Tolong pilih gambar terlebih dahulu!'**
+  /// **'Mohon pilih gambar terlebih dahulu'**
   String get please_select_image;
 
   /// No description provided for @please_write_caption.
   ///
   /// In id, this message translates to:
-  /// **'Maaf, keterangan tidak boleh kosong'**
+  /// **'Mohon isi keterangan terlebih dahulu'**
   String get please_write_caption;
 
   /// No description provided for @story_upload_success.
   ///
   /// In id, this message translates to:
-  /// **'Unggah cerita berhasil!'**
+  /// **'Cerita berhasil diunggah'**
   String get story_upload_success;
 
   /// No description provided for @request_camera_permission.
   ///
   /// In id, this message translates to:
-  /// **'Meminta akses kamera...'**
+  /// **'Meminta izin akses kamera...'**
   String get request_camera_permission;
 
   /// No description provided for @initializing_camera.
@@ -569,7 +569,7 @@ abstract class AppLocalizations {
   /// No description provided for @uploading_story.
   ///
   /// In id, this message translates to:
-  /// **'Mengunggah cerita...'**
+  /// **'Sedang mengunggah cerita...'**
   String get uploading_story;
 }
 
