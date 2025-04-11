@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/routes/app_route_path.dart';
 import 'package:storyzz/ui/detail/detail_dialog.dart';
@@ -204,7 +205,16 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
           if (MediaQuery.of(context).size.width <= 600)
             MaterialPage(
               key: ValueKey('StoryDetailScreen-${_currentStory!.id}'),
-              child: StoryDetailScreen(story: _currentStory!),
+              child: StoryDetailScreen(
+                story: _currentStory!,
+                onBack: () {
+                  _isStoryDetail = false;
+                  _isMainScreen = true;
+                  _currentStory = null;
+                  _currentStoryId = null;
+                  notifyListeners();
+                },
+              ),
             ),
       ],
       onDidRemovePage: (page) {
@@ -252,7 +262,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  'Direct story access not supported. Redirected to home.',
+                  AppLocalizations.of(context)!.direct_story_access_not_support,
                 ),
                 duration: Duration(seconds: 3),
               ),
@@ -330,7 +340,6 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
       _isMainScreen = false;
       notifyListeners();
     } else {
-      
       // for web dekstop, show dialog without changing navigation state
       showDialog(
         context: context,

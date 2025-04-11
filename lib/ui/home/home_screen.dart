@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/provider/story_provider.dart';
 import 'package:storyzz/ui/home/story_card.dart';
@@ -66,6 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Consumer2<AuthProvider, StoryProvider>(
         builder: (context, authProvider, storyProvider, child) {
@@ -90,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: widget.onLogout,
-                    child: Text('LOGOUT'),
+                    child: Text(localizations.logout),
                   ),
                 ],
               ),
@@ -99,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
           // user not found
           if (authProvider.user == null) {
-            return Center(child: Text('User data not available'));
+            return Center(child: Text(localizations.no_user_data));
           }
 
           // error story state
@@ -115,11 +118,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'Error loading stories: ${storyProvider.errorMessage}',
+                    '${localizations.error_loading_stories} ${storyProvider.errorMessage}',
                     style: TextStyle(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 16),
+
+                  // retry button
                   ElevatedButton(
                     onPressed: () {
                       if (authProvider.user != null) {
@@ -128,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Text('RETRY'),
+                      child: Text(localizations.retry),
                     ),
                   ),
                 ],
@@ -217,9 +222,9 @@ class _HomeScreenState extends State<HomeScreen> {
     await authProvider.logout(); // handle via router delegate
     widget.onLogout();
     if (mounted) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Logout success")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.logout_success)),
+      );
     }
   }
 
@@ -233,13 +238,16 @@ class _HomeScreenState extends State<HomeScreen> {
             Icon(Icons.auto_stories, size: 80, color: Colors.grey),
             SizedBox(height: 16),
             Text(
-              'No stories available',
+              AppLocalizations.of(context)!.no_stories,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            Text(
-              'Pull down to refresh or tap + to add a new story',
-              style: TextStyle(color: Colors.grey[600]),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                AppLocalizations.of(context)!.pull_to_refresh,
+                style: TextStyle(color: Colors.grey[600]),
+              ),
             ),
           ],
         ),

@@ -12,23 +12,33 @@ class SettingsProvider extends ChangeNotifier {
   Setting? _setting;
   Setting? get setting => _setting;
 
+  Locale _locale = const Locale('en');
+  Locale get locale => _locale;
+
   SettingsProvider(this._settingRepository) {
     _initializeSettings();
   }
 
   void _initializeSettings() {
     try {
-      final savedSetting = _settingRepository.getSettingValue();
-
+      // Get theme setting
       final isDarkSystem =
           WidgetsBinding.instance.platformDispatcher.platformBrightness ==
           Brightness.dark;
-      _setting = Setting(
-        isDark:
-            _settingRepository.isDarkModeSet()
-                ? savedSetting.isDark
-                : isDarkSystem,
-      );
+
+      final bool savedIsDark =
+          _settingRepository.isDarkModeSet()
+              ? _settingRepository.getSettingValue().isDark
+              : isDarkSystem;
+
+      // Get language setting
+      final String savedLanguage =
+          _settingRepository.getString(SettingRepository.languageKey) ?? 'en';
+      _locale = Locale(savedLanguage);
+
+      // Create combined setting
+      _setting = Setting(isDark: savedIsDark, locale: savedLanguage);
+
       _message = "Settings initialized successfully";
     } catch (e) {
       _message = "Failed to initialize settings";
@@ -40,6 +50,7 @@ class SettingsProvider extends ChangeNotifier {
     try {
       await _settingRepository.saveSettingValue(value);
       _setting = value;
+      _locale = Locale(value.locale);
       _message = "Your data is saved";
     } catch (e) {
       _message = "Failed to save your data";
@@ -50,10 +61,35 @@ class SettingsProvider extends ChangeNotifier {
   Future<void> setTheme(bool isDark) async {
     try {
       await _settingRepository.setTheme(isDark);
-      _setting = Setting(isDark: isDark);
+      if (_setting != null) {
+        _setting = _setting!.copyWith(isDark: isDark);
+      } else {
+        _setting = Setting(isDark: isDark, locale: _locale.languageCode);
+      }
       _message = "Theme successfully updated.";
     } catch (e) {
       _message = "Failed to update theme. Please try again.";
+    }
+    notifyListeners();
+  }
+
+  Future<void> setLocale(String languageCode) async {
+    try {
+      await _settingRepository.setLocale(languageCode);
+      _locale = Locale(languageCode);
+      if (_setting != null) {
+        _setting = _setting!.copyWith(locale: languageCode);
+      } else {
+        _setting = Setting(
+          isDark:
+              WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+              Brightness.dark,
+          locale: languageCode,
+        );
+      }
+      _message = "Language successfully updated";
+    } catch (e) {
+      _message = "Failed to update language. Please try again.";
     }
     notifyListeners();
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 
 import '../../core/data/networking/responses/stories_response.dart'
     show ListStory;
@@ -11,6 +12,7 @@ class StoryDetailDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final dateFormat = DateFormat('MMMM d, yyyy · HH:mm');
     final formattedDate = dateFormat.format(story.createdAt);
 
@@ -41,7 +43,7 @@ class StoryDetailDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Story Details',
+                    localizations.story_details,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   IconButton(
@@ -160,7 +162,7 @@ class StoryDetailDialog extends StatelessWidget {
                                     Icon(Icons.location_on, color: Colors.red),
                                     SizedBox(width: 8),
                                     Text(
-                                      'Location',
+                                      localizations.location,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
@@ -170,7 +172,7 @@ class StoryDetailDialog extends StatelessWidget {
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  'Latitude: ${story.lat?.toStringAsFixed(6)}, Longitude: ${story.lon?.toStringAsFixed(6)}',
+                                  '${localizations.latitude}: ${story.lat?.toStringAsFixed(6)}, ${localizations.longitude}: ${story.lon?.toStringAsFixed(6)}',
                                   style: TextStyle(fontSize: 14),
                                 ),
                                 SizedBox(height: 16),
@@ -183,7 +185,10 @@ class StoryDetailDialog extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Center(
-                                    child: Text('Map view would appear here'),
+                                    child: Text(
+                                      localizations.map_view,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
                                   ),
                                 ),
                               ],

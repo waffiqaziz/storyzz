@@ -66,7 +66,6 @@ class MyRouteInformationParser extends RouteInformationParser<AppRoutePath> {
       if (tabIndex == 2) {
         return RouteInformation(uri: Uri.parse('/settings'));
       }
-      return RouteInformation(uri: Uri.parse('/'));
     }
     return RouteInformation(uri: Uri.parse('/'));
   }

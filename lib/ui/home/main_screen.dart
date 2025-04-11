@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:storyzz/ui/home/home_screen.dart';
 import 'package:storyzz/ui/home/settings_screen.dart';
 import 'package:storyzz/ui/home/upload_story_screen.dart';
+import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 
 class MainScreen extends StatelessWidget {
   final VoidCallback onLogout;
@@ -42,18 +43,18 @@ class MainScreen extends StatelessWidget {
                     selectedIndex: currentIndex,
                     onDestinationSelected: onTabChanged,
                     labelType: NavigationRailLabelType.all,
-                    destinations: const [
+                    destinations: [
                       NavigationRailDestination(
                         icon: Icon(Icons.home_filled),
-                        label: Text("Home"),
+                        label: Text(AppLocalizations.of(context)!.home),
                       ),
                       NavigationRailDestination(
                         icon: Icon(Icons.add_box_outlined),
-                        label: Text("Upload"),
+                        label: Text(AppLocalizations.of(context)!.upload),
                       ),
                       NavigationRailDestination(
                         icon: Icon(Icons.settings),
-                        label: Text("Settings"),
+                        label: Text(AppLocalizations.of(context)!.settings),
                       ),
                     ],
                   ),
@@ -68,21 +69,21 @@ class MainScreen extends StatelessWidget {
               ? NavigationBar(
                 selectedIndex: currentIndex,
                 onDestinationSelected: onTabChanged,
-                destinations: const [
+                destinations: [
                   NavigationDestination(
                     icon: Icon(Icons.home_filled),
-                    label: "Home",
-                    tooltip: "Home",
+                    label: AppLocalizations.of(context)!.home,
+                    tooltip: AppLocalizations.of(context)!.home,
                   ),
                   NavigationDestination(
                     icon: Icon(Icons.add_box_outlined),
-                    label: "Upload",
-                    tooltip: "Upload Story",
+                    label: AppLocalizations.of(context)!.upload,
+                    tooltip: AppLocalizations.of(context)!.upload,
                   ),
                   NavigationDestination(
                     icon: Icon(Icons.settings),
-                    label: "Settings",
-                    tooltip: "Settings",
+                    label: AppLocalizations.of(context)!.settings,
+                    tooltip: AppLocalizations.of(context)!.settings,
                   ),
                 ],
               )

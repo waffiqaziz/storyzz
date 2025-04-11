@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/model/user.dart';
 import 'package:storyzz/core/designsystem/theme.dart';
+import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
+import 'package:storyzz/core/provider/settings_provider.dart';
+import 'package:storyzz/ui/widgets/language_selector.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback onLogin;
@@ -50,7 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               margin: EdgeInsets.only(bottom: 16, left: 16, right: 16),
-              content: Text(result.message ?? "Login success"),
+              content: Text(
+                result.message ?? AppLocalizations.of(context)!.login_succes,
+              ),
             ),
           );
         }
@@ -59,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                result.message ?? "Login failed. Please try again.",
+                result.message ?? AppLocalizations.of(context)!.login_failed,
                 style: TextStyle(color: Colors.black),
               ),
               backgroundColor: Theme.of(context).colorScheme.error,
@@ -72,9 +77,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Consumer<AuthProvider>(
       builder: (context, authProvider, child) {
         return Scaffold(
+          appBar: AppBar(
+            actions: [
+              Consumer<SettingsProvider>(
+                builder:
+                    (context, provider, _) => Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: LanguageSelector(
+                        currentLanguageCode: provider.locale.languageCode,
+                        onChanged: (code) => provider.setLocale(code),
+                        isCompact: true,
+                      ),
+                    ),
+              ),
+            ],
+          ),
           body: Center(
             child: SingleChildScrollView(
               child: Padding(
@@ -91,13 +113,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         Image.asset('assets/icon/icon.png', height: 80),
                         const SizedBox(height: 16),
                         Text(
-                          'Welcome Back',
+                          localizations.welcome_back,
                           style: Theme.of(context).textTheme.headlineMedium,
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Sign in to continue',
+                          localizations.sign_in_to_continue,
                           style: Theme.of(context).textTheme.bodyLarge
                               ?.copyWith(color: Colors.grey.shade600),
                           textAlign: TextAlign.center,
@@ -109,18 +131,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           enabled: !authProvider.isLoadingLogin,
                           controller: _emailController,
                           decoration: customInputDecoration(
-                            label: 'Email',
+                            label: localizations.email,
                             prefixIcon: Icons.email_outlined,
                           ),
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
+                              return localizations.enter_email;
                             }
                             if (!RegExp(
                               r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                             ).hasMatch(value)) {
-                              return 'Please enter a valid email';
+                              return localizations.enter_valid_email;
                             }
                             return null;
                           },
@@ -132,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           enabled: !authProvider.isLoadingLogin,
                           controller: _passwordController,
                           decoration: customInputDecoration(
-                            label: 'Password',
+                            label: localizations.password,
                             prefixIcon: Icons.lock_outline,
                             suffixIcon: IconButton(
                               icon: Icon(
@@ -150,10 +172,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           obscureText: _obscurePassword,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
+                              return localizations.enter_password;
                             }
                             if (value.length < 6) {
-                              return 'Password must be at least 6 characters long';
+                              return localizations.password_minimum;
                             }
                             return null;
                           },
@@ -173,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ).showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            "This feature only for user interface (UI).",
+                                            localizations.only_for_ui,
                                           ),
                                         ),
                                       );
@@ -183,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               minimumSize: Size(50, 30),
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            child: Text('Forgot Password?'),
+                            child: Text(localizations.forgot_password),
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -204,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                     ),
                                   )
-                                  : Text('LOGIN'),
+                                  : Text(localizations.login_upper),
                         ),
                         const SizedBox(height: 24),
 
@@ -213,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Don\'t have an account? ',
+                              localizations.dont_have_account,
                               style: TextStyle(color: Colors.grey.shade600),
                             ),
                             TextButton(
@@ -226,7 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 minimumSize: Size(50, 30),
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
-                              child: Text('Register'),
+                              child: Text(localizations.register_lower),
                             ),
                           ],
                         ),
