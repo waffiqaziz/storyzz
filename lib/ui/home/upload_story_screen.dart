@@ -32,13 +32,14 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Safe to read context here
     _uploadStoryProvider = context.read<UploadStoryProvider>();
   }
 
   @override
   void dispose() {
     _cleanupCamera();
+    _uploadStoryProvider = null;
+
     super.dispose();
   }
 
@@ -46,9 +47,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     _cameraController?.dispose();
     _cameraController = null;
 
-    // Use cached provider, avoid using context
-    _uploadStoryProvider?.setCameraInitialized(false);
-    _uploadStoryProvider?.setShowCamera(false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _uploadStoryProvider?.setCameraInitialized(false);
+      _uploadStoryProvider?.setShowCamera(false);
+    });
   }
 
   bool _isMobileChrome() {
