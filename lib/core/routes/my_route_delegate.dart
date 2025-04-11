@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/routes/app_route_path.dart';
+import 'package:storyzz/core/utils/custom_page_transition.dart';
 import 'package:storyzz/ui/detail/detail_dialog.dart';
 import 'package:storyzz/ui/detail/detail_screen.dart';
 
@@ -14,6 +15,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRoutePath> {
   final GlobalKey<NavigatorState> _navigatorKey;
   final AuthProvider authProvider;
+  final _mainScreenKey = GlobalKey();
 
   bool _isLoggedIn = false;
   bool _isLoginScreen = true;
@@ -183,10 +185,12 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
               },
             ),
           ),
-        if (_isMainScreen)
+        if (_isMainScreen ||
+            _isStoryDetail) // keep MainScreen in the stack even when showing detail
           MaterialPage(
             key: ValueKey('MainScreen'),
             child: MainScreen(
+              key: _mainScreenKey,
               currentIndex: _currentTabIndex,
               onTabChanged: (index) {
                 _currentTabIndex = index;
@@ -201,20 +205,14 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
               },
             ),
           ),
+
+        // only add detail screen as an overlay
         if (_isStoryDetail && _currentStory != null)
           if (MediaQuery.of(context).size.width <= 600)
-            MaterialPage(
+            CustomPageTransition(
+              transitionType: TransitionType.fade,
               key: ValueKey('StoryDetailScreen-${_currentStory!.id}'),
-              child: StoryDetailScreen(
-                story: _currentStory!,
-                onBack: () {
-                  _isStoryDetail = false;
-                  _isMainScreen = true;
-                  _currentStory = null;
-                  _currentStoryId = null;
-                  notifyListeners();
-                },
-              ),
+              child: StoryDetailScreen(story: _currentStory!),
             ),
       ],
       onDidRemovePage: (page) {
@@ -326,18 +324,12 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
 
     // check if context is available
     final context = navigatorKey?.currentContext;
-    if (context == null) {
-      // if no context, just update the navigation state
-      _isStoryDetail = true;
-      _isMainScreen = false;
-      notifyListeners();
-      return;
-    }
+    if (context == null) return;
 
     // only change navigation state for mobile views
     if (MediaQuery.of(context).size.width <= 600) {
+      // add detail screen on top, MainScreen remains in the stack
       _isStoryDetail = true;
-      _isMainScreen = false;
       notifyListeners();
     } else {
       // for web dekstop, show dialog without changing navigation state

@@ -7,13 +7,8 @@ import '../../core/data/networking/responses/stories_response.dart'
 
 class StoryDetailScreen extends StatelessWidget {
   final ListStory story;
-  final VoidCallback onBack;
 
-  const StoryDetailScreen({
-    super.key,
-    required this.story,
-    required this.onBack,
-  });
+  const StoryDetailScreen({super.key, required this.story});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +23,12 @@ class StoryDetailScreen extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         elevation: 0,
-        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: onBack),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -41,7 +41,7 @@ class StoryDetailScreen extends StatelessWidget {
                 aspectRatio: 16 / 9,
                 child: Image.network(
                   story.photoUrl,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                   width: double.infinity,
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
