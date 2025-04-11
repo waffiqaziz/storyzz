@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/routes/app_route_path.dart';
 import 'package:storyzz/ui/detail/detail_dialog.dart';
@@ -26,7 +27,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
   int _currentTabIndex = 0;
 
   MyRouteDelegate(this.authProvider)
-      : _navigatorKey = GlobalKey<NavigatorState>() {
+    : _navigatorKey = GlobalKey<NavigatorState>() {
     _init();
   }
 
@@ -222,8 +223,8 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
           _isLoginScreen = true;
           notifyListeners();
         } else if (page.key.toString().startsWith(
-              'ValueKey<StoryDetailScreen-',
-            )) {
+          'ValueKey<StoryDetailScreen-',
+        )) {
           _isStoryDetail = false;
           _isMainScreen = true;
           _currentStory = null;
@@ -261,7 +262,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  'Direct story access not supported. Redirected to home.',
+                  AppLocalizations.of(context)!.direct_story_access_not_support,
                 ),
                 duration: Duration(seconds: 3),
               ),

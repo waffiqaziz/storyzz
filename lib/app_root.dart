@@ -27,8 +27,8 @@ class AppRoot extends StatelessWidget {
         Provider(create: (_) => MyRouteInformationParser()),
         Provider(create: (_) => ApiServices(httpClient: http.Client())),
         Provider(
-          create: (context) =>
-              AuthRepository(prefs, context.read<ApiServices>()),
+          create:
+              (context) => AuthRepository(prefs, context.read<ApiServices>()),
         ),
         Provider(
           create: (context) => StoryRepository(context.read<ApiServices>()),
@@ -37,8 +37,8 @@ class AppRoot extends StatelessWidget {
           create: (context) => AuthProvider(context.read<AuthRepository>()),
         ),
         ChangeNotifierProvider(
-          create: (context) =>
-              UploadStoryProvider(context.read<StoryRepository>()),
+          create:
+              (context) => UploadStoryProvider(context.read<StoryRepository>()),
         ),
         ChangeNotifierProvider(
           create: (context) => StoryProvider(context.read<StoryRepository>()),
@@ -47,8 +47,8 @@ class AppRoot extends StatelessWidget {
           create: (context) => MyRouteDelegate(context.read<AuthProvider>()),
         ),
         ChangeNotifierProvider(
-          create: (context) =>
-              SettingsProvider(context.read<SettingRepository>()),
+          create:
+              (context) => SettingsProvider(context.read<SettingRepository>()),
         ),
       ],
       child: MyApp(prefs: prefs),

@@ -28,8 +28,9 @@ class SettingRepository {
 
   Setting getSettingValue() {
     return Setting(
-        isDark: _preferences.getBool(themeKey) ?? true,
-        locale: _preferences.getString(languageKey) ?? 'en');
+      isDark: _preferences.getBool(themeKey) ?? true,
+      locale: _preferences.getString(languageKey) ?? 'en',
+    );
   }
 
   bool isDarkModeSet() {

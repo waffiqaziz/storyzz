@@ -21,6 +21,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get upload_story => 'Unggah Cerita';
 
   @override
+  String get cancel => 'Batal';
+
+  @override
+  String get direct_story_access_not_support =>
+      'Direct story access not supported. Redirected to home.';
+
+  @override
   String get welcome_back => 'Selamat Datang Kembali';
 
   @override
@@ -30,19 +37,47 @@ class AppLocalizationsId extends AppLocalizations {
   String get email => 'Email';
 
   @override
+  String get enter_email => 'Tolong masukkan email anda';
+
+  @override
+  String get enter_valid_email => 'Tolong masukkan email yang valid';
+
+  @override
   String get password => 'Kata Sandi';
+
+  @override
+  String get enter_password => 'Tolong masukkan kata sandi anda';
+
+  @override
+  String get password_minimum =>
+      'Kata sandi harus setidaknya memiliki panjang 8 karakter';
 
   @override
   String get forgot_password => 'Lupa Kata Sandi?';
 
   @override
-  String get login => 'MASUK';
+  String get login_upper => 'MASUK';
+
+  @override
+  String get login_lower => 'Masuk';
 
   @override
   String get dont_have_account => 'Belum punya akun?';
 
   @override
-  String get register => 'Daftar';
+  String get register_lower => 'Daftar';
+
+  @override
+  String get register_upper => 'DAFTAR';
+
+  @override
+  String get register_success => 'Pembuatan akun berhasil';
+
+  @override
+  String get register_failed => 'Pendaftaran gagal';
+
+  @override
+  String get only_for_ui => 'Fitur ini hanya untuk tampilan';
 
   @override
   String get create_account => 'Buat Akun';
@@ -54,7 +89,16 @@ class AppLocalizationsId extends AppLocalizations {
   String get full_name => 'Nama Lengkap';
 
   @override
+  String get enter_full_name => 'Tolong masukkan nama anda';
+
+  @override
   String get confirm_password => 'Konfirmasi Kata Sandi';
+
+  @override
+  String get confirm_your_password => 'Tolong konfirmasi password anda';
+
+  @override
+  String get password_is_not_same => 'Kata sandi tidak sama';
 
   @override
   String get already_have_account => 'Sudah punya akun?';
@@ -121,10 +165,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get logout => 'KELUAR';
 
   @override
-  String get login_failed => 'Gagal masuk. Silakan coba lagi.';
+  String get login_succes => 'Berhasil masuk!';
 
   @override
-  String get register_failed => 'Pendaftaran gagal';
+  String get login_failed => 'Gagal masuk. Silakan coba lagi.';
 
   @override
   String get language_updated => 'Bahasa berhasil diperbarui';

@@ -3,20 +3,37 @@
   "upload": "Unggah",
   "settings": "Pengaturan",
   "upload_story": "Unggah Cerita",
+
+  "cancel": "Batal",
+
+  "direct_story_access_not_support": "Direct story access not supported. Redirected to home.",
   
   "welcome_back": "Selamat Datang Kembali",
   "sign_in_to_continue": "Masuk untuk melanjutkan",
   "email": "Email",
+  "enter_email": "Tolong masukkan email anda",
+  "enter_valid_email": "Tolong masukkan email yang valid",
   "password": "Kata Sandi",
+  "enter_password": "Tolong masukkan kata sandi anda",
+  "password_minimum": "Kata sandi harus setidaknya memiliki panjang 8 karakter",
   "forgot_password": "Lupa Kata Sandi?",
-  "login": "MASUK",
+  "login_upper": "MASUK",
+  "login_lower": "Masuk",
   "dont_have_account": "Belum punya akun?",
-  "register": "Daftar",
+  "register_lower": "Daftar",
+  "register_upper": "DAFTAR",
+  "register_success": "Pembuatan akun berhasil",
+  "register_failed": "Gagal membuat akun",
+
+  "only_for_ui": "Fitur ini hanya untuk tampilan",
   
   "create_account": "Buat Akun",
   "sign_up_to_get_started": "Daftar untuk memulai",
   "full_name": "Nama Lengkap",
+  "enter_full_name": "Tolong masukkan nama anda",
   "confirm_password": "Konfirmasi Kata Sandi",
+  "confirm_your_password": "Tolong konfirmasi password anda",
+  "password_is_not_same": "Kata sandi tidak sama",
   "already_have_account": "Sudah punya akun?",
   
   "dark_theme": "Tema Gelap",
@@ -42,7 +59,8 @@
   "logout_success": "Berhasil keluar",
   "retry": "COBA LAGI",
   "logout": "KELUAR",
-  
+
+  "login_succes": "Berhasil masuk!",
   "login_failed": "Gagal masuk. Silakan coba lagi.",
   "register_failed": "Pendaftaran gagal",
   "language_updated": "Bahasa berhasil diperbarui",

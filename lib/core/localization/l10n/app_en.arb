@@ -3,20 +3,37 @@
   "upload": "Upload",
   "settings": "Settings",
   "upload_story": "Upload Story",
-  
+
+  "cancel": "Cancel",
+
+  "direct_story_access_not_support": "Akses cerita langsung tidak didukung. Diarahkan ke beranda.",
+
   "welcome_back": "Welcome Back",
   "sign_in_to_continue": "Sign in to continue",
   "email": "Email",
+  "enter_email": "Please enter your email",
+  "enter_valid_email": "Please enter a valid email",
   "password": "Password",
+  "enter_password": "Please enter your password",
+  "password_minimum": "Password must be at least 8 characters long",
   "forgot_password": "Forgot Password?",
-  "login": "LOGIN",
+  "login_upper": "LOGIN",
+  "login_lower": "Login",
   "dont_have_account": "Don\"t have an account?",
-  "register": "Register",
+  "register_lower": "Register",
+  "register_uppper": "REGISTER",
+  "register_success": "Register success",
+  "register_failed": "Register gailed",
+
+  "only_for_ui": "This feature only for user interface (UI).",
   
   "create_account": "Create Account",
   "sign_up_to_get_started": "Sign up to get started",
   "full_name": "Full Name",
+  "enter_full_name": "Please enter your name",
   "confirm_password": "Confirm Password",
+  "confirm_your_password": "Please confirm your password",
+  "password_is_not_same": "Passwords do not match",
   "already_have_account": "Already have an account?",
   
   "dark_theme": "Dark Theme",
@@ -43,8 +60,8 @@
   "retry": "RETRY",
   "logout": "LOGOUT",
   
+  "login_succes": "Login success!",
   "login_failed": "Login failed. Please try again.",
-  "register_failed": "Register failed",
   "language_updated": "Language successfully updated",
 
   "just_now": "Just now",

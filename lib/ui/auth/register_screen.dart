@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/model/user.dart';
 import 'package:storyzz/core/designsystem/theme.dart';
+import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
+import 'package:storyzz/core/provider/settings_provider.dart';
+import 'package:storyzz/ui/widgets/language_selector.dart';
 
 class RegisterScreen extends StatefulWidget {
   final VoidCallback onRegister;
@@ -50,14 +53,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
         widget.onRegister();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(result.message ?? "Register success")),
+            SnackBar(
+              content: Text(
+                result.message ??
+                    AppLocalizations.of(context)!.register_success,
+              ),
+            ),
           );
         }
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(result.message ?? "Register failed"),
+              content: Text(
+                result.message ?? AppLocalizations.of(context)!.register_failed,
+              ),
               backgroundColor: Theme.of(context).colorScheme.error,
             ),
           );
@@ -68,7 +78,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          Consumer<SettingsProvider>(
+            builder:
+                (context, provider, _) => Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: LanguageSelector(
+                    currentLanguageCode: provider.locale.languageCode,
+                    onChanged: (code) => provider.setLocale(code),
+                    isCompact: true,
+                  ),
+                ),
+          ),
+        ],
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -85,16 +112,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Image.asset('assets/icon/icon.png', height: 80),
                     const SizedBox(height: 16),
                     Text(
-                      'Create Account',
+                      localizations.create_account,
                       style: Theme.of(context).textTheme.headlineMedium,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Sign up to get started',
+                      localizations.sign_up_to_get_started,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: Colors.grey.shade600,
-                          ),
+                        color: Colors.grey.shade600,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 32),
@@ -103,12 +130,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       controller: _nameController,
                       decoration: customInputDecoration(
-                        label: 'Full Name',
+                        label: localizations.full_name,
                         prefixIcon: Icons.person_outline,
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your name';
+                          return localizations.enter_full_name;
                         }
                         return null;
                       },
@@ -119,18 +146,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       controller: _emailController,
                       decoration: customInputDecoration(
-                        label: 'Email',
+                        label: localizations.email,
                         prefixIcon: Icons.email_outlined,
                       ),
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
+                          return localizations.enter_email;
                         }
                         if (!RegExp(
                           r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                         ).hasMatch(value)) {
-                          return 'Please enter a valid email';
+                          return localizations.enter_valid_email;
                         }
                         return null;
                       },
@@ -141,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       controller: _passwordController,
                       decoration: customInputDecoration(
-                        label: 'Password',
+                        label: localizations.register_lower,
                         prefixIcon: Icons.lock_outline,
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -159,10 +186,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       obscureText: _obscurePassword,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter a password';
+                          return localizations.enter_password;
                         }
                         if (value.length < 8) {
-                          return 'Password must be at least 8 characters long';
+                          return localizations.password_minimum;
                         }
                         return null;
                       },
@@ -173,7 +200,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       controller: _confirmPasswordController,
                       decoration: customInputDecoration(
-                        label: 'Confirm Password',
+                        label: localizations.confirm_password,
                         prefixIcon: Icons.lock_outline,
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -192,10 +219,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       obscureText: _obscureConfirmPassword,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please confirm your password';
+                          return localizations.confirm_your_password;
                         }
                         if (value != _passwordController.text) {
-                          return 'Passwords do not match';
+                          return localizations.password_is_not_same;
                         }
                         return null;
                       },
@@ -206,21 +233,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Consumer<AuthProvider>(
                       builder: (context, authProvider, child) {
                         return ElevatedButton(
-                          onPressed: authProvider.isLoadingRegister
-                              ? null
-                              : _handleRegister,
-                          child: authProvider.isLoadingRegister
-                              ? SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white,
+                          onPressed:
+                              authProvider.isLoadingRegister
+                                  ? null
+                                  : _handleRegister,
+                          child:
+                              authProvider.isLoadingRegister
+                                  ? SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white,
+                                      ),
                                     ),
-                                  ),
-                                )
-                              : Text('REGISTER'),
+                                  )
+                                  : Text(localizations.register_upper),
                         );
                       },
                     ),
@@ -231,7 +260,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Already have an account? ',
+                          localizations.already_have_account,
                           style: TextStyle(color: Colors.grey.shade600),
                         ),
                         TextButton(
@@ -241,7 +270,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             minimumSize: Size(50, 30),
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          child: Text('Login'),
+                          child: Text(localizations.login_lower),
                         ),
                       ],
                     ),

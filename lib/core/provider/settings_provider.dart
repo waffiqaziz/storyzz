@@ -24,11 +24,12 @@ class SettingsProvider extends ChangeNotifier {
       // Get theme setting
       final isDarkSystem =
           WidgetsBinding.instance.platformDispatcher.platformBrightness ==
-              Brightness.dark;
+          Brightness.dark;
 
-      final bool savedIsDark = _settingRepository.isDarkModeSet()
-          ? _settingRepository.getSettingValue().isDark
-          : isDarkSystem;
+      final bool savedIsDark =
+          _settingRepository.isDarkModeSet()
+              ? _settingRepository.getSettingValue().isDark
+              : isDarkSystem;
 
       // Get language setting
       final String savedLanguage =
@@ -36,10 +37,7 @@ class SettingsProvider extends ChangeNotifier {
       _locale = Locale(savedLanguage);
 
       // Create combined setting
-      _setting = Setting(
-        isDark: savedIsDark,
-        locale: savedLanguage,
-      );
+      _setting = Setting(isDark: savedIsDark, locale: savedLanguage);
 
       _message = "Settings initialized successfully";
     } catch (e) {
@@ -83,10 +81,11 @@ class SettingsProvider extends ChangeNotifier {
         _setting = _setting!.copyWith(locale: languageCode);
       } else {
         _setting = Setting(
-            isDark:
-                WidgetsBinding.instance.platformDispatcher.platformBrightness ==
-                    Brightness.dark,
-            locale: languageCode);
+          isDark:
+              WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+              Brightness.dark,
+          locale: languageCode,
+        );
       }
       _message = "Language successfully updated";
     } catch (e) {

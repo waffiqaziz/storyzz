@@ -69,15 +69,16 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       final isChromeMobile = _isMobileChrome();
 
       // handling for Chrome on mobile
-      final videoConstraints = isChromeMobile
-          ? {
-              'facingMode': {
-                'exact': 'environment',
-              }, // force to use back camera
-              'width': {'ideal': 720, 'max': 1280},
-              'height': {'ideal': 480, 'max': 720},
-            }
-          : true;
+      final videoConstraints =
+          isChromeMobile
+              ? {
+                'facingMode': {
+                  'exact': 'environment',
+                }, // force to use back camera
+                'width': {'ideal': 720, 'max': 1280},
+                'height': {'ideal': 480, 'max': 720},
+              }
+              : true;
 
       // request camera permission with specific constraints
       await html.window.navigator.mediaDevices!.getUserMedia({
@@ -117,9 +118,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   Future<void> _useFallbackCameraInput() async {
     try {
       // create file input with camera capture attribute
-      final inputElement = html.FileUploadInputElement()
-        ..accept = 'image/*'
-        ..setAttribute('capture', 'environment');
+      final inputElement =
+          html.FileUploadInputElement()
+            ..accept = 'image/*'
+            ..setAttribute('capture', 'environment');
 
       // add to DOM temporarily
       html.document.body!.append(inputElement);
@@ -535,8 +537,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
                   // temporarily set camera as not initialized while switching
                   context.read<UploadStoryProvider>().setCameraInitialized(
-                        false,
-                      );
+                    false,
+                  );
 
                   await _cameraController!.dispose();
                   _cameraController = CameraController(
@@ -549,8 +551,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                     // mark camera as initialized again
                     if (mounted) {
                       context.read<UploadStoryProvider>().setCameraInitialized(
-                            true,
-                          );
+                        true,
+                      );
                     }
                   } catch (e) {
                     if (mounted) {
@@ -591,9 +593,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton.icon(
-                onPressed: uploadProvider.isRequestingPermission
-                    ? null
-                    : () => _handleCameraButton(),
+                onPressed:
+                    uploadProvider.isRequestingPermission
+                        ? null
+                        : () => _handleCameraButton(),
                 icon: Icon(
                   Icons.photo_camera,
                   color: Theme.of(context).colorScheme.onTertiary,
@@ -659,9 +662,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
         ],
       ),
       clipBehavior: Clip.antiAlias,
-      child: kIsWeb
-          ? Image.network(imageFile.path)
-          : Image.file(File(imageFile.path)),
+      child:
+          kIsWeb
+              ? Image.network(imageFile.path)
+              : Image.file(File(imageFile.path)),
     );
   }
 
@@ -723,9 +727,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                             isUploading ? null : () => uploadProvider.reset(),
                         icon: Icon(
                           Icons.refresh,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.surfaceContainerLowest,
+                          color:
+                              Theme.of(
+                                context,
+                              ).colorScheme.surfaceContainerLowest,
                         ),
                         label: Text(AppLocalizations.of(context)!.change_image),
                       ),

@@ -63,7 +63,7 @@ import 'app_localizations_id.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -86,16 +86,16 @@ abstract class AppLocalizations {
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
-    Locale('id')
+    Locale('id'),
   ];
 
   /// No description provided for @home.
@@ -122,6 +122,18 @@ abstract class AppLocalizations {
   /// **'Unggah Cerita'**
   String get upload_story;
 
+  /// No description provided for @cancel.
+  ///
+  /// In id, this message translates to:
+  /// **'Batal'**
+  String get cancel;
+
+  /// No description provided for @direct_story_access_not_support.
+  ///
+  /// In id, this message translates to:
+  /// **'Direct story access not supported. Redirected to home.'**
+  String get direct_story_access_not_support;
+
   /// No description provided for @welcome_back.
   ///
   /// In id, this message translates to:
@@ -140,11 +152,35 @@ abstract class AppLocalizations {
   /// **'Email'**
   String get email;
 
+  /// No description provided for @enter_email.
+  ///
+  /// In id, this message translates to:
+  /// **'Tolong masukkan email anda'**
+  String get enter_email;
+
+  /// No description provided for @enter_valid_email.
+  ///
+  /// In id, this message translates to:
+  /// **'Tolong masukkan email yang valid'**
+  String get enter_valid_email;
+
   /// No description provided for @password.
   ///
   /// In id, this message translates to:
   /// **'Kata Sandi'**
   String get password;
+
+  /// No description provided for @enter_password.
+  ///
+  /// In id, this message translates to:
+  /// **'Tolong masukkan kata sandi anda'**
+  String get enter_password;
+
+  /// No description provided for @password_minimum.
+  ///
+  /// In id, this message translates to:
+  /// **'Kata sandi harus setidaknya memiliki panjang 8 karakter'**
+  String get password_minimum;
 
   /// No description provided for @forgot_password.
   ///
@@ -152,11 +188,17 @@ abstract class AppLocalizations {
   /// **'Lupa Kata Sandi?'**
   String get forgot_password;
 
-  /// No description provided for @login.
+  /// No description provided for @login_upper.
   ///
   /// In id, this message translates to:
   /// **'MASUK'**
-  String get login;
+  String get login_upper;
+
+  /// No description provided for @login_lower.
+  ///
+  /// In id, this message translates to:
+  /// **'Masuk'**
+  String get login_lower;
 
   /// No description provided for @dont_have_account.
   ///
@@ -164,11 +206,35 @@ abstract class AppLocalizations {
   /// **'Belum punya akun?'**
   String get dont_have_account;
 
-  /// No description provided for @register.
+  /// No description provided for @register_lower.
   ///
   /// In id, this message translates to:
   /// **'Daftar'**
-  String get register;
+  String get register_lower;
+
+  /// No description provided for @register_upper.
+  ///
+  /// In id, this message translates to:
+  /// **'DAFTAR'**
+  String get register_upper;
+
+  /// No description provided for @register_success.
+  ///
+  /// In id, this message translates to:
+  /// **'Pembuatan akun berhasil'**
+  String get register_success;
+
+  /// No description provided for @register_failed.
+  ///
+  /// In id, this message translates to:
+  /// **'Pendaftaran gagal'**
+  String get register_failed;
+
+  /// No description provided for @only_for_ui.
+  ///
+  /// In id, this message translates to:
+  /// **'Fitur ini hanya untuk tampilan'**
+  String get only_for_ui;
 
   /// No description provided for @create_account.
   ///
@@ -188,11 +254,29 @@ abstract class AppLocalizations {
   /// **'Nama Lengkap'**
   String get full_name;
 
+  /// No description provided for @enter_full_name.
+  ///
+  /// In id, this message translates to:
+  /// **'Tolong masukkan nama anda'**
+  String get enter_full_name;
+
   /// No description provided for @confirm_password.
   ///
   /// In id, this message translates to:
   /// **'Konfirmasi Kata Sandi'**
   String get confirm_password;
+
+  /// No description provided for @confirm_your_password.
+  ///
+  /// In id, this message translates to:
+  /// **'Tolong konfirmasi password anda'**
+  String get confirm_your_password;
+
+  /// No description provided for @password_is_not_same.
+  ///
+  /// In id, this message translates to:
+  /// **'Kata sandi tidak sama'**
+  String get password_is_not_same;
 
   /// No description provided for @already_have_account.
   ///
@@ -320,17 +404,17 @@ abstract class AppLocalizations {
   /// **'KELUAR'**
   String get logout;
 
+  /// No description provided for @login_succes.
+  ///
+  /// In id, this message translates to:
+  /// **'Berhasil masuk!'**
+  String get login_succes;
+
   /// No description provided for @login_failed.
   ///
   /// In id, this message translates to:
   /// **'Gagal masuk. Silakan coba lagi.'**
   String get login_failed;
-
-  /// No description provided for @register_failed.
-  ///
-  /// In id, this message translates to:
-  /// **'Pendaftaran gagal'**
-  String get register_failed;
 
   /// No description provided for @language_updated.
   ///
@@ -516,8 +600,9 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
 }
