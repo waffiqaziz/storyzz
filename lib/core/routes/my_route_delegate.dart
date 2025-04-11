@@ -228,6 +228,12 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
           _currentStory = null;
           _currentStoryId = null;
           notifyListeners();
+        } else if (page.key.toString().contains('StoryDetailScreen')) {
+          _isStoryDetail = false;
+          _isMainScreen = true;
+          _currentStory = null;
+          _currentStoryId = null;
+          notifyListeners();
         }
       },
     );
@@ -324,7 +330,13 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
 
     // check if context is available
     final context = navigatorKey?.currentContext;
-    if (context == null) return;
+
+    if (context == null) {
+      // if no context, just update the navigation state
+      _isStoryDetail = true;
+      notifyListeners();
+      return;
+    }
 
     // only change navigation state for mobile views
     if (MediaQuery.of(context).size.width <= 600) {
