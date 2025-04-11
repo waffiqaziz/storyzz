@@ -21,7 +21,7 @@ This application includes the following key features:
 ### 2. Story Pages
 
 - **Story List**: Displays a list of stories from the API, showing usernames and photos
-- ~~**Story Detail**: Shows detailed information (username, photo, and description) when a story item is tapped~~
+- **Story Detail**: Shows detailed information (username, photo, and description) when a story item is tapped
 
 ### 3. Add Story
 
@@ -38,6 +38,11 @@ This application includes the following key features:
 - Support dark and light themes
 - Adjusted by system or select manually
 
+### 6. Support Multi-languages
+
+- Support localization
+- Currently support English (en-US) and Indonesian (id-ID) languages
+
 ## 🛠️ Getting Started
 
 API Doc: [https://story-api.dicoding.dev/v1/](https://story-api.dicoding.dev/v1/)
@@ -48,4 +53,48 @@ samples, guidance on mobile development, and a full API reference.
 
 ## 📸 Screenshots
 
-[Under Construction]
+<details>
+<summary>📱 Mobile Platform | 🌞 Light Mode</summary>
+<img src="./doc/screenshots/mobile-login.png" width=200 alt="Mobile Login Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/mobile-register.png" width=200 alt="Mobile Register Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/mobile-localization.png" width=200 alt="Mobile Localization Dialog Light Mode">&nbsp;
+<img src="./doc/screenshots/mobile-home.png" width=200 alt="Mobile Home Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/mobile-upload-story.png" width=200 alt="Mobile Upload Story Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/mobile-settings.png" width=200 alt="Mobile Settings Screen Light Mode">&nbsp;
+</details>
+
+<br>
+
+<details>
+<summary>📱 Mobile Platform | 🌙 Dark Mode</summary>
+<img src="./doc/screenshots/mobile-login-dark.png" width=200 alt="Mobile Login Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/mobile-register-dark.png" width=200 alt="Mobile Register Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/mobile-localization-dark.png" width=200 alt="Mobile Localization Dialog Dark Mode">&nbsp;
+<img src="./doc/screenshots/mobile-home-dark.png" width=200 alt="Mobile Home Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/mobile-upload-story-dark.png" width=200 alt="Mobile Upload Story Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/mobile-settings-dark.png" width=200 alt="Mobile Settings Screen Dark Mode">&nbsp;
+</details>
+
+<br>
+
+<details>
+<summary>🌐 Desktop Web Platform | 🌞 Light Mode</summary>
+<img src="./doc/screenshots/desktop-login.png" width=400 alt="Desktop Mobile Login Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/desktop-register.png" width=400 alt="Desktop Mobile Register Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/desktop-localization.png" width=400 alt="Desktop Mobile Localization Dialog Light Mode">&nbsp;
+<img src="./doc/screenshots/desktop-home.png" width=400 alt="Desktop Mobile Home Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/desktop-upload-story.png" width=400 alt="Desktop Mobile Upload Story Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/desktop-settings.png" width=400 alt="Desktop Mobile Settings Screen Light Mode">&nbsp;
+</details>
+
+<br>
+
+<details>
+<summary>🌐 Desktop Web Platform | 🌙 Dark Mode</summary>
+<img src="./doc/screenshots/dekstop-login-dark.png" width=400 alt="Desktop Mobile Login Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/dekstop-register-dark.png" width=400 alt="Desktop Mobile Register Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/desktop-localization-dark.png" width=400 alt="Desktop Mobile Localization Dialog Dark Mode">&nbsp;
+<img src="./doc/screenshots/dekstop-home-dark.png" width=400 alt="Desktop Mobile Home Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/dekstop-upload-story-dark.png" width=400 alt="Desktop Mobile Upload Story Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/desktop-settings-dark.png" width=400 alt="Desktop Mobile Settings Screen Dark Mode">&nbsp;
+</details>
