@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:image/image.dart' as img;
+import 'package:intl/intl.dart';
 
 Future<List<int>> compressImage(List<int> bytes) async {
   int imageLength = bytes.length;
@@ -16,4 +17,8 @@ Future<List<int>> compressImage(List<int> bytes) async {
     length = newByte.length;
   } while (length > 1000000);
   return newByte;
+}
+
+String formattedLocalTime(DateTime createdAt) {
+  return DateFormat('MMMM d, yyyy · HH:mm').format(createdAt.toLocal());
 }

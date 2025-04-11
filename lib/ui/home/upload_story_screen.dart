@@ -24,13 +24,22 @@ class UploadStoryScreen extends StatefulWidget {
 }
 
 class _UploadStoryScreenState extends State<UploadStoryScreen> {
-  // image picker for mobile and web platform
   final ImagePicker _picker = ImagePicker();
   CameraController? _cameraController;
+
+  UploadStoryProvider? _uploadStoryProvider;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _uploadStoryProvider = context.read<UploadStoryProvider>();
+  }
 
   @override
   void dispose() {
     _cleanupCamera();
+    _uploadStoryProvider = null;
+
     super.dispose();
   }
 
@@ -38,11 +47,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     _cameraController?.dispose();
     _cameraController = null;
 
-    // reset camera state in provider
-    if (mounted) {
-      context.read<UploadStoryProvider>().setCameraInitialized(false);
-      context.read<UploadStoryProvider>().setShowCamera(false);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _uploadStoryProvider?.setCameraInitialized(false);
+      _uploadStoryProvider?.setShowCamera(false);
+    });
   }
 
   bool _isMobileChrome() {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/utils/helper.dart';
 
 import '../../core/data/networking/responses/stories_response.dart'
     show ListStory;
@@ -18,8 +18,6 @@ class StoryDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final dateFormat = DateFormat('MMMM d, yyyy · HH:mm');
-    final formattedDate = dateFormat.format(story.createdAt);
 
     return Scaffold(
       appBar: AppBar(
@@ -37,15 +35,22 @@ class StoryDetailScreen extends StatelessWidget {
             // Hero image
             Hero(
               tag: 'story-image-${story.id}',
-              child: AspectRatio(
-                aspectRatio: 16 / 9,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: 200,
+                  minWidth: double.infinity,
+                ),
                 child: Image.network(
                   story.photoUrl,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                   width: double.infinity,
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Container(
+                      constraints: BoxConstraints(
+                        // default height before image loads
+                        minHeight: 350,
+                      ),
                       color: Colors.grey[200],
                       child: Center(
                         child: CircularProgressIndicator(
@@ -104,7 +109,7 @@ class StoryDetailScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              formattedDate,
+                              formattedLocalTime(story.createdAt),
                               style: TextStyle(
                                 color: Colors.grey[600],
                                 fontSize: 14,
@@ -115,12 +120,10 @@ class StoryDetailScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   SizedBox(height: 16),
 
                   // description
                   Text(story.description, style: TextStyle(fontSize: 16)),
-
                   SizedBox(height: 24),
 
                   // location info if available
