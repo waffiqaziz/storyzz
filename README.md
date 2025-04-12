@@ -79,22 +79,22 @@ samples, guidance on mobile development, and a full API reference.
 
 <details>
 <summary>🌐 Desktop Web Platform | 🌞 Light Mode</summary>
-<img src="./doc/screenshots/desktop-login.png" width=400 alt="Desktop Mobile Login Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/desktop-register.png" width=400 alt="Desktop Mobile Register Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/desktop-localization.png" width=400 alt="Desktop Mobile Localization Dialog Light Mode">&nbsp;
-<img src="./doc/screenshots/desktop-home.png" width=400 alt="Desktop Mobile Home Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/desktop-upload-story.png" width=400 alt="Desktop Mobile Upload Story Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/desktop-settings.png" width=400 alt="Desktop Mobile Settings Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/desktop-login.png" width=400 alt="Desktop Login Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/desktop-register.png" width=400 alt="Desktop Register Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/desktop-localization.png" width=400 alt="Desktop Localization Dialog Light Mode">&nbsp;
+<img src="./doc/screenshots/desktop-home.png" width=400 alt="Desktop Home Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/desktop-upload-story.png" width=400 alt="Desktop Upload Story Screen Light Mode">&nbsp;
+<img src="./doc/screenshots/desktop-settings.png" width=400 alt="Desktop Settings Screen Light Mode">&nbsp;
 </details>
 
 <br>
 
 <details>
 <summary>🌐 Desktop Web Platform | 🌙 Dark Mode</summary>
-<img src="./doc/screenshots/dekstop-login-dark.png" width=400 alt="Desktop Mobile Login Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/desktop-register-dark.png" width=400 alt="Desktop Mobile Register Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/desktop-localization-dark.png" width=400 alt="Desktop Mobile Localization Dialog Dark Mode">&nbsp;
-<img src="./doc/screenshots/desktop-home-dark.png" width=400 alt="Desktop Mobile Home Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/desktop-upload-story-dark.png" width=400 alt="Desktop Mobile Upload Story Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/desktop-settings-dark.png" width=400 alt="Desktop Mobile Settings Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/desktop-login-dark.png" width=400 alt="Desktop Login Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/desktop-register-dark.png" width=400 alt="Desktop Register Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/desktop-localization-dark.png" width=400 alt="Desktop Localization Dialog Dark Mode">&nbsp;
+<img src="./doc/screenshots/desktop-home-dark.png" width=400 alt="Desktop Home Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/desktop-upload-story-dark.png" width=400 alt="Desktop Upload Story Screen Dark Mode">&nbsp;
+<img src="./doc/screenshots/desktop-settings-dark.png" width=400 alt="Desktop Settings Screen Dark Mode">&nbsp;
 </details>
