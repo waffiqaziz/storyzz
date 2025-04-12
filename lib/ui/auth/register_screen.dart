@@ -81,7 +81,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         actions: [
           Consumer<SettingsProvider>(
             builder:
