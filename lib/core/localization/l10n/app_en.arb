@@ -21,7 +21,7 @@
   "login_lower": "Login",
   "dont_have_account": "Don\"t have an account?",
   "register_lower": "Register",
-  "register_uppper": "REGISTER",
+  "register_upper": "REGISTER",
   "register_success": "Register success",
   "register_failed": "Register gailed",
 

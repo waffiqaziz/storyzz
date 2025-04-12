@@ -168,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       controller: _passwordController,
                       decoration: customInputDecoration(
-                        label: localizations.register_lower,
+                        label: localizations.password,
                         prefixIcon: Icons.lock_outline,
                         suffixIcon: IconButton(
                           icon: Icon(

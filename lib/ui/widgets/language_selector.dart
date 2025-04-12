@@ -42,14 +42,22 @@ class LanguageSelector extends StatelessWidget {
                     _buildLanguageOption(
                       context,
                       'en',
-                      '🇺🇸',
+                      Image.asset(
+                        "assets/flag/flag_us.webp",
+                        width: 30,
+                        height: 25,
+                      ),
                       localizations.english,
                       localizations,
                     ),
                     _buildLanguageOption(
                       context,
                       'id',
-                      '🇮🇩',
+                      Image.asset(
+                        "assets/flag/flag_id.webp",
+                        width: 30,
+                        height: 25,
+                      ),
                       localizations.indonesian,
                       localizations,
                     ),
@@ -70,14 +78,14 @@ class LanguageSelector extends StatelessWidget {
   Widget _buildLanguageOption(
     BuildContext context,
     String code,
-    String flag,
+    Image flag,
     String name,
     AppLocalizations localizations,
   ) {
     final isSelected = currentLanguageCode == code;
 
     return ListTile(
-      leading: Text(flag, style: const TextStyle(fontSize: 24)),
+      leading: flag,
       title: Text(name),
       trailing: isSelected ? const Icon(Icons.check) : null,
       onTap: () {
@@ -100,7 +108,7 @@ class LanguageSelector extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('🇺🇸'),
+                Image.asset("assets/flag/flag_us.webp", width: 30, height: 25),
                 const SizedBox(width: 8),
                 Text(
                   localizations.english,
@@ -118,7 +126,7 @@ class LanguageSelector extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('🇮🇩'),
+                Image.asset("assets/flag/flag_id.webp", width: 30, height: 25),
                 const SizedBox(width: 8),
                 Text(
                   localizations.indonesian,

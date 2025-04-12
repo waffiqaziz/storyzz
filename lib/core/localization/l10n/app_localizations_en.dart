@@ -67,7 +67,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get register_lower => 'Register';
 
   @override
-  String get register_upper => 'DAFTAR';
+  String get register_upper => 'REGISTER';
 
   @override
   String get register_success => 'Register success';
