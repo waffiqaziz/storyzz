@@ -354,35 +354,9 @@ class MaterialTheme {
           horizontal: 16,
         ),
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: baseTheme.colorScheme.primary,
-          elevation: 0,
-          textStyle: TextStyle(
-            fontFamily: 'Nunito',
-            fontWeight: FontWeight.bold,
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-        ),
-      ),
-      snackBarTheme: SnackBarThemeData(
-        backgroundColor: baseTheme.colorScheme.surfaceContainerHigh,
-        behavior: SnackBarBehavior.floating,
-        elevation: 6,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        contentTextStyle: TextStyle(
-          fontWeight: FontWeight.w400,
-          color: baseTheme.colorScheme.onSurface,
-        ),
-      ),
     );
   }
 
-  // Same for dark theme
   ThemeData darkWithCustomStyles() {
     final baseTheme = dark();
     return baseTheme.copyWith(
@@ -402,31 +376,6 @@ class MaterialTheme {
           horizontal: 16,
         ),
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.black, // text color
-          backgroundColor: baseTheme.colorScheme.primary,
-          elevation: 0,
-          textStyle: TextStyle(
-            fontFamily: 'Nunito',
-            fontWeight: FontWeight.bold,
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(26),
-          ),
-        ),
-      ),
-      snackBarTheme: SnackBarThemeData(
-        backgroundColor: baseTheme.colorScheme.surfaceContainerHigh,
-        behavior: SnackBarBehavior.floating,
-        elevation: 6,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        contentTextStyle: TextStyle(
-          fontWeight: FontWeight.w400,
-          color: baseTheme.colorScheme.onSurface,
-        ),
-      ),
     );
   }
 
@@ -434,9 +383,32 @@ class MaterialTheme {
     useMaterial3: true,
     brightness: colorScheme.brightness,
     colorScheme: colorScheme,
+    fontFamily: 'Nunito',
+    fontFamilyFallback: ['Nunito'],
     textTheme: textTheme.apply(
       bodyColor: colorScheme.onSurface,
       displayColor: colorScheme.onSurface,
+      fontFamily: 'Nunito',
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: colorScheme.surfaceContainerLowest,
+        backgroundColor: colorScheme.primary,
+        elevation: 0,
+        textStyle: TextStyle(fontFamily: 'Nunito', fontWeight: FontWeight.bold),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+      ),
+    ),
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: colorScheme.surfaceContainerHigh,
+      behavior: SnackBarBehavior.floating,
+      elevation: 6,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      contentTextStyle: TextStyle(
+        fontWeight: FontWeight.w400,
+        color: colorScheme.onSurface,
+      ),
     ),
     scaffoldBackgroundColor: colorScheme.surface,
     canvasColor: colorScheme.surface,

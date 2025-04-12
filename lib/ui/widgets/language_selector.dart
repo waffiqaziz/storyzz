@@ -23,6 +23,7 @@ class LanguageSelector extends StatelessWidget {
         : _buildFullSelector(context, localizations);
   }
 
+  // dialog
   Widget _buildCompactSelector(
     BuildContext context,
     AppLocalizations localizations,
@@ -75,6 +76,7 @@ class LanguageSelector extends StatelessWidget {
     );
   }
 
+  // drop down item
   Widget _buildLanguageOption(
     BuildContext context,
     String code,
@@ -85,6 +87,8 @@ class LanguageSelector extends StatelessWidget {
     final isSelected = currentLanguageCode == code;
 
     return ListTile(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16),
       leading: flag,
       title: Text(name),
       trailing: isSelected ? const Icon(Icons.check) : null,
@@ -95,6 +99,7 @@ class LanguageSelector extends StatelessWidget {
     );
   }
 
+  // button drop down
   Widget _buildFullSelector(
     BuildContext context,
     AppLocalizations localizations,
@@ -148,8 +153,8 @@ class LanguageSelector extends StatelessWidget {
         },
         buttonStyleData: ButtonStyleData(
           height: 40,
-          width: 150,
-          padding: const EdgeInsets.only(left: 10, right: 10),
+          width: 170,
+          padding: const EdgeInsets.only(left: 16, right: 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
             color: Theme.of(context).colorScheme.primaryContainer,
@@ -158,13 +163,12 @@ class LanguageSelector extends StatelessWidget {
         ),
         iconStyleData: IconStyleData(
           icon: const Icon(Icons.arrow_drop_down),
-          iconSize: 24,
           iconEnabledColor: Theme.of(context).colorScheme.onPrimaryContainer,
           iconDisabledColor: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
         dropdownStyleData: DropdownStyleData(
           maxHeight: 200,
-          width: 150,
+          width: 170,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
             color: Theme.of(context).colorScheme.primaryContainer,
