@@ -1,100 +1,143 @@
 # Storyzz
 
-## 🚀 Introduction
+A Flutter application for sharing stories with images.
 
-Storyzz is a Flutter mobile application that allows users to share stories with images and descriptions. Users can register, login, view stories from other users, and add their own stories to the platform.
+## 🚀 Overview
 
-## 🌟 Features
+Storyzz is a cross-platform Flutter application that enables users to share stories with images and descriptions. The app provides authentication features, story browsing, and creation capabilities with a modern, responsive UI that supports both mobile and desktop platforms. Currently build for mobile and web platform.
 
-This application includes the following key features:
+## ✨ Features
 
-### 1. Authentication Pages
+### Authentication
 
-- **Login Page**: Allows users to log in to the application
-- **Register Page**: Allows new users to create an account
-- **Password Security**: Character masking for password fields
-- **Session Management**: Stores session and token data in device preferences
-  - Automatically redirects to the main page if the user is already logged in
-  - Directs to the login page if no active session exists
-- **Logout Functionality**: Allows users to log out, clearing token and session information
+- **Login & Registration** - Secure user authentication system
+- **Session Management** - Persistent login sessions using device preferences
+- **Password Security** - Character masking for password fields
 
-### 2. Story Pages
+### Story Management
 
-- **Story List**: Displays a list of stories from the API, showing usernames and photos
-- **Story Detail**: Shows detailed information (username, photo, and description) when a story item is tapped
+- **Story Feed** - Browse stories from other users
+- **Story Details** - View full story information with images and descriptions
+- **Create Stories** - Upload images (max 1MB) with custom captions
 
-### 3. Add Story
+### UI/UX
 
-- **Create Story**: Interface for users to add new stories
-- **Post Image**: Upload an image, with max size 1MB
-- **Caption**: Allows users to add a brief description related to the image when creating a new story
+- **Responsive Design** - Optimized for both mobile and desktop platforms
+- **Theme Support** - Toggle between light and dark themes
+- **Localization** - Available in English and Indonesian
 
-### 4. Advanced Navigation
+### Technical Features
 
-- Implements declarative navigation throughout the application using Flutter's navigation system
-
-### 5. Dark and Light Themes
-
-- Support dark and light themes
-- Adjusted by system or select manually
-
-### 6. Support Multi-languages
-
-- Support localization
-- Currently support English (en-US) and Indonesian (id-ID) languages
+- **Declarative Navigation** - Modern navigation system
+- **API Integration** - Connected to Dicoding Story API
+- **Data Persistence** - Local storage for user preferences
 
 ## 🛠️ Getting Started
-
-API Doc: [https://story-api.dicoding.dev/v1/](https://story-api.dicoding.dev/v1/)
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+### Prerequisites
+
+- Flutter SDK (latest stable version)
+- Dart SDK
+- An IDE (VS Code, Android Studio, etc.)
+
+### Installation
+
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/waffiqaziz/storyzz.git
+   ```
+
+2. Navigate to project directory and install dependencies
+
+   ```bash
+   cd storyzz
+   flutter pub get
+   ```
+
+3. Generate required files
+
+   ```bash
+   dart run build_runner build --delete-conflicting-outputs
+   ```
+
+4. Run the application
+
+   ```bash
+   flutter run
+   ```
+
+## 📚 API Documentation
+
+This application uses the Dicoding Story API:
+[https://story-api.dicoding.dev/v1/](https://story-api.dicoding.dev/v1/)
+
 ## 📸 Screenshots
 
 <details>
-<summary>📱 Mobile Platform | 🌞 Light Mode</summary>
-<img src="./doc/screenshots/mobile-login.png" width=250 alt="Mobile Login Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/mobile-register.png" width=250 alt="Mobile Register Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/mobile-localization.png" width=250 alt="Mobile Localization Dialog Light Mode">&nbsp;
-<img src="./doc/screenshots/mobile-home.png" width=250 alt="Mobile Home Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/mobile-upload-story.png" width=250 alt="Mobile Upload Story Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/mobile-settings.png" width=250 alt="Mobile Settings Screen Light Mode">&nbsp;
+<summary>📱 Mobile Platform | Light Mode</summary>
+<p float="left">
+  <img src="./doc/screenshots/mobile-login.png" width="250" alt="Login Screen" />
+  <img src="./doc/screenshots/mobile-register.png" width="250" alt="Register Screen" />
+  <img src="./doc/screenshots/mobile-home.png" width="250" alt="Home Screen" />
+</p>
+<p float="left">
+  <img src="./doc/screenshots/mobile-upload-story.png" width="250" alt="Upload Story Screen" />
+  <img src="./doc/screenshots/mobile-settings.png" width="250" alt="Settings Screen" />
+  <img src="./doc/screenshots/mobile-localization.png" width="250" alt="Localization Dialog" />
+</p>
 </details>
-
-<br>
 
 <details>
-<summary>📱 Mobile Platform | 🌙 Dark Mode</summary>
-<img src="./doc/screenshots/mobile-login-dark.png" width=250 alt="Mobile Login Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/mobile-register-dark.png" width=250 alt="Mobile Register Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/mobile-localization-dark.png" width=250 alt="Mobile Localization Dialog Dark Mode">&nbsp;
-<img src="./doc/screenshots/mobile-home-dark.png" width=250 alt="Mobile Home Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/mobile-upload-story-dark.png" width=250 alt="Mobile Upload Story Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/mobile-settings-dark.png" width=250 alt="Mobile Settings Screen Dark Mode">&nbsp;
+<summary>📱 Mobile Platform | Dark Mode</summary>
+<p float="left">
+  <img src="./doc/screenshots/mobile-login-dark.png" width="250" alt="Login Screen (Dark)" />
+  <img src="./doc/screenshots/mobile-register-dark.png" width="250" alt="Register Screen (Dark)" />
+  <img src="./doc/screenshots/mobile-home-dark.png" width="250" alt="Home Screen (Dark)" />
+</p>
+<p float="left">
+  <img src="./doc/screenshots/mobile-upload-story-dark.png" width="250" alt="Upload Story Screen (Dark)" />
+  <img src="./doc/screenshots/mobile-settings-dark.png" width="250" alt="Settings Screen (Dark)" />
+  <img src="./doc/screenshots/mobile-localization-dark.png" width="250" alt="Localization Dialog (Dark)" />
+</p>
 </details>
-
-<br>
 
 <details>
-<summary>🌐 Desktop Web Platform | 🌞 Light Mode</summary>
-<img src="./doc/screenshots/desktop-login.png" width=400 alt="Desktop Login Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/desktop-register.png" width=400 alt="Desktop Register Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/desktop-localization.png" width=400 alt="Desktop Localization Dialog Light Mode">&nbsp;
-<img src="./doc/screenshots/desktop-home.png" width=400 alt="Desktop Home Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/desktop-upload-story.png" width=400 alt="Desktop Upload Story Screen Light Mode">&nbsp;
-<img src="./doc/screenshots/desktop-settings.png" width=400 alt="Desktop Settings Screen Light Mode">&nbsp;
+<summary>🖥️ Desktop Platform | Light Mode</summary>
+<p>
+  <img src="./doc/screenshots/desktop-login.png" width="400" alt="Login Screen" />
+  <img src="./doc/screenshots/desktop-register.png" width="400" alt="Register Screen" />
+</p>
+<p>
+  <img src="./doc/screenshots/desktop-home.png" width="400" alt="Home Screen" />
+  <img src="./doc/screenshots/desktop-upload-story.png" width="400" alt="Upload Story Screen" />
+</p>
+<p>
+  <img src="./doc/screenshots/desktop-settings.png" width="400" alt="Settings Screen" />
+  <img src="./doc/screenshots/desktop-localization.png" width="400" alt="Localization Dialog" />
+</p>
 </details>
-
-<br>
 
 <details>
-<summary>🌐 Desktop Web Platform | 🌙 Dark Mode</summary>
-<img src="./doc/screenshots/desktop-login-dark.png" width=400 alt="Desktop Login Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/desktop-register-dark.png" width=400 alt="Desktop Register Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/desktop-localization-dark.png" width=400 alt="Desktop Localization Dialog Dark Mode">&nbsp;
-<img src="./doc/screenshots/desktop-home-dark.png" width=400 alt="Desktop Home Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/desktop-upload-story-dark.png" width=400 alt="Desktop Upload Story Screen Dark Mode">&nbsp;
-<img src="./doc/screenshots/desktop-settings-dark.png" width=400 alt="Desktop Settings Screen Dark Mode">&nbsp;
+<summary>🖥️ Desktop Platform | Dark Mode</summary>
+<p>
+  <img src="./doc/screenshots/desktop-login-dark.png" width="400" alt="Login Screen (Dark)" />
+  <img src="./doc/screenshots/desktop-register-dark.png" width="400" alt="Register Screen (Dark)" />
+</p>
+<p>
+  <img src="./doc/screenshots/desktop-home-dark.png" width="400" alt="Home Screen (Dark)" />
+  <img src="./doc/screenshots/desktop-upload-story-dark.png" width="400" alt="Upload Story Screen (Dark)" />
+</p>
+<p>
+  <img src="./doc/screenshots/desktop-settings-dark.png" width="400" alt="Settings Screen (Dark)" />
+  <img src="./doc/screenshots/desktop-localization-dark.png" width="400" alt="Localization Dialog (Dark)" />
+</p>
 </details>
+
+## 🔒 Environment Setup
+
+[under construction]
