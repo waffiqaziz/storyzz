@@ -51,7 +51,7 @@ class AppRoot extends StatelessWidget {
               (context) => SettingsProvider(context.read<SettingRepository>()),
         ),
       ],
-      child: MyApp(prefs: prefs),
+      child: MyApp(),
     );
   }
 }
