@@ -31,7 +31,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get direct_story_access_not_support =>
-      'Akses cerita langsung tidak didukung. Diarahkan ke beranda.';
+      'Direcct story access not supported. Redirect to home.';
 
   @override
   String get welcome_back => 'Welcome Back';
