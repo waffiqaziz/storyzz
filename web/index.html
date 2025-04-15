@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<!--
+		<!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
 
@@ -14,6 +14,35 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
+		<!-- Environment variables -->
+		<script src="env.js"></script>
+
+		<!-- Google Maps with dynamic API key -->
+		<script id="google-maps-script"></script>
+		<script>
+			let serviceWorkerVersion = null;
+			let scriptLoaded = false;
+			function loadMainDartJs() {
+				if (scriptLoaded) return;
+				scriptLoaded = true;
+				var scriptTag = document.createElement("script");
+				scriptTag.src = "main.dart.js";
+				scriptTag.type = "application/javascript";
+				document.body.append(scriptTag);
+			}
+		</script>
+
+		// TODO: Add your Google Maps Api Key here
+		<script>
+			// Load Google Maps with API key from environment variables
+			document.addEventListener("DOMContentLoaded", function () {
+				const script = document.getElementById("google-maps-script");
+				script.src = `https://maps.googleapis.com/maps/api/js?key=${window.ENV.GOOGLE_MAPS_API_KEY}&loading=async`;
+				script.async = true;
+				script.defer = true;
+			});
+		</script>
+
 		<base href="$FLUTTER_BASE_HREF" />
 
 		<meta charset="UTF-8" />

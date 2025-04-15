@@ -1,8 +1,7 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:storyzz/core/data/repository/story_repository.dart';
 
 class UploadStoryProvider extends ChangeNotifier {
@@ -119,5 +118,29 @@ class UploadStoryProvider extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  Future<void> uploadStoryWithFile({
+    required String token,
+    required String description,
+    required XFile imageFile,
+  }) async {
+    if (kIsWeb) {
+      final bytes = await imageFile.readAsBytes();
+      return uploadStory(
+        token: token,
+        description: description,
+        photoBytes: bytes,
+        fileName: imageFile.name,
+      );
+    } else {
+      final file = File(imageFile.path);
+      return uploadStory(
+        token: token,
+        description: description,
+        photoFile: file,
+        fileName: imageFile.name,
+      );
+    }
   }
 }

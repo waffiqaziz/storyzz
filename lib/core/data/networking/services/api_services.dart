@@ -6,17 +6,33 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
 import 'package:storyzz/core/data/model/user.dart';
+import 'package:storyzz/core/data/networking/responses/general_response.dart';
 import 'package:storyzz/core/data/networking/responses/login_response.dart';
-import 'package:storyzz/core/data/networking/responses/register_response.dart';
 import 'package:storyzz/core/data/networking/responses/stories_response.dart';
 import 'package:storyzz/core/data/networking/utils/api_utils.dart';
 
+/// A service class responsible for handling API interactions, such as login, registration,
+/// fetching stories, and uploading stories to the server.
+///
+/// The class provides methods for interacting with the story API (https://story-api.dicoding.dev/v1),
+/// handling responses, and managing errors in a safe way.
 class ApiServices {
   static const String _baseUrl = "https://story-api.dicoding.dev/v1";
   final http.Client httpClient;
 
   ApiServices({required this.httpClient});
 
+  /// Logs the user in with the provided email and password.
+  ///
+  /// Sends a POST request to the "/login" endpoint to authenticate the user.
+  /// If the login is successful, a [LoginResponse] is returned; otherwise,
+  /// an error message is thrown.
+  ///
+  /// Parameters:
+  /// - [email] The email address of the user.
+  /// - [password] The password of the user.
+  ///
+  /// Returns a [ApiResult] containing either the login response or an error message.
   Future<ApiResult<LoginResponse>> login(String email, String password) async {
     return await safeApiCall(() async {
       final response = await httpClient.post(
@@ -36,6 +52,16 @@ class ApiServices {
     });
   }
 
+  /// Registers a new user with the provided [User] details.
+  ///
+  /// Sends a POST request to the "/register" endpoint to create a new user.
+  /// If registration is successful, a [GeneralResponse] is returned; otherwise,
+  /// an error message is thrown.
+  ///
+  /// Parameters:
+  /// - [user] The [User] object containing the user's registration details.
+  ///
+  /// Returns a [ApiResult] containing either the registration response or an error message.
   Future<ApiResult<GeneralResponse>> register(User user) async {
     return await safeApiCall(() async {
       final response = await httpClient.post(
@@ -60,6 +86,19 @@ class ApiServices {
     });
   }
 
+  /// Fetches a list of stories from the API with optional pagination and location filtering.
+  ///
+  /// Sends a GET request to the "/stories" endpoint to retrieve stories. The request
+  /// includes optional query parameters for pagination (page and size) and location (latitude/longitude).
+  /// The [user] object is used to include the authorization token in the request headers.
+  ///
+  /// Parameters:
+  /// - [page] Optional. The page number for pagination.
+  /// - [size] Optional. The number of items per page for pagination.
+  /// - [location] The location filter for stories (default is 0).
+  /// - [user] The [User] object containing the authorization token.
+  ///
+  /// Returns a [ApiResult] containing either a [StoriesResponse] or an error message.
   Future<ApiResult<StoriesResponse>> getStories({
     int? page,
     int? size,
@@ -94,6 +133,23 @@ class ApiServices {
     });
   }
 
+  /// Uploads a story with an optional image file.
+  ///
+  /// Sends a POST request to the "/stories" endpoint with a multipart request body.
+  /// The request includes a description, location (latitude and longitude), and
+  /// an image file (either as a `File` for mobile or `Uint8List` for web). If the upload is successful,
+  /// a [GeneralResponse] is returned; otherwise, an error message is thrown.
+  ///
+  /// Parameters:
+  /// - [token] The user's authentication token.
+  /// - [description] The description of the story.
+  /// - [photoFile] The image file for mobile (optional).
+  /// - [photoBytes] The image bytes for web (optional).
+  /// - [fileName] The file name of the image.
+  /// - [lat] The latitude of the story location (optional).
+  /// - [lon] The longitude of the story location (optional).
+  ///
+  /// Returns a [ApiResult] containing either the upload response or an error message.
   Future<ApiResult<GeneralResponse>> uploadStory({
     required String token,
     required String description,
@@ -158,7 +214,11 @@ class ApiServices {
     });
   }
 
-  // helper function to determine MIME type from file extension
+  /// Helper function to determine MIME type from file extension.
+  ///
+  /// [filePath] The path to the file (including the extension).
+  ///
+  /// Returns the MIME type corresponding to the file extension.
   String _getImageMimeType(String filePath) {
     final extension = path.extension(filePath).toLowerCase();
     switch (extension) {

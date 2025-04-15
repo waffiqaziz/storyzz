@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/routes/app_route_path.dart';
 import 'package:storyzz/core/utils/custom_page_transition.dart';
-import 'package:storyzz/ui/detail/detail_dialog.dart';
-import 'package:storyzz/ui/detail/detail_screen.dart';
-import 'package:storyzz/ui/widgets/dialog_page.dart';
+import 'package:storyzz/core/widgets/dialog_page.dart';
+import 'package:storyzz/features/detail/presentation/screen/detail_dialog.dart';
+import 'package:storyzz/features/detail/presentation/screen/detail_screen.dart';
 
-import '../../ui/auth/login_screen.dart';
-import '../../ui/auth/register_screen.dart';
-import '../../ui/home/main_screen.dart';
-import '../data/networking/responses/stories_response.dart' show ListStory;
+import '../../features/auth/presentation/screen/login_screen.dart';
+import '../../features/auth/presentation/screen/register_screen.dart';
+import '../../features/home/presentation/screen/main_screen.dart';
 
 class MyRouteDelegate extends RouterDelegate<AppRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRoutePath> {
@@ -113,7 +113,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
     bool isCurrentlyLoggedIn = authProvider.isLoggedIn;
     final isDesktop = MediaQuery.of(context).size.width > 600;
 
-    // if login status changed, update our local state
+    // if login status changed, update the local state
     if (isCurrentlyLoggedIn != _isLoggedIn) {
       _isLoggedIn = isCurrentlyLoggedIn;
       if (_isLoggedIn) {
@@ -268,6 +268,8 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
 
   @override
   Future<void> setNewRoutePath(AppRoutePath path) async {
+    /// Handle when open via url
+
     if (path.isUnknown) {
       _isLoginScreen = true;
       _isStoryDetailDialog = false;
@@ -341,7 +343,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
         _currentStory = null;
         _currentStoryId = null;
 
-        // Update tab index if provided in the path
+        // update tab index if provided in the path
         if (path.tabIndex != null) {
           _currentTabIndex = path.tabIndex!;
         }

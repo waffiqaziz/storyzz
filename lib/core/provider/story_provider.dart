@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/data/networking/responses/stories_response.dart';
+import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/data/repository/story_repository.dart';
 
 class StoryProvider extends ChangeNotifier {

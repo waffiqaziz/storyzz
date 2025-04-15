@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 
+/// Custom colors and theme
 class MaterialTheme {
   final TextTheme textTheme;
 

@@ -16,18 +16,19 @@ class ApiResult<T> {
   factory ApiResult.error(String message) => ApiResult._(message: message);
 }
 
-// handle any exception
+/// Handles API calls safely by catching various exceptions
+/// and returning appropriate error messages.
 Future<ApiResult<T>> safeApiCall<T>(Future<T> Function() apiCall) async {
   try {
     final result = await apiCall();
     return ApiResult.success(result);
-  } on ClientException {
-    log("API Call Failed: ClientException");
+  } on ClientException catch (e) {
+    log("API Call Failed: ClientException - ${e.message}");
     return ApiResult.error(
       "Network request failed. Please check your connection.",
     );
-  } on SocketException {
-    log("API Call Failed: SocketException");
+  } on SocketException catch (e) {
+    log("API Call Failed: SocketException - ${e.message}");
     return ApiResult.error(
       "No internet connection. Please check your network.",
     );

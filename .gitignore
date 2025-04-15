@@ -48,3 +48,5 @@ lib/core/localization/l10n/untranslated.txt
 # Generated code
 *.freezed.dart
 *.g.dart
+
+web/env.js

@@ -24,12 +24,16 @@ class MyRouteInformationParser extends RouteInformationParser<AppRoutePath> {
       return AppRoutePath.home();
     }
 
-    if (uri.pathSegments.first == 'upload') {
+    if (uri.pathSegments.first == 'map') {
       return AppRoutePath.home(tabIndex: 1);
     }
 
-    if (uri.pathSegments.first == 'settings') {
+    if (uri.pathSegments.first == 'upload') {
       return AppRoutePath.home(tabIndex: 2);
+    }
+
+    if (uri.pathSegments.first == 'settings') {
+      return AppRoutePath.home(tabIndex: 3);
     }
 
     if (uri.pathSegments.first == 'story' && uri.pathSegments.length == 2) {
@@ -61,9 +65,12 @@ class MyRouteInformationParser extends RouteInformationParser<AppRoutePath> {
         return RouteInformation(uri: Uri.parse('/home'));
       }
       if (tabIndex == 1) {
-        return RouteInformation(uri: Uri.parse('/upload'));
+        return RouteInformation(uri: Uri.parse('/map'));
       }
       if (tabIndex == 2) {
+        return RouteInformation(uri: Uri.parse('/upload'));
+      }
+      if (tabIndex == 3) {
         return RouteInformation(uri: Uri.parse('/settings'));
       }
     }
