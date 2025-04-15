@@ -27,7 +27,14 @@ jobs:
 
       # Flutter dependencies setup
       - name: Install Flutter dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
+
+      # Create env.js file with API key
+      - name: Create environment file
+        run: |
+          echo "window.ENV = { GOOGLE_MAPS_API_KEY: '${{ secrets.GOOGLE_MAPS_API_KEY }}' };" > web/env.js
 
       # Build the Flutter web project
       - name: Build Flutter Web
