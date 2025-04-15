@@ -8,6 +8,7 @@
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
 
+        // TODO: Add your Google Maps Api Key here
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="YOUR_API_KEY" />
