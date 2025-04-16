@@ -12,6 +12,17 @@ import '../../features/auth/presentation/screen/login_screen.dart';
 import '../../features/auth/presentation/screen/register_screen.dart';
 import '../../features/home/presentation/screen/main_screen.dart';
 
+/// A custom [RouterDelegate] that manages navigation state for the app.
+///
+/// It handles:
+/// - Authentication flow (login, register)
+/// - Main screen navigation with tab support
+/// - Story detail navigation (responsive: full screen on mobile, dialog on desktop)
+/// - URL syncing via [AppRoutePath]
+///
+/// The delegate keeps track of current route states and notifies the navigator
+/// to rebuild accordingly.
+
 class MyRouteDelegate extends RouterDelegate<AppRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRoutePath> {
   final GlobalKey<NavigatorState> _navigatorKey;

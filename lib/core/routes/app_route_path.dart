@@ -1,3 +1,13 @@
+/// Defines route states for the app's navigation system.
+///
+/// Represents various screens:
+/// - Login
+/// - Register
+/// - Main (with optional tab index)
+/// - Story Detail (with story ID)
+/// - Unknown (fallback)
+///
+/// Used by the RouterDelegate and RouteInformationParser to manage navigation.
 class AppRoutePath {
   final bool isUnknown;
   final bool isLoginScreen;

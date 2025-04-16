@@ -3,6 +3,15 @@ import 'package:storyzz/core/data/model/user.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/data/repository/story_repository.dart';
 
+/// Manages the state of paginated user stories fetched from the server.
+///
+/// Handles:
+/// - Fetching stories with pagination
+/// - Refreshing story list
+/// - Tracking loading state and error messages
+/// - Exposing whether more stories are available
+///
+/// Depends on [StoryRepository] for data access.
 class StoryProvider extends ChangeNotifier {
   final StoryRepository _repository;
 

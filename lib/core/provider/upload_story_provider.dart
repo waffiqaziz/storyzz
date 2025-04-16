@@ -4,6 +4,15 @@ import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:storyzz/core/data/repository/story_repository.dart';
 
+/// Manages state for uploading user stories, including image selection and camera usage.
+///
+/// Handles:
+/// - Uploading stories with image
+/// - Managing loading, success, and error states
+/// - Handling caption and image input
+/// - Supporting camera integration (mobile and web platform)
+///
+/// Uses [StoryRepository] to perform the actual upload.
 class UploadStoryProvider extends ChangeNotifier {
   final StoryRepository _storyRepository;
 
