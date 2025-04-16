@@ -4,32 +4,26 @@ import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/provider/story_provider.dart';
 import 'package:storyzz/core/routes/my_route_delegate.dart';
-import 'package:storyzz/features/map/controller/map_story_controller.dart';
 import 'package:storyzz/features/map/presentation/widgets/empty_state_view.dart';
 import 'package:storyzz/features/map/presentation/widgets/map_story_card.dart';
+import 'package:storyzz/features/map/provider/map_provider.dart';
 
 /// A widget that displays a list of stories with support for
 /// pull-to-refresh, loading states, error handling, and empty states.
 ///
-/// - [MapStoryController] for controlling behavior such as refreshing and tapping stories,
-/// - [StoryProvider] to retrieve the story data and states.
-/// - [AppLocalizations] instance provides localized strings for display.
+/// Requires
+/// - onStoryTap: handle and manage tap event via callback if needed
 class StoryListView extends StatelessWidget {
-  final MapStoryController controller;
-  final StoryProvider storyProvider;
-  final AppLocalizations localizations;
   final Function(ListStory)? onStoryTap;
 
-  const StoryListView({
-    super.key,
-    required this.controller,
-    required this.storyProvider,
-    required this.localizations,
-    this.onStoryTap,
-  });
+  const StoryListView({super.key, this.onStoryTap});
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final mapProvider = context.watch<MapProvider>();
+    final storyProvider = context.watch<StoryProvider>();
+
     // error state view
     if (storyProvider.errorMessage.isNotEmpty) {
       return Center(
@@ -45,7 +39,7 @@ class StoryListView extends StatelessWidget {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: controller.refreshStories,
+              onPressed: () => mapProvider.refreshStories(),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Text(localizations.retry),
@@ -58,10 +52,10 @@ class StoryListView extends StatelessWidget {
 
     return RefreshIndicator(
       onRefresh: () async {
-        controller.refreshStories();
+        mapProvider.refreshStories();
       },
       child: CustomScrollView(
-        controller: controller.scrollController,
+        controller: mapProvider.scrollController,
         slivers: [
           // show loading indicator if initial load is in progress
           if (storyProvider.isLoading && storyProvider.stories.isEmpty)
@@ -79,7 +73,7 @@ class StoryListView extends StatelessWidget {
             SliverToBoxAdapter(child: EmptyState(localizations: localizations)),
 
           // display list of stories
-          if (storyProvider.stories.isNotEmpty) _buildSliverStoryList(),
+          if (storyProvider.stories.isNotEmpty) _buildSliverStoryList(context),
 
           // show loading indicator at the bottom when loading more
           if (storyProvider.isLoading && storyProvider.stories.isNotEmpty)
@@ -97,10 +91,9 @@ class StoryListView extends StatelessWidget {
   }
 
   /// Builds a sliver list of stories with padding.
-  ///
-  /// Each story item is rendered using [MapStoryCard]. If a story includes
-  /// latitude and longitude, a location icon will be shown.
-  Widget _buildSliverStoryList() {
+  Widget _buildSliverStoryList(BuildContext context) {
+    final storyProvider = context.watch<StoryProvider>();
+
     return SliverPadding(
       padding: EdgeInsets.all(16),
       sliver: SliverList(
@@ -122,15 +115,14 @@ class StoryListView extends StatelessWidget {
 
             final story = storyProvider.stories[index];
 
-            /// One tap to navigate marker position
-            /// Double tap to open detail story
             return GestureDetector(
               onTap: () {
-                // use the callback if provided
+                // use the callback if provided,
+                // on this case, it used on potrait layout
                 if (onStoryTap != null) {
-                  onStoryTap!(story);
+                  onStoryTap!(story); // used via callback
                 } else {
-                  controller.onStoryTap(story);
+                  context.read<MapProvider>().onStoryTap(story);
                 }
               },
               onDoubleTap:

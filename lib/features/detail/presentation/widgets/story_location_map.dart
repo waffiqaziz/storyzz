@@ -79,15 +79,11 @@ class _StoryLocationMapState extends State<StoryLocationMap> {
             markers: markers,
             initialCameraPosition: CameraPosition(
               target: LatLng(widget.latitude, widget.longitude),
-              zoom: 17.0,
+              zoom: 11.0,
             ),
             myLocationButtonEnabled: widget.controlsEnabled,
             zoomControlsEnabled: widget.controlsEnabled,
             zoomGesturesEnabled: true,
-            onCameraIdle: () {
-              // Optional: log or act when the map is idle
-              debugPrint('Map is idle');
-            },
           ),
         );
       },

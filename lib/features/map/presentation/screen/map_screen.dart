@@ -6,6 +6,7 @@ import 'package:storyzz/core/provider/story_provider.dart';
 import 'package:storyzz/features/map/controller/map_story_controller.dart';
 import 'package:storyzz/features/map/presentation/layout/landscape_layout.dart';
 import 'package:storyzz/features/map/presentation/layout/potrait_layout.dart';
+import 'package:storyzz/features/map/provider/map_provider.dart';
 
 /// A screen that displays stories on a map with either portrait or landscape layout,
 /// depending on the screen width.
@@ -23,28 +24,20 @@ class MapStoryScreen extends StatefulWidget {
 }
 
 class _MapStoryScreenState extends State<MapStoryScreen> {
-  late MapStoryController _controller;
-
   @override
   void initState() {
     super.initState();
-    _controller = MapStoryController(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _controller.initData();
+      // initialize data
+      context.read<MapProvider>().initData();
     });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    // determine if layout is landscape based on screen width
     final isLandscape = MediaQuery.of(context).size.width > 600;
+    final mapProvider = context.watch<MapProvider>();
 
     return Scaffold(
       appBar: AppBar(
@@ -58,13 +51,13 @@ class _MapStoryScreenState extends State<MapStoryScreen> {
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),
-            onPressed: _controller.refreshStories,
+            onPressed: mapProvider.refreshStories,
             tooltip: localizations.refresh,
           ),
           SizedBox(width: 4),
           IconButton(
             icon: Icon(Icons.layers),
-            onPressed: _controller.toggleMapType,
+            onPressed: mapProvider.toggleMapType,
             tooltip: localizations.change_map_type,
           ),
           SizedBox(width: 8),
@@ -72,6 +65,19 @@ class _MapStoryScreenState extends State<MapStoryScreen> {
       ),
       body: Consumer2<AuthProvider, StoryProvider>(
         builder: (context, authProvider, storyProvider, child) {
+          // Location warning snackbar
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mapProvider.shouldShowLocationWarning) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(mapProvider.locationWarningMessage),
+                  duration: Duration(seconds: 3),
+                  action: SnackBarAction(label: "OK", onPressed: () {}),
+                ),
+              );
+            }
+          });
+
           // Loading state
           if (authProvider.isLoadingLogin) {
             return Center(child: CircularProgressIndicator());
@@ -101,9 +107,7 @@ class _MapStoryScreenState extends State<MapStoryScreen> {
           }
 
           // Build layout based on orientation
-          return isLandscape
-              ? LandscapeLayout(controller: _controller)
-              : PortraitLayout(controller: _controller);
+          return isLandscape ? LandscapeLayout() : PortraitLayout();
         },
       ),
     );

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:storyzz/core/localization/l10n/app_localizations.dart';
-import 'package:storyzz/core/provider/story_provider.dart';
 import 'package:storyzz/features/map/presentation/layout/vertical_split_view.dart';
-import 'package:storyzz/features/map/controller/map_story_controller.dart';
 import 'package:storyzz/features/map/presentation/widgets/map_view.dart';
 import 'package:storyzz/features/map/presentation/widgets/story_list_view.dart';
 
@@ -14,22 +10,13 @@ import 'package:storyzz/features/map/presentation/widgets/story_list_view.dart';
 /// - The story list occupies 25% of the width.
 /// - The map view fills the remaining 75%.
 class LandscapeLayout extends StatelessWidget {
-  final MapStoryController controller;
-
-  const LandscapeLayout({super.key, required this.controller});
+  const LandscapeLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final storyProvider = context.watch<StoryProvider>();
-    final localizations = AppLocalizations.of(context)!;
-
     return VerticalSplitView(
-      left: StoryListView(
-        controller: controller,
-        storyProvider: storyProvider,
-        localizations: localizations,
-      ),
-      right: MapView(controller: controller),
+      left: StoryListView(),
+      right: MapView(),
       ratio: 0.25,
     );
   }
