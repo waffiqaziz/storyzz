@@ -100,11 +100,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     if (_uploadStoryProvider!.isSuccess) {
       _cameraService.cleanup();
 
-      // refresh to get the latest story
-      context.read<StoryProvider>().refreshStories(user: authProvider.user!);
-
       // navigate to home screen
       context.read<MyRouteDelegate>().navigateToHome();
+
+      await context.read<StoryProvider>().refreshStories(user: authProvider.user!);
 
       // show snackbar upload success
       ScaffoldMessenger.of(context).showSnackBar(

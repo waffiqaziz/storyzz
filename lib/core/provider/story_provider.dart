@@ -50,9 +50,12 @@ class StoryProvider extends ChangeNotifier {
 
     if (result.data != null && !result.data!.error) {
       if (refresh) {
-        _stories = result.data!.listStory;
+        // Freezed package create immutable ListStory so,
+        // create a new mutable list instead of directly assigning,
+        _stories = List<ListStory>.from(result.data!.listStory);
       } else {
-        _stories.addAll(result.data!.listStory);
+        // create a new mutable list with all current items plus new ones
+        _stories = [..._stories, ...result.data!.listStory];
       }
       _hasMoreStories = result.data!.listStory.length >= _pageSize;
       _currentPage++;
