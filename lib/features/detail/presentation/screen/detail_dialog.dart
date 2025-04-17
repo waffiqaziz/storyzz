@@ -39,7 +39,7 @@ class StoryDetailDialog extends StatelessWidget {
       canPop: true,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
-          onClose;
+          onClose();
         }
       },
       child: Dialog(
