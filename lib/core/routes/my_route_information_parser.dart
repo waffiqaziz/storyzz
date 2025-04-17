@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:storyzz/core/routes/app_route_path.dart';
 
+/// A custom [RouteInformationParser] that converts between [RouteInformation]
+/// and [AppRoutePath].
+///
+/// Responsible for:
+/// - Parsing incoming route URLs into structured [AppRoutePath] instances
+/// - Restoring URLs from the current app state
+///
+/// Supported routes:
+/// - `/login` → Login screen
+/// - `/register` → Register screen
+/// - `/home`, `/map`, `/upload`, `/settings` → Main screen with tab index
+/// - `/story/:id` → Story detail view
+/// - Any unknown path → Unknown route (404)
 class MyRouteInformationParser extends RouteInformationParser<AppRoutePath> {
   @override
   Future<AppRoutePath> parseRouteInformation(
