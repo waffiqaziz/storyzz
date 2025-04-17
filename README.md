@@ -17,8 +17,9 @@ Storyzz is a cross-platform Flutter application that enables users to share stor
 ### Story Management
 
 - **Story Feed** - Browse stories from other users
-- **Story Details** - View full story information with images and descriptions
+- **Story Details** - View full story information with images, descriptions, and a map of the story location.
 - **Create Stories** - Upload images (max 1MB) with custom captions
+- **Map & List View** -  Display a split-screen showing a map with story locations alongside a scrollable list of stories.
 
 ### UI/UX
 
@@ -65,7 +66,43 @@ samples, guidance on mobile development, and a full API reference.
    dart run build_runner build --delete-conflicting-outputs
    ```
 
-4. Run the application
+4. Environment Setup
+
+   - **Web**
+
+     For local development web, create a local version of `web/env.js` with your      development API key:
+
+     ```js
+     window.ENV = {
+       GOOGLE_MAPS_API_KEY: 'YOUR_API_KEY'
+     };
+     ```
+
+   - **Android**
+
+     Add your api on `android\app\src\main\AndroidManifest.xml`
+
+     ```xml
+     ...
+     // TODO: Add your Google Maps Api Key here
+     <meta-data
+         android:name="com.google.android.geo.API_KEY"
+         android:value="YOUR_API_KEY" />
+     ...
+     ```
+
+   - **iOS**
+
+     Add your api on `ios\Runner\AppDelegate.swift`
+
+     ```swift
+     ...
+     // TODO: Add your Google Maps Api Key here
+     GMSServices.provideAPIKey("YOUR_API_KEY")
+     ...
+     ```
+
+5. Run the application
 
    ```bash
    flutter run
@@ -137,7 +174,3 @@ This application uses the Dicoding Story API:
   <img src="./doc/screenshots/desktop-localization-dark.png" width="400" alt="Localization Dialog (Dark)" />
 </p>
 </details>
-
-## 🔒 Environment Setup
-
-[under construction]

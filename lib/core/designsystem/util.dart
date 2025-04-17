@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Funvtion to set Nunito fonts from assets as default Font Family
 TextTheme createTextTheme(BuildContext context) {
   TextTheme baseTextTheme = Theme.of(context).textTheme;
 

@@ -12,6 +12,7 @@ import 'package:storyzz/core/provider/story_provider.dart';
 import 'package:storyzz/core/provider/upload_story_provider.dart';
 import 'package:storyzz/core/routes/my_route_delegate.dart';
 import 'package:storyzz/core/routes/my_route_information_parser.dart';
+import 'package:storyzz/features/map/provider/map_provider.dart';
 import 'package:storyzz/my_app.dart';
 
 class AppRoot extends StatelessWidget {
@@ -33,6 +34,7 @@ class AppRoot extends StatelessWidget {
         Provider(
           create: (context) => StoryRepository(context.read<ApiServices>()),
         ),
+
         ChangeNotifierProvider(
           create: (context) => AuthProvider(context.read<AuthRepository>()),
         ),
@@ -49,6 +51,13 @@ class AppRoot extends StatelessWidget {
         ChangeNotifierProvider(
           create:
               (context) => SettingsProvider(context.read<SettingRepository>()),
+        ),
+        ChangeNotifierProvider(
+          create:
+              (context) => MapProvider(
+                authProvider: context.read<AuthProvider>(),
+                storyProvider: context.read<StoryProvider>(),
+              ),
         ),
       ],
       child: MyApp(),

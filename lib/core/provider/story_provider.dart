@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/data/networking/responses/stories_response.dart';
+import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/data/repository/story_repository.dart';
 
+/// Manages the state of paginated user stories fetched from the server.
+///
+/// Handles:
+/// - Fetching stories with pagination
+/// - Refreshing story list
+/// - Tracking loading state and error messages
+/// - Exposing whether more stories are available
+///
+/// Depends on [StoryRepository] for data access.
 class StoryProvider extends ChangeNotifier {
   final StoryRepository _repository;
 
@@ -41,9 +50,12 @@ class StoryProvider extends ChangeNotifier {
 
     if (result.data != null && !result.data!.error) {
       if (refresh) {
-        _stories = result.data!.listStory;
+        // Freezed package create immutable ListStory so,
+        // create a new mutable list instead of directly assigning,
+        _stories = List<ListStory>.from(result.data!.listStory);
       } else {
-        _stories.addAll(result.data!.listStory);
+        // create a new mutable list with all current items plus new ones
+        _stories = [..._stories, ...result.data!.listStory];
       }
       _hasMoreStories = result.data!.listStory.length >= _pageSize;
       _currentPage++;

@@ -1,8 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:storyzz/core/constants/my_prefs_key.dart';
 import 'package:storyzz/core/data/model/setting.dart';
 import 'package:storyzz/core/data/repository/setting_repository.dart';
 
+/// Manages app settings such as theme and language preferences.
+///
+/// Handles:
+/// - Initializing settings from storage or system defaults
+/// - Updating and persisting theme and locale
+/// - Exposing localized [Locale] and [Setting] objects
+/// - Providing status messages for UI feedback
+///
+/// Uses [SettingRepository] for data persistence.
 class SettingsProvider extends ChangeNotifier {
   final SettingRepository _settingRepository;
 
@@ -21,7 +31,7 @@ class SettingsProvider extends ChangeNotifier {
 
   void _initializeSettings() {
     try {
-      // Get theme setting
+      // get theme setting
       final isDarkSystem =
           WidgetsBinding.instance.platformDispatcher.platformBrightness ==
           Brightness.dark;
@@ -31,12 +41,12 @@ class SettingsProvider extends ChangeNotifier {
               ? _settingRepository.getSettingValue().isDark
               : isDarkSystem;
 
-      // Get language setting
+      // get language setting
       final String savedLanguage =
-          _settingRepository.getString(SettingRepository.languageKey) ?? 'en';
+          _settingRepository.getString(SettingsPrefsKeys.languageKey) ?? 'en';
       _locale = Locale(savedLanguage);
 
-      // Create combined setting
+      // create combined setting
       _setting = Setting(isDark: savedIsDark, locale: savedLanguage);
 
       _message = "Settings initialized successfully";

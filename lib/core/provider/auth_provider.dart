@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:storyzz/core/data/networking/responses/login_response.dart';
-import 'package:storyzz/core/data/networking/responses/register_response.dart';
+import 'package:storyzz/core/data/networking/responses/general_response.dart';
 import 'package:storyzz/core/data/networking/utils/api_utils.dart';
 
 import '../data/repository/auth_repository.dart';
 import '../data/model/user.dart';
 
+/// Provides authentication logic and state management.
+///
+/// Handles:
+/// - Login, logout, and registration flows
+/// - Persisting and retrieving the authenticated user
+/// - Tracking loading and error states
+///
+/// Relies on [AuthRepository] for actual auth operations.
 class AuthProvider extends ChangeNotifier {
   final AuthRepository authRepository;
 

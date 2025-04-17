@@ -18,10 +18,16 @@ class AppLocalizationsId extends AppLocalizations {
   String get settings => 'Pengaturan';
 
   @override
-  String get upload_story => 'Unggah Cerita';
+  String get map => 'Peta';
 
   @override
   String get cancel => 'Batal';
+
+  @override
+  String get refresh => 'Muat ulang';
+
+  @override
+  String get change_map_type => 'Ganti tema peta';
 
   @override
   String get direct_story_access_not_support =>
@@ -37,6 +43,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get email => 'Email';
 
   @override
+  String get email_form => 'Kolom email';
+
+  @override
   String get enter_email => 'Mohon masukkan alamat email Anda';
 
   @override
@@ -44,6 +53,9 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get password => 'Kata Sandi';
+
+  @override
+  String get password_form => 'Kolom kata sandi';
 
   @override
   String get enter_password => 'Mohon masukkan kata sandi Anda';
@@ -195,6 +207,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get m_ago_plural => 'menit yang lalu';
 
   @override
+  String get upload_story => 'Unggah Cerita';
+
+  @override
   String get camera => 'Kamera';
 
   @override
@@ -214,8 +229,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get error_picking_image => 'Terjadi kesalahan saat memilih gambar:';
 
   @override
-  String get error_accessing_camera =>
-      'Terjadi kesalahan saat mengakses kamera:';
+  String get error_accessing_camera => 'Akses kamera ditolak';
 
   @override
   String get error_initializing_camera =>

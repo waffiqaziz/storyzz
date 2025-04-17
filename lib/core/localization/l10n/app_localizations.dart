@@ -116,17 +116,29 @@ abstract class AppLocalizations {
   /// **'Pengaturan'**
   String get settings;
 
-  /// No description provided for @upload_story.
+  /// No description provided for @map.
   ///
   /// In id, this message translates to:
-  /// **'Unggah Cerita'**
-  String get upload_story;
+  /// **'Peta'**
+  String get map;
 
   /// No description provided for @cancel.
   ///
   /// In id, this message translates to:
   /// **'Batal'**
   String get cancel;
+
+  /// No description provided for @refresh.
+  ///
+  /// In id, this message translates to:
+  /// **'Muat ulang'**
+  String get refresh;
+
+  /// No description provided for @change_map_type.
+  ///
+  /// In id, this message translates to:
+  /// **'Ganti tema peta'**
+  String get change_map_type;
 
   /// No description provided for @direct_story_access_not_support.
   ///
@@ -152,6 +164,12 @@ abstract class AppLocalizations {
   /// **'Email'**
   String get email;
 
+  /// No description provided for @email_form.
+  ///
+  /// In id, this message translates to:
+  /// **'Kolom email'**
+  String get email_form;
+
   /// No description provided for @enter_email.
   ///
   /// In id, this message translates to:
@@ -169,6 +187,12 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Kata Sandi'**
   String get password;
+
+  /// No description provided for @password_form.
+  ///
+  /// In id, this message translates to:
+  /// **'Kolom kata sandi'**
+  String get password_form;
 
   /// No description provided for @enter_password.
   ///
@@ -464,6 +488,12 @@ abstract class AppLocalizations {
   /// **'menit yang lalu'**
   String get m_ago_plural;
 
+  /// No description provided for @upload_story.
+  ///
+  /// In id, this message translates to:
+  /// **'Unggah Cerita'**
+  String get upload_story;
+
   /// No description provided for @camera.
   ///
   /// In id, this message translates to:
@@ -503,7 +533,7 @@ abstract class AppLocalizations {
   /// No description provided for @error_accessing_camera.
   ///
   /// In id, this message translates to:
-  /// **'Terjadi kesalahan saat mengakses kamera:'**
+  /// **'Akses kamera ditolak'**
   String get error_accessing_camera;
 
   /// No description provided for @error_initializing_camera.

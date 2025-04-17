@@ -18,14 +18,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings => 'Settings';
 
   @override
-  String get upload_story => 'Upload Story';
+  String get map => 'Map';
 
   @override
   String get cancel => 'Cancel';
 
   @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get change_map_type => 'Change map type';
+
+  @override
   String get direct_story_access_not_support =>
-      'Akses cerita langsung tidak didukung. Diarahkan ke beranda.';
+      'Direcct story access not supported. Redirect to home.';
 
   @override
   String get welcome_back => 'Welcome Back';
@@ -37,6 +43,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get email => 'Email';
 
   @override
+  String get email_form => 'Email form';
+
+  @override
   String get enter_email => 'Please enter your email';
 
   @override
@@ -44,6 +53,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get password => 'Password';
+
+  @override
+  String get password_form => 'Password form';
 
   @override
   String get enter_password => 'Please enter your password';
@@ -194,6 +206,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get m_ago_plural => 'minutes ago';
 
   @override
+  String get upload_story => 'Upload Story';
+
+  @override
   String get camera => 'Camera';
 
   @override
@@ -221,7 +236,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_switching_camera => 'Error switching camera:';
 
   @override
-  String get camera_access_denied => 'Camera access denied:';
+  String get camera_access_denied => 'Camera access denied';
 
   @override
   String get camera_used_by_other =>
