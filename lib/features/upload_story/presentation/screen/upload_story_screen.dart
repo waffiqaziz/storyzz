@@ -103,14 +103,18 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       // navigate to home screen
       context.read<MyRouteDelegate>().navigateToHome();
 
-      await context.read<StoryProvider>().refreshStories(user: authProvider.user!);
+      await context.read<StoryProvider>().refreshStories(
+        user: authProvider.user!,
+      );
 
       // show snackbar upload success
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(AppLocalizations.of(context)!.story_upload_success),
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.story_upload_success),
+          ),
+        );
+      }
       _uploadStoryProvider!.reset();
     } else if (_uploadStoryProvider!.errorMessage != null) {
       // show snackbar upload failed
