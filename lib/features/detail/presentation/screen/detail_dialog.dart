@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/utils/helper.dart';
-import 'package:storyzz/features/detail/presentation/widgets/story_location_map.dart';
+import 'package:storyzz/features/detail/presentation/widgets/location_section.dart';
 
 /// A dialog view that displays the details of a story, similar to the full-screen
 /// `StoryDetailScreen`, but presented in a dialog. This is typically shown for
-/// mobile views or when a more compact presentation is required.
+/// desktop view
 ///
 /// Displays the following:
 /// - Story image (with loading and error states)
@@ -90,7 +90,11 @@ class StoryDetailDialog extends StatelessWidget {
 
                             // location info if available
                             if (story.lat != null && story.lon != null)
-                              _buildLocationSection(context, localizations),
+                              LocationSection(
+                                story: story,
+                                mapControlsEnabled: false,
+                                mapKeyPrefix: 'dialog',
+                              ),
                           ],
                         ),
                       ),
@@ -185,44 +189,6 @@ class StoryDetailDialog extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildLocationSection(
-    BuildContext context,
-    AppLocalizations localizations,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Divider(),
-        SizedBox(height: 16),
-        Row(
-          children: [
-            Icon(Icons.location_on, color: Colors.red),
-            SizedBox(width: 8),
-            Text(
-              localizations.location,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-          ],
-        ),
-        SizedBox(height: 8),
-        Text(
-          '${localizations.latitude}: ${story.lat?.toStringAsFixed(6)}, ${localizations.longitude}: ${story.lon?.toStringAsFixed(6)}',
-          style: TextStyle(fontSize: 14),
-        ),
-        SizedBox(height: 16),
-
-        // map view - potentially using a smaller height for the dialog
-        StoryLocationMap(
-          key: ValueKey('dialog-location-map-${story.id}'),
-          latitude: story.lat!,
-          longitude: story.lon!,
-          height: 400.0,
-          controlsEnabled: false, // disable controls in dialog for cleaner look
         ),
       ],
     );

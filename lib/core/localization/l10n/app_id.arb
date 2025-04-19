@@ -52,6 +52,8 @@
   "latitude": "Garis Lintang",
   "longitude": "Garis Bujur",
   "map_view": "Tampilan Peta",
+  "loading_address": "Memuat alamat",
+  "address_not_available": "Alamat tidak tersedia",
 
   "show_more": "Lihat Selengkapnya",
   "show_less": "Sembunyikan",

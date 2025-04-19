@@ -30,8 +30,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get change_map_type => 'Ganti tema peta';
 
   @override
-  String get direct_story_access_not_support =>
-      'Akses langsung ke cerita tidak didukung. Dialihkan ke beranda.';
+  String get direct_story_access_not_support => 'Akses langsung ke cerita tidak didukung. Dialihkan ke beranda.';
 
   @override
   String get welcome_back => 'Selamat Datang Kembali';
@@ -61,8 +60,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get enter_password => 'Mohon masukkan kata sandi Anda';
 
   @override
-  String get password_minimum =>
-      'Kata sandi harus terdiri dari minimal 8 karakter';
+  String get password_minimum => 'Kata sandi harus terdiri dari minimal 8 karakter';
 
   @override
   String get forgot_password => 'Lupa Kata Sandi?';
@@ -149,6 +147,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get map_view => 'Tampilan Peta';
 
   @override
+  String get loading_address => 'Memuat alamat';
+
+  @override
+  String get address_not_available => 'Alamat tidak tersedia';
+
+  @override
   String get show_more => 'Lihat Selengkapnya';
 
   @override
@@ -164,8 +168,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get no_stories => 'Tidak ada cerita yang tersedia';
 
   @override
-  String get pull_to_refresh =>
-      'Tarik ke bawah untuk menyegarkan atau ketuk tombol + untuk menambahkan cerita baru';
+  String get pull_to_refresh => 'Tarik ke bawah untuk menyegarkan atau ketuk tombol + untuk menambahkan cerita baru';
 
   @override
   String get logout_success => 'Berhasil keluar';
@@ -219,8 +222,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get change_image => 'Ganti Gambar';
 
   @override
-  String get image_too_large =>
-      'Ukuran gambar terlalu besar. Ukuran maksimum adalah 1MB.';
+  String get image_too_large => 'Ukuran gambar terlalu besar. Ukuran maksimum adalah 1MB.';
 
   @override
   String get error_taking_picture => 'Terjadi kesalahan saat mengambil gambar:';
@@ -232,19 +234,16 @@ class AppLocalizationsId extends AppLocalizations {
   String get error_accessing_camera => 'Akses kamera ditolak';
 
   @override
-  String get error_initializing_camera =>
-      'Terjadi kesalahan saat menyiapkan kamera:';
+  String get error_initializing_camera => 'Terjadi kesalahan saat menyiapkan kamera:';
 
   @override
-  String get error_switching_camera =>
-      'Terjadi kesalahan saat mengganti kamera:';
+  String get error_switching_camera => 'Terjadi kesalahan saat mengganti kamera:';
 
   @override
   String get camera_access_denied => 'Akses ke kamera ditolak:';
 
   @override
-  String get camera_used_by_other =>
-      'Kamera sedang digunakan oleh aplikasi atau tab lain. Silakan tutup aplikasi kamera lainnya dan coba kembali.';
+  String get camera_used_by_other => 'Kamera sedang digunakan oleh aplikasi atau tab lain. Silakan tutup aplikasi kamera lainnya dan coba kembali.';
 
   @override
   String get please_select_image => 'Mohon pilih gambar terlebih dahulu';

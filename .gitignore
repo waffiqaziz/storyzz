@@ -50,3 +50,4 @@ lib/core/localization/l10n/untranslated.txt
 *.g.dart
 
 web/env.js
+*.env

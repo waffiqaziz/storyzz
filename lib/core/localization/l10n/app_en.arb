@@ -52,6 +52,8 @@
   "latitude": "Latitude",
   "longitude": "Longitude",
   "map_view": "Map view would appear here",
+  "loading_address": "Loading address",
+  "address_not_available": "Address not available",
 
   "show_more": "Show more",
   "show_less": "Show less",
