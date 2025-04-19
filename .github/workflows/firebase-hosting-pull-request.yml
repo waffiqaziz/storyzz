@@ -34,7 +34,7 @@ jobs:
       # Create .env file from secrets
       - name: Create .env file
         run: |
-          echo "GEOCODE_API_KEY=${{ secrets.GEOCODE_API_KEY }}" > assets/.env
+          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
 
       # Create env.js file with API key
       - name: Create environment file
