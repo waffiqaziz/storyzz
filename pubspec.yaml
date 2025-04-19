@@ -99,7 +99,7 @@ flutter:
     - assets/
     - assets/icon/
     - assets/flag/
-    - .env
+    - assets/.env
 
   fonts:
     - family: Nunito
