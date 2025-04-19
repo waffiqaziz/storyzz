@@ -27,6 +27,11 @@ jobs:
         run: |
           flutter pub get
           dart run build_runner build --delete-conflicting-outputs
+
+      # Create .env file from secrets
+      - name: Create .env file
+        run: |
+          echo "GEOCODE_API_KEY=${{ secrets.GEOCODE_API_KEY }}" > assets/.env
             
       # Create env.js file with API key
       - name: Create environment file

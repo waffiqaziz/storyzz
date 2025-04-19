@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/utils/helper.dart';
-import 'package:storyzz/features/detail/presentation/widgets/story_location_map.dart';
+import 'package:storyzz/features/detail/presentation/widgets/location_section.dart';
 
 /// A full-screen view that displays the details of a story including:
 /// - Hero image (with transition animation)
@@ -11,7 +11,7 @@ import 'package:storyzz/features/detail/presentation/widgets/story_location_map.
 /// - Map section (if location data is available)
 ///
 /// Typically shown when a user selects a story from the list.
-/// Works on both web and mobile platforms.
+/// Its for mobile view.
 ///
 /// Parameters:
 /// - [story]: The story object to display
@@ -102,7 +102,11 @@ class StoryDetailScreen extends StatelessWidget {
 
                   // location info if available
                   if (story.lat != null && story.lon != null)
-                    _buildLocationSection(context, localizations),
+                    LocationSection(
+                      story: story,
+                      mapControlsEnabled: true,
+                      mapKeyPrefix: 'detail',
+                    ),
                 ],
               ),
             ),
@@ -137,43 +141,6 @@ class StoryDetailScreen extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildLocationSection(
-    BuildContext context,
-    AppLocalizations localizations,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Divider(),
-        SizedBox(height: 16),
-        Row(
-          children: [
-            Icon(Icons.location_on, color: Colors.red),
-            SizedBox(width: 8),
-            Text(
-              localizations.location,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-          ],
-        ),
-        SizedBox(height: 8),
-        Text(
-          '${localizations.latitude}: ${story.lat?.toStringAsFixed(6)}, ${localizations.longitude}: ${story.lon?.toStringAsFixed(6)}',
-          style: TextStyle(fontSize: 14),
-        ),
-        SizedBox(height: 16),
-
-        // map view
-        StoryLocationMap(
-          key: ValueKey('detail-location-map-${story.id}'),
-          latitude: story.lat!,
-          longitude: story.lon!,
-          height: 400.0,
         ),
       ],
     );

@@ -3,9 +3,12 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:storyzz/core/data/networking/services/api_services.dart';
+import 'package:storyzz/core/data/networking/services/maps_api_services.dart';
 import 'package:storyzz/core/data/repository/auth_repository.dart';
+import 'package:storyzz/core/data/repository/maps_repository.dart';
 import 'package:storyzz/core/data/repository/setting_repository.dart';
 import 'package:storyzz/core/data/repository/story_repository.dart';
+import 'package:storyzz/core/provider/address_provider.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/provider/settings_provider.dart';
 import 'package:storyzz/core/provider/story_provider.dart';
@@ -27,6 +30,7 @@ class AppRoot extends StatelessWidget {
         Provider(create: (_) => SettingRepository(prefs)),
         Provider(create: (_) => MyRouteInformationParser()),
         Provider(create: (_) => ApiServices(httpClient: http.Client())),
+        Provider(create: (_) => MapsApiService(httpClient: http.Client())),
         Provider(
           create:
               (context) => AuthRepository(prefs, context.read<ApiServices>()),
@@ -34,7 +38,9 @@ class AppRoot extends StatelessWidget {
         Provider(
           create: (context) => StoryRepository(context.read<ApiServices>()),
         ),
-
+        Provider(
+          create: (context) => MapsRepository(context.read<MapsApiService>()),
+        ),
         ChangeNotifierProvider(
           create: (context) => AuthProvider(context.read<AuthRepository>()),
         ),
@@ -58,6 +64,9 @@ class AppRoot extends StatelessWidget {
                 authProvider: context.read<AuthProvider>(),
                 storyProvider: context.read<StoryProvider>(),
               ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AddressProvider(context.read<MapsRepository>()),
         ),
       ],
       child: MyApp(),
