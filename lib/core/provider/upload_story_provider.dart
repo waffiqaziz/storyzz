@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:storyzz/core/data/repository/story_repository.dart';
 
 /// Manages state for uploading user stories, including image selection and camera usage.
@@ -18,28 +19,33 @@ class UploadStoryProvider extends ChangeNotifier {
 
   UploadStoryProvider(this._storyRepository);
 
+  // state properties
   bool _isLoading = false;
   String? _errorMessage;
   bool _isSuccess = false;
   String _caption = '';
   XFile? _imageFile;
-
-  // web camera-related properties
-  bool _showCamera = false;
-  bool _isCameraInitialized = false;
-  bool _requestingPermission = false;
-  List<CameraDescription>? _cameras;
-
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   bool get isSuccess => _isSuccess;
   String get caption => _caption;
   XFile? get imageFile => _imageFile;
 
+  // web camera-related properties
+  bool _showCamera = false;
+  bool _isCameraInitialized = false;
+  bool _requestingPermission = false;
+  List<CameraDescription>? _cameras;
   bool get showCamera => _showCamera;
   bool get isCameraInitialized => _isCameraInitialized;
   bool get isRequestingPermission => _requestingPermission;
   List<CameraDescription>? get cameras => _cameras;
+
+  // location properties
+  bool _includeLocation = false;
+  LatLng? _selectedLocation;
+  bool get includeLocation => _includeLocation;
+  LatLng? get selectedLocation => _selectedLocation;
 
   void setCaption(String caption) {
     _caption = caption;
@@ -133,6 +139,8 @@ class UploadStoryProvider extends ChangeNotifier {
     required String token,
     required String description,
     required XFile imageFile,
+    double? lat,
+    double? lon,
   }) async {
     if (kIsWeb) {
       final bytes = await imageFile.readAsBytes();
@@ -141,6 +149,8 @@ class UploadStoryProvider extends ChangeNotifier {
         description: description,
         photoBytes: bytes,
         fileName: imageFile.name,
+        lat: lat,
+        lon: lon,
       );
     } else {
       final file = File(imageFile.path);
@@ -149,7 +159,19 @@ class UploadStoryProvider extends ChangeNotifier {
         description: description,
         photoFile: file,
         fileName: imageFile.name,
+        lat: lat,
+        lon: lon,
       );
     }
+  }
+
+  void toggleLocationIncluded(bool value) {
+    _includeLocation = value;
+    notifyListeners();
+  }
+
+  void setSelectedLocation(LatLng? location) {
+    _selectedLocation = location;
+    notifyListeners();
   }
 }

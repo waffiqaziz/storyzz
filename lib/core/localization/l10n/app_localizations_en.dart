@@ -30,7 +30,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get change_map_type => 'Change map type';
 
   @override
-  String get direct_story_access_not_support => 'Direcct story access not supported. Redirect to home.';
+  String get direct_story_access_not_support =>
+      'Direcct story access not supported. Redirect to home.';
 
   @override
   String get welcome_back => 'Welcome Back';
@@ -168,7 +169,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get no_stories => 'No stories available';
 
   @override
-  String get pull_to_refresh => 'Pull down to refresh or tap + to add a new story';
+  String get pull_to_refresh =>
+      'Pull down to refresh or tap + to add a new story';
 
   @override
   String get logout_success => 'Logout success';
@@ -243,7 +245,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get camera_access_denied => 'Camera access denied';
 
   @override
-  String get camera_used_by_other => 'Camera is in use by another app or tab. Please close other camera apps and try again.';
+  String get camera_used_by_other =>
+      'Camera is in use by another app or tab. Please close other camera apps and try again.';
 
   @override
   String get please_select_image => 'Please select an image first!';
@@ -265,4 +268,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get uploading_story => 'Uploading story...';
+
+  @override
+  String get tap_to_select_location => 'Tap to select location';
 }

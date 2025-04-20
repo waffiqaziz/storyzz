@@ -97,5 +97,6 @@
   "request_camera_permission": "Meminta izin akses kamera...",
   "initializing_camera": "Menyiapkan kamera...",
   "write_a_caption": "Tulis keterangan...",
-  "uploading_story": "Sedang mengunggah cerita..."
+  "uploading_story": "Sedang mengunggah cerita...",
+  "tap_to_select_location": "Ketuk untuk menentukan lokasi"
 }
