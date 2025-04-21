@@ -5,6 +5,7 @@ import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/routes/app_route_path.dart';
 import 'package:storyzz/core/utils/custom_page_transition.dart';
 import 'package:storyzz/core/widgets/dialog_page.dart';
+import 'package:storyzz/features/auth/presentation/transition/auth_screen_transition.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_dialog.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_screen.dart';
 
@@ -35,6 +36,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
   bool _isMainScreen = false;
   bool _isStoryDetail = false;
   bool _isStoryDetailDialog = false;
+  bool _isNavigatingForward = true;
   String? _currentStoryId;
   ListStory? _currentStory;
 
@@ -162,8 +164,9 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
       key: navigatorKey,
       pages: [
         if (_isLoginScreen)
-          MaterialPage(
-            key: ValueKey('LoginScreen'),
+          AuthScreenTransition(
+            key: const ValueKey('LoginScreen'),
+            isForward: !_isNavigatingForward,
             child: LoginScreen(
               onLogin: () {
                 _isLoggedIn = true;
@@ -172,6 +175,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
                 notifyListeners();
               },
               onRegister: () {
+                _isNavigatingForward = true;
                 _isRegisterScreen = true;
                 _isLoginScreen = false;
                 notifyListeners();
@@ -179,8 +183,9 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
             ),
           ),
         if (_isRegisterScreen)
-          MaterialPage(
-            key: ValueKey('RegisterScreen'),
+          AuthScreenTransition(
+            key: const ValueKey('RegisterScreen'),
+            isForward: _isNavigatingForward,
             child: RegisterScreen(
               onRegister: () {
                 _isLoggedIn = true;
@@ -189,6 +194,7 @@ class MyRouteDelegate extends RouterDelegate<AppRoutePath>
                 notifyListeners();
               },
               onLogin: () {
+                _isNavigatingForward = false;
                 _isLoginScreen = true;
                 _isRegisterScreen = false;
                 notifyListeners();

@@ -46,95 +46,101 @@ class LocationMapSelector extends StatelessWidget {
         ),
         if (uploadProvider.includeLocation) ...[
           const SizedBox(height: 16),
-          Container(
-            height: 250,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-            clipBehavior: Clip.antiAlias,
-            child: Stack(
-              children: [
-                // show map
-                GoogleMap(
-                  style: isDark ? customStyleDark : customStyleLight,
-                  mapType: MapType.normal,
-                  markers: {
-                    if (uploadProvider.selectedLocation != null)
-                      Marker(
-                        markerId: const MarkerId('story_location'),
-                        position: uploadProvider.selectedLocation!,
-                        draggable: true,
-                        onDragEnd: (newPosition) {
-                          uploadProvider.setSelectedLocation(newPosition);
-                        },
-                        infoWindow: InfoWindow(
-                          // show formatted address as snippet
-                          snippet:
-                              context
-                                  .watch<AddressProvider>()
-                                  .formattedAddress ??
-                              AppLocalizations.of(
-                                context,
-                              )!.address_not_available,
-                        ),
-                      ),
-                  },
-                  initialCameraPosition: CameraPosition(
-                    target:
-                        uploadProvider.selectedLocation ??
-                        const LatLng(-2.014380, 118.152180),
-                    zoom: uploadProvider.selectedLocation != null ? 12 : 4,
-                  ),
-                  myLocationButtonEnabled: true,
-                  zoomControlsEnabled: true,
-                  zoomGesturesEnabled: true,
-                  onTap: (position) {
-                    uploadProvider.setSelectedLocation(position);
-
-                    // get formatted address
-                    context.read<AddressProvider>().getAddressFromCoordinates(
-                      position.latitude,
-                      position.longitude,
-                    );
-                  },
-                ),
-
-                // show touch icon if user not yet selected any location
-                if (uploadProvider.selectedLocation == null)
-                  Positioned.fill(
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.touch_app,
-                            size: 40,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.primary.withValues(alpha: 0.8),
+          AnimatedOpacity(
+            opacity: uploadProvider.includeLocation ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 700),
+            child: Container(
+              height: 250,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Stack(
+                children: [
+                  // show map
+                  GoogleMap(
+                    style: isDark ? customStyleDark : customStyleLight,
+                    mapType: MapType.normal,
+                    markers: {
+                      if (uploadProvider.selectedLocation != null)
+                        Marker(
+                          markerId: const MarkerId('story_location'),
+                          position: uploadProvider.selectedLocation!,
+                          draggable: true,
+                          onDragEnd: (newPosition) {
+                            uploadProvider.setSelectedLocation(newPosition);
+                          },
+                          infoWindow: InfoWindow(
+                            // show formatted address as snippet
+                            snippet:
+                                context
+                                    .watch<AddressProvider>()
+                                    .formattedAddress ??
+                                AppLocalizations.of(
+                                  context,
+                                )!.address_not_available,
                           ),
-                          const SizedBox(height: 8),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
+                        ),
+                    },
+                    initialCameraPosition: CameraPosition(
+                      target:
+                          uploadProvider.selectedLocation ??
+                          const LatLng(-2.014380, 118.152180),
+                      zoom: uploadProvider.selectedLocation != null ? 12 : 4,
+                    ),
+                    myLocationButtonEnabled: true,
+                    zoomControlsEnabled: true,
+                    zoomGesturesEnabled: true,
+                    onTap: (position) {
+                      uploadProvider.setSelectedLocation(position);
+
+                      // get formatted address
+                      context.read<AddressProvider>().getAddressFromCoordinates(
+                        position.latitude,
+                        position.longitude,
+                      );
+                    },
+                  ),
+
+                  // show touch icon if user not yet selected any location
+                  if (uploadProvider.selectedLocation == null)
+                    Positioned.fill(
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.touch_app,
+                              size: 40,
                               color: Theme.of(
                                 context,
-                              ).colorScheme.surface.withValues(alpha: 0.8),
-                              borderRadius: BorderRadius.circular(16),
+                              ).colorScheme.primary.withValues(alpha: 0.8),
                             ),
-                            child: Text(
-                              AppLocalizations.of(
-                                context,
-                              )!.tap_to_select_location,
-                              textAlign: TextAlign.center,
+                            const SizedBox(height: 8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.surface.withValues(alpha: 0.8),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: Text(
+                                AppLocalizations.of(
+                                  context,
+                                )!.tap_to_select_location,
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
           if (uploadProvider.selectedLocation != null) ...[
