@@ -6,10 +6,6 @@ class MapsEnvironment {
   }
 
   static String get mapsCoApiKey {
-    return dotenv.env['GEOCODE_API_KEY'] ??
-        const String.fromEnvironment(
-          'GEOCODE_API_KEY',
-          defaultValue: 'default_placeholder_key',
-        );
+    return dotenv.get('GEOCODE_API_KEY', fallback: 'NO_API_KEY');
   }
 }
