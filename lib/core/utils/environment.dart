@@ -2,7 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class MapsEnvironment {
   static Future<void> initialize() async {
-    await dotenv.load(fileName: ".env");
+    await dotenv.load(fileName: "assets/.env");
   }
 
   static String get mapsCoApiKey {
