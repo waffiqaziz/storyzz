@@ -97,5 +97,6 @@
   "request_camera_permission": "Requesting camera permission...",
   "initializing_camera": "Initializing camera...",
   "write_a_caption": "Write a caption...",
-  "uploading_story": "Uploading story..."
+  "uploading_story": "Uploading story...",
+  "tap_to_select_location": "Tap to select location"
 }

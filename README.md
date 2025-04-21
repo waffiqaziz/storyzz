@@ -112,11 +112,14 @@ This application use several API's:
   <img src="./doc/screenshots/mobile-upload-story.png"
     width="250" alt="Upload Story Screen"
     />
+  <img src="./doc/screenshots/mobile-upload-story2.png"
+    width="250" alt="Upload Story Screen Filled"
+    />
+</p>
+<p>
   <img src="./doc/screenshots/mobile-settings.png"
     width="250" alt="Settings Screen"
   />
-</p>
-<p>
   <img src="./doc/screenshots/mobile-localization.png"
     width="250" alt="Localization Dialog"
   />
@@ -141,22 +144,25 @@ This application use several API's:
 </p>
 <p float="left">
   <img src="./doc/screenshots/mobile-map-dark.png"
-    width="250" alt="Upload Map Screen (Dark)" /
-
+    width="250" alt="Upload Map Screen (Dark)"
+  />
   <img src="./doc/screenshots/mobile-upload-story-dark.png"
     width="250" alt="Upload Story Screen (Dark)"
   />
-  <img src="./doc/screenshots/mobile-settings-dark.png"
-    width="250" alt="Settings Screen (Dark)"
+    <img src="./doc/screenshots/mobile-upload-story-dark2.png"
+    width="250" alt="Upload Story Screen Filled (Dark)"
   />
 </p>
 <p>
+  <img src="./doc/screenshots/mobile-settings-dark.png"
+    width="250" alt="Settings Screen (Dark)"
+  />
   <img src="./doc/screenshots/mobile-localization-dark.png"
-    width="250" alt="Localization Dialog (Dark)" />  <img src="./doc/screenshots/mobile-detail-da
-  k.png"
-    width="
-  50
-  " alt="Detail Screen (Dark)" />
+    width="250" alt="Localization Dialog (Dark)"
+  />
+  <img src="./doc/screenshots/mobile-detail-dark.png"
+    width="250" alt="Detail Screen (Dark)"
+  />
 </p>
 </details>
 
@@ -187,9 +193,17 @@ This application use several API's:
   />
 </p>
 <p>
+  <img src="./doc/screenshots/desktop-upload-story2.png"
+    width="400" alt="Upload Story Screen Filled Top"
+  />
+  <img src="./doc/screenshots/desktop-upload-story3.png"
+    width="400" alt="Upload Story Screen Filled Bottom"
+  />
+</p>
+<p>
   <img src="./doc/screenshots/desktop-detail1.png"
-    width="400" alt="Dialog Detail Screen Top" /
-
+    width="400" alt="Dialog Detail Screen Top"
+  />
   <img src="./doc/screenshots/desktop-detail2.png"
     width="400" alt="Dialog Detail Screen Bottom"
   />
@@ -228,9 +242,17 @@ This application use several API's:
   />
 </p>
 <p>
+  <img src="./doc/screenshots/desktop-upload-story-dark2.png"
+    width="400" alt="Upload Story Screen Top (Dark)"
+  />  
+  <img src="./doc/screenshots/desktop-upload-story-dark3.png"
+    width="400" alt="Upload Story Screen Bottom (Dark)"
+  />
+</p>
+<p>
   <img src="./doc/screenshots/desktop-detail1-dark.png"
-    width="400" alt="Dialog Detail Screen Top (Dark)" /
-
+    width="400" alt="Dialog Detail Screen Top (Dark)"
+  />
   <img src="./doc/screenshots/desktop-detail2-dark.png"
     width="400" alt="Dialog Detail Screen Bottom (Dark)"
   />

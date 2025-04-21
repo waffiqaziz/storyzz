@@ -11,6 +11,7 @@ import 'package:storyzz/core/provider/upload_story_provider.dart';
 import 'package:storyzz/core/routes/my_route_delegate.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/camera_web_view.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/image_preview.dart';
+import 'package:storyzz/features/upload_story/presentation/widgets/location_map_selector.dart';
 import 'package:storyzz/features/upload_story/services/camera_service.dart';
 import 'package:storyzz/features/upload_story/services/image_picker_services.dart';
 
@@ -24,7 +25,7 @@ class UploadStoryScreen extends StatefulWidget {
 class _UploadStoryScreenState extends State<UploadStoryScreen> {
   late final CameraService _cameraService;
   late final ImagePickerService _imagePickerService;
-  UploadStoryProvider? _uploadStoryProvider;
+  late UploadStoryProvider _uploadStoryProvider;
 
   @override
   void initState() {
@@ -47,7 +48,6 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   void dispose() {
     // clean up camera to prevent memory leak
     _cameraService.cleanup();
-    _uploadStoryProvider = null;
     super.dispose();
   }
 
@@ -62,8 +62,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   Future<void> _uploadStory() async {
     final authProvider = context.read<AuthProvider>();
 
-    final imageFile = _uploadStoryProvider!.imageFile;
-    final caption = _uploadStoryProvider!.caption;
+    final imageFile = _uploadStoryProvider.imageFile;
+    final caption = _uploadStoryProvider.caption;
 
     if (imageFile == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -85,19 +85,30 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     }
 
     authProvider.getUser();
-    _uploadStoryProvider!.reset();
+    _uploadStoryProvider.reset();
 
     final token = authProvider.user?.token ?? "";
+    double? lat;
+    double? lon;
 
-    await _uploadStoryProvider!.uploadStoryWithFile(
+    // Include location data if user has enabled it
+    if (_uploadStoryProvider.includeLocation &&
+        _uploadStoryProvider.selectedLocation != null) {
+      lat = _uploadStoryProvider.selectedLocation!.latitude;
+      lon = _uploadStoryProvider.selectedLocation!.longitude;
+    }
+
+    await _uploadStoryProvider.uploadStoryWithFile(
       token: token,
       description: caption,
       imageFile: imageFile,
+      lat: lat,
+      lon: lon,
     );
 
     if (!mounted) return;
 
-    if (_uploadStoryProvider!.isSuccess) {
+    if (_uploadStoryProvider.isSuccess) {
       _cameraService.cleanup();
 
       // navigate to home screen
@@ -115,11 +126,11 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
           ),
         );
       }
-      _uploadStoryProvider!.reset();
-    } else if (_uploadStoryProvider!.errorMessage != null) {
+      _uploadStoryProvider.reset();
+    } else if (_uploadStoryProvider.errorMessage != null) {
       // show snackbar upload failed
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(_uploadStoryProvider!.errorMessage!)),
+        SnackBar(content: Text(_uploadStoryProvider.errorMessage!)),
       );
     }
   }
@@ -184,6 +195,11 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
+
+                      // Location Map Selector here
+                      LocationMapSelector(),
+                      const SizedBox(height: 16),
+
                       ElevatedButton.icon(
                         onPressed:
                             isUploading ? null : () => uploadProvider.reset(),
