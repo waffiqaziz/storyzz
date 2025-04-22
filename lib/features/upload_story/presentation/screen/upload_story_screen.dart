@@ -153,6 +153,13 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     final isUploading = uploadProvider.isLoading;
     final showCamera = uploadProvider.showCamera;
 
+    // get build-time constant
+    final appFlavor = const String.fromEnvironment(
+      'APP_FLAVOR',
+      defaultValue: 'free',
+    );
+    final isPaidVersion = appFlavor == 'paid';
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -209,10 +216,15 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Location Map Selector, handle based on build variant
-                      // does not apply to websites
+                      // Location Map Selector, handle based on
+                      // build variant for android
+                      // and
+                      // build-time constants for web platform
                       if (kIsWeb) ...[
-                        LocationMapSelector(),
+                        if (isPaidVersion)
+                          LocationMapSelector()
+                        else
+                          _buildPremiumFeaturePromotion(context),
                       ] else if (Theme.of(context).platform ==
                           TargetPlatform.android) ...[
                         if (BuildConfig.canAddLocation) ...[
