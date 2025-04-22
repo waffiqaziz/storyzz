@@ -2,16 +2,17 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:label="storyzz"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
 
-        // TODO: Add your Google Maps Api Key here
+        <!-- TODO: Add your Google Maps Api Key here -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="${MAPS_API_KEY}" />
 
         <activity
             android:name=".MainActivity"

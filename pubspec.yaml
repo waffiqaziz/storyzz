@@ -43,6 +43,7 @@ dependencies:
   # google maps
   google_maps_flutter: ^2.12.1
   google_maps_flutter_web: ^0.5.12
+  google_maps_flutter_android: ^2.16.1
 
   # code generator
   json_annotation: ^4.9.0

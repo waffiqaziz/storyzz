@@ -8,6 +8,8 @@ on:
       - master
     paths-ignore:
       - "**/*.md"
+      - "*.md"
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest

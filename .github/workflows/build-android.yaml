@@ -1,0 +1,193 @@
+name: Android CI/CD
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+    paths-ignore:
+      - "**/*.md"
+      - "*.md"
+  pull_request:
+    branches:
+      - master
+      - develop
+    paths-ignore:
+      - "**/*.md"
+      - "*.md"
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  analyze:
+    name: Analyze Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      
+      - name: Install dependencies
+        run: flutter pub get
+      
+      - name: Analyze Dart code
+        run: flutter analyze --no-fatal-infos
+      
+      # - name: Run tests
+      #   run: flutter test
+
+  build_android_free:
+    name: Build Android Free Variant
+    needs: analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      
+      - name: Flutter version
+        run: flutter --version
+      
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
+      
+      - name: Create .env file
+        run: |
+          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+      
+      - name: Create secrets.properties
+        run: |
+          echo "MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" > android/secrets.properties
+      
+      - name: Build APK (Free)
+        run: flutter build apk --flavor free -t lib/main.dart --debug
+      
+      # - name: Upload Free Debug APK
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: app-free-debug
+      #     path: build/app/outputs/flutter-apk/app-free-debug.apk
+      
+      - name: Build Free Release APK
+        run: flutter build apk --flavor free -t lib/main.dart --release
+      
+      # - name: Upload Free Release APK
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: app-free-release
+      #     path: build/app/outputs/flutter-apk/app-free-release.apk
+
+  build_android_paid:
+    name: Build Android Paid Variant
+    needs: analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      
+      - name: Flutter version
+        run: flutter --version
+      
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
+      
+      - name: Create .env file
+        run: |
+          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+      
+      - name: Create secrets.properties
+        run: |
+          echo "MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" > android/secrets.properties
+      
+      - name: Build APK (Paid)
+        run: flutter build apk --flavor paid -t lib/main.dart --debug
+      
+      # - name: Upload Paid Debug APK
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: app-paid-debug
+      #     path: build/app/outputs/flutter-apk/app-paid-debug.apk
+      
+      - name: Build Paid Release APK
+        run: flutter build apk --flavor paid -t lib/main.dart --release
+      
+      # - name: Upload Paid Release APK
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: app-paid-release
+      #     path: build/app/outputs/flutter-apk/app-paid-release.apk
+
+  build_android_bundle:
+    name: Build Android App Bundle
+    needs: analyze
+    if: github.ref == 'refs/heads/master'  # Only on master branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
+      
+      - name: Create .env file
+        run: |
+          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+      
+      - name: Create secrets.properties
+        run: |
+          echo "MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" > android/secrets.properties
+      
+      - name: Build App Bundle (Free)
+        run: flutter build appbundle --flavor free -t lib/main.dart
+      
+      # - name: Upload Free App Bundle
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: app-free-bundle
+      #     path: build/app/outputs/bundle/freeRelease/app-free-release.aab
+      
+      - name: Build App Bundle (Paid)
+        run: flutter build appbundle --flavor paid -t lib/main.dart
+      
+      # - name: Upload Paid App Bundle
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: app-paid-bundle
+      #     path: build/app/outputs/bundle/paidRelease/app-paid-release.aab
