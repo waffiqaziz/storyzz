@@ -51,8 +51,52 @@ class _LocationSectionState extends State<LocationSection> {
     }
   }
 
+  void _openFullscreenMap() {
+    final address = context.read<AddressProvider>().state.getAddressOrFallback(
+      context,
+    );
+
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withValues(alpha: 0.9),
+      builder: (_) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Stack(
+              children: [
+                StoryLocationMap(
+                  latitude: widget.story.lat!,
+                  longitude: widget.story.lon!,
+                  title: widget.story.name,
+                  location: address,
+                  height: MediaQuery.of(context).size.height,
+                  controlsEnabled: true,
+                ),
+                Positioned(
+                  top: 16,
+                  left: 16,
+                  child: FloatingActionButton.small(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Icon(Icons.close),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final address = context.watch<AddressProvider>().state.getAddressOrFallback(
+      context,
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -69,18 +113,30 @@ class _LocationSectionState extends State<LocationSection> {
         const SizedBox(height: 16),
 
         // map
-        StoryLocationMap(
-          key: ValueKey(
-            '${widget.mapKeyPrefix}-location-map-${widget.story.id}',
-          ),
-          latitude: widget.story.lat!,
-          longitude: widget.story.lon!,
-          height: 400.0,
-          controlsEnabled: widget.mapControlsEnabled,
-          title: widget.story.name,
-          location: context.watch<AddressProvider>().state.getAddressOrFallback(
-            context,
-          ),
+        Stack(
+          children: [
+            StoryLocationMap(
+              key: ValueKey(
+                '${widget.mapKeyPrefix}-location-map-${widget.story.id}',
+              ),
+              latitude: widget.story.lat!,
+              longitude: widget.story.lon!,
+              height: 400.0,
+              controlsEnabled: widget.mapControlsEnabled,
+              title: widget.story.name,
+              location: address,
+            ),
+            Positioned(
+              top: 12,
+              right: 12,
+              child: FloatingActionButton.small(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                onPressed: _openFullscreenMap,
+                child: const Icon(Icons.fullscreen),
+              ),
+            ),
+          ],
         ),
       ],
     );
