@@ -313,6 +313,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
               ),
               FilledButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(AppLocalizations.of(context)!.coming_soon),
