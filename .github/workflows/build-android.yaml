@@ -29,6 +29,11 @@ jobs:
         with:
           channel: stable
 
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
+
       - name: Create .env file
         run: |
           echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
@@ -36,9 +41,6 @@ jobs:
       - name: Create secrets.properties
         run: |
           echo "MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" > android/secrets.properties
-      
-      - name: Install dependencies
-        run: flutter pub get
       
       - name: Analyze Dart code
         run: flutter analyze --no-fatal-infos
