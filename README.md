@@ -22,20 +22,19 @@ supports both mobile and desktop platforms. Currently build for mobile and web p
 - **Story Feed** - Browse stories from other users
 - **Story Details** - View full story information with images, descriptions,
   and a map of the story location.
-- **Create Stories** - Upload images (max 1MB) with custom captions
+- **Post Stories** - Upload images (max 1MB) with captions and location.
 - **Map & List View** -  Display a split-screen showing a map with story
   locations alongside a scrollable list of stories.
 
 ### UI/UX
 
-- **Responsive Design** - Optimized for both mobile and desktop platforms
+- **Responsive Design** - Optimized for both mobile and desktop views
 - **Theme Support** - Toggle between light and dark themes
 - **Localization** - Available in English and Indonesian
 
 ### Technical Features
 
 - **Declarative Navigation** - Modern navigation system
-- **API Integration** - Connected to Dicoding Story API
 - **Data Persistence** - Local storage for user preferences
 
 ## 🛠️ Getting Started
@@ -44,42 +43,9 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-### Prerequisites
+### Development Step by Step
 
-- Flutter SDK (latest stable version)
-- Dart SDK
-- An IDE (VS Code, Android Studio, etc.)
-
-### Installation
-
-1. Clone the repository
-
-   ```bash
-   git clone https://github.com/waffiqaziz/storyzz.git
-   ```
-
-2. Navigate to project directory and install dependencies
-
-   ```bash
-   cd storyzz
-   flutter pub get
-   ```
-
-3. Generate required files
-
-   ```bash
-   dart run build_runner build --delete-conflicting-outputs
-   ```
-
-4. Environment Setup
-
-   Please read [here](./doc/environment_setup.md).
-  
-5. Run the application
-
-   ```bash
-   flutter run
-   ```
+To development the project, please read [here](./doc/development.md).
 
 ## 📚 API Documentation
 

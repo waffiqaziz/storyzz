@@ -1,4 +1,5 @@
 {
+  "@@locale": "en",
   "home": "Home",
   "upload": "Upload",
   "settings": "Settings",
@@ -98,5 +99,14 @@
   "initializing_camera": "Initializing camera...",
   "write_a_caption": "Write a caption...",
   "uploading_story": "Uploading story...",
-  "tap_to_select_location": "Tap to select location"
+  "tap_to_select_location": "Tap to select location",
+
+  "premium_feature": "Premium Feature",
+  "upgrade_to_add_location": "Upgrade to Premium to add location to your stories",
+  "upgrade_now": "Upgrade Now",
+  "get_premium": "Get Premium",
+  "premium_benefits_description": "Upgrade to Storyzz Premium to enjoy additional features  adding location to your stories!",
+  "upgrade": "Upgrade",
+  "close": "Close",
+  "coming_soon": "Upgrade feature coming soon!"
 }

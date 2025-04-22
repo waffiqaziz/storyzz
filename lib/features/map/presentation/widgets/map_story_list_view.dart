@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
-import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/provider/story_provider.dart';
 import 'package:storyzz/core/routes/my_route_delegate.dart';
-import 'package:storyzz/features/map/presentation/widgets/empty_state_view.dart';
+import 'package:storyzz/core/widgets/empty_story.dart';
+import 'package:storyzz/core/widgets/story_error_view.dart';
 import 'package:storyzz/features/map/presentation/widgets/map_story_card.dart';
 import 'package:storyzz/features/map/provider/map_provider.dart';
 
@@ -13,39 +14,29 @@ import 'package:storyzz/features/map/provider/map_provider.dart';
 ///
 /// Requires
 /// - onStoryTap: handle and manage tap event via callback if needed
-class StoryListView extends StatelessWidget {
+class MapStoryListView extends StatelessWidget {
   final Function(ListStory)? onStoryTap;
 
-  const StoryListView({super.key, this.onStoryTap});
+  const MapStoryListView({super.key, this.onStoryTap});
+
+  void _refreshStories(BuildContext context) {
+    final authProvider = context.read<AuthProvider>();
+    if (authProvider.user != null) {
+      context.read<StoryProvider>().refreshStories(user: authProvider.user!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
     final mapProvider = context.watch<MapProvider>();
     final storyProvider = context.watch<StoryProvider>();
 
     // error state view
-    if (storyProvider.errorMessage.isNotEmpty) {
+    if (storyProvider.state.isError) {
       return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.warning_amber_rounded, size: 64, color: Colors.orange),
-            SizedBox(height: 16),
-            Text(
-              '${localizations.error_loading_stories} ${storyProvider.errorMessage}',
-              style: TextStyle(fontSize: 16),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => mapProvider.refreshStories(),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Text(localizations.retry),
-              ),
-            ),
-          ],
+        child: StoryErrorView(
+          errorMessage: storyProvider.state.errorMessage!,
+          onRetry: () => _refreshStories(context),
         ),
       );
     }
@@ -57,32 +48,30 @@ class StoryListView extends StatelessWidget {
       child: CustomScrollView(
         controller: mapProvider.scrollController,
         slivers: [
-          // show loading indicator if initial load is in progress
-          if (storyProvider.isLoading && storyProvider.stories.isEmpty)
-            SliverToBoxAdapter(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: CircularProgressIndicator(),
-                ),
+          // handle all story state
+          if (storyProvider.state.isLoading && storyProvider.stories.isEmpty ||
+              storyProvider.state.isInitial)
+            const SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator()),
+            )
+          else if (storyProvider.state.isError)
+            SliverFillRemaining(
+              child: StoryErrorView(
+                errorMessage: storyProvider.state.errorMessage!,
+                onRetry: () => _refreshStories(context),
               ),
-            ),
+            )
+          else if (storyProvider.stories.isEmpty)
+            EmptyStory()
+          else if (storyProvider.state.isLoaded)
+            _buildSliverStoryList(context),
 
-          // show empty state if no stories found after loading
-          if (storyProvider.stories.isEmpty && !storyProvider.isLoading)
-            SliverToBoxAdapter(child: EmptyState(localizations: localizations)),
-
-          // display list of stories
-          if (storyProvider.stories.isNotEmpty) _buildSliverStoryList(context),
-
-          // show loading indicator at the bottom when loading more
-          if (storyProvider.isLoading && storyProvider.stories.isNotEmpty)
-            SliverToBoxAdapter(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: CircularProgressIndicator(),
-                ),
+          // Loading indicator at bottom for pagination
+          if (storyProvider.state.isLoading && storyProvider.stories.isNotEmpty)
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Center(child: CircularProgressIndicator()),
               ),
             ),
         ],
@@ -99,22 +88,11 @@ class StoryListView extends StatelessWidget {
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            if (index == storyProvider.stories.length &&
-                storyProvider.isLoading) {
-              return Center(
-                child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-
             if (index >= storyProvider.stories.length) {
               return null;
             }
 
             final story = storyProvider.stories[index];
-
             return GestureDetector(
               onTap: () {
                 // use the callback if provided,
@@ -139,7 +117,8 @@ class StoryListView extends StatelessWidget {
             );
           },
           childCount:
-              storyProvider.stories.length + (storyProvider.isLoading ? 1 : 0),
+              storyProvider.stories.length +
+              (storyProvider.state.isLoading ? 1 : 0),
         ),
       ),
     );

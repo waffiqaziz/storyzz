@@ -6,6 +6,8 @@ on:
   pull_request:
     paths-ignore:
       - "**/*.md"
+      - "*.md"
+
 permissions:
   checks: write
   contents: read

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:storyzz/core/data/model/user.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
+import 'package:storyzz/core/data/networking/states/story_load_state.dart';
 import 'package:storyzz/core/data/repository/story_repository.dart';
 
 /// Manages the state of paginated user stories fetched from the server.
@@ -17,15 +18,14 @@ class StoryProvider extends ChangeNotifier {
 
   StoryProvider(this._repository);
 
-  bool _isLoading = false;
-  String _errorMessage = '';
+  StoryLoadState _state = const StoryLoadState.initial();
+  StoryLoadState get state => _state;
+
   List<ListStory> _stories = [];
   bool _hasMoreStories = true;
   int _currentPage = 1;
   final int _pageSize = 10;
 
-  bool get isLoading => _isLoading;
-  String get errorMessage => _errorMessage;
   List<ListStory> get stories => _stories;
   bool get hasMoreStories => _hasMoreStories;
 
@@ -38,8 +38,7 @@ class StoryProvider extends ChangeNotifier {
 
     if (!_hasMoreStories && !refresh) return;
 
-    _isLoading = true;
-    _errorMessage = '';
+    _state = const StoryLoadState.loading();
     notifyListeners();
 
     final result = await _repository.getStories(
@@ -59,11 +58,11 @@ class StoryProvider extends ChangeNotifier {
       }
       _hasMoreStories = result.data!.listStory.length >= _pageSize;
       _currentPage++;
+      _state = StoryLoadState.loaded(_stories);
     } else if (result.message != null) {
-      _errorMessage = result.message!;
+      _state = StoryLoadState.error(result.message!);
     }
 
-    _isLoading = false;
     notifyListeners();
   }
 

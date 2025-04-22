@@ -56,7 +56,7 @@ class MapProvider extends ChangeNotifier {
 
   /// Load more stories method
   void _loadMoreStoriesIfNeeded() {
-    if (!_storyProvider.isLoading &&
+    if (!_storyProvider.state.isLoading &&
         _storyProvider.hasMoreStories &&
         _authProvider.user != null) {
       _storyProvider.getStories(user: _authProvider.user!).then((_) {

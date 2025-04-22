@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:storyzz/features/map/presentation/layout/vertical_split_view.dart';
+import 'package:storyzz/features/map/presentation/widgets/map_story_list_view.dart';
 import 'package:storyzz/features/map/presentation/widgets/map_view.dart';
-import 'package:storyzz/features/map/presentation/widgets/story_list_view.dart';
 
 /// A responsive layout for landscape orientation that displays
 /// a list of stories on the left and a map on the right side.
@@ -15,7 +15,7 @@ class LandscapeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VerticalSplitView(
-      left: StoryListView(),
+      left: MapStoryListView(),
       right: MapView(),
       ratio: 0.25,
     );

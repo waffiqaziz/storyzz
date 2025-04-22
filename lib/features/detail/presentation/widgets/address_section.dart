@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/data/networking/states/address_load_state.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/provider/address_provider.dart';
 
+/// A widget that displays a formatted address for given coordinates.
+///
+/// It reacts to [AddressProvider] state and shows:
+/// - a loading indicator while fetching,
+/// - the formatted address once loaded,
+/// - fallback coordinates or error messages if loading fails.
+///
+/// Parameters:
+/// [latitude] and [longitude] are the coordinates to resolve.
+/// [storyId] is used for tracking/address caching purposes.
 class AddressSection extends StatefulWidget {
   final double latitude;
   final double longitude;
@@ -48,7 +59,8 @@ class _AddressSectionState extends State<AddressSection> {
                 '${localizations.longitude}: ${widget.longitude.toStringAsFixed(6)}';
 
             switch (addressProvider.state) {
-              case AddressLoadState.loading:
+              // show loading
+              case AddressLoadStateLoading():
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Row(
@@ -64,18 +76,18 @@ class _AddressSectionState extends State<AddressSection> {
                   ),
                 );
 
-              case AddressLoadState.loaded:
+              // show actual formatted addresss
+              case AddressLoadStateLoaded(formattedAddress: final address):
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (addressProvider.formattedAddress != null)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          addressProvider.formattedAddress!,
-                          style: const TextStyle(fontSize: 16),
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Text(
+                        address,
+                        style: const TextStyle(fontSize: 16),
                       ),
+                    ),
                     Text(
                       '$latText, $lonText',
                       style: TextStyle(fontSize: 14, color: Colors.grey[600]),
@@ -84,7 +96,7 @@ class _AddressSectionState extends State<AddressSection> {
                 );
 
               // shows not available if theres an error
-              case AddressLoadState.error:
+              case AddressLoadStateError():
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -100,11 +112,16 @@ class _AddressSectionState extends State<AddressSection> {
                   ],
                 );
 
-              case AddressLoadState.initial:
+              // show the latitude and longiture on initial
+              case AddressLoadStateInitial():
                 return Text(
                   '$latText, $lonText',
                   style: const TextStyle(fontSize: 14),
                 );
+
+              // should not show
+              default:
+                return Text('Unknown state: ${addressProvider.state}');
             }
           },
         ),

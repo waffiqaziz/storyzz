@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+/// A [Page] that displays a modal dialog using [DialogRoute].
+///
+/// Useful for displaying dialogs via Navigator 2.0 API.
+///
+/// Parameters:
+/// [child] is the content of the dialog.
+/// [barrierDismissible] controls whether tapping outside dismisses the dialog.
+/// [barrierColor] sets the color behind the dialog.
 class DialogPage<T> extends Page<T> {
   final Widget child;
   final bool barrierDismissible;

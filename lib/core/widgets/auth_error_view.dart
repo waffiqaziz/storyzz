@@ -8,6 +8,7 @@ import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 /// - The provided [errorMessage]
 /// - A logout button for recovery or retry
 ///
+/// Parameters:
 /// - [errorMessage]: Message describing the auth error.
 /// - [onLogout]: Callback triggered when the user presses the logout button.
 class AuthErrorView extends StatelessWidget {

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 /// A simple centered loading indicator.
 ///
-/// Typically used while waiting for asynchronous operations to complete,
-/// such as authentication or data fetching.
+/// Typically used while waiting for asynchronous operations to complete
 class LoadingView extends StatelessWidget {
   const LoadingView({super.key});
 
