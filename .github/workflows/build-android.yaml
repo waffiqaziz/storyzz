@@ -28,6 +28,14 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+
+      - name: Create .env file
+        run: |
+          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+      
+      - name: Create secrets.properties
+        run: |
+          echo "MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" > android/secrets.properties
       
       - name: Install dependencies
         run: flutter pub get
