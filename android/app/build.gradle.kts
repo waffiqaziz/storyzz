@@ -34,6 +34,25 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+    buildFeatures {
+        buildConfig = true
+    }
+
+    flavorDimensions += "tier"
+    productFlavors {
+        create("free") {
+            dimension = "tier"
+            applicationIdSuffix = ".free"
+            resValue("string", "app_name", "Storyzz Free")
+            buildConfigField("boolean", "IS_PAID_VERSION", "false")
+        }
+        create("paid") {
+            dimension = "tier"
+            applicationIdSuffix = ".paid"
+            resValue("string", "app_name", "Storyzz Premium")
+            buildConfigField("boolean", "IS_PAID_VERSION", "true")
+        }
+    }
 }
 
 flutter {

@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 
+/// A widget that allows users to select a language.
+///
+/// Displays either a compact icon button (that opens a dialog)
+/// or a full dropdown menu, based on [isCompact].
+///
+/// Parameters:
+/// - [onChanged] is called when a new language is selected.
+/// - [currentLanguageCode] indicates the currently selected language.
+/// - [isCompact] toggles between dialog and dropdown presentation.
 class LanguageSelector extends StatelessWidget {
   final Function(String) onChanged;
   final String currentLanguageCode;

@@ -18,7 +18,6 @@ abstract class User with _$User {
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }
 
-// Extension to add the custom methods we need
 extension UserExtension on User {
   // Convert to a JSON string
   String toJsonString() => json.encode(toJson());

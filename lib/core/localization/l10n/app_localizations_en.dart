@@ -271,4 +271,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tap_to_select_location => 'Tap to select location';
+
+  @override
+  String get premium_feature => 'Premium Feature';
+
+  @override
+  String get upgrade_to_add_location =>
+      'Upgrade to Premium to add location to your stories';
+
+  @override
+  String get upgrade_now => 'Upgrade Now';
+
+  @override
+  String get get_premium => 'Get Premium';
+
+  @override
+  String get premium_benefits_description =>
+      'Upgrade to Storyzz Premium to enjoy additional features  adding location to your stories!';
+
+  @override
+  String get upgrade => 'Upgrade';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get coming_soon => 'Upgrade feature coming soon!';
 }

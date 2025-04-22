@@ -3,11 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/provider/story_provider.dart';
-import 'package:storyzz/features/home/presentation/widgets/auth_error_view.dart';
-import 'package:storyzz/features/home/presentation/widgets/loading_view.dart';
-import 'package:storyzz/features/home/presentation/widgets/no_user_view.dart';
-import 'package:storyzz/features/home/presentation/widgets/story_error_view.dart';
-import 'package:storyzz/features/home/presentation/widgets/story_list_view.dart';
+import 'package:storyzz/core/widgets/auth_error_view.dart';
+import 'package:storyzz/features/home/presentation/widgets/home_story_list_view.dart';
 
 /// Main screen shown after user logs in.
 ///
@@ -72,16 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  /// Refreshes the current user's stories list.
-  ///
-  /// Typically used in pull-to-refresh or retry flows.
-  void _refreshStories() {
-    final authProvider = context.read<AuthProvider>();
-    if (authProvider.user != null) {
-      context.read<StoryProvider>().refreshStories(user: authProvider.user!);
-    }
-  }
-
   /// Listens for scroll events and loads more stories near bottom.
   ///
   /// Triggers a paginated fetch if not already loading and more
@@ -91,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final authProvider = context.read<AuthProvider>();
       final storyProvider = context.read<StoryProvider>();
 
-      if (!storyProvider.isLoading &&
+      if (!storyProvider.state.isLoading &&
           storyProvider.hasMoreStories &&
           authProvider.user != null) {
         storyProvider.getStories(user: authProvider.user!);
@@ -128,10 +115,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Consumer2<AuthProvider, StoryProvider>(
         builder: (context, authProvider, storyProvider, child) {
-          if (authProvider.isLoadingLogin) {
-            return const LoadingView();
-          }
-
           if (authProvider.errorMessage.isNotEmpty) {
             return AuthErrorView(
               errorMessage: authProvider.errorMessage,
@@ -139,21 +122,9 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
 
-          if (authProvider.user == null) {
-            return NoUserView();
-          }
-
-          if (storyProvider.errorMessage.isNotEmpty) {
-            return StoryErrorView(
-              errorMessage: storyProvider.errorMessage,
-              onRetry: () => _refreshStories(),
-            );
-          }
-
-          return StoriesListView(
+          // show list of story
+          return HomeStoriesListView(
             scrollController: _scrollController,
-            storyProvider: storyProvider,
-            onRefresh: _refreshStories,
             onLogout: () => _logOut(authProvider),
           );
         },

@@ -619,6 +619,54 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Ketuk untuk menentukan lokasi'**
   String get tap_to_select_location;
+
+  /// No description provided for @premium_feature.
+  ///
+  /// In id, this message translates to:
+  /// **'Fitur Premium'**
+  String get premium_feature;
+
+  /// No description provided for @upgrade_to_add_location.
+  ///
+  /// In id, this message translates to:
+  /// **'Tingkatkan ke Premium untuk menambahkan lokasi ke cerita Anda'**
+  String get upgrade_to_add_location;
+
+  /// No description provided for @upgrade_now.
+  ///
+  /// In id, this message translates to:
+  /// **'Tingkatkan Sekarang'**
+  String get upgrade_now;
+
+  /// No description provided for @get_premium.
+  ///
+  /// In id, this message translates to:
+  /// **'Dapatkan Fitur Premium'**
+  String get get_premium;
+
+  /// No description provided for @premium_benefits_description.
+  ///
+  /// In id, this message translates to:
+  /// **'Tingkatkan ke Storyzz Premium untuk menikmati fitur tambahan menambahkan lokasi ke cerita Anda!'**
+  String get premium_benefits_description;
+
+  /// No description provided for @upgrade.
+  ///
+  /// In id, this message translates to:
+  /// **'Tingkatkan'**
+  String get upgrade;
+
+  /// No description provided for @close.
+  ///
+  /// In id, this message translates to:
+  /// **'Tutup'**
+  String get close;
+
+  /// No description provided for @coming_soon.
+  ///
+  /// In id, this message translates to:
+  /// **'Fitur Premium segera hadir!'**
+  String get coming_soon;
 }
 
 class _AppLocalizationsDelegate

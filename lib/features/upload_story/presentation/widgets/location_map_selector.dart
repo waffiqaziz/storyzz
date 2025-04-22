@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/data/networking/states/address_load_state.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/provider/address_provider.dart';
 import 'package:storyzz/core/provider/upload_story_provider.dart';
@@ -72,13 +73,10 @@ class LocationMapSelector extends StatelessWidget {
                           },
                           infoWindow: InfoWindow(
                             // show formatted address as snippet
-                            snippet:
-                                context
-                                    .watch<AddressProvider>()
-                                    .formattedAddress ??
-                                AppLocalizations.of(
-                                  context,
-                                )!.address_not_available,
+                            snippet: context
+                                .watch<AddressProvider>()
+                                .state
+                                .getAddressOrFallback(context),
                           ),
                         ),
                     },

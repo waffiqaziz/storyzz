@@ -1,11 +1,15 @@
-class GeneralResponse {
-  bool error;
-  String message;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  GeneralResponse({required this.error, required this.message});
+part 'general_response.freezed.dart';
+part 'general_response.g.dart';
+
+@freezed
+abstract class GeneralResponse with _$GeneralResponse {
+  const factory GeneralResponse({
+    required bool error,
+    required String message,
+  }) = _GeneralResponse;
 
   factory GeneralResponse.fromJson(Map<String, dynamic> json) =>
-      GeneralResponse(error: json["error"], message: json["message"]);
-
-  Map<String, dynamic> toJson() => {"error": error, "message": message};
+      _$GeneralResponseFromJson(json);
 }

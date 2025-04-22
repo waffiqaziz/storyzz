@@ -9,12 +9,23 @@ import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/provider/story_provider.dart';
 import 'package:storyzz/core/provider/upload_story_provider.dart';
 import 'package:storyzz/core/routes/my_route_delegate.dart';
+import 'package:storyzz/core/variant/build_configuration.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/camera_web_view.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/image_preview.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/location_map_selector.dart';
 import 'package:storyzz/features/upload_story/services/camera_service.dart';
 import 'package:storyzz/features/upload_story/services/image_picker_services.dart';
 
+/// A screen that allows users to upload a story with an image, caption, and optional location.
+///
+/// This screen provides the following features:
+/// - Capturing or selecting an image from the gallery (web and mobile support).
+/// - Writing a caption for the story.
+/// - Selecting a location (only available on web or for premium users).
+/// - Uploading the story via [UploadStoryProvider].
+///
+/// The camera and gallery behavior is abstracted via [CameraService] and [ImagePickerService].
+/// Premium gating for location features is handled by [BuildConfig.canAddLocation].
 class UploadStoryScreen extends StatefulWidget {
   const UploadStoryScreen({super.key});
 
@@ -39,7 +50,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     super.didChangeDependencies();
     _uploadStoryProvider = context.read<UploadStoryProvider>();
 
-    // nitialize services with context
+    // initialize services with context
     _cameraService.initialize(context);
     _imagePickerService.initialize(context);
   }
@@ -183,6 +194,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                             ),
                       ),
                     const SizedBox(height: 16),
+
+                    // show caption field and location selector
                     if (imageFile != null && !showCamera) ...[
                       TextField(
                         decoration: InputDecoration(
@@ -196,10 +209,21 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Location Map Selector here
-                      LocationMapSelector(),
+                      // Location Map Selector, handle based on build variant
+                      // does not apply to websites
+                      if (kIsWeb) ...[
+                        LocationMapSelector(),
+                      ] else if (Theme.of(context).platform ==
+                          TargetPlatform.android) ...[
+                        if (BuildConfig.canAddLocation) ...[
+                          LocationMapSelector(),
+                        ] else ...[
+                          _buildPremiumFeaturePromotion(context),
+                        ],
+                      ],
                       const SizedBox(height: 16),
 
+                      // button to reset image
                       ElevatedButton.icon(
                         onPressed:
                             isUploading ? null : () => uploadProvider.reset(),
@@ -230,6 +254,75 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildPremiumFeaturePromotion(BuildContext context) {
+    return Card(
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.location_on,
+              size: 40,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              AppLocalizations.of(context)!.premium_feature,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              AppLocalizations.of(context)!.upgrade_to_add_location,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            const SizedBox(height: 16),
+            OutlinedButton.icon(
+              onPressed: () {
+                _showUpgradeDialog(context);
+              },
+              icon: Icon(Icons.star),
+              label: Text(AppLocalizations.of(context)!.upgrade_now),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showUpgradeDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text(AppLocalizations.of(context)!.get_premium),
+            content: Text(
+              AppLocalizations.of(context)!.premium_benefits_description,
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(AppLocalizations.of(context)!.close),
+              ),
+              FilledButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(AppLocalizations.of(context)!.coming_soon),
+                    ),
+                  );
+                },
+                child: Text(AppLocalizations.of(context)!.upgrade),
+              ),
+            ],
+          ),
     );
   }
 }

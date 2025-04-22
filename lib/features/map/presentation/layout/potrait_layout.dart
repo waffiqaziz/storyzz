@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/features/map/presentation/layout/horizontal_split_view.dart';
 import 'package:storyzz/features/map/presentation/widgets/map_view.dart';
-import 'package:storyzz/features/map/presentation/widgets/story_list_view.dart';
+import 'package:storyzz/features/map/presentation/widgets/map_story_list_view.dart';
 import 'package:storyzz/features/map/provider/map_provider.dart';
 
 /// A responsive layout for portrait orientation that displays
@@ -26,7 +26,7 @@ class _PortraitLayoutState extends State<PortraitLayout> {
     return HorizontalSplitView(
       key: _splitViewKey,
       top: MapView(),
-      bottom: StoryListView(
+      bottom: MapStoryListView(
         onStoryTap: (story) {
           context.read<MapProvider>().onStoryTap(story);
 
