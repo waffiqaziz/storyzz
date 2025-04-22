@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -60,6 +62,11 @@ class LocationMapSelector extends StatelessWidget {
                 children: [
                   // show map
                   GoogleMap(
+                    gestureRecognizers: {
+                      Factory<OneSequenceGestureRecognizer>(
+                        () => EagerGestureRecognizer(),
+                      ),
+                    },
                     style: isDark ? customStyleDark : customStyleLight,
                     mapType: MapType.normal,
                     markers: {

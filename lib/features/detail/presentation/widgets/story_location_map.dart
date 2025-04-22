@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/provider/settings_provider.dart';
 import 'package:storyzz/features/map/utils/map_style.dart';
+import 'package:flutter/gestures.dart';
 
 /// Displays a Google Map centered on a story's location with optional controls and custom styling.
 ///
@@ -77,17 +79,25 @@ class _StoryLocationMapState extends State<StoryLocationMap> {
           decoration: BoxDecoration(
             borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
           ),
-          child: GoogleMap(
-            style: isDark ? customStyleDark : customStyleLight,
-            mapType: MapType.normal,
-            markers: markers,
-            initialCameraPosition: CameraPosition(
-              target: LatLng(widget.latitude, widget.longitude),
-              zoom: 11.0,
+          child: Listener(
+            onPointerDown: (_) => FocusScope.of(context).unfocus(),
+            child: GoogleMap(
+              gestureRecognizers: {
+                Factory<OneSequenceGestureRecognizer>(
+                  () => EagerGestureRecognizer(),
+                ),
+              },
+              style: isDark ? customStyleDark : customStyleLight,
+              mapType: MapType.normal,
+              markers: markers,
+              initialCameraPosition: CameraPosition(
+                target: LatLng(widget.latitude, widget.longitude),
+                zoom: 11.0,
+              ),
+              myLocationButtonEnabled: false,
+              zoomControlsEnabled: widget.controlsEnabled,
+              zoomGesturesEnabled: true,
             ),
-            myLocationButtonEnabled: widget.controlsEnabled,
-            zoomControlsEnabled: widget.controlsEnabled,
-            zoomGesturesEnabled: true,
           ),
         );
       },
