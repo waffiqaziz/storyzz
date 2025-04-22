@@ -1,6 +1,22 @@
-# Storyzz
+<p align="center">
+    <picture>
+      <source
+        media="(prefers-color-scheme: dark)"
+        srcset="doc/images/storyzz-light.svg"
+        width="250"
+      >
+      <source
+        media="(prefers-color-scheme: light)"
+        srcset="doc/images/storyzz-dark.svg"
+        width="250"
+      >
+      <img alt="Storyzz" src="doc/images/storyzz-dark.svg">
+    </picture>
+</p>
 
-A Flutter application for sharing stories with images.
+<h3 align="center">
+A Flutter application for sharing stories with images and location.
+</h3>
 
 ## 🚀 Overview
 
@@ -229,3 +245,16 @@ This application use several API's:
   />
 </p>
 </details>
+
+## License
+
+[Apache Version 2.0](LICENSE)
+
+```text
+Copyright 2025 Waffiq Aziz
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0

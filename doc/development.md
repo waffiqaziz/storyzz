@@ -61,7 +61,7 @@ Obtain your API key from the [Google Maps Platform](https://developers.google.co
 
 #### **Geocode API**
 
-Obtain your API key from [Geocode Maps](https://geocodemaps.co/).
+Obtain your API key from [Geocode Maps](https://geocode.maps.co/).
 
 - **Web**: Update `web/env.js` to include:
 
