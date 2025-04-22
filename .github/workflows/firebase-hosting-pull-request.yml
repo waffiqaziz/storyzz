@@ -25,6 +25,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable # Defaults to the latest stable version
+          cache: true
       - run: flutter --version
 
       # Flutter dependencies setup
