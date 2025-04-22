@@ -1,0 +1,92 @@
+{
+  "configurations": [
+    {
+      "name": "free_debug",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "debug",
+      "args": [
+        "--flavor",
+        "free"
+      ]
+    },
+    {
+      "name": "free_profile",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "profile",
+      "args": [
+        "--flavor",
+        "free"
+      ]
+    },
+    {
+      "name": "free_release",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "release",
+      "args": [
+        "--flavor",
+        "free"
+      ]
+    },
+    {
+      "name": "paid_debug",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "flutterMode": "debug",
+      "args": [
+        "--flavor",
+        "paid"
+      ]
+    },
+    {
+      "name": "paid_profile",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "flutterMode": "profile",
+      "args": [
+        "--flavor",
+        "paid"
+      ]
+    },
+    {
+      "name": "paid_release",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "flutterMode": "release",
+      "args": [
+        "--flavor",
+        "paid"
+      ]
+    },
+    {
+      "name": "web_free",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": [
+        "-d",
+        "chrome",
+        "--dart-define=APP_FLAVOR=free"
+      ]
+    },
+    {
+      "name": "web_paid",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": [
+        "-d",
+        "chrome",
+        "--dart-define=APP_FLAVOR=paid"
+      ]
+    }
+  ]
+}
