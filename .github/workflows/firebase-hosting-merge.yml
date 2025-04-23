@@ -43,9 +43,9 @@ jobs:
             GEOCODE_API_KEY: '${{ secrets.GEOCODE_API_KEY }}'
           };" > web/env.js
 
-      # Build the Flutter web project
+      # Build the Flutter web project (Paid Version)
       - name: Build Flutter Web
-        run: flutter build web --release
+        run: flutter build web --release --dart-define=APP_FLAVOR=paid
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
