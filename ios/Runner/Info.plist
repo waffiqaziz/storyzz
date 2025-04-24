@@ -48,10 +48,12 @@
 		<key>UIStatusBarHidden</key>
 		<false />
 		<key>NSCameraUsageDescription</key>
-		<string>Buka privasi ini untuk akses kamera.</string>
+		<string>Access to camera.</string>
 		<key>NSMicrophoneUsageDescription</key>
-		<string>Buka privasi ini untuk akses mikrofon.</string>
+		<string>Access to microphone.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>Buka privasi ini untuk akses galeri foto.</string>
+		<string>Access to gallery.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>This app needs access to location when open.</string>
 	</dict>
 </plist>
