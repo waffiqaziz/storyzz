@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:storyzz/core/designsystem/theme.dart';
 import 'package:storyzz/core/designsystem/util.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
-import 'package:storyzz/core/provider/settings_provider.dart';
+import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/routes/my_route_delegate.dart';
 import 'package:storyzz/core/routes/my_route_information_parser.dart';
 import 'package:storyzz/core/variant/build_configuration.dart';

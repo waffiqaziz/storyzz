@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/states/story_load_state.dart';
-import 'package:storyzz/core/provider/auth_provider.dart';
-import 'package:storyzz/core/provider/story_provider.dart';
+import 'package:storyzz/core/providers/auth_provider.dart';
+import 'package:storyzz/core/providers/story_provider.dart';
 import 'package:storyzz/core/widgets/empty_story.dart';
 import 'package:storyzz/core/widgets/story_error_view.dart';
 import 'package:storyzz/features/home/presentation/widgets/home_story_card.dart';

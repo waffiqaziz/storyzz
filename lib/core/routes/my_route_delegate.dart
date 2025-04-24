@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
-import 'package:storyzz/core/provider/auth_provider.dart';
+import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/routes/app_route_path.dart';
 import 'package:storyzz/core/utils/custom_page_transition.dart';
 import 'package:storyzz/core/widgets/dialog_page.dart';
