@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 
 /// Used as helper to transform error message from location operation
