@@ -5,13 +5,12 @@ import 'package:storyzz/core/provider/auth_provider.dart';
 import 'package:storyzz/core/routes/app_route_path.dart';
 import 'package:storyzz/core/utils/custom_page_transition.dart';
 import 'package:storyzz/core/widgets/dialog_page.dart';
+import 'package:storyzz/features/auth/presentation/screen/login_screen.dart';
+import 'package:storyzz/features/auth/presentation/screen/register_screen.dart';
 import 'package:storyzz/features/auth/presentation/transition/auth_screen_transition.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_dialog.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_screen.dart';
-
-import '../../features/auth/presentation/screen/login_screen.dart';
-import '../../features/auth/presentation/screen/register_screen.dart';
-import '../../features/home/presentation/screen/main_screen.dart';
+import 'package:storyzz/features/home/presentation/screen/main_screen.dart';
 
 /// A custom [RouterDelegate] that manages navigation state for the app.
 ///

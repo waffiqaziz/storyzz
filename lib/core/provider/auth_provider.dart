@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:storyzz/core/data/networking/responses/login_response.dart';
+import 'package:storyzz/core/data/model/user.dart';
 import 'package:storyzz/core/data/networking/responses/general_response.dart';
+import 'package:storyzz/core/data/networking/responses/login_response.dart';
 import 'package:storyzz/core/data/networking/utils/api_utils.dart';
-
-import '../data/repository/auth_repository.dart';
-import '../data/model/user.dart';
+import 'package:storyzz/core/data/repository/auth_repository.dart';
 
 /// Provides authentication logic and state management.
 ///

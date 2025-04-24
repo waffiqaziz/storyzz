@@ -1,12 +1,11 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:storyzz/core/data/model/user.dart';
 import 'package:storyzz/core/data/networking/responses/general_response.dart';
 import 'package:storyzz/core/data/networking/responses/stories_response.dart';
 import 'package:storyzz/core/data/networking/services/api_services.dart';
 import 'package:storyzz/core/data/networking/utils/api_utils.dart';
-
-import '../model/user.dart';
 
 class StoryRepository {
   final ApiServices _apiServices;
