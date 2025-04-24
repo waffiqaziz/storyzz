@@ -5,6 +5,10 @@ import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 import 'package:storyzz/features/upload_story/services/camera_service.dart';
 
+/// A widget used as camera view for web platform
+///
+/// - Use build in camera
+/// - Can switch between front/back camera
 class CameraViewWeb extends StatelessWidget {
   final CameraService cameraService;
 
