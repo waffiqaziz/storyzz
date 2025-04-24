@@ -270,7 +270,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uploading_story => 'Uploading story...';
 
   @override
-  String get tap_to_select_location => 'Tap to select location';
+  String get tap_to_select_location => 'Tap on the map to select your location';
+
+  @override
+  String get use_current_location => 'Use current';
+
+  @override
+  String get location_error =>
+      'Unable to access your location. Please check your permissions.';
+
+  @override
+  String get location_services_disabled => 'Location services are disabled.';
+
+  @override
+  String get location_permissions_denied => 'Location permissions are denied.';
+
+  @override
+  String get location_permissions_permanently_denied =>
+      'Location permissions are permanently denied. Please enable them in your device settings. Or you can select location manually';
 
   @override
   String get premium_feature => 'Premium Feature';

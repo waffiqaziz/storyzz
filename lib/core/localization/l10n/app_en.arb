@@ -99,7 +99,15 @@
   "initializing_camera": "Initializing camera...",
   "write_a_caption": "Write a caption...",
   "uploading_story": "Uploading story...",
+
   "tap_to_select_location": "Tap to select location",
+
+  "tap_to_select_location": "Tap on the map to select your location",
+  "use_current_location": "Use current",
+  "location_error": "Unable to access your location. Please check your permissions.",
+  "location_services_disabled": "Location services are disabled.",
+  "location_permissions_denied": "Location permissions are denied.",
+  "location_permissions_permanently_denied": "Location permissions are permanently denied. Please enable them in your device settings. Or you can select location manually",
 
   "premium_feature": "Premium Feature",
   "upgrade_to_add_location": "Upgrade to Premium to add location to your stories",
