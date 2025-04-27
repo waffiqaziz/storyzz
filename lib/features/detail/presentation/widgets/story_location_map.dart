@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:storyzz/core/provider/settings_provider.dart';
+import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/features/map/utils/map_style.dart';
-import 'package:flutter/gestures.dart';
 
 /// Displays a Google Map centered on a story's location with optional controls and custom styling.
 ///

@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/model/user.dart';
 import 'package:storyzz/core/designsystem/theme.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
-import 'package:storyzz/core/provider/auth_provider.dart';
-import 'package:storyzz/core/provider/settings_provider.dart';
+import 'package:storyzz/core/providers/auth_provider.dart';
+import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/widgets/language_selector.dart';
 
 /// A screen that allows the user to register a new account. It contains fields

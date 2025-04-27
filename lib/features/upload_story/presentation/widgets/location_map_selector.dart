@@ -1,13 +1,20 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
-import 'package:storyzz/core/data/networking/states/address_load_state.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
-import 'package:storyzz/core/provider/address_provider.dart';
-import 'package:storyzz/core/provider/upload_story_provider.dart';
-import 'package:storyzz/features/map/utils/map_style.dart';
+import 'package:storyzz/core/providers/address_provider.dart';
+import 'package:storyzz/features/upload_story/presentation/providers/upload_location_loading_provider.dart';
+import 'package:storyzz/features/upload_story/presentation/providers/upload_map_controller_provider.dart';
+import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
+import 'package:storyzz/features/upload_story/presentation/widgets/build_google_map.dart';
+import 'package:storyzz/features/upload_story/presentation/widgets/location_error_display.dart';
+import 'package:storyzz/features/upload_story/presentation/widgets/location_map_controls.dart';
+import 'package:storyzz/features/upload_story/presentation/widgets/location_map_placeholder.dart';
+import 'package:storyzz/features/upload_story/utils/helper.dart';
 
 /// A widget that allows users to optionally include and select a location
 /// for a story upload using Google Maps.
@@ -19,164 +26,294 @@ import 'package:storyzz/features/map/utils/map_style.dart';
 /// - A tap-to-select prompt if no location is currently selected.
 /// - Latitude and longitude display of the selected location.
 /// - A button to clear the selected location.
-class LocationMapSelector extends StatelessWidget {
+class LocationMapSelector extends StatefulWidget {
   const LocationMapSelector({super.key});
 
   @override
+  State<LocationMapSelector> createState() => _LocationMapSelectorState();
+}
+
+class _LocationMapSelectorState extends State<LocationMapSelector> {
+  @override
   Widget build(BuildContext context) {
     final uploadProvider = context.watch<UploadStoryProvider>();
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final locationLoadingProvider =
+        context.watch<UploadLocationLoadingProvider>();
+
+    // initial get the current position when the map is shown
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (uploadProvider.includeLocation &&
+          uploadProvider.selectedLocation == null &&
+          !locationLoadingProvider.isLoading &&
+          locationLoadingProvider.errorMessage == null) {
+        _getCurrentPosition(context);
+      }
+    });
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text(
-              AppLocalizations.of(context)!.location,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const Spacer(),
+        _buildMapHeader(context, uploadProvider),
 
-            // swich to show map view
-            Switch(
-              value: uploadProvider.includeLocation,
-              onChanged: (value) {
-                uploadProvider.toggleLocationIncluded(value);
-              },
-            ),
-          ],
-        ),
+        // if location is included then shows the map
         if (uploadProvider.includeLocation) ...[
           const SizedBox(height: 16),
-          AnimatedOpacity(
-            opacity: uploadProvider.includeLocation ? 1.0 : 0.0,
-            duration: const Duration(milliseconds: 700),
-            child: Container(
-              height: 250,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: Stack(
-                children: [
-                  // show map
-                  GoogleMap(
-                    gestureRecognizers: {
-                      Factory<OneSequenceGestureRecognizer>(
-                        () => EagerGestureRecognizer(),
-                      ),
-                    },
-                    style: isDark ? customStyleDark : customStyleLight,
-                    mapType: MapType.normal,
-                    markers: {
-                      if (uploadProvider.selectedLocation != null)
-                        Marker(
-                          markerId: const MarkerId('story_location'),
-                          position: uploadProvider.selectedLocation!,
-                          draggable: true,
-                          onDragEnd: (newPosition) {
-                            uploadProvider.setSelectedLocation(newPosition);
-                          },
-                          infoWindow: InfoWindow(
-                            // show formatted address as snippet
-                            snippet: context
-                                .watch<AddressProvider>()
-                                .state
-                                .getAddressOrFallback(context),
-                          ),
-                        ),
-                    },
-                    initialCameraPosition: CameraPosition(
-                      target:
-                          uploadProvider.selectedLocation ??
-                          const LatLng(-2.014380, 118.152180),
-                      zoom: uploadProvider.selectedLocation != null ? 12 : 4,
-                    ),
-                    myLocationButtonEnabled: true,
-                    zoomControlsEnabled: true,
-                    zoomGesturesEnabled: true,
-                    onTap: (position) {
-                      uploadProvider.setSelectedLocation(position);
-
-                      // get formatted address
-                      context.read<AddressProvider>().getAddressFromCoordinates(
-                        position.latitude,
-                        position.longitude,
-                      );
-                    },
-                  ),
-
-                  // show touch icon if user not yet selected any location
-                  if (uploadProvider.selectedLocation == null)
-                    Positioned.fill(
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.touch_app,
-                              size: 40,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primary.withValues(alpha: 0.8),
-                            ),
-                            const SizedBox(height: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.surface.withValues(alpha: 0.8),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: Text(
-                                AppLocalizations.of(
-                                  context,
-                                )!.tap_to_select_location,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
+          _buildMapContainer(context, uploadProvider, locationLoadingProvider),
           if (uploadProvider.selectedLocation != null) ...[
             const SizedBox(height: 8),
-            Row(
-              children: [
-                // latitude and longitude
-                Expanded(
-                  child: Text(
-                    '${uploadProvider.selectedLocation!.latitude.toStringAsFixed(6)}, '
-                    '${uploadProvider.selectedLocation!.longitude.toStringAsFixed(6)}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ),
 
-                // button to clear the selected location.
-                TextButton.icon(
-                  onPressed: () {
-                    uploadProvider.setSelectedLocation(null);
-                  },
-                  icon: const Icon(Icons.clear, size: 18),
-                  label: Text(AppLocalizations.of(context)!.cancel),
-                ),
-              ],
+            // shows get current location and cancel button
+            LocationMapControls(
+              location: uploadProvider.selectedLocation!,
+              isLoading: locationLoadingProvider.isLoading,
+              onUseCurrentLocation: () => _getCurrentPosition(context),
+              onClear: () => uploadProvider.setSelectedLocation(null),
             ),
           ],
         ],
       ],
     );
+  }
+
+  Widget _buildMapHeader(
+    BuildContext context,
+    UploadStoryProvider uploadProvider,
+  ) {
+    return Row(
+      children: [
+        // location text
+        Text(
+          AppLocalizations.of(context)!.location,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const Spacer(),
+
+        // switch button to shows map
+        Switch(
+          value: uploadProvider.includeLocation,
+          onChanged: (value) {
+            uploadProvider.toggleLocationIncluded(value);
+
+            // if turning on and no location is set, try to get current position
+            if (value &&
+                uploadProvider.selectedLocation == null &&
+                !context.read<UploadLocationLoadingProvider>().isLoading) {
+              _getCurrentPosition(context);
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMapContainer(
+    BuildContext context,
+    UploadStoryProvider uploadProvider,
+    UploadLocationLoadingProvider locationLoadingProvider,
+  ) {
+    return AnimatedOpacity(
+      opacity: uploadProvider.includeLocation ? 1.0 : 0.0,
+      duration: const Duration(milliseconds: 700),
+      child: Container(
+        height: 250,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+        clipBehavior: Clip.antiAlias,
+        child: Stack(
+          children: [
+            // show loading indicator if map is not ready
+            if (locationLoadingProvider.isLoading &&
+                uploadProvider.selectedLocation == null)
+              const Center(child: CircularProgressIndicator())
+            else ...[
+              BuildGoogleMap(),
+
+              Positioned(
+                top: 12,
+                left: 12,
+                child: PointerInterceptor(
+                  child: FloatingActionButton.small(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    onPressed:
+                        () => _openFullscreenMap(context, uploadProvider),
+                    child: const Icon(Icons.fullscreen),
+                  ),
+                ),
+              ),
+            ],
+
+            // show error message if unable to get location
+            if (locationLoadingProvider.errorMessage != null &&
+                uploadProvider.selectedLocation == null)
+              LocationErrorDisplay(
+                errorMessage: locationLoadingProvider.errorMessage!,
+              ),
+
+            // show placeholder if no location selected
+            if (uploadProvider.selectedLocation == null &&
+                !locationLoadingProvider.isLoading)
+              LocationMapPlaceholder(),
+
+            // show loading indicator when try to get current location
+            if (locationLoadingProvider.isLoading &&
+                uploadProvider.selectedLocation != null)
+              _buildLoadingIndicator(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _openFullscreenMap(
+    BuildContext context,
+    UploadStoryProvider uploadProvider,
+  ) {
+    if (uploadProvider.selectedLocation == null) return;
+
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withValues(alpha: 0.9),
+      builder: (_) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.all(48),
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              // Circular Google Map
+              ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  25,
+                ), // Large value for circle
+                child: SizedBox(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: BuildGoogleMap(),
+                ),
+              ),
+
+              // Close button positioned diagonally outside the map
+              Positioned(
+                top: -40,
+                right: -40,
+                child: PointerInterceptor(
+                  child: FloatingActionButton.small(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Icon(Icons.close),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildLoadingIndicator(BuildContext context) {
+    return Positioned(
+      bottom: 16,
+      left: 16,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.black.withValues(alpha: 0.5),
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.3),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: const CircularProgressIndicator(strokeWidth: 2),
+      ),
+    );
+  }
+
+  Future<void> _getCurrentPosition(BuildContext context) async {
+    final uploadProvider = context.read<UploadStoryProvider>();
+    final locationLoadingProvider =
+        context.read<UploadLocationLoadingProvider>();
+    final uploadMapControllerProvider =
+        context.read<UploadMapControllerProvider>();
+
+    locationLoadingProvider.setIsLoading(true);
+    locationLoadingProvider.setErrorMessage(null);
+
+    try {
+      final position = await _determinePosition(context);
+      final latLng = LatLng(position.latitude, position.longitude);
+
+      // set the new location in the provider
+      uploadProvider.setSelectedLocation(latLng);
+
+      // get formatted address for the marker info window
+      if (context.mounted) {
+        context.read<AddressProvider>().getAddressFromCoordinates(
+          position.latitude,
+          position.longitude,
+        );
+      }
+
+      // Always animate the camera to the new position
+      if (context.mounted) {
+        await uploadMapControllerProvider.animateCamera(
+          CameraPosition(target: latLng, zoom: 15),
+        );
+      }
+    } catch (e) {
+      // show error message unable to get location
+      // whether the app can't get location permission or
+      // theres an error when trying to get current location
+      if (context.mounted) {
+        locationLoadingProvider.setErrorMessage(
+          getLocalizedErrorMessage(context, e.toString()),
+        );
+      }
+    } finally {
+      locationLoadingProvider.setIsLoading(false);
+    }
+  }
+
+  Future<Position> _determinePosition(BuildContext context) async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      if (context.mounted) {
+        return Future.error(
+          AppLocalizations.of(context)!.location_services_disabled,
+        );
+      }
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        if (context.mounted) {
+          return Future.error(
+            AppLocalizations.of(context)!.location_permissions_denied,
+          );
+        }
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      if (context.mounted) {
+        return Future.error(
+          AppLocalizations.of(context)!.location_permissions_permanently_denied,
+        );
+      }
+    }
+
+    // permissions is granted
+    return await Geolocator.getCurrentPosition();
   }
 }

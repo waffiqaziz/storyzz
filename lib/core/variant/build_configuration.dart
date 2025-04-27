@@ -24,7 +24,7 @@ class BuildConfig {
 
   static Future<void> initialize() async {
     if (_initialized) return;
-    
+
     final packageInfo = await PackageInfo.fromPlatform();
     // Check if the application ID contains ".paid"
     _isPaidVersion = packageInfo.packageName.contains('.paid');
@@ -35,8 +35,9 @@ class BuildConfig {
     assert(_initialized, 'BuildConfig must be initialized before use');
     return _isPaidVersion;
   }
-  
+
   static bool get isFreeVersion => !isPaidVersion;
-  static String get appName => isPaidVersion ? 'Storyzz Premium' : 'Storyzz Free';
+  static String get appName =>
+      isPaidVersion ? 'Storyzz Premium' : 'Storyzz Free';
   static bool get canAddLocation => isPaidVersion;
 }

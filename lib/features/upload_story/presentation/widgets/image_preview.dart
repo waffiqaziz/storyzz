@@ -1,13 +1,16 @@
 // file: lib/features/story/presentation/widgets/image_preview.dart
 
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:storyzz/core/provider/upload_story_provider.dart';
+import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 
+/// Widget as image preview to shows selected image 
+/// whether from camera or gallery
 class ImagePreview extends StatelessWidget {
   final XFile? imageFile;
   final VoidCallback onCameraPressed;

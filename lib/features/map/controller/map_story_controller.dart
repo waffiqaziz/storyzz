@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
-import 'package:storyzz/core/provider/auth_provider.dart';
-import 'package:storyzz/core/provider/story_provider.dart';
+import 'package:storyzz/core/providers/auth_provider.dart';
+import 'package:storyzz/core/providers/story_provider.dart';
 import 'package:storyzz/features/map/services/map_service.dart';
 
 /// A controller that manages map-related functionality for the story map screen.

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/data/networking/states/address_load_state.dart';
-import 'package:storyzz/core/provider/address_provider.dart';
+import 'package:storyzz/core/providers/address_provider.dart';
 import 'package:storyzz/features/detail/presentation/widgets/address_section.dart';
 import 'package:storyzz/features/detail/presentation/widgets/story_location_map.dart';
 

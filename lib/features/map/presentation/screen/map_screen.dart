@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
-import 'package:storyzz/core/provider/auth_provider.dart';
-import 'package:storyzz/core/provider/story_provider.dart';
+import 'package:storyzz/core/providers/auth_provider.dart';
+import 'package:storyzz/core/providers/story_provider.dart';
 import 'package:storyzz/features/map/controller/map_story_controller.dart';
 import 'package:storyzz/features/map/presentation/layout/landscape_layout.dart';
 import 'package:storyzz/features/map/presentation/layout/potrait_layout.dart';

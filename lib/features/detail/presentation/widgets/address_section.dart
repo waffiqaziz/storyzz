@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/states/address_load_state.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
-import 'package:storyzz/core/provider/address_provider.dart';
+import 'package:storyzz/core/providers/address_provider.dart';
 
 /// A widget that displays a formatted address for given coordinates.
 ///

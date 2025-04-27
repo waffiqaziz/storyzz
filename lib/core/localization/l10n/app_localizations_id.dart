@@ -274,7 +274,25 @@ class AppLocalizationsId extends AppLocalizations {
   String get uploading_story => 'Sedang mengunggah cerita...';
 
   @override
-  String get tap_to_select_location => 'Ketuk untuk menentukan lokasi';
+  String get tap_to_select_location =>
+      'Ketuk pada peta untuk memilih lokasi Anda';
+
+  @override
+  String get use_current_location => 'Gunakan saat ini';
+
+  @override
+  String get location_error =>
+      'Tidak dapat mengakses lokasi Anda. Silakan periksa izin Anda.';
+
+  @override
+  String get location_services_disabled => 'Layanan lokasi dinonaktifkan.';
+
+  @override
+  String get location_permissions_denied => 'Izin lokasi ditolak.';
+
+  @override
+  String get location_permissions_permanently_denied =>
+      'Izin lokasi ditolak secara permanen. Harap aktifkan di pengaturan perangkat Anda. Atau anda bisa menentukan lokasi secara manual';
 
   @override
   String get premium_feature => 'Fitur Premium';
