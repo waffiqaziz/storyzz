@@ -15,8 +15,3 @@ String getLocalizedErrorMessage(BuildContext context, String error) {
   }
   return AppLocalizations.of(context)!.location_error;
 }
-
-// LatLng? getCountryCoordinates(String countryCode) {
-//   // Convert to uppercase for case-insensitive lookup
-//   return countryCoordinates[countryCode.toUpperCase()];
-// }
