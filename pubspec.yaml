@@ -70,7 +70,7 @@ dev_dependencies:
   build_runner: ^2.4.15
 
   # code generator
-  json_serializable: ^6.9.4
+  json_serializable: ^6.9.5
   freezed: ^3.0.6
 
 # used for splash screen, setup for web and android
