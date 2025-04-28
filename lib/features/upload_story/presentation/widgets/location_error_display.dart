@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// A widget to shows an error if theres problem 
+/// A widget to shows an error if theres problem
 /// when trying to get the curent location
 class LocationErrorDisplay extends StatelessWidget {
   final String errorMessage;

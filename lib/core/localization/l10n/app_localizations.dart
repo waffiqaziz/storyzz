@@ -697,6 +697,24 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Fitur Premium segera hadir!'**
   String get coming_soon;
+
+  /// No description provided for @pageNotFound.
+  ///
+  /// In id, this message translates to:
+  /// **'Halaman Tidak Ditemukan'**
+  String get pageNotFound;
+
+  /// No description provided for @pageNotFoundDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Halaman yang Anda cari tidak ada atau telah dipindahkan.'**
+  String get pageNotFoundDescription;
+
+  /// No description provided for @goToHome.
+  ///
+  /// In id, this message translates to:
+  /// **'Kembali ke Beranda'**
+  String get goToHome;
 }
 
 class _AppLocalizationsDelegate

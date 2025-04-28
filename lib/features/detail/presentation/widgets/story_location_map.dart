@@ -81,23 +81,27 @@ class _StoryLocationMapState extends State<StoryLocationMap> {
           ),
           child: Listener(
             onPointerDown: (_) => FocusScope.of(context).unfocus(),
-            child: GoogleMap(
-              gestureRecognizers: {
-                Factory<OneSequenceGestureRecognizer>(
-                  () => EagerGestureRecognizer(),
-                ),
-              },
-              style: isDark ? customStyleDark : customStyleLight,
-              mapType: MapType.normal,
-              markers: markers,
-              initialCameraPosition: CameraPosition(
-                target: LatLng(widget.latitude, widget.longitude),
-                zoom: 11.0,
-              ),
-              myLocationButtonEnabled: false,
-              zoomControlsEnabled: widget.controlsEnabled,
-              zoomGesturesEnabled: true,
-            ),
+            child:
+                context
+                        .mounted // to prevent error when navigating away from the page
+                    ? GoogleMap(
+                      gestureRecognizers: {
+                        Factory<OneSequenceGestureRecognizer>(
+                          () => EagerGestureRecognizer(),
+                        ),
+                      },
+                      style: isDark ? customStyleDark : customStyleLight,
+                      mapType: MapType.normal,
+                      markers: markers,
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(widget.latitude, widget.longitude),
+                        zoom: 11.0,
+                      ),
+                      myLocationButtonEnabled: false,
+                      zoomControlsEnabled: widget.controlsEnabled,
+                      zoomGesturesEnabled: true,
+                    )
+                    : const SizedBox.shrink(),
           ),
         );
       },

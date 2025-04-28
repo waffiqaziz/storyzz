@@ -5,10 +5,10 @@ import 'package:storyzz/core/designsystem/theme.dart';
 import 'package:storyzz/core/designsystem/util.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
-import 'package:storyzz/core/routes/my_route_delegate.dart';
-import 'package:storyzz/core/routes/my_route_information_parser.dart';
+import 'package:storyzz/core/routes/app_router.dart';
 import 'package:storyzz/core/variant/build_configuration.dart';
 
+/// Used to initialize the app and set up the main MaterialApp widget.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -17,9 +17,12 @@ class MyApp extends StatelessWidget {
     late String appName;
     final settingsProvider = context.watch<SettingsProvider>();
     final isDark = settingsProvider.setting?.isDark ?? false;
+    final router = context.read<AppRouter>().router;
 
     MaterialTheme theme = MaterialTheme(createTextTheme(context));
 
+    /// Set the app name based on the build configuration
+    /// This is for differentiating between free and paid versions of the app
     if (kIsWeb) {
       final appFlavor = const String.fromEnvironment(
         'APP_FLAVOR',
@@ -40,8 +43,7 @@ class MyApp extends StatelessWidget {
       darkTheme: theme.darkWithCustomStyles(),
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       debugShowCheckedModeBanner: true, // show debug banner
-      routeInformationParser: context.read<MyRouteInformationParser>(),
-      routerDelegate: context.read<MyRouteDelegate>(),
+      routerConfig: router,
     );
   }
 }

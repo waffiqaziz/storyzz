@@ -319,4 +319,14 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get coming_soon => 'Fitur Premium segera hadir!';
+
+  @override
+  String get pageNotFound => 'Halaman Tidak Ditemukan';
+
+  @override
+  String get pageNotFoundDescription =>
+      'Halaman yang Anda cari tidak ada atau telah dipindahkan.';
+
+  @override
+  String get goToHome => 'Kembali ke Beranda';
 }

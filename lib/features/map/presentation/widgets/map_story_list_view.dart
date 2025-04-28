@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
-import 'package:storyzz/core/routes/my_route_delegate.dart';
+import 'package:storyzz/core/routes/app_router.dart';
 import 'package:storyzz/core/widgets/empty_story.dart';
 import 'package:storyzz/core/widgets/story_error_view.dart';
 import 'package:storyzz/features/map/presentation/widgets/map_story_card.dart';
@@ -103,10 +103,9 @@ class MapStoryListView extends StatelessWidget {
                   context.read<MapProvider>().onStoryTap(story);
                 }
               },
-              onDoubleTap:
-                  () => context.read<MyRouteDelegate>().navigateToStoryDetail(
-                    story,
-                  ),
+              onDoubleTap: () {
+                context.navigateToStoryDetail(story);
+              },
               child: Card(
                 margin: EdgeInsets.only(bottom: 16),
                 child: MapStoryCard(

@@ -116,5 +116,9 @@
   "premium_benefits_description": "Upgrade to Storyzz Premium to enjoy additional features  adding location to your stories!",
   "upgrade": "Upgrade",
   "close": "Close",
-  "coming_soon": "Upgrade feature coming soon!"
+  "coming_soon": "Upgrade feature coming soon!",
+
+  "pageNotFound": "Page Not Found",
+  "pageNotFoundDescription": "The page you're looking for doesn't exist or has been moved.",
+  "goToHome": "Go to Home"
 }

@@ -115,5 +115,9 @@
   "premium_benefits_description": "Tingkatkan ke Storyzz Premium untuk menikmati fitur tambahan menambahkan lokasi ke cerita Anda!",
   "upgrade": "Tingkatkan",
   "close": "Tutup",
-  "coming_soon": "Fitur Premium segera hadir!"
+  "coming_soon": "Fitur Premium segera hadir!",
+
+  "pageNotFound": "Halaman Tidak Ditemukan",
+  "pageNotFoundDescription": "Halaman yang Anda cari tidak ada atau telah dipindahkan.",
+  "goToHome": "Kembali ke Beranda"
 }
