@@ -41,6 +41,7 @@ class ImagePreview extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // camera button
               ElevatedButton.icon(
                 onPressed:
                     uploadProvider.isRequestingPermission
@@ -65,6 +66,8 @@ class ImagePreview extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
+
+              // gallery button
               ElevatedButton.icon(
                 onPressed: onGalleryPressed,
                 icon: Icon(
@@ -101,7 +104,7 @@ class ImagePreview extends StatelessWidget {
     return Container(
       constraints: const BoxConstraints(maxHeight: 400),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withAlpha(50),

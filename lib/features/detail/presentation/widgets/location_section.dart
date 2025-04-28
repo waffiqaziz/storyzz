@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/data/networking/states/address_load_state.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/features/detail/presentation/widgets/address_section.dart';
 import 'package:storyzz/features/detail/presentation/widgets/story_location_map.dart';
 
@@ -17,7 +17,6 @@ import 'package:storyzz/features/detail/presentation/widgets/story_location_map.
 /// [mapControlsEnabled] toggles map interaction UI.
 /// [mapKeyPrefix] is used to generate a unique [ValueKey] for the map.
 class LocationSection extends StatefulWidget {
-  final ListStory story;
   final bool mapControlsEnabled;
   final String mapKeyPrefix;
 
@@ -25,7 +24,6 @@ class LocationSection extends StatefulWidget {
     super.key,
     this.mapControlsEnabled = true,
     this.mapKeyPrefix = 'detail',
-    required this.story,
   });
 
   @override
@@ -34,6 +32,7 @@ class LocationSection extends StatefulWidget {
 
 class _LocationSectionState extends State<LocationSection> {
   bool _requestedAddress = false;
+  
 
   @override
   void didChangeDependencies() {
@@ -43,52 +42,12 @@ class _LocationSectionState extends State<LocationSection> {
     if (!_requestedAddress) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         context.read<AddressProvider>().getAddressFromCoordinates(
-          widget.story.lat!,
-          widget.story.lon!,
+          context.read<AppProvider>().selectedStory!.lat!,
+          context.read<AppProvider>().selectedStory!.lon!,
         );
       });
       _requestedAddress = true;
     }
-  }
-
-  void _openFullscreenMap() {
-    final address = context.read<AddressProvider>().state.getAddressOrFallback(
-      context,
-    );
-
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withValues(alpha: 0.9),
-      builder: (_) {
-        return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: Stack(
-              children: [
-                StoryLocationMap(
-                  latitude: widget.story.lat!,
-                  longitude: widget.story.lon!,
-                  title: widget.story.name,
-                  location: address,
-                  height: MediaQuery.of(context).size.height,
-                  controlsEnabled: true,
-                ),
-                Positioned(
-                  top: 16,
-                  left: 16,
-                  child: FloatingActionButton.small(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Icon(Icons.close),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 
   @override
@@ -96,6 +55,7 @@ class _LocationSectionState extends State<LocationSection> {
     final address = context.watch<AddressProvider>().state.getAddressOrFallback(
       context,
     );
+    final story = context.read<AppProvider>().selectedStory!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,9 +65,9 @@ class _LocationSectionState extends State<LocationSection> {
 
         // address
         AddressSection(
-          latitude: widget.story.lat!,
-          longitude: widget.story.lon!,
-          storyId: widget.story.id,
+          latitude: story.lat!,
+          longitude: story.lon!,
+          storyId: story.id,
         ),
 
         const SizedBox(height: 16),
@@ -117,13 +77,13 @@ class _LocationSectionState extends State<LocationSection> {
           children: [
             StoryLocationMap(
               key: ValueKey(
-                '${widget.mapKeyPrefix}-location-map-${widget.story.id}',
+                '${widget.mapKeyPrefix}-location-map-${story.id}',
               ),
-              latitude: widget.story.lat!,
-              longitude: widget.story.lon!,
+              latitude: story.lat!,
+              longitude: story.lon!,
               height: 400.0,
               controlsEnabled: widget.mapControlsEnabled,
-              title: widget.story.name,
+              title: story.name,
               location: address,
             ),
             Positioned(
@@ -132,7 +92,9 @@ class _LocationSectionState extends State<LocationSection> {
               child: FloatingActionButton.small(
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
-                onPressed: _openFullscreenMap,
+                onPressed: () {
+                  context.read<AppProvider>().openFullScreenMap();
+                },
                 child: const Icon(Icons.fullscreen),
               ),
             ),

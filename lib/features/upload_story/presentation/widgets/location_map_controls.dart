@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 
 /// A widget to shows buttons to controll the map
 ///
 /// - Button to use current location
 /// - Button to cancel select a location
 class LocationMapControls extends StatelessWidget {
-  final LatLng location;
   final bool isLoading;
   final VoidCallback onUseCurrentLocation;
-  final VoidCallback onClear;
+  final VoidCallback onMove;
 
   const LocationMapControls({
     super.key,
-    required this.location,
     required this.isLoading,
     required this.onUseCurrentLocation,
-    required this.onClear,
+    required this.onMove,
   });
 
   @override
   Widget build(BuildContext context) {
+    final location = context.watch<UploadStoryProvider>().selectedLocation!;
+
     return Row(
       children: [
         // show latitude and longitude
@@ -45,9 +46,9 @@ class LocationMapControls extends StatelessWidget {
 
         // button to clear the selected location
         TextButton.icon(
-          onPressed: onClear,
-          icon: const Icon(Icons.clear, size: 18),
-          label: Text(AppLocalizations.of(context)!.cancel),
+          onPressed: onMove,
+          icon: const Icon(Icons.center_focus_strong, size: 18),
+          label: Text(AppLocalizations.of(context)!.center_map),
         ),
       ],
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:storyzz/core/data/networking/responses/list_story.dart';
+import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/utils/helper.dart';
 import 'package:storyzz/features/detail/presentation/widgets/location_section.dart';
 
@@ -18,18 +19,17 @@ import 'package:storyzz/features/detail/presentation/widgets/location_section.da
 /// - [story]: The story object to display
 /// - [onClose]: Callback to handle closing the dialog
 class StoryDetailDialog extends StatelessWidget {
-  final ListStory story;
   final VoidCallback onClose;
 
   const StoryDetailDialog({
     super.key,
-    required this.story,
     required this.onClose,
   });
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final story = context.read<AppProvider>().selectedStory!;
 
     // use MediaQuery to get screen width
     final screenWidth = MediaQuery.of(context).size.width;
@@ -69,7 +69,7 @@ class StoryDetailDialog extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildStoryImage(),
+                      _buildStoryImage(story.photoUrl),
 
                       // content
                       Padding(
@@ -91,7 +91,6 @@ class StoryDetailDialog extends StatelessWidget {
                             // location info if available
                             if (story.lat != null && story.lon != null)
                               LocationSection(
-                                story: story,
                                 mapControlsEnabled: false,
                                 mapKeyPrefix: 'dialog',
                               ),
@@ -125,11 +124,12 @@ class StoryDetailDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildStoryImage() {
+  Widget _buildStoryImage(String photoUrl) {
+    
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: 400, minWidth: double.infinity),
       child: Image.network(
-        story.photoUrl,
+        photoUrl,
         fit: BoxFit.contain,
         width: double.infinity,
         loadingBuilder: (context, child, loadingProgress) {
@@ -165,6 +165,8 @@ class StoryDetailDialog extends StatelessWidget {
   }
 
   Widget _buildAuthorInfo(BuildContext context) {
+    final story = context.read<AppProvider>().selectedStory!;
+    
     return Row(
       children: [
         CircleAvatar(

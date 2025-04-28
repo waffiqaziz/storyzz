@@ -7,6 +7,7 @@ import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_location_loading_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_map_controller_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
@@ -64,10 +65,25 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
 
             // shows get current location and cancel button
             LocationMapControls(
-              location: uploadProvider.selectedLocation!,
               isLoading: locationLoadingProvider.isLoading,
+
+              // use current location
               onUseCurrentLocation: () => _getCurrentPosition(context),
-              onClear: () => uploadProvider.setSelectedLocation(null),
+
+              // move camera
+              onMove: () async {
+                if (!context.mounted) return;
+
+                final controllerProvider =
+                    context.read<UploadMapControllerProvider>();
+                final location = uploadProvider.selectedLocation;
+
+                if (location == null) return;
+
+                await controllerProvider.animateCamera(
+                  CameraPosition(target: location, zoom: 15),
+                );
+              },
             ),
           ],
         ],
@@ -127,6 +143,7 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
             else ...[
               BuildGoogleMap(),
 
+              // button to open full screen map
               Positioned(
                 top: 12,
                 left: 12,
@@ -134,8 +151,9 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
                   child: FloatingActionButton.small(
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
-                    onPressed:
-                        () => _openFullscreenMap(context, uploadProvider),
+                    onPressed: () {
+                      context.read<AppProvider>().openFullScreenMap();
+                    },
                     child: const Icon(Icons.fullscreen),
                   ),
                 ),
@@ -161,54 +179,6 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
           ],
         ),
       ),
-    );
-  }
-
-  void _openFullscreenMap(
-    BuildContext context,
-    UploadStoryProvider uploadProvider,
-  ) {
-    if (uploadProvider.selectedLocation == null) return;
-
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withValues(alpha: 0.9),
-      builder: (_) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          insetPadding: EdgeInsets.all(48),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              // Circular Google Map
-              ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  25,
-                ), // Large value for circle
-                child: SizedBox(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: BuildGoogleMap(),
-                ),
-              ),
-
-              // Close button positioned diagonally outside the map
-              Positioned(
-                top: -40,
-                right: -40,
-                child: PointerInterceptor(
-                  child: FloatingActionButton.small(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Icon(Icons.close),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 
