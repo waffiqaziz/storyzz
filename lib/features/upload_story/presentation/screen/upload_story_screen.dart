@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
-import 'package:storyzz/core/routes/my_route_delegate.dart';
+import 'package:storyzz/core/routes/app_router.dart';
 import 'package:storyzz/core/variant/build_configuration.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/camera_web_view.dart';
@@ -123,7 +123,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       _cameraService.cleanup();
 
       // navigate to home screen
-      context.read<MyRouteDelegate>().navigateToHome();
+      context.navigateToHome();
 
       await context.read<StoryProvider>().refreshStories(
         user: authProvider.user!,

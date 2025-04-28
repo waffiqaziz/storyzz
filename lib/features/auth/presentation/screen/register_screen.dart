@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/model/user.dart';
 import 'package:storyzz/core/designsystem/theme.dart';
@@ -13,19 +14,8 @@ import 'package:storyzz/core/widgets/language_selector.dart';
 ///
 /// The user can submit the registration form by pressing the "Register" button,
 /// which triggers the registration process through an authentication provider.
-///
-/// Parameters:
-/// - [onRegister]: Callback invoked when the registration is successful.
-/// - [onLogin]: Callback invoked when the user opts to navigate to the login screen.
 class RegisterScreen extends StatefulWidget {
-  final VoidCallback onRegister;
-  final VoidCallback onLogin;
-
-  const RegisterScreen({
-    super.key,
-    required this.onRegister,
-    required this.onLogin,
-  });
+  const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -60,8 +50,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       final result = await authProvider.register(user);
       if (result.data != null && !result.data!.error) {
-        widget.onRegister();
         if (mounted) {
+          context.go('/');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
@@ -276,7 +266,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(color: Colors.grey.shade600),
                         ),
                         TextButton(
-                          onPressed: widget.onLogin,
+                          onPressed: () => context.go('/login'),
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.all(8),
                             minimumSize: Size(50, 30),

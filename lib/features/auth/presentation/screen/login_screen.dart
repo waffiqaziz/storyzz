@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/model/user.dart';
 import 'package:storyzz/core/designsystem/theme.dart';
@@ -12,19 +13,8 @@ import 'package:storyzz/core/widgets/language_selector.dart';
 ///
 /// The user can submit the login form by pressing the "Login" button, which triggers
 /// the login process through an authentication provider.
-///
-/// Parameters:
-/// - [onLogin]: Callback invoked when the login is successful.
-/// - [onRegister]: Callback invoked when the user opts to navigate to the registration screen.
 class LoginScreen extends StatefulWidget {
-  final VoidCallback onLogin;
-  final VoidCallback onRegister;
-
-  const LoginScreen({
-    super.key,
-    required this.onLogin,
-    required this.onRegister,
-  });
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -57,8 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
         user.password!,
       );
       if (result.data != null) {
-        widget.onLogin();
         if (mounted) {
+          context.go('/');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               margin: EdgeInsets.only(bottom: 16, left: 16, right: 16),
@@ -258,10 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(color: Colors.grey.shade600),
                             ),
                             TextButton(
-                              onPressed:
-                                  authProvider.isLoadingLogin
-                                      ? null
-                                      : widget.onRegister,
+                              onPressed: () => context.go('/register'),
                               style: TextButton.styleFrom(
                                 padding: EdgeInsets.all(8),
                                 minimumSize: Size(50, 30),

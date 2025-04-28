@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
-import 'package:storyzz/core/routes/my_route_delegate.dart';
+import 'package:storyzz/core/routes/app_router.dart';
 import 'package:storyzz/core/utils/helper.dart';
 
 /// A tappable card displaying a preview of a story.
@@ -33,7 +32,7 @@ class HomeStoryCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: () {
-          context.read<MyRouteDelegate>().navigateToStoryDetail(story);
+          context.navigateToStoryDetail(story);
         },
         borderRadius: BorderRadius.circular(12),
         child: Column(

@@ -22,14 +22,14 @@ class AuthScreenTransition extends Page {
   Route createRoute(BuildContext context) {
     return PageRouteBuilder(
       settings: this,
-      transitionDuration: const Duration(milliseconds: 500),
-      reverseTransitionDuration: const Duration(milliseconds: 400),
+      transitionDuration: const Duration(milliseconds: 800),
+      reverseTransitionDuration: const Duration(milliseconds: 600),
       pageBuilder: (context, animation, secondaryAnimation) => child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         final begin =
             isForward
-                ? const Offset(1.0, 0.0) // Register comes from right
-                : const Offset(-1.0, 0.0); // Login comes from left
+                ? const Offset(1.0, 0.0) // register comes from right
+                : const Offset(-1.0, 0.0); // login comes from left
         const end = Offset.zero;
 
         // Use a custom curve for more natural animation

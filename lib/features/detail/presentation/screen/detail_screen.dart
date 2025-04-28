@@ -37,7 +37,12 @@ class StoryDetailScreen extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         elevation: 0,
-        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: onBack),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            onBack();
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

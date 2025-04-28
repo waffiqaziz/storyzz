@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
@@ -15,9 +16,7 @@ import 'package:storyzz/features/home/presentation/widgets/home_story_list_view.
 ///
 /// - [onLogout]: Callback triggered after a successful logout.
 class HomeScreen extends StatefulWidget {
-  final VoidCallback onLogout;
-
-  const HomeScreen({super.key, required this.onLogout});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -97,8 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Displays a success message after logout completes.
   void _logOut(AuthProvider authProvider) async {
     await authProvider.logout();
-    widget.onLogout();
     if (mounted) {
+      context.go('/login');
       _showLogoutSuccessMessage();
     }
   }
@@ -118,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (authProvider.errorMessage.isNotEmpty) {
             return AuthErrorView(
               errorMessage: authProvider.errorMessage,
-              onLogout: widget.onLogout,
+              onLogout: () => _logOut(authProvider),
             );
           }
 

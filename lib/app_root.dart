@@ -12,14 +12,14 @@ import 'package:storyzz/core/providers/address_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
-import 'package:storyzz/core/routes/my_route_delegate.dart';
-import 'package:storyzz/core/routes/my_route_information_parser.dart';
+import 'package:storyzz/core/routes/app_router.dart';
 import 'package:storyzz/features/map/provider/map_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_location_loading_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_map_controller_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 import 'package:storyzz/my_app.dart';
 
+/// Used to initialize all providers and services in the app.
 class AppRoot extends StatelessWidget {
   final SharedPreferences prefs;
 
@@ -30,7 +30,6 @@ class AppRoot extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(create: (_) => SettingRepository(prefs)),
-        Provider(create: (_) => MyRouteInformationParser()),
         Provider(create: (_) => ApiServices(httpClient: http.Client())),
         Provider(create: (_) => MapsApiService(httpClient: http.Client())),
         Provider(
@@ -60,9 +59,6 @@ class AppRoot extends StatelessWidget {
           create: (context) => StoryProvider(context.read<StoryRepository>()),
         ),
         ChangeNotifierProvider(
-          create: (context) => MyRouteDelegate(context.read<AuthProvider>()),
-        ),
-        ChangeNotifierProvider(
           create:
               (context) => SettingsProvider(context.read<SettingRepository>()),
         ),
@@ -75,6 +71,11 @@ class AppRoot extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AddressProvider(context.read<MapsRepository>()),
+        ),
+        Provider(
+          create:
+              (context) =>
+                  AppRouter(authProvider: context.read<AuthProvider>()),
         ),
       ],
       child: MyApp(),

@@ -6,9 +6,7 @@ import 'package:storyzz/core/widgets/language_selector.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
-  final VoidCallback onLogout;
-
-  const SettingsScreen({super.key, required this.onLogout});
+  const SettingsScreen({super.key});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();

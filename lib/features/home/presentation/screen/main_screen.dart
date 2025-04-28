@@ -26,104 +26,133 @@ import 'package:storyzz/features/upload_story/presentation/screen/upload_story_s
 ///   onTabChanged: (index) { /* handle tab change */ },
 /// );
 /// ```
-class MainScreen extends StatelessWidget {
-  final VoidCallback onLogout;
+class MainScreen extends StatefulWidget {
+  final Widget child;
   final int currentIndex;
   final Function(int) onTabChanged;
+  final VoidCallback onLogout;
+  final Object? routeExtra;
 
   const MainScreen({
     super.key,
-    required this.onLogout,
+    required this.child,
     required this.currentIndex,
     required this.onTabChanged,
+    required this.onLogout,
+    this.routeExtra,
   });
 
   /// Breakpoint for determining wide vs mobile layout.
   static const int tabletBreakpoint = 600;
 
   @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  // We'll use this to prevent layout thrashing during transitions
+  bool _isMobile = true;
+  double _previousWidth = 0;
+
+  @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth < tabletBreakpoint;
 
-    // the content to be displayed based on the selected tab index.
-    Widget content = AnimatedTabSwitcher(
-      index: currentIndex,
+    // only update layout mode when width changes significantly to avoid flickering
+    if ((screenWidth - _previousWidth).abs() > 5) {
+      _isMobile = screenWidth < MainScreen.tabletBreakpoint;
+      _previousWidth = screenWidth;
+    }
+
+    final content = AnimatedTabSwitcher(
+      index: widget.currentIndex,
       children: [
-        HomeScreen(onLogout: onLogout),
-        MapStoryScreen(),
-        UploadStoryScreen(),
-        SettingsScreen(onLogout: onLogout),
+        const HomeScreen(),
+        const MapStoryScreen(),
+        const UploadStoryScreen(),
+        const SettingsScreen(),
       ],
     );
 
     return Scaffold(
-      // use a mobile or tablet layout depending on the screen width.
-      body:
-          isMobile
-              ? content
-              : Row(
-                children: [
-                  // navigation rail for tablets and larger devices.
-                  NavigationRail(
-                    selectedIndex: currentIndex,
-                    onDestinationSelected: onTabChanged,
-                    labelType: NavigationRailLabelType.all,
-                    destinations: [
-                      NavigationRailDestination(
-                        icon: Icon(Icons.home_filled),
-                        label: Text(AppLocalizations.of(context)!.home),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.map_rounded),
-                        label: Text(AppLocalizations.of(context)!.map),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.add_box_outlined),
-                        label: Text(AppLocalizations.of(context)!.upload),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.settings),
-                        label: Text(AppLocalizations.of(context)!.settings),
-                      ),
-                    ],
-                  ),
-                  const VerticalDivider(
-                    width: 1,
-                  ), // divider between nav and the content
-                  Expanded(child: content),
-                ],
-              ),
-      // bottom navigation bar for mobile devices.
-      bottomNavigationBar:
-          isMobile
-              ? NavigationBar(
-                selectedIndex: currentIndex,
-                onDestinationSelected: onTabChanged,
-                destinations: [
-                  NavigationDestination(
-                    icon: Icon(Icons.home_filled),
-                    label: AppLocalizations.of(context)!.home,
-                    tooltip: AppLocalizations.of(context)!.home,
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.map_rounded),
-                    label: AppLocalizations.of(context)!.map,
-                    tooltip: AppLocalizations.of(context)!.map,
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.add_box_outlined),
-                    label: AppLocalizations.of(context)!.upload,
-                    tooltip: AppLocalizations.of(context)!.upload,
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.settings),
-                    label: AppLocalizations.of(context)!.settings,
-                    tooltip: AppLocalizations.of(context)!.settings,
-                  ),
-                ],
-              )
-              : null,
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 800),
+        child:
+            _isMobile
+                ? content
+                : Row(
+                  key: const ValueKey('desktop_layout'),
+                  children: [
+                    NavigationRail(
+                      selectedIndex: widget.currentIndex,
+                      onDestinationSelected: widget.onTabChanged,
+                      labelType: NavigationRailLabelType.all,
+                      destinations: [
+                        NavigationRailDestination(
+                          icon: const Icon(Icons.home_filled),
+                          label: Text(AppLocalizations.of(context)!.home),
+                        ),
+                        NavigationRailDestination(
+                          icon: const Icon(Icons.map_rounded),
+                          label: Text(AppLocalizations.of(context)!.map),
+                        ),
+                        NavigationRailDestination(
+                          icon: const Icon(Icons.add_box_outlined),
+                          label: Text(AppLocalizations.of(context)!.upload),
+                        ),
+                        NavigationRailDestination(
+                          icon: const Icon(Icons.settings_rounded),
+                          label: Text(AppLocalizations.of(context)!.settings),
+                        ),
+                      ],
+                    ),
+                    const VerticalDivider(width: 1),
+                    Expanded(child: content),
+                  ],
+                ),
+      ),
+      bottomNavigationBar: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 1),
+              end: Offset.zero,
+            ).animate(animation),
+            child: FadeTransition(opacity: animation, child: child),
+          );
+        },
+        child:
+            _isMobile
+                ? NavigationBar(
+                  key: const ValueKey('bottom_nav'),
+                  selectedIndex: widget.currentIndex,
+                  onDestinationSelected: widget.onTabChanged,
+                  destinations: [
+                    NavigationDestination(
+                      icon: const Icon(Icons.home_filled),
+                      label: AppLocalizations.of(context)!.home,
+                      tooltip: AppLocalizations.of(context)!.home,
+                    ),
+                    NavigationDestination(
+                      icon: const Icon(Icons.map_rounded),
+                      label: AppLocalizations.of(context)!.map,
+                      tooltip: AppLocalizations.of(context)!.map,
+                    ),
+                    NavigationDestination(
+                      icon: const Icon(Icons.add_box_outlined),
+                      label: AppLocalizations.of(context)!.upload,
+                      tooltip: AppLocalizations.of(context)!.upload,
+                    ),
+                    NavigationDestination(
+                      icon: const Icon(Icons.settings_rounded),
+                      label: AppLocalizations.of(context)!.settings,
+                      tooltip: AppLocalizations.of(context)!.settings,
+                    ),
+                  ],
+                )
+                : const SizedBox.shrink(),
+      ),
     );
   }
 }

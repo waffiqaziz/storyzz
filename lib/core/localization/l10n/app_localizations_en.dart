@@ -314,4 +314,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get coming_soon => 'Upgrade feature coming soon!';
+
+  @override
+  String get pageNotFound => 'Page Not Found';
+
+  @override
+  String get pageNotFoundDescription =>
+      'The page you\'re looking for doesn\'t exist or has been moved.';
+
+  @override
+  String get goToHome => 'Go to Home';
 }
