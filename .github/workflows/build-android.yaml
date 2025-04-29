@@ -34,6 +34,7 @@ jobs:
         run: |
           flutter pub get
           dart run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
 
       - name: Create .env file
         run: |
@@ -72,10 +73,11 @@ jobs:
       - name: Flutter version
         run: flutter --version
       
-      - name: Install dependencies
+      - name: Install dependencies & generate files
         run: |
           flutter pub get
           dart run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
       
       - name: Create .env file
         run: |
@@ -126,10 +128,11 @@ jobs:
       - name: Flutter version
         run: flutter --version
       
-      - name: Install dependencies
+      - name: Install dependencies & generate files
         run: |
           flutter pub get
           dart run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
       
       - name: Create .env file
         run: |
@@ -178,10 +181,11 @@ jobs:
           channel: stable
           cache: true
       
-      - name: Install dependencies
+      - name: Install dependencies & generate files
         run: |
           flutter pub get
           dart run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
       
       - name: Create .env file
         run: |
