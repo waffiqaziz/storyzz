@@ -100,8 +100,8 @@
   "write_a_caption": "Tulis keterangan...",
   "uploading_story": "Sedang mengunggah cerita...",
 
+  "center_map": "Pusatkan peta",
   "tap_to_select_location": "Ketuk untuk menentukan lokasi",
-  "tap_to_select_location": "Ketuk pada peta untuk memilih lokasi Anda",
   "use_current_location": "Gunakan saat ini",
   "location_error": "Tidak dapat mengakses lokasi Anda. Silakan periksa izin Anda.",
   "location_services_disabled": "Layanan lokasi dinonaktifkan.",
@@ -117,7 +117,8 @@
   "close": "Tutup",
   "coming_soon": "Fitur Premium segera hadir!",
 
-  "pageNotFound": "Halaman Tidak Ditemukan",
-  "pageNotFoundDescription": "Halaman yang Anda cari tidak ada atau telah dipindahkan.",
-  "goToHome": "Kembali ke Beranda"
+  "story_not_found": "Postingan Tidak Ditemukan",
+  "page_not_found": "Halaman Tidak Ditemukan",
+  "page_not_found_description": "Halaman yang Anda cari tidak ada atau telah dipindahkan.",
+  "go_to_home": "Kembali ke Beranda"
 }

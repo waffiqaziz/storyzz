@@ -9,6 +9,7 @@ import 'package:storyzz/core/data/repository/maps_repository.dart';
 import 'package:storyzz/core/data/repository/setting_repository.dart';
 import 'package:storyzz/core/data/repository/story_repository.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
@@ -42,6 +43,7 @@ class AppRoot extends StatelessWidget {
         Provider(
           create: (context) => MapsRepository(context.read<MapsApiService>()),
         ),
+        ChangeNotifierProvider(create: (_) => AppProvider()),
         ChangeNotifierProvider(
           create: (context) => UploadLocationLoadingProvider(),
         ),
@@ -74,8 +76,10 @@ class AppRoot extends StatelessWidget {
         ),
         Provider(
           create:
-              (context) =>
-                  AppRouter(authProvider: context.read<AuthProvider>()),
+              (context) => AppRouter(
+                appProvider: context.read<AppProvider>(),
+                authProvider: context.read<AuthProvider>(),
+              ),
         ),
       ],
       child: MyApp(),

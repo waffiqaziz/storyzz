@@ -68,7 +68,7 @@ class _NotFoundScreenState extends State<NotFoundScreen>
 
               // Error text
               Text(
-                AppLocalizations.of(context)!.pageNotFound,
+                AppLocalizations.of(context)!.page_not_found,
                 style: theme.textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -79,7 +79,7 @@ class _NotFoundScreenState extends State<NotFoundScreen>
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
                 child: Text(
-                  AppLocalizations.of(context)!.pageNotFoundDescription,
+                  AppLocalizations.of(context)!.page_not_found_description,
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: theme.textTheme.bodyLarge?.color?.withValues(
                       alpha: 0.7,
@@ -97,7 +97,7 @@ class _NotFoundScreenState extends State<NotFoundScreen>
                   color: theme.colorScheme.surfaceContainerLowest,
                   Icons.home,
                 ),
-                label: Text(AppLocalizations.of(context)!.goToHome),
+                label: Text(AppLocalizations.of(context)!.go_to_home),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 14,

@@ -13,6 +13,7 @@ import 'package:storyzz/features/upload_story/presentation/providers/upload_stor
 import 'package:storyzz/features/upload_story/presentation/widgets/camera_web_view.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/image_preview.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/location_map_selector.dart';
+import 'package:storyzz/features/upload_story/presentation/widgets/premium_feature_promotion.dart';
 import 'package:storyzz/features/upload_story/services/camera_service.dart';
 import 'package:storyzz/features/upload_story/services/image_picker_services.dart';
 
@@ -102,7 +103,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     double? lat;
     double? lon;
 
-    // Include location data if user has enabled it
+    // include location data if user enabled it
     if (_uploadStoryProvider.includeLocation &&
         _uploadStoryProvider.selectedLocation != null) {
       lat = _uploadStoryProvider.selectedLocation!.latitude;
@@ -125,6 +126,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       // navigate to home screen
       context.navigateToHome();
 
+      // refresh to get the latest stories
       await context.read<StoryProvider>().refreshStories(
         user: authProvider.user!,
       );
@@ -137,7 +139,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
           ),
         );
       }
-      _uploadStoryProvider.reset();
+      _uploadStoryProvider.reset(); // reset all parameters
     } else if (_uploadStoryProvider.errorMessage != null) {
       // show snackbar upload failed
       ScaffoldMessenger.of(context).showSnackBar(
@@ -153,7 +155,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     final isUploading = uploadProvider.isLoading;
     final showCamera = uploadProvider.showCamera;
 
-    // get build-time constant
+    // get build-time constant for web platform
     final appFlavor = const String.fromEnvironment(
       'APP_FLAVOR',
       defaultValue: 'free',
@@ -171,6 +173,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
           if (imageFile != null && !showCamera)
             Container(
               margin: const EdgeInsets.only(right: 8.0),
+
+              // button trigger to upload story
               child: IconButton(
                 icon: const Icon(Icons.check),
                 onPressed: isUploading ? null : _uploadStory,
@@ -208,6 +212,21 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                         decoration: InputDecoration(
                           hintText:
                               AppLocalizations.of(context)!.write_a_caption,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
                         ),
                         maxLines: 3,
                         onChanged: (value) {
@@ -224,13 +243,13 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                         if (isPaidVersion)
                           LocationMapSelector()
                         else
-                          _buildPremiumFeaturePromotion(context),
+                          PremiumFeaturePromotion(),
                       ] else if (Theme.of(context).platform ==
                           TargetPlatform.android) ...[
                         if (BuildConfig.canAddLocation) ...[
                           LocationMapSelector(),
                         ] else ...[
-                          _buildPremiumFeaturePromotion(context),
+                          PremiumFeaturePromotion(),
                         ],
                       ],
                       const SizedBox(height: 16),
@@ -266,76 +285,6 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildPremiumFeaturePromotion(BuildContext context) {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.location_on,
-              size: 40,
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              AppLocalizations.of(context)!.premium_feature,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              AppLocalizations.of(context)!.upgrade_to_add_location,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 16),
-            OutlinedButton.icon(
-              onPressed: () {
-                _showUpgradeDialog(context);
-              },
-              icon: Icon(Icons.star),
-              label: Text(AppLocalizations.of(context)!.upgrade_now),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showUpgradeDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(AppLocalizations.of(context)!.get_premium),
-            content: Text(
-              AppLocalizations.of(context)!.premium_benefits_description,
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(AppLocalizations.of(context)!.close),
-              ),
-              FilledButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(AppLocalizations.of(context)!.coming_soon),
-                    ),
-                  );
-                },
-                child: Text(AppLocalizations.of(context)!.upgrade),
-              ),
-            ],
-          ),
     );
   }
 }

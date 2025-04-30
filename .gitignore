@@ -51,6 +51,9 @@ android/secrets.properties
 # Generated code
 *.freezed.dart
 *.g.dart
+lib/core/localization/l10n/app_localizations.dart
+lib/core/localization/l10n/app_localizations_en.dart
+lib/core/localization/l10n/app_localizations_id.dart
 
 web/env.js
 *.env

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/model/user.dart';
 import 'package:storyzz/core/designsystem/theme.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/widgets/language_selector.dart';
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       if (result.data != null) {
         if (mounted) {
-          context.go('/');
+          context.read<AuthProvider>().isLogged();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               margin: EdgeInsets.only(bottom: 16, left: 16, right: 16),
@@ -248,7 +248,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(color: Colors.grey.shade600),
                             ),
                             TextButton(
-                              onPressed: () => context.go('/register'),
+                              onPressed:
+                                  () =>
+                                      context
+                                          .read<AppProvider>()
+                                          .openRegister(),
                               style: TextButton.styleFrom(
                                 padding: EdgeInsets.all(8),
                                 minimumSize: Size(50, 30),

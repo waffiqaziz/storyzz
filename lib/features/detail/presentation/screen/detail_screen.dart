@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:storyzz/core/data/networking/responses/list_story.dart';
+import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/utils/helper.dart';
 import 'package:storyzz/features/detail/presentation/widgets/location_section.dart';
 
@@ -17,18 +18,12 @@ import 'package:storyzz/features/detail/presentation/widgets/location_section.da
 /// - [story]: The story object to display
 /// - [onBack]: Callback to handle back navigation
 class StoryDetailScreen extends StatelessWidget {
-  final ListStory story;
-  final VoidCallback onBack;
-
-  const StoryDetailScreen({
-    super.key,
-    required this.story,
-    required this.onBack,
-  });
+  const StoryDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final story = context.read<AppProvider>().selectedStory!;
 
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +35,9 @@ class StoryDetailScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            onBack();
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.read<AppProvider>().closeDetail();
+            });
           },
         ),
       ),
@@ -108,7 +105,6 @@ class StoryDetailScreen extends StatelessWidget {
                   // location info if available
                   if (story.lat != null && story.lon != null)
                     LocationSection(
-                      story: story,
                       mapControlsEnabled: true,
                       mapKeyPrefix: 'detail',
                     ),
@@ -122,6 +118,8 @@ class StoryDetailScreen extends StatelessWidget {
   }
 
   Widget _buildAuthorInfo(BuildContext context) {
+    final story = context.read<AppProvider>().selectedStory!;
+
     return Row(
       children: [
         CircleAvatar(

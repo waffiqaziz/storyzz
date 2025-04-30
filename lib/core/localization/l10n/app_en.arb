@@ -100,9 +100,8 @@
   "write_a_caption": "Write a caption...",
   "uploading_story": "Uploading story...",
 
+  "center_map": "Center map",
   "tap_to_select_location": "Tap to select location",
-
-  "tap_to_select_location": "Tap on the map to select your location",
   "use_current_location": "Use current",
   "location_error": "Unable to access your location. Please check your permissions.",
   "location_services_disabled": "Location services are disabled.",
@@ -118,7 +117,8 @@
   "close": "Close",
   "coming_soon": "Upgrade feature coming soon!",
 
-  "pageNotFound": "Page Not Found",
-  "pageNotFoundDescription": "The page you're looking for doesn't exist or has been moved.",
-  "goToHome": "Go to Home"
+  "story_not_found": "Story Not Found",
+  "page_not_found": "Page Not Found",
+  "page_not_found_description": "The page you're looking for doesn't exist or has been moved.",
+  "go_to_home": "Go to Home"
 }
