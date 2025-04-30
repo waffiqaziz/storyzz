@@ -119,7 +119,7 @@ class StoryDetailScreen extends StatelessWidget {
 
   Widget _buildAuthorInfo(BuildContext context) {
     final story = context.read<AppProvider>().selectedStory!;
-    
+
     return Row(
       children: [
         CircleAvatar(

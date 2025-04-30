@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
 
 class AppProvider extends ChangeNotifier {
+  bool _isLanguageDialogOpen = false;
+  bool get isLanguageDialogOpen => _isLanguageDialogOpen;
+
   bool _isUpDialogOpen = false;
   bool get isUpDialogOpen => _isUpDialogOpen;
 
@@ -19,6 +22,16 @@ class AppProvider extends ChangeNotifier {
 
   bool _isFullScreenMap = false;
   bool get isFullScreenMap => _isFullScreenMap;
+
+  void openLanguageDialog() {
+    _isLanguageDialogOpen = true;
+    notifyListeners();
+  }
+
+  void closeLanguageDialog() {
+    _isLanguageDialogOpen = false;
+    notifyListeners();
+  }
 
   void openRegister() {
     _isRegister = true;
@@ -63,6 +76,7 @@ class AppProvider extends ChangeNotifier {
   }
 
   void resetAll() {
+    _isLanguageDialogOpen = false;
     _isUpDialogOpen = false;
     _isFullScreenMap = false;
     _isFromDetail = false;

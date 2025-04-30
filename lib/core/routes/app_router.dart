@@ -5,6 +5,7 @@ import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
+import 'package:storyzz/core/widgets/language_dialog_screen.dart';
 import 'package:storyzz/core/widgets/not_found_widget.dart';
 import 'package:storyzz/features/auth/presentation/screen/login_screen.dart';
 import 'package:storyzz/features/auth/presentation/screen/register_screen.dart';
@@ -60,8 +61,12 @@ class AppRouter {
           if (appProvider.isRegister) {
             return '/register';
           }
+          if (appProvider.isLanguageDialogOpen) {
+            return '/login/language-dialog';
+          }
           return null;
         },
+        routes: [_dialogLanguage('login')],
 
         pageBuilder:
             (context, state) => AuthScreenTransition(
@@ -77,8 +82,12 @@ class AppRouter {
           if (appProvider.isLogin) {
             return '/login';
           }
+          if (appProvider.isLanguageDialogOpen) {
+            return '/register/language-dialog';
+          }
           return null;
         },
+        routes: [_dialogLanguage('register')],
         pageBuilder:
             (context, state) => AuthScreenTransition(
               child: RegisterScreen(),
@@ -203,7 +212,9 @@ class AppRouter {
     final validPaths = [
       '/',
       '/login',
+      '/login/language-dialog',
       '/register',
+      '/register/language-dialog',
       '/map',
       '/upload',
       '/upload/upgrade',
@@ -227,7 +238,10 @@ class AppRouter {
 
     final bool isGoingToAuth = path == '/login' || path == '/register';
 
-    if (!isLoggedIn && !isGoingToAuth && path != '/404') {
+    if (!isLoggedIn &&
+        !isGoingToAuth &&
+        path != '/404' &&
+        !appProvider.isLanguageDialogOpen) {
       return '/login';
     }
 
@@ -253,13 +267,25 @@ class AppRouter {
     return 0;
   }
 
+  GoRoute _dialogLanguage(String name) {
+    return GoRoute(
+      path: '/language-dialog',
+      name: "${name}LanguageDialog",
+      parentNavigatorKey: rootNavigatorKey,
+      pageBuilder:
+          (context, state) => _dialogTransition(state, LanguageDialogScreen()),
+    );
+  }
+
   GoRoute _detailRoute(String name) {
     return GoRoute(
       path: 'story/:id',
       name: "${name}StoryDetail",
       parentNavigatorKey: rootNavigatorKey,
       redirect: (context, state) {
-        if (appProvider.isFullScreenMap && appProvider.selectedStory != null && appProvider.isFromDetail) {
+        if (appProvider.isFullScreenMap &&
+            appProvider.selectedStory != null &&
+            appProvider.isFromDetail) {
           return '/story/:id/map';
         }
         if (appProvider.selectedStory == null && appProvider.isFromDetail) {

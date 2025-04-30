@@ -32,7 +32,6 @@ class LocationSection extends StatefulWidget {
 
 class _LocationSectionState extends State<LocationSection> {
   bool _requestedAddress = false;
-  
 
   @override
   void didChangeDependencies() {
@@ -76,9 +75,7 @@ class _LocationSectionState extends State<LocationSection> {
         Stack(
           children: [
             StoryLocationMap(
-              key: ValueKey(
-                '${widget.mapKeyPrefix}-location-map-${story.id}',
-              ),
+              key: ValueKey('${widget.mapKeyPrefix}-location-map-${story.id}'),
               latitude: story.lat!,
               longitude: story.lon!,
               height: 400.0,

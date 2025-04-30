@@ -21,10 +21,7 @@ import 'package:storyzz/features/detail/presentation/widgets/location_section.da
 class StoryDetailDialog extends StatelessWidget {
   final VoidCallback onClose;
 
-  const StoryDetailDialog({
-    super.key,
-    required this.onClose,
-  });
+  const StoryDetailDialog({super.key, required this.onClose});
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +122,6 @@ class StoryDetailDialog extends StatelessWidget {
   }
 
   Widget _buildStoryImage(String photoUrl) {
-    
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: 400, minWidth: double.infinity),
       child: Image.network(
@@ -166,7 +162,7 @@ class StoryDetailDialog extends StatelessWidget {
 
   Widget _buildAuthorInfo(BuildContext context) {
     final story = context.read<AppProvider>().selectedStory!;
-    
+
     return Row(
       children: [
         CircleAvatar(

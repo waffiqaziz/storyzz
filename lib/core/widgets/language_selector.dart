@@ -1,6 +1,8 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 
 /// A widget that allows users to select a language.
 ///
@@ -38,72 +40,10 @@ class LanguageSelector extends StatelessWidget {
     AppLocalizations localizations,
   ) {
     return IconButton(
-      icon: const Icon(Icons.language),
+      icon: const Icon(Icons.language_rounded),
       tooltip: localizations.language,
       onPressed: () {
-        showDialog(
-          context: context,
-          builder:
-              (context) => AlertDialog(
-                title: Text(localizations.language),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _buildLanguageOption(
-                      context,
-                      'en',
-                      Image.asset(
-                        "assets/flag/flag_us.webp",
-                        width: 30,
-                        height: 25,
-                      ),
-                      localizations.english,
-                      localizations,
-                    ),
-                    _buildLanguageOption(
-                      context,
-                      'id',
-                      Image.asset(
-                        "assets/flag/flag_id.webp",
-                        width: 30,
-                        height: 25,
-                      ),
-                      localizations.indonesian,
-                      localizations,
-                    ),
-                  ],
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(localizations.cancel),
-                  ),
-                ],
-              ),
-        );
-      },
-    );
-  }
-
-  // drop down item
-  Widget _buildLanguageOption(
-    BuildContext context,
-    String code,
-    Image flag,
-    String name,
-    AppLocalizations localizations,
-  ) {
-    final isSelected = currentLanguageCode == code;
-
-    return ListTile(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-      contentPadding: EdgeInsets.symmetric(horizontal: 16),
-      leading: flag,
-      title: Text(name),
-      trailing: isSelected ? const Icon(Icons.check) : null,
-      onTap: () {
-        onChanged(code);
-        Navigator.pop(context);
+        context.read<AppProvider>().openLanguageDialog();
       },
     );
   }
