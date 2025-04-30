@@ -16,7 +16,7 @@ class MapDialogFullScreen extends StatelessWidget {
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
-          context.read<AppProvider>().closeFullScreenMap();
+          context.read<AppProvider>().closeUploadFullScreenMap();
         }
       },
       child: Dialog(
@@ -44,7 +44,7 @@ class MapDialogFullScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.black,
                   onPressed: () {
-                    context.read<AppProvider>().closeFullScreenMap();
+                    context.read<AppProvider>().closeUploadFullScreenMap();
                   },
                   child: const Icon(Icons.close),
                 ),

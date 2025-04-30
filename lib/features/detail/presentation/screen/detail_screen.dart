@@ -18,9 +18,7 @@ import 'package:storyzz/features/detail/presentation/widgets/location_section.da
 /// - [story]: The story object to display
 /// - [onBack]: Callback to handle back navigation
 class StoryDetailScreen extends StatelessWidget {
-  final VoidCallback onBack;
-
-  const StoryDetailScreen({super.key, required this.onBack});
+  const StoryDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,9 @@ class StoryDetailScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            onBack();
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.read<AppProvider>().closeDetail();
+            });
           },
         ),
       ),

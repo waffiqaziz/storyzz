@@ -19,9 +19,7 @@ import 'package:storyzz/features/detail/presentation/widgets/location_section.da
 /// - [story]: The story object to display
 /// - [onClose]: Callback to handle closing the dialog
 class StoryDetailDialog extends StatelessWidget {
-  final VoidCallback onClose;
-
-  const StoryDetailDialog({super.key, required this.onClose});
+  const StoryDetailDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,9 @@ class StoryDetailDialog extends StatelessWidget {
       canPop: true,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
-          onClose();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.read<AppProvider>().closeDetail();
+          });
         }
       },
       child: Dialog(
@@ -115,7 +115,14 @@ class StoryDetailDialog extends StatelessWidget {
             localizations.story_details,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
-          IconButton(icon: Icon(Icons.close), onPressed: onClose),
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.read<AppProvider>().closeDetail();
+              });
+            },
+          ),
         ],
       ),
     );

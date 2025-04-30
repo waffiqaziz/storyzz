@@ -5,6 +5,7 @@ import 'package:storyzz/core/providers/address_provider.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/features/detail/presentation/widgets/story_location_map.dart';
 
+// TODO: Future work on this widget
 class DetailFullScreenMap extends StatelessWidget {
   const DetailFullScreenMap({super.key});
 
@@ -34,9 +35,10 @@ class DetailFullScreenMap extends StatelessWidget {
               child: FloatingActionButton.small(
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
-                onPressed:
-                    () => context.read<AppProvider>().closeFullScreenMap(),
                 child: const Icon(Icons.close),
+                onPressed: () {
+                  context.read<AppProvider>().closeDetailFullScreenMap();
+                },
               ),
             ),
           ],

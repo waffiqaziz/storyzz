@@ -20,8 +20,13 @@ class AppProvider extends ChangeNotifier {
   bool _isLogin = false;
   bool get isLogin => _isLogin;
 
-  bool _isFullScreenMap = false;
-  bool get isFullScreenMap => _isFullScreenMap;
+  bool _isUploadFullScreenMap = false;
+  bool get isUploadFullScreenMap => _isUploadFullScreenMap;
+
+  bool _isDetailFullScreenMap = false;
+  bool get isDetailFullScreenMap => _isDetailFullScreenMap;
+
+  final ValueNotifier<bool> fullScreenMapNotifier = ValueNotifier<bool>(false);
 
   void openLanguageDialog() {
     _isLanguageDialogOpen = true;
@@ -61,6 +66,26 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void openUploadFullScreenMap() {
+    _isUploadFullScreenMap = true;
+    notifyListeners();
+  }
+
+  void closeUploadFullScreenMap() {
+    _isUploadFullScreenMap = false;
+    notifyListeners();
+  }
+
+  void openDetailFullScreenMap() {
+    _isDetailFullScreenMap = true;
+    notifyListeners();
+  }
+
+  void closeDetailFullScreenMap() {
+    _isDetailFullScreenMap = false;
+    notifyListeners();
+  }
+
   void openDetail(ListStory? story) {
     _selectedStory = story;
     _isFromDetail = false;
@@ -70,28 +95,16 @@ class AppProvider extends ChangeNotifier {
   void closeDetail() {
     _selectedStory = null;
     _isFromDetail = true;
-    _isUpDialogOpen = false;
-    _isFullScreenMap = false;
     notifyListeners();
   }
 
-  void resetAll() {
-    _isLanguageDialogOpen = false;
-    _isUpDialogOpen = false;
-    _isFullScreenMap = false;
-    _isFromDetail = false;
-    _selectedStory = null;
-    _isFromDetail = false;
-    notifyListeners();
-  }
-
-  void openFullScreenMap() {
-    _isFullScreenMap = true;
-    notifyListeners();
-  }
-
-  void closeFullScreenMap() {
-    _isFullScreenMap = false;
-    notifyListeners();
-  }
+  // void resetAll() {
+  //   _isLanguageDialogOpen = false;
+  //   _isUpDialogOpen = false;
+  //   _isFullScreenMap = false;
+  //   _isFromDetail = false;
+  //   _selectedStory = null;
+  //   _isFromDetail = false;
+  //   notifyListeners();
+  // }
 }

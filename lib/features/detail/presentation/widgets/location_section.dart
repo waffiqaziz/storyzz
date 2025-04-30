@@ -83,18 +83,7 @@ class _LocationSectionState extends State<LocationSection> {
               title: story.name,
               location: address,
             ),
-            Positioned(
-              top: 12,
-              right: 12,
-              child: FloatingActionButton.small(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                onPressed: () {
-                  context.read<AppProvider>().openFullScreenMap();
-                },
-                child: const Icon(Icons.fullscreen),
-              ),
-            ),
+            // TODO: Future work around to add fullscreen map feature
           ],
         ),
       ],

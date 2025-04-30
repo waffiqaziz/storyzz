@@ -12,7 +12,6 @@ import 'package:storyzz/features/auth/presentation/screen/register_screen.dart';
 import 'package:storyzz/features/auth/presentation/transition/auth_screen_transition.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_dialog.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_screen.dart';
-import 'package:storyzz/features/detail/presentation/widgets/detail_full_screen_map.dart';
 import 'package:storyzz/features/home/presentation/screen/home_screen.dart';
 import 'package:storyzz/features/home/presentation/screen/main_screen.dart';
 import 'package:storyzz/features/map/presentation/screen/map_screen.dart';
@@ -27,9 +26,9 @@ class AppRouter {
   final AuthProvider authProvider;
   final AppProvider appProvider;
 
-  final GlobalKey<NavigatorState> rootNavigatorKey =
+  final GlobalKey<NavigatorState> _rootNavigatorKey =
       GlobalKey<NavigatorState>();
-  final GlobalKey<NavigatorState> shellNavigatorKey =
+  final GlobalKey<NavigatorState> _shellNavigatorKey =
       GlobalKey<NavigatorState>();
 
   AppRouter({required this.appProvider, required this.authProvider}) {
@@ -41,7 +40,7 @@ class AppRouter {
   }
 
   late final GoRouter router = GoRouter(
-    navigatorKey: rootNavigatorKey,
+    navigatorKey: _rootNavigatorKey,
     initialLocation: '/',
     debugLogDiagnostics: false, // true for debugging
     refreshListenable: Listenable.merge([authProvider, appProvider]),
@@ -66,14 +65,15 @@ class AppRouter {
           }
           return null;
         },
-        routes: [_dialogLanguage('login')],
+        routes: [_languageDialogRoute('login')],
 
-        pageBuilder:
-            (context, state) => AuthScreenTransition(
-              child: LoginScreen(),
-              isForward: false,
-              key: state.pageKey,
-            ),
+        pageBuilder: (context, state) {
+          return AuthScreenTransition(
+            child: LoginScreen(),
+            isForward: false,
+            key: state.pageKey,
+          );
+        },
       ),
       GoRoute(
         path: '/register',
@@ -87,18 +87,19 @@ class AppRouter {
           }
           return null;
         },
-        routes: [_dialogLanguage('register')],
-        pageBuilder:
-            (context, state) => AuthScreenTransition(
-              child: RegisterScreen(),
-              isForward: true,
-              key: state.pageKey,
-            ),
+        routes: [_languageDialogRoute('register')],
+        pageBuilder: (context, state) {
+          return AuthScreenTransition(
+            child: RegisterScreen(),
+            isForward: true,
+            key: state.pageKey,
+          );
+        },
       ),
 
       // main app shell with bottom navigation
       ShellRoute(
-        navigatorKey: shellNavigatorKey,
+        navigatorKey: _shellNavigatorKey,
         builder: (context, state, child) {
           return MainScreen(
             currentIndex: _calculateSelectedIndex(state),
@@ -131,7 +132,7 @@ class AppRouter {
             name: 'home',
             builder: (context, state) => HomeScreen(),
             redirect: (context, state) {
-              // appProvider.resetAll();
+              // open detail page
               if (appProvider.selectedStory != null) {
                 return '/story/${appProvider.selectedStory!.id}';
               }
@@ -144,6 +145,7 @@ class AppRouter {
             name: 'map',
             builder: (context, state) => MapStoryScreen(),
             redirect: (context, state) {
+              // open detail page
               if (appProvider.selectedStory != null) {
                 return '/map/story/${appProvider.selectedStory!.id}';
               }
@@ -156,13 +158,17 @@ class AppRouter {
             name: 'upload',
             builder: (context, state) => UploadStoryScreen(),
             redirect: (context, state) {
+              // open dialog upgrade promotion
               if (appProvider.isUpDialogOpen) {
                 return '/upload/upgrade';
               }
-              if (appProvider.isFullScreenMap) {
+              // show map as fullscreen
+              if (appProvider.isUploadFullScreenMap) {
                 return '/upload/map';
               }
-              if (!appProvider.isUpDialogOpen && !appProvider.isFullScreenMap) {
+              // back to upload screen
+              if (!appProvider.isUpDialogOpen &&
+                  !appProvider.isUploadFullScreenMap) {
                 return '/upload';
               }
               return null;
@@ -171,18 +177,18 @@ class AppRouter {
               GoRoute(
                 path: '/upgrade',
                 name: 'upgradeDialog',
-                parentNavigatorKey: rootNavigatorKey,
-                pageBuilder:
-                    (context, state) =>
-                        _dialogTransition(state, UpgradeDialog()),
+                parentNavigatorKey: _rootNavigatorKey,
+                pageBuilder: (context, state) {
+                  return _dialogTransition(state, UpgradeDialog());
+                },
               ),
               GoRoute(
                 path: '/map',
                 name: 'uploadMap',
-                parentNavigatorKey: rootNavigatorKey,
-                pageBuilder:
-                    (context, state) =>
-                        _dialogTransition(state, MapDialogFullScreen()),
+                parentNavigatorKey: _rootNavigatorKey,
+                pageBuilder: (context, state) {
+                  return _dialogTransition(state, MapDialogFullScreen());
+                },
               ),
             ],
           ),
@@ -267,27 +273,30 @@ class AppRouter {
     return 0;
   }
 
-  GoRoute _dialogLanguage(String name) {
+  GoRoute _languageDialogRoute(String name) {
     return GoRoute(
       path: '/language-dialog',
       name: "${name}LanguageDialog",
-      parentNavigatorKey: rootNavigatorKey,
-      pageBuilder:
-          (context, state) => _dialogTransition(state, LanguageDialogScreen()),
+      parentNavigatorKey: _rootNavigatorKey,
+      pageBuilder: (context, state) {
+        return _dialogTransition(state, LanguageDialogScreen());
+      },
     );
   }
 
   GoRoute _detailRoute(String name) {
     return GoRoute(
-      path: 'story/:id',
+      path: '/story/:id',
       name: "${name}StoryDetail",
-      parentNavigatorKey: rootNavigatorKey,
+      parentNavigatorKey: _rootNavigatorKey,
       redirect: (context, state) {
-        if (appProvider.isFullScreenMap &&
-            appProvider.selectedStory != null &&
-            appProvider.isFromDetail) {
-          return '/story/:id/map';
-        }
+        debugPrint('isFullScreenMap: ${appProvider.isDetailFullScreenMap}');
+        debugPrint(
+          'selectedStory != null: ${appProvider.selectedStory != null}',
+        );
+        debugPrint('ID from path: ${state.pathParameters['id']}');
+
+        // close the detail page
         if (appProvider.selectedStory == null && appProvider.isFromDetail) {
           return '/$name';
         }
@@ -307,16 +316,6 @@ class AppRouter {
         }
         return null;
       },
-      routes: [
-        GoRoute(
-          path: '/map',
-          name: '${name}DetailMap',
-          parentNavigatorKey: rootNavigatorKey,
-          pageBuilder:
-              (context, state) =>
-                  _dialogTransition(state, DetailFullScreenMap()),
-        ),
-      ],
       pageBuilder: (context, state) {
         return _buildStoryDetailPage(
           appProvider,
@@ -346,23 +345,7 @@ Page _buildStoryDetailPage(
       builder: (context) {
         final isDesktop =
             MediaQuery.of(context).size.width >= MainScreen.tabletBreakpoint;
-        return isDesktop
-            ? StoryDetailDialog(
-              onClose: () {
-                // wait until all widget is done
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  appProvider.closeDetail();
-                });
-              },
-            )
-            : StoryDetailScreen(
-              onBack: () {
-                // wait until all widget is done
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  appProvider.closeDetail();
-                });
-              },
-            );
+        return isDesktop ? StoryDetailDialog() : StoryDetailScreen();
       },
     ),
   );
@@ -389,6 +372,7 @@ CustomTransitionPage<dynamic> _dialogTransition(
   return CustomTransitionPage(
     key: state.pageKey,
     fullscreenDialog: true,
+    maintainState: true,
     opaque: false,
     barrierDismissible: true,
     barrierColor: Colors.black54,

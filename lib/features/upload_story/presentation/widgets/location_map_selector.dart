@@ -152,7 +152,7 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
                     onPressed: () {
-                      context.read<AppProvider>().openFullScreenMap();
+                      context.read<AppProvider>().openUploadFullScreenMap();
                     },
                     child: const Icon(Icons.fullscreen),
                   ),
