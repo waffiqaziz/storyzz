@@ -77,35 +77,35 @@ This application use several API's:
 <details>
 <summary>📱 Mobile Platform | Light Mode</summary>
 <p float="left">
-  <img src="./doc/screenshots/mobile-login.png"
+  <img src="https://i.postimg.cc/CKJPKj5R/mobile-login.png"
     width="250" alt="Login Screen"
   />
-  <img src="./doc/screenshots/mobile-register.png"
+  <img src="https://i.postimg.cc/FF24mQw2/mobile-register.png"
     width="250" alt="Register Screen"
   />
-  <img src="./doc/screenshots/mobile-home.png"
+  <img src="https://i.postimg.cc/8Pr0bJKY/mobile-home.png"
     width="250" alt="Home Screen"
   />
 </p>
 <p float="left">
-  <img src="./doc/screenshots/mobile-map.png"
+  <img src="https://i.postimg.cc/Jn2pNMbm/mobile-map.png"
     width="250" alt="Map Story Screen"
   />  
-  <img src="./doc/screenshots/mobile-upload-story.png"
+  <img src="https://i.postimg.cc/YC7BGzrR/mobile-upload-story.png"
     width="250" alt="Upload Story Screen"
     />
-  <img src="./doc/screenshots/mobile-upload-story2.png"
+  <img src="https://i.postimg.cc/SRmcYPPq/mobile-upload-story2.png"
     width="250" alt="Upload Story Screen Filled"
     />
 </p>
 <p>
-  <img src="./doc/screenshots/mobile-settings.png"
+  <img src="https://i.postimg.cc/gcwWf0tV/mobile-settings.png"
     width="250" alt="Settings Screen"
   />
-  <img src="./doc/screenshots/mobile-localization.png"
+  <img src="https://i.postimg.cc/2SQ9spfF/mobile-localization.png"
     width="250" alt="Localization Dialog"
   />
-  <img src="./doc/screenshots/mobile-detail.png"
+  <img src="https://i.postimg.cc/XqtDb4Jx/mobile-detail.png"
     width="250" alt="Detail Screen"
   />
 </p>
@@ -114,35 +114,35 @@ This application use several API's:
 <details>
 <summary>📱 Mobile Platform | Dark Mode</summary>
 <p float="left">
-  <img src="./doc/screenshots/mobile-login-dark.png"
+  <img src="https://i.postimg.cc/JnnTHGHP/mobile-login-dark.png"
     width="250" alt="Login Screen (Dark)"
   />
-  <img src="./doc/screenshots/mobile-register-dark.png"
+  <img src="https://i.postimg.cc/J0HPKvqX/mobile-register-dark.png"
     width="250" alt="Register Screen (Dark)"
   />
-  <img src="./doc/screenshots/mobile-home-dark.png"
+  <img src="https://i.postimg.cc/x1DFpfB1/mobile-home-dark.png"
     width="250" alt="Home Screen (Dark)"
   />
 </p>
 <p float="left">
-  <img src="./doc/screenshots/mobile-map-dark.png"
+  <img src="https://i.postimg.cc/LhdvWDCb/mobile-map-dark.png"
     width="250" alt="Upload Map Screen (Dark)"
   />
-  <img src="./doc/screenshots/mobile-upload-story-dark.png"
+  <img src="https://i.postimg.cc/k5XrwMtt/mobile-upload-story-dark.png"
     width="250" alt="Upload Story Screen (Dark)"
   />
-    <img src="./doc/screenshots/mobile-upload-story-dark2.png"
+    <img src="https://i.postimg.cc/cCTwRmq3/mobile-upload-story-dark2.png"
     width="250" alt="Upload Story Screen Filled (Dark)"
   />
 </p>
 <p>
-  <img src="./doc/screenshots/mobile-settings-dark.png"
+  <img src="https://i.postimg.cc/pXztL6Hy/mobile-settings-dark.png"
     width="250" alt="Settings Screen (Dark)"
   />
-  <img src="./doc/screenshots/mobile-localization-dark.png"
+  <img src="https://i.postimg.cc/fbMqZHz4/mobile-localization-dark.png"
     width="250" alt="Localization Dialog (Dark)"
   />
-  <img src="./doc/screenshots/mobile-detail-dark.png"
+  <img src="https://i.postimg.cc/CM22DHND/mobile-detail-dark.png"
     width="250" alt="Detail Screen (Dark)"
   />
 </p>
@@ -151,47 +151,47 @@ This application use several API's:
 <details>
 <summary>🖥️ Desktop Platform | Light Mode</summary>
 <p>
-  <img src="./doc/screenshots/desktop-login.png"
+  <img src="https://i.postimg.cc/25Fp7b6Y/desktop-login.png"
     width="400" alt="Login Screen"
   />
-  <img src="./doc/screenshots/desktop-register.png"
+  <img src="https://i.postimg.cc/dQNb6Kqh/desktop-register.png"
     width="400" alt="Register Screen"
   />
 </p>
 <p>
-  <img src="./doc/screenshots/desktop-home.png"
+  <img src="https://i.postimg.cc/fT46pf9s/desktop-home.png"
     width="400" alt="Home Screen"
   />
-  <img src="./doc/screenshots/desktop-map.png"
+  <img src="https://i.postimg.cc/50xh74YC/desktop-map.png"
     width="400" alt="Map Screen"
   />
 </p>
 <p>
-  <img src="./doc/screenshots/desktop-upload-story.png"
+  <img src="https://i.postimg.cc/GhZZ0JTr/desktop-upload-story.png"
     width="400" alt="Upload Story Screen"
   />
-  <img src="./doc/screenshots/desktop-settings.png"
+  <img src="https://i.postimg.cc/BbzRn2hT/desktop-settings.png"
     width="400" alt="Settings Screen"
   />
 </p>
 <p>
-  <img src="./doc/screenshots/desktop-upload-story2.png"
+  <img src="https://i.postimg.cc/pdB7nwGX/desktop-upload-story2.png"
     width="400" alt="Upload Story Screen Filled Top"
   />
-  <img src="./doc/screenshots/desktop-upload-story3.png"
+  <img src="https://i.postimg.cc/PxWmxH22/desktop-upload-story3.png"
     width="400" alt="Upload Story Screen Filled Bottom"
   />
 </p>
 <p>
-  <img src="./doc/screenshots/desktop-detail1.png"
+  <img src="https://i.postimg.cc/9fx6k3Gg/desktop-detail1.png"
     width="400" alt="Dialog Detail Screen Top"
   />
-  <img src="./doc/screenshots/desktop-detail2.png"
+  <img src="https://i.postimg.cc/d1pzq8N8/desktop-detail2.png"
     width="400" alt="Dialog Detail Screen Bottom"
   />
 </p>
 <p>
-  <img src="./doc/screenshots/desktop-localization.png"
+  <img src="https://i.postimg.cc/13sb5RBY/desktop-localization.png"
     width="400" alt="Localization Dialog"
   />
 </p>
@@ -200,47 +200,47 @@ This application use several API's:
 <details>
 <summary>🖥️ Desktop Platform | Dark Mode</summary>
 <p>
-  <img src="./doc/screenshots/desktop-login-dark.png"
+  <img src="https://i.postimg.cc/Xv0S5cnx/desktop-login-dark.png"
     width="400" alt="Login Screen (Dark)"
   />
-  <img src="./doc/screenshots/desktop-register-dark.png"
+  <img src="https://i.postimg.cc/BnHRJL2F/desktop-register-dark.png"
     width="400" alt="Register Screen (Dark)"
   />
 </p>
 <p>
-  <img src="./doc/screenshots/desktop-home-dark.png"
+  <img src="https://i.postimg.cc/3JgPT0Xv/desktop-home-dark.png"
     width="400" alt="Home Screen (Dark)"
   />
-  <img src="./doc/screenshots/desktop-map-dark.png"
+  <img src="https://i.postimg.cc/8ccqGZbk/desktop-map-dark.png"
     width="400" alt="Map Screen (Dark)"
   />
 </p>
 <p>
-  <img src="./doc/screenshots/desktop-upload-story-dark.png"
+  <img src="https://i.postimg.cc/3whVN8Zc/desktop-upload-story-dark.png"
     width="400" alt="Upload Story Screen (Dark)"
   />
-  <img src="./doc/screenshots/desktop-settings-dark.png"
+  <img src="https://i.postimg.cc/HsJfPPxB/desktop-settings-dark.png"
     width="400" alt="Settings Screen (Dark)"
   />
 </p>
 <p>
-  <img src="./doc/screenshots/desktop-upload-story-dark2.png"
+  <img src="https://i.postimg.cc/G275XknW/desktop-upload-story-dark2.png"
     width="400" alt="Upload Story Screen Top (Dark)"
   />  
-  <img src="./doc/screenshots/desktop-upload-story-dark3.png"
+  <img src="https://i.postimg.cc/FR5yNzgY/desktop-upload-story-dark3.png"
     width="400" alt="Upload Story Screen Bottom (Dark)"
   />
 </p>
 <p>
-  <img src="./doc/screenshots/desktop-detail1-dark.png"
+  <img src="https://i.postimg.cc/j2fBCLBB/desktop-detail1-dark.png"
     width="400" alt="Dialog Detail Screen Top (Dark)"
   />
-  <img src="./doc/screenshots/desktop-detail2-dark.png"
+  <img src="https://i.postimg.cc/v8xJ0NDX/desktop-detail2-dark.png"
     width="400" alt="Dialog Detail Screen Bottom (Dark)"
   />
 </p>
 <p>
-  <img src="./doc/screenshots/desktop-localization-dark.png"
+  <img src="https://i.postimg.cc/FRD2wM3n/desktop-localization-dark.png"
     width="400" alt="Localization Dialog (Dark)"
   />
 </p>
