@@ -17,63 +17,67 @@ class BuildGoogleMap extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final uploadProvider = context.watch<UploadStoryProvider>();
 
-    return GoogleMap(
-      gestureRecognizers: {
-        Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
-      },
-      style: isDark ? customStyleDark : customStyleLight,
-      mapType: MapType.normal,
-      markers: {
-        if (uploadProvider.selectedLocation != null)
-          Marker(
-            markerId: const MarkerId('story_location'),
-            position: uploadProvider.selectedLocation!,
-            draggable: true,
-            onDragEnd: (newPosition) {
-              uploadProvider.setSelectedLocation(newPosition);
-
-              // get formatted address for the new position
-              context.read<AddressProvider>().getAddressFromCoordinates(
-                newPosition.latitude,
-                newPosition.longitude,
-              );
-            },
-            infoWindow: InfoWindow(
-              // show formatted address as snippet
-              snippet: context
-                  .watch<AddressProvider>()
-                  .state
-                  .getAddressOrFallback(context),
+    return context.mounted
+        ? GoogleMap(
+          gestureRecognizers: {
+            Factory<OneSequenceGestureRecognizer>(
+              () => EagerGestureRecognizer(),
             ),
+          },
+          style: isDark ? customStyleDark : customStyleLight,
+          mapType: MapType.normal,
+          markers: {
+            if (uploadProvider.selectedLocation != null)
+              Marker(
+                markerId: const MarkerId('story_location'),
+                position: uploadProvider.selectedLocation!,
+                draggable: true,
+                onDragEnd: (newPosition) {
+                  uploadProvider.setSelectedLocation(newPosition);
+
+                  // get formatted address for the new position
+                  context.read<AddressProvider>().getAddressFromCoordinates(
+                    newPosition.latitude,
+                    newPosition.longitude,
+                  );
+                },
+                infoWindow: InfoWindow(
+                  // show formatted address as snippet
+                  snippet: context
+                      .watch<AddressProvider>()
+                      .state
+                      .getAddressOrFallback(context),
+                ),
+              ),
+          },
+
+          // default position is Indonesian if unable to get current location
+          initialCameraPosition: CameraPosition(
+            target:
+                uploadProvider.selectedLocation ??
+                const LatLng(-2.014380, 118.152180), // Default to Indonesia
+            zoom: uploadProvider.selectedLocation != null ? 15 : 4,
           ),
-      },
 
-      // default position is Indonesian if unable to get current location
-      initialCameraPosition: CameraPosition(
-        target:
-            uploadProvider.selectedLocation ??
-            const LatLng(-2.014380, 118.152180), // Default to Indonesia
-        zoom: uploadProvider.selectedLocation != null ? 15 : 4,
-      ),
+          myLocationButtonEnabled: true,
+          myLocationEnabled: true,
+          zoomControlsEnabled: true,
+          zoomGesturesEnabled: true,
+          onMapCreated: (GoogleMapController controller) {
+            context.read<UploadMapControllerProvider>().setMapController(
+              controller,
+            );
+          },
+          onTap: (position) {
+            uploadProvider.setSelectedLocation(position);
 
-      myLocationButtonEnabled: true,
-      myLocationEnabled: true,
-      zoomControlsEnabled: true,
-      zoomGesturesEnabled: true,
-      onMapCreated: (GoogleMapController controller) {
-        context.read<UploadMapControllerProvider>().setMapController(
-          controller,
-        );
-      },
-      onTap: (position) {
-        uploadProvider.setSelectedLocation(position);
-
-        // get formatted address
-        context.read<AddressProvider>().getAddressFromCoordinates(
-          position.latitude,
-          position.longitude,
-        );
-      },
-    );
+            // get formatted address
+            context.read<AddressProvider>().getAddressFromCoordinates(
+              position.latitude,
+              position.longitude,
+            );
+          },
+        )
+        : const SizedBox.shrink();
   }
 }

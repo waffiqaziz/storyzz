@@ -18,7 +18,7 @@ import 'package:storyzz/features/map/presentation/screen/map_screen.dart';
 import 'package:storyzz/features/notfound/presentation/screen/not_found_screen.dart';
 import 'package:storyzz/features/settings/presentation/screen/settings_screen.dart';
 import 'package:storyzz/features/upload_story/presentation/screen/upload_story_screen.dart';
-import 'package:storyzz/features/upload_story/presentation/widgets/location_map_dialog_fullscreen.dart';
+import 'package:storyzz/features/upload_story/presentation/widgets/location_map_fullscreen.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/upgrade_dialog.dart';
 
 /// AppRouter is responsible for managing the navigation and routing of the app.
@@ -175,7 +175,7 @@ class AppRouter {
             },
             routes: [
               GoRoute(
-                path: '/upgrade',
+                path: 'upgrade',
                 name: 'upgradeDialog',
                 parentNavigatorKey: _rootNavigatorKey,
                 pageBuilder: (context, state) {
@@ -183,11 +183,11 @@ class AppRouter {
                 },
               ),
               GoRoute(
-                path: '/map',
+                path: 'map',
                 name: 'uploadMap',
                 parentNavigatorKey: _rootNavigatorKey,
                 pageBuilder: (context, state) {
-                  return _dialogTransition(state, MapDialogFullScreen());
+                  return _dialogTransition(state, MapFullScreen());
                 },
               ),
             ],
@@ -286,7 +286,7 @@ class AppRouter {
 
   GoRoute _detailRoute(String name) {
     return GoRoute(
-      path: '/story/:id',
+      path: 'story/:id',
       name: "${name}StoryDetail",
       parentNavigatorKey: _rootNavigatorKey,
       redirect: (context, state) {

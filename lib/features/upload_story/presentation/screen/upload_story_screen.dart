@@ -38,12 +38,15 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   late final CameraService _cameraService;
   late final ImagePickerService _imagePickerService;
   late UploadStoryProvider _uploadStoryProvider;
+  final TextEditingController _captionController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _cameraService = CameraService();
     _imagePickerService = ImagePickerService();
+    _captionController.text = context.read<UploadStoryProvider>().caption;
   }
 
   @override
@@ -54,12 +57,17 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     // initialize services with context
     _cameraService.initialize(context);
     _imagePickerService.initialize(context);
+    if (_uploadStoryProvider.includeLocation) {
+      _scrollToLocationSelector();
+    }
   }
 
   @override
   void dispose() {
     // clean up camera to prevent memory leak
     _cameraService.cleanup();
+    _captionController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -97,7 +105,6 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     }
 
     authProvider.getUser();
-    _uploadStoryProvider.reset();
 
     final token = authProvider.user?.token ?? "";
     double? lat;
@@ -122,6 +129,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
     if (_uploadStoryProvider.isSuccess) {
       _cameraService.cleanup();
+      _uploadStoryProvider.reset();
 
       // navigate to home screen
       context.navigateToHome();
@@ -146,6 +154,16 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
         SnackBar(content: Text(_uploadStoryProvider.errorMessage!)),
       );
     }
+  }
+
+  void _scrollToLocationSelector() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   @override
@@ -184,6 +202,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
       ),
       body: Center(
         child: SingleChildScrollView(
+          controller: _scrollController,
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 475),
@@ -209,6 +228,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                     // show caption field and location selector
                     if (imageFile != null && !showCamera) ...[
                       TextField(
+                        controller: _captionController,
                         decoration: InputDecoration(
                           hintText:
                               AppLocalizations.of(context)!.write_a_caption,
@@ -241,13 +261,27 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                       // build-time constants for web platform
                       if (kIsWeb) ...[
                         if (isPaidVersion)
-                          LocationMapSelector()
+                          StatefulBuilder(
+                            builder: (
+                              BuildContext context,
+                              StateSetter setState,
+                            ) {
+                              return LocationMapSelector();
+                            },
+                          )
                         else
                           PremiumFeaturePromotion(),
                       ] else if (Theme.of(context).platform ==
                           TargetPlatform.android) ...[
                         if (BuildConfig.canAddLocation) ...[
-                          LocationMapSelector(),
+                          StatefulBuilder(
+                            builder: (
+                              BuildContext context,
+                              StateSetter setState,
+                            ) {
+                              return LocationMapSelector();
+                            },
+                          ),
                         ] else ...[
                           PremiumFeaturePromotion(),
                         ],
