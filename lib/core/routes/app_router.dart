@@ -175,7 +175,7 @@ class AppRouter {
             },
             routes: [
               GoRoute(
-                path: '/upgrade',
+                path: 'upgrade',
                 name: 'upgradeDialog',
                 parentNavigatorKey: _rootNavigatorKey,
                 pageBuilder: (context, state) {
@@ -183,7 +183,7 @@ class AppRouter {
                 },
               ),
               GoRoute(
-                path: '/map',
+                path: 'map',
                 name: 'uploadMap',
                 parentNavigatorKey: _rootNavigatorKey,
                 pageBuilder: (context, state) {
@@ -286,7 +286,7 @@ class AppRouter {
 
   GoRoute _detailRoute(String name) {
     return GoRoute(
-      path: '/story/:id',
+      path: 'story/:id',
       name: "${name}StoryDetail",
       parentNavigatorKey: _rootNavigatorKey,
       redirect: (context, state) {
