@@ -344,8 +344,7 @@ Page _buildStoryDetailPage(
     state,
     Builder(
       builder: (context) {
-        final isDesktop =
-            MediaQuery.of(context).size.width >= tabletBreakpoint;
+        final isDesktop = MediaQuery.of(context).size.width >= tabletBreakpoint;
         return isDesktop ? StoryDetailDialog() : StoryDetailScreen();
       },
     ),

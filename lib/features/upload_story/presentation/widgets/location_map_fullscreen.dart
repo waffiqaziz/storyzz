@@ -25,7 +25,7 @@ class MapFullScreen extends StatelessWidget {
             height: double.infinity,
             child: BuildGoogleMap(),
           ),
-      
+
           // Close button positioned diagonally outside the map
           Positioned(
             top: 16,
