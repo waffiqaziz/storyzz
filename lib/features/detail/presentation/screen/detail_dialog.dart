@@ -45,62 +45,78 @@ class StoryDetailDialog extends StatelessWidget {
           });
         }
       },
-      child: Dialog(
-        backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.symmetric(
-          horizontal: (screenWidth - dialogWidth) / 2,
-          vertical: 24,
-        ),
-        child: Container(
-          width: dialogWidth,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildStoryImage(story.photoUrl),
-
-                      // content
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // author info
-                            _buildAuthorInfo(context),
-                            SizedBox(height: 16),
-
-                            // description
-                            Text(
-                              story.description,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            SizedBox(height: 24),
-
-                            // location info if available
-                            if (story.lat != null && story.lon != null)
-                              LocationSection(
-                                mapControlsEnabled: false,
-                                mapKeyPrefix: 'dialog',
-                              ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+      child: Stack(
+        children: [
+          // The original dialog
+          Dialog(
+            backgroundColor: Colors.transparent,
+            insetPadding: EdgeInsets.symmetric(
+              horizontal: (screenWidth - dialogWidth) / 2,
+              vertical: 24,
+            ),
+            child: Container(
+              width: dialogWidth,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
               ),
-            ],
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildStoryImage(story.photoUrl),
+
+                          // content
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // author info
+                                _buildAuthorInfo(context),
+                                SizedBox(height: 16),
+
+                                // description
+                                Text(
+                                  story.description,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                SizedBox(height: 24),
+
+                                // location info if available
+                                if (story.lat != null && story.lon != null)
+                                  LocationSection(
+                                    mapControlsEnabled: false,
+                                    mapKeyPrefix: 'dialog',
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
+          // Exit button positioned relative to the screen
+          Positioned(
+            top: 16,
+            right: 16,
+            child: IconButton(
+              icon: Icon(Icons.close_rounded, size: 32),
+              onPressed: () {
+                context.read<AppProvider>().closeDetail();
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
