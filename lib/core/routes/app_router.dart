@@ -18,7 +18,7 @@ import 'package:storyzz/features/map/presentation/screen/map_screen.dart';
 import 'package:storyzz/features/notfound/presentation/screen/not_found_screen.dart';
 import 'package:storyzz/features/settings/presentation/screen/settings_screen.dart';
 import 'package:storyzz/features/upload_story/presentation/screen/upload_story_screen.dart';
-import 'package:storyzz/features/upload_story/presentation/widgets/location_map_dialog_fullscreen.dart';
+import 'package:storyzz/features/upload_story/presentation/widgets/location_map_fullscreen.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/upgrade_dialog.dart';
 
 /// AppRouter is responsible for managing the navigation and routing of the app.
@@ -187,7 +187,7 @@ class AppRouter {
                 name: 'uploadMap',
                 parentNavigatorKey: _rootNavigatorKey,
                 pageBuilder: (context, state) {
-                  return _dialogTransition(state, MapDialogFullScreen());
+                  return _dialogTransition(state, MapFullScreen());
                 },
               ),
             ],
