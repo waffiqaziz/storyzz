@@ -6,6 +6,7 @@ import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
+import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/core/widgets/language_selector.dart';
 
 /// A screen that allows the user to log in to their existing account. It contains fields
@@ -48,15 +49,24 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       if (result.data != null) {
         if (mounted) {
-          context.read<AuthProvider>().isLogged();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              margin: EdgeInsets.only(bottom: 16, left: 16, right: 16),
-              content: Text(
-                result.message ?? AppLocalizations.of(context)!.login_succes,
+          if (mounted) {
+            context.read<AuthProvider>().isLogged();
+            // Determine if the screen is wide enough to display the NavigationRail
+            bool isWideScreen =
+                MediaQuery.of(context).size.width >= tabletBreakpoint;
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                margin:
+                    isWideScreen
+                        ? EdgeInsets.only(bottom: 16, left: 96, right: 16)
+                        : EdgeInsets.only(bottom: 16, left: 16, right: 16),
+                content: Text(
+                  result.message ?? AppLocalizations.of(context)!.login_succes,
+                ),
               ),
-            ),
-          );
+            );
+          }
         }
       } else {
         if (mounted) {

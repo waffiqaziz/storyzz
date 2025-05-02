@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/features/home/presentation/screen/home_screen.dart';
 import 'package:storyzz/features/home/presentation/transition/tab_switcher';
 import 'package:storyzz/features/map/presentation/screen/map_screen.dart';
@@ -42,9 +43,6 @@ class MainScreen extends StatefulWidget {
     this.routeExtra,
   });
 
-  /// Breakpoint for determining wide vs mobile layout.
-  static const int tabletBreakpoint = 600;
-
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -60,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
 
     // only update layout mode when width changes significantly to avoid flickering
     if ((screenWidth - _previousWidth).abs() > 5) {
-      _isMobile = screenWidth < MainScreen.tabletBreakpoint;
+      _isMobile = screenWidth < tabletBreakpoint;
       _previousWidth = screenWidth;
     }
 

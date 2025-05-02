@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/utils/helper.dart';
 import 'package:storyzz/features/detail/presentation/widgets/location_section.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// A dialog view that displays the details of a story, similar to the full-screen
 /// `StoryDetailScreen`, but presented in a dialog. This is typically shown for
@@ -21,9 +21,15 @@ import 'package:storyzz/features/detail/presentation/widgets/location_section.da
 class StoryDetailDialog extends StatelessWidget {
   const StoryDetailDialog({super.key});
 
+  Future<void> _launchUrl(String urlString) async {
+    final Uri uri = Uri.parse(urlString);
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not launch $urlString');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
     final story = context.read<AppProvider>().selectedStory!;
 
     // use MediaQuery to get screen width
@@ -55,12 +61,6 @@ class StoryDetailDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // header with close button
-              _buildHeader(context, localizations),
-
-              Divider(height: 1),
-
-              // scrollable content
               Flexible(
                 child: SingleChildScrollView(
                   child: Column(
@@ -105,64 +105,44 @@ class StoryDetailDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context, AppLocalizations localizations) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 8, top: 8, bottom: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            localizations.story_details,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.read<AppProvider>().closeDetail();
-              });
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildStoryImage(String photoUrl) {
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: 400, minWidth: double.infinity),
-      child: Image.network(
-        photoUrl,
-        fit: BoxFit.contain,
-        width: double.infinity,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) return child;
-          return Container(
-            height: 350,
-            color: Colors.grey[200],
-            child: Center(
-              child: CircularProgressIndicator(
-                value:
-                    loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-              ),
-            ),
-          );
-        },
-        errorBuilder:
-            (context, error, stackTrace) => Container(
+      child: GestureDetector(
+        onTap: () => _launchUrl(photoUrl),
+        child: Image.network(
+          photoUrl,
+          fit: BoxFit.contain,
+          width: double.infinity,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Container(
               height: 350,
-              color: Colors.grey[300],
+              color: Colors.grey[200],
               child: Center(
-                child: Icon(
-                  Icons.broken_image,
-                  size: 64,
-                  color: Colors.grey[400],
+                child: CircularProgressIndicator(
+                  value:
+                      loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
                 ),
               ),
-            ),
+            );
+          },
+          errorBuilder:
+              (context, error, stackTrace) => Container(
+                height: 350,
+                color: Colors.grey[300],
+                child: Center(
+                  child: Icon(
+                    Icons.broken_image,
+                    size: 64,
+                    color: Colors.grey[400],
+                  ),
+                ),
+              ),
+        ),
       ),
     );
   }

@@ -1,0 +1,1 @@
+int tabletBreakpoint = 600;
