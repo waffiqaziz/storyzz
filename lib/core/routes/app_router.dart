@@ -15,6 +15,7 @@ import 'package:storyzz/features/detail/presentation/screen/detail_dialog.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_screen.dart';
 import 'package:storyzz/features/home/presentation/screen/home_screen.dart';
 import 'package:storyzz/features/home/presentation/screen/main_screen.dart';
+import 'package:storyzz/features/home/presentation/widgets/logout_confirmation_dialog.dart';
 import 'package:storyzz/features/map/presentation/screen/map_screen.dart';
 import 'package:storyzz/features/notfound/presentation/screen/not_found_screen.dart';
 import 'package:storyzz/features/settings/presentation/screen/settings_screen.dart';
@@ -137,9 +138,26 @@ class AppRouter {
               if (appProvider.selectedStory != null) {
                 return '/story/${appProvider.selectedStory!.id}';
               }
+              if (appProvider.isDialogLogOutOpen) {
+                return '/logout-confirmation';
+              }
+              if (!appProvider.isDialogLogOutOpen) {
+                return '/';
+              }
+
               return null;
             },
-            routes: [_detailRoute('')],
+            routes: [
+              _detailRoute(''),
+              GoRoute(
+                path: 'logout-confirmation',
+                name: 'dialogLogOut',
+                parentNavigatorKey: _rootNavigatorKey,
+                pageBuilder: (context, state) {
+                  return _dialogTransition(state, LogoutConfirmationDialog());
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: '/map',
@@ -218,6 +236,7 @@ class AppRouter {
     // Define valid paths
     final validPaths = [
       '/',
+      '/logout-confirmation',
       '/login',
       '/login/language-dialog',
       '/register',

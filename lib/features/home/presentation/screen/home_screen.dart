@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
 import 'package:storyzz/core/widgets/auth_error_view.dart';
@@ -91,22 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
         _scrollController.position.maxScrollExtent - 500;
   }
 
-  /// Logs out the user and triggers the [onLogout] callback.
-  ///
-  /// Displays a success message after logout completes.
-  void _logOut(AuthProvider authProvider) async {
-    await authProvider.logout();
-    if (mounted) {
-      context.go('/login');
-      _showLogoutSuccessMessage();
-    }
-  }
-
-  /// Displays a snackbar with a localized logout success message.
-  void _showLogoutSuccessMessage() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(AppLocalizations.of(context)!.logout_success)),
-    );
+  /// Logs out the user and opens a confirmation dialog.
+  void _logOut(AuthProvider authProvider) {
+    context.read<AppProvider>().openDialogLogOut();
   }
 
   @override
