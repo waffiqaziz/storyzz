@@ -18,8 +18,36 @@ import 'package:url_launcher/url_launcher.dart';
 /// Parameters:
 /// - [story]: The story object to display
 /// - [onClose]: Callback to handle closing the dialog
-class StoryDetailDialog extends StatelessWidget {
+class StoryDetailDialog extends StatefulWidget {
   const StoryDetailDialog({super.key});
+
+  @override
+  State<StoryDetailDialog> createState() => _StoryDetailDialogState();
+}
+
+class _StoryDetailDialogState extends State<StoryDetailDialog> {
+  final ScrollController _scrollController = ScrollController();
+  bool _showScrollbar = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // hide the scrollbar if the user hasn't scrolled
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(Duration(milliseconds: 800), () {
+        if (mounted && _scrollController.offset == 0.0) {
+          setState(() => _showScrollbar = false);
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   Future<void> _launchUrl(String urlString) async {
     final Uri uri = Uri.parse(urlString);
@@ -65,39 +93,44 @@ class StoryDetailDialog extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Flexible(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildStoryImage(story.photoUrl),
+                    child: Scrollbar(
+                      controller: _scrollController,
+                      thumbVisibility: _showScrollbar,
+                      child: SingleChildScrollView(
+                        controller: _scrollController,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildStoryImage(story.photoUrl),
 
-                          // content
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // author info
-                                _buildAuthorInfo(context),
-                                SizedBox(height: 16),
+                            // content
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // author info
+                                  _buildAuthorInfo(context),
+                                  SizedBox(height: 16),
 
-                                // description
-                                Text(
-                                  story.description,
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                SizedBox(height: 24),
-
-                                // location info if available
-                                if (story.lat != null && story.lon != null)
-                                  LocationSection(
-                                    mapControlsEnabled: false,
-                                    mapKeyPrefix: 'dialog',
+                                  // description
+                                  Text(
+                                    story.description,
+                                    style: TextStyle(fontSize: 16),
                                   ),
-                              ],
+                                  SizedBox(height: 24),
+
+                                  // location info if available
+                                  if (story.lat != null && story.lon != null)
+                                    LocationSection(
+                                      mapControlsEnabled: false,
+                                      mapKeyPrefix: 'dialog',
+                                    ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -107,10 +140,10 @@ class StoryDetailDialog extends StatelessWidget {
           ),
           // Exit button positioned relative to the screen
           Positioned(
-            top: 16,
-            right: 16,
+            top: 8,
+            right: 8,
             child: IconButton(
-              icon: Icon(Icons.close_rounded, size: 32),
+              icon: Icon(Icons.close_rounded, size: 28, color: Colors.white),
               onPressed: () {
                 context.read<AppProvider>().closeDetail();
               },
@@ -123,7 +156,7 @@ class StoryDetailDialog extends StatelessWidget {
 
   Widget _buildStoryImage(String photoUrl) {
     return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: 400, minWidth: double.infinity),
+      constraints: BoxConstraints(minHeight: 300, minWidth: double.infinity),
       child: GestureDetector(
         onTap: () => _launchUrl(photoUrl),
         child: Image.network(
