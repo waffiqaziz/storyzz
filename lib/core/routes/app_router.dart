@@ -5,6 +5,7 @@ import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
+import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/core/widgets/language_dialog_screen.dart';
 import 'package:storyzz/core/widgets/not_found_widget.dart';
 import 'package:storyzz/features/auth/presentation/screen/login_screen.dart';
@@ -14,6 +15,7 @@ import 'package:storyzz/features/detail/presentation/screen/detail_dialog.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_screen.dart';
 import 'package:storyzz/features/home/presentation/screen/home_screen.dart';
 import 'package:storyzz/features/home/presentation/screen/main_screen.dart';
+import 'package:storyzz/features/home/presentation/widgets/logout_confirmation_dialog.dart';
 import 'package:storyzz/features/map/presentation/screen/map_screen.dart';
 import 'package:storyzz/features/notfound/presentation/screen/not_found_screen.dart';
 import 'package:storyzz/features/settings/presentation/screen/settings_screen.dart';
@@ -136,9 +138,26 @@ class AppRouter {
               if (appProvider.selectedStory != null) {
                 return '/story/${appProvider.selectedStory!.id}';
               }
+              if (appProvider.isDialogLogOutOpen) {
+                return '/logout-confirmation';
+              }
+              if (!appProvider.isDialogLogOutOpen) {
+                return '/';
+              }
+
               return null;
             },
-            routes: [_detailRoute('')],
+            routes: [
+              _detailRoute(''),
+              GoRoute(
+                path: 'logout-confirmation',
+                name: 'dialogLogOut',
+                parentNavigatorKey: _rootNavigatorKey,
+                pageBuilder: (context, state) {
+                  return _dialogTransition(state, LogoutConfirmationDialog());
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: '/map',
@@ -217,6 +236,7 @@ class AppRouter {
     // Define valid paths
     final validPaths = [
       '/',
+      '/logout-confirmation',
       '/login',
       '/login/language-dialog',
       '/register',
@@ -343,8 +363,7 @@ Page _buildStoryDetailPage(
     state,
     Builder(
       builder: (context) {
-        final isDesktop =
-            MediaQuery.of(context).size.width >= MainScreen.tabletBreakpoint;
+        final isDesktop = MediaQuery.of(context).size.width >= tabletBreakpoint;
         return isDesktop ? StoryDetailDialog() : StoryDetailScreen();
       },
     ),

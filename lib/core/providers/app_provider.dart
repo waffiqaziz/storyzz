@@ -26,7 +26,8 @@ class AppProvider extends ChangeNotifier {
   bool _isDetailFullScreenMap = false;
   bool get isDetailFullScreenMap => _isDetailFullScreenMap;
 
-  final ValueNotifier<bool> fullScreenMapNotifier = ValueNotifier<bool>(false);
+  bool _isDialogLogOutOpen = false;
+  bool get isDialogLogOutOpen => _isDialogLogOutOpen;
 
   void openLanguageDialog() {
     _isLanguageDialogOpen = true;
@@ -95,6 +96,16 @@ class AppProvider extends ChangeNotifier {
   void closeDetail() {
     _selectedStory = null;
     _isFromDetail = true;
+    notifyListeners();
+  }
+
+  void openDialogLogOut() {
+    _isDialogLogOutOpen = true;
+    notifyListeners();
+  }
+
+  void closeDialogLogOut() {
+    _isDialogLogOutOpen = false;
     notifyListeners();
   }
 

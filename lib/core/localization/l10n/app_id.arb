@@ -67,6 +67,8 @@
   "logout_success": "Berhasil keluar",
   "retry": "Coba Lagi",
   "logout": "Keluar",
+  "logout_confirmation": "Konfirmasi keluar",
+  "logout_confirmation_msg": "Apakah Anda yakin ingin keluar?",
 
   "login_succes": "Berhasil masuk",
   "login_failed": "Gagal masuk. Silakan coba kembali.",

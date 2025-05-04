@@ -130,6 +130,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     if (_uploadStoryProvider.isSuccess) {
       _cameraService.cleanup();
       _uploadStoryProvider.reset();
+      _captionController.clear();
 
       // navigate to home screen
       context.navigateToHome();

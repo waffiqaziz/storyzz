@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/states/address_load_state.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
@@ -83,7 +84,20 @@ class _LocationSectionState extends State<LocationSection> {
               title: story.name,
               location: address,
             ),
-            // TODO: Future work around to add fullscreen map feature
+            Positioned(
+              top: 12,
+              left: 12,
+              child: PointerInterceptor(
+                child: FloatingActionButton.small(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                  child: const Icon(Icons.fullscreen),
+                  onPressed: () {
+                    context.read<AppProvider>().openDetailFullScreenMap();
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ],

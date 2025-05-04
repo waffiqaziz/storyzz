@@ -65,8 +65,10 @@
   "pull_to_refresh": "Pull down to refresh or tap + to add a new story",
 
   "logout_success": "Logout success",
-  "retry": "RETRY",
-  "logout": "LOGOUT",
+  "retry": "Retry",
+  "logout": "Logout",
+  "logout_confirmation": "Logout Confirmation",
+  "logout_confirmation_msg": "Are you sure you want to logout?",
   
   "login_succes": "Login success!",
   "login_failed": "Login failed. Please try again.",

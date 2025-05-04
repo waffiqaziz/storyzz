@@ -22,6 +22,7 @@ class AuthProvider extends ChangeNotifier {
   bool isLoadingLogout = false;
   bool isLoadingRegister = false;
   bool isLoggedIn = false;
+  bool logoutSuccess = false;
   User? user;
   String errorMessage = '';
 
@@ -34,13 +35,19 @@ class AuthProvider extends ChangeNotifier {
     isLoadingLogout = true;
     notifyListeners();
 
-    final logout = await authRepository.logout();
-    if (logout) {
-      await authRepository.deleteUser();
-    }
-    isLoggedIn = await authRepository.isLoggedIn();
+    try {
+      final logout = await authRepository.logout();
+      if (logout) {
+        await authRepository.deleteUser();
+      }
+      isLoggedIn = await authRepository.isLoggedIn();
+      logoutSuccess = true;
 
-    isLoadingLogout = false;
+      isLoadingLogout = false;
+    } catch (e) {
+      errorMessage = "An error occurred while logging out";
+      logoutSuccess = false;
+    }
     notifyListeners();
 
     return !isLoggedIn;
