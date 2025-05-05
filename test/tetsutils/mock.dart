@@ -43,6 +43,7 @@ class MockFile extends Mock implements File {}
 
 class MockAppLocalizations extends Mock implements AppLocalizations {
   @override
+  // ignore: override_on_non_overriding_member, non_constant_identifier_names
   String get address_not_available => 'Address Not Available';
 }
 
