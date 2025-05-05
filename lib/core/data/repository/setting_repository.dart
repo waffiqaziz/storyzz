@@ -46,7 +46,7 @@ class SettingRepository {
     }
   }
 
-  String? getString(String key) {
-    return _preferences.getString(key);
+  String? getLanguage() {
+    return _preferences.getString(SettingsPrefsKeys.languageKey);
   }
 }
