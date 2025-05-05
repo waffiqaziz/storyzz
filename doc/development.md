@@ -84,6 +84,13 @@ Obtain your API key from [Geocode Maps](https://geocode.maps.co/).
 flutter run
 ```
 
+## Testing
+
+This project includes several test to ensure the correctness of the application.
+We use GitHub Actions  to automatically run the tests on each pull request, and
+you can view the results [here](https://github.com/waffiqaziz/storyzz/actions/workflows/flutter_ci_cd.yml).
+To run testing on your local machine please read [here](testing.md).
+
 ## Building Android Variants
 
 The app has two flavor variants:
