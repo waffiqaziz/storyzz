@@ -25,6 +25,8 @@ stories with images and descriptions. The app provides authentication features,
 story browsing, and creation capabilities with a modern, responsive UI that
 supports both mobile and desktop platforms. Currently build for mobile and web platform.
 
+[![codecov](https://codecov.io/github/waffiqaziz/storyzz/graph/badge.svg?token=KYFE69ZHVN)](https://codecov.io/github/waffiqaziz/storyzz)
+
 ## ✨ Features
 
 ### Authentication
