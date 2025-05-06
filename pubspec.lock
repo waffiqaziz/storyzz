@@ -692,6 +692,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.9.5"
+  junitreporter_flutter_3x:
+    dependency: "direct main"
+    description:
+      name: junitreporter_flutter_3x
+      sha256: fd992797519132cd872bc5decb9421451eacc157c4cea4b7fd28633d34c44445
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.6"
   leak_tracker:
     dependency: transitive
     description:
@@ -1121,6 +1129,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.4"
+  testreport:
+    dependency: transitive
+    description:
+      name: testreport
+      sha256: d9b9af11e591d15724f63324b7957e6b36c04cca293147db7761064bbf363b0d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   timing:
     dependency: transitive
     description:
@@ -1314,5 +1330,5 @@ packages:
     source: hosted
     version: "3.1.3"
 sdks:
-  dart: ">=3.7.0 <4.0.0"
+  dart: ">=3.7.0 <3.9.0"
   flutter: ">=3.27.0"

@@ -100,6 +100,22 @@ jobs:
           minimum-coverage: 50
           artifact-name: code-coverage-report
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@ad3126e916f78f00edff4ed0317cf185271ccc2d
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      
+      - name: Generate test report .xml
+        run: |
+          dart pub global activate junitreport
+          flutter test --coverage --reporter json | tojunit > TEST-report.xml
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   build_android_free:
     name: Build Android Free Variant
