@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/states/story_load_state.dart';
+import 'package:storyzz/core/design/widgets/empty_story.dart';
+import 'package:storyzz/core/design/widgets/story_error_view.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
-import 'package:storyzz/core/widgets/empty_story.dart';
-import 'package:storyzz/core/widgets/story_error_view.dart';
 import 'package:storyzz/features/home/presentation/widgets/home_story_card.dart';
 
 /// A scrollable list view that displays stories in a card format with pull-to-refresh support.

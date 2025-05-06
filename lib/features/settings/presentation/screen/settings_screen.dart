@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
-import 'package:storyzz/core/widgets/language_selector.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {

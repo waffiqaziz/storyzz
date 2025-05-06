@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/designsystem/theme.dart';
+import 'package:storyzz/core/design/theme.dart';
+import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
-import 'package:storyzz/core/widgets/language_selector.dart';
 
 /// A screen that allows the user to register a new account. It contains fields
 /// for the user's name, email, password, and confirm password, along with

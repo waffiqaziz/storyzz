@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/designsystem/theme.dart';
+import 'package:storyzz/core/design/theme.dart';
+import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
-import 'package:storyzz/core/widgets/language_selector.dart';
 
 /// A screen that allows the user to log in to their existing account. It contains fields
 /// for the user's email and password, along with validation for each field.
