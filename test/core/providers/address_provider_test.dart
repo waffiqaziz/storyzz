@@ -17,7 +17,7 @@ void main() {
     addressProvider = AddressProvider(mockMapsRepository);
   });
 
-  group('AddressProvider Tests', () {
+  group('AddressProvider', () {
     const double testLat = 40.7128;
     const double testLon = -74.0060;
     const String testAddress = "New York City, NY, USA";

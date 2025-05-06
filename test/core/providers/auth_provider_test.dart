@@ -24,7 +24,7 @@ void main() {
     authProvider = AuthProvider(mockAuthRepository);
   });
 
-  group('AuthProvider Tests', () {
+  group('AuthProvider', () {
     test('initial values should be correct', () {
       expect(authProvider.isLoadingLogin, false);
       expect(authProvider.isLoadingLogout, false);
@@ -33,7 +33,7 @@ void main() {
       expect(authProvider.user, null);
       expect(authProvider.errorMessage, '');
     });
-    group('isLogged Tests', () {
+    group('isLogged', () {
       test('should return true when user is logged in', () async {
         when(mockAuthRepository.isLoggedIn).thenAnswer((_) async => true);
 
@@ -67,7 +67,7 @@ void main() {
       });
     });
 
-    group('logout Tests', () {
+    group('logout', () {
       test('should handle successful logout', () async {
         when(() => mockAuthRepository.logout()).thenAnswer((_) async => true);
         when(
@@ -104,7 +104,7 @@ void main() {
       });
     });
 
-    group('saveUser Tests', () {
+    group('saveUser', () {
       test('should save user successfully', () async {
         when(
           () => mockAuthRepository.saveUser(testUser),
@@ -118,7 +118,7 @@ void main() {
       });
     });
 
-    group('getUser Tests', () {
+    group('getUser', () {
       test('should get user successfully', () async {
         when(
           () => mockAuthRepository.getUser(),
@@ -158,7 +158,7 @@ void main() {
       });
     });
 
-    group('loginNetwork Tests', () {
+    group('loginNetwork', () {
       test('should handle successful login', () async {
         final loginResponse = LoginResponse(
           error: false,
@@ -188,7 +188,7 @@ void main() {
       });
     });
 
-    group('register Tests', () {
+    group('register', () {
       test('should handle successful registration', () async {
         final response = GeneralResponse(error: false, message: 'Success');
 

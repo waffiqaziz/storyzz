@@ -2,8 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:storyzz/core/data/model/user.dart';
 
 void main() {
-  group('User Model Tests', () {
-    test('User.fromJson should correctly deserialize a JSON map', () {
+  group('User Model', () {
+    test('fromJson should correctly deserialize a JSON map', () {
       final jsonMap = {
         'name': 'Test User',
         'email': 'test@example.com',
@@ -20,7 +20,7 @@ void main() {
     });
 
     test(
-      'User.toJson should correctly serialize a User object to a JSON map',
+      'toJson should correctly serialize a User object to a JSON map',
       () {
         const user = User(
           name: 'Test User',
@@ -39,7 +39,7 @@ void main() {
     );
   });
 
-  group('UserExtension Tests', () {
+  group('UserExtension', () {
     test(
       'toJsonString should correctly convert a User object to a JSON string',
       () {

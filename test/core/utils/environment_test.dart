@@ -8,7 +8,7 @@ import '../../tetsutils/mock.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('JsContextWrapper Tests', () {
+  group('JsContextWrapper', () {
     test('getApiKey returns API key when available in JS context', () {
       // It require a way to mock the js.context
       // Since theres no way directly test the JS interaction in a unit test,
@@ -21,7 +21,7 @@ void main() {
     });
   });
 
-  group('DefaultEnvironmentProvider Tests', () {
+  group('DefaultEnvironmentProvider', () {
     late MockJsContextWrapper mockJsContextWrapper;
     late DefaultEnvironmentProvider provider;
 
@@ -65,7 +65,7 @@ void main() {
     });
   });
 
-  group('MapsEnvironment Tests', () {
+  group('MapsEnvironment', () {
     late MockEnvironmentProvider mockEnvironmentProvider;
     late MockJsContextWrapper mockJsContextWrapper;
 

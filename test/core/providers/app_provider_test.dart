@@ -9,7 +9,7 @@ void main() {
     appProvider = AppProvider();
   });
 
-  group('AppProvider Tests', () {
+  group('AppProvider', () {
     test('all initial state should be false and null', () {
       expect(appProvider.isDetailFullScreenMap, false);
       expect(appProvider.isFromDetail, false);
