@@ -23,32 +23,4 @@ class MapsRepository {
       return null;
     }
   }
-
-  /// Get formatted address from latitude and longitude
-  Future<String?> getFormattedAddress(double lat, double lon) async {
-    try {
-      final response = await _mapsApiService.getAddressFromCoordinates(
-        lat,
-        lon,
-      );
-      return response.displayName;
-    } catch (e) {
-      debugPrint('Error getting formatted address: $e');
-      return null;
-    }
-  }
-
-  /// Get coordinates from address string - implementation would depend on the API
-  Future<Map<String, double>?> getCoordinatesFromAddress(String address) async {
-    try {
-      // This needs to be implemented if maps.co provides a forward geocoding service
-      // For now, this is a placeholder
-      throw UnimplementedError(
-        'Forward geocoding not implemented for maps.co API',
-      );
-    } catch (e) {
-      debugPrint('Error getting coordinates: $e');
-      return null;
-    }
-  }
 }

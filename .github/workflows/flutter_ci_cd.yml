@@ -1,21 +1,24 @@
-name: Android CI/CD
+name: Flutter CI/CD with Firebase Hosting
 
 on:
   push:
     branches:
       - master
-      - develop
     paths-ignore:
       - "**/*.md"
       - "*.md"
   pull_request:
     branches:
       - master
-      - develop
     paths-ignore:
       - "**/*.md"
       - "*.md"
-  workflow_dispatch:  # Allow manual triggering
+  workflow_dispatch: 
+
+permissions:
+  checks: write
+  contents: read
+  pull-requests: write
 
 jobs:
   analyze:
@@ -25,7 +28,7 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
           cache: true
@@ -50,6 +53,54 @@ jobs:
       # - name: Run tests
       #   run: flutter test
 
+  testing:
+    name: Run Tests
+    needs: analyze
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      
+      - name: Set up Flutter
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
+
+      - name: Create .env file
+        run: |
+          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+      
+      - name: Create secrets.properties
+        run: |
+          echo "MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" > android/secrets.properties
+
+      - name: Run Flutter Tests
+        run: flutter test --coverage
+
+      - name: Setup LCOV
+        uses: hrishikesh-kadam/setup-lcov@6c1aa0cc9e1c02f9f58f01ac599f1064ccc83470
+
+      - name: Report Code Coverage
+        uses: zgosalvez/github-actions-report-lcov@ec80ffb0e31fc6b6c35e18a8ef83403b1a8a84ee
+        with:
+          coverage-files: coverage/lcov.info
+          update-comment: true
+          minimum-coverage: 50
+          artifact-name: code-coverage-report
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
   build_android_free:
     name: Build Android Free Variant
     needs: analyze
@@ -65,7 +116,7 @@ jobs:
           cache: 'gradle'
       
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
           cache: true
@@ -120,7 +171,7 @@ jobs:
           cache: 'gradle'
       
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
           cache: true
@@ -163,7 +214,7 @@ jobs:
   build_android_bundle:
     name: Build Android App Bundle
     needs: analyze
-    if: github.ref == 'refs/heads/master'  # Only on master branch
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master'}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -176,7 +227,7 @@ jobs:
           cache: 'gradle'
       
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
           cache: true
@@ -212,3 +263,92 @@ jobs:
       #   with:
       #     name: app-paid-bundle
       #     path: build/app/outputs/bundle/paidRelease/app-paid-release.aab
+
+  build_and_deploy_web:
+    name: Build and Deploy Firebase Web
+    needs: analyze
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Flutter
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
+        with:
+          channel: stable
+          cache: true
+          
+      - name: Flutter version
+        run: flutter --version
+      
+      - name: Install dependencies & generate files
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
+      
+      - name: Create .env file
+        run: |
+          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+          
+      - name: Create environment file
+        run: |
+          echo "window.ENV = { 
+            GOOGLE_MAPS_API_KEY: '${{ secrets.GOOGLE_MAPS_API_KEY }}',
+            GEOCODE_API_KEY: '${{ secrets.GEOCODE_API_KEY }}'
+          };" > web/env.js
+          
+      - name: Build Flutter Web
+        run: flutter build web --release --dart-define=APP_FLAVOR=paid
+        
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_STORYZZ_63592 }}
+          channelId: live
+          projectId: storyzz-63592
+
+  build_and_preview_web:
+    name: Build and Preview Firebase Web
+    needs: analyze
+    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Flutter
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
+        with:
+          channel: stable
+          cache: true
+          
+      - name: Flutter version
+        run: flutter --version
+      
+      - name: Install dependencies & generate files
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
+      
+      - name: Create .env file
+        run: |
+          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+          
+      - name: Create environment file
+        run: |
+          echo "window.ENV = { 
+            GOOGLE_MAPS_API_KEY: '${{ secrets.GOOGLE_MAPS_API_KEY }}',
+            GEOCODE_API_KEY: '${{ secrets.GEOCODE_API_KEY }}'
+          };" > web/env.js
+          
+      - name: Build Flutter Web
+        run: flutter build web --release --dart-define=APP_FLAVOR=paid
+        
+      - name: Deploy to Firebase Hosting Preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_STORYZZ_63592 }}
+          projectId: storyzz-63592

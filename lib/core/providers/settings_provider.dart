@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:storyzz/core/constants/my_prefs_key.dart';
 import 'package:storyzz/core/data/model/setting.dart';
 import 'package:storyzz/core/data/repository/setting_repository.dart';
 
@@ -42,8 +41,7 @@ class SettingsProvider extends ChangeNotifier {
               : isDarkSystem;
 
       // get language setting
-      final String savedLanguage =
-          _settingRepository.getString(SettingsPrefsKeys.languageKey) ?? 'en';
+      final String savedLanguage = _settingRepository.getLanguage() ?? 'en';
       _locale = Locale(savedLanguage);
 
       // create combined setting

@@ -31,7 +31,7 @@ class AuthProvider extends ChangeNotifier {
     return isLoggedIn;
   }
 
-  Future<bool> logout() async {
+  Future<void> logout() async {
     isLoadingLogout = true;
     notifyListeners();
 
@@ -42,15 +42,12 @@ class AuthProvider extends ChangeNotifier {
       }
       isLoggedIn = await authRepository.isLoggedIn();
       logoutSuccess = true;
-
-      isLoadingLogout = false;
     } catch (e) {
       errorMessage = "An error occurred while logging out";
       logoutSuccess = false;
     }
+    isLoadingLogout = false;
     notifyListeners();
-
-    return !isLoggedIn;
   }
 
   Future<bool> saveUser(User user) async {

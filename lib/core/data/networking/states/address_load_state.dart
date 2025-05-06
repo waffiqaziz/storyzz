@@ -14,10 +14,14 @@ class AddressLoadState with _$AddressLoadState {
 }
 
 extension AddressLoadStateX on AddressLoadState {
-  String getAddressOrFallback(BuildContext context) {
+  String getAddressOrFallback(
+    BuildContext context, {
+    AppLocalizations? localizations,
+  }) {
+    final l10n = localizations ?? AppLocalizations.of(context)!;
     return switch (this) {
       AddressLoadStateLoaded(formattedAddress: final address) => address,
-      _ => AppLocalizations.of(context)!.address_not_available,
+      _ => l10n.address_not_available,
     };
   }
 }

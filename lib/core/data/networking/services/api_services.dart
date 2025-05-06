@@ -172,10 +172,7 @@ class ApiServices {
       if (lon != null) request.fields['lon'] = lon.toString();
 
       final extension = path.extension(fileName).toLowerCase();
-      final mime = MediaType(
-        'image',
-        _getImageMimeType(extension),
-      ); // get file extensions
+      final mime = MediaType('image', _getImageMimeType(extension));
 
       if (kIsWeb && photoBytes != null) {
         final multipart = http.MultipartFile.fromBytes(
@@ -201,15 +198,30 @@ class ApiServices {
         throw Exception('No image data provided');
       }
 
-      final streamedResponse = await request.send();
-      final response = await http.Response.fromStream(streamedResponse);
-      final json = jsonDecode(response.body);
+      // send the request and get the response
+      final streamedResponse = await httpClient.send(request);
 
+      // check if the response is successful
+      final response = await http.Response.fromStream(streamedResponse);
+
+      // handle the response
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return GeneralResponse.fromJson(json);
+        try {
+          final json = jsonDecode(response.body);
+          return GeneralResponse.fromJson(json);
+        } catch (e) {
+          throw FormatException('Failed to decode response: ${response.body}');
+        }
       } else {
-        final message = json['message'] ?? 'Unknown error occurred';
-        throw Exception(message);
+        // extract error message
+        String errorMessage;
+        try {
+          final json = jsonDecode(response.body);
+          errorMessage = json['message'] ?? 'Unknown server error';
+        } catch (e) {
+          errorMessage = 'Server error: Status code ${response.statusCode}';
+        }
+        throw Exception(errorMessage);
       }
     });
   }
