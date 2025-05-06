@@ -53,5 +53,37 @@ void main() {
       expect(addressJson['country'], null);
       expect(addressJson['country_code'], null);
     });
+
+    test('toJson should return correct Map<String, dynamic>', () {
+      const address = GeocodingAddress(
+        amenity: 'Test Amenity',
+        road: 'Test Road',
+      );
+
+      final response = GeocodingResponse(
+        placeId: 12345,
+        licence: 'Test Licence',
+        osmType: 'Test OSM Type',
+        osmId: 67890,
+        lat: '12.345',
+        lon: '67.890',
+        displayName: 'Test Display Name',
+        address: address,
+        boundingbox: ['10', '20', '30', '40'],
+      );
+
+      final json = response.toJson();
+
+      expect(json, isA<Map<String, dynamic>>());
+      expect(json['place_id'], 12345);
+      expect(json['licence'], 'Test Licence');
+      expect(json['osm_type'], 'Test OSM Type');
+      expect(json['osm_id'], 67890);
+      expect(json['lat'], '12.345');
+      expect(json['lon'], '67.890');
+      expect(json['display_name'], 'Test Display Name');
+      expect(json['address'], address.toJson());
+      expect(json['boundingbox'], ['10', '20', '30', '40']);
+    });
   });
 }

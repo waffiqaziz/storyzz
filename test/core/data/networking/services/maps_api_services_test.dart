@@ -89,10 +89,8 @@ void main() {
           () => mockHttpClient.get(any()),
         ).thenAnswer((_) async => http.Response(mockResponseBody, 200));
 
-        // Act
         final result = await mapsApiService.getAddressFromCoordinates(lat, lon);
 
-        // Assert
         verify(() => mockHttpClient.get(expectedUri)).called(1);
         expect(result, isA<GeocodingResponse>());
         expect(result.displayName, 'San Francisco, California, USA');
@@ -112,7 +110,6 @@ void main() {
           (_) async => http.Response('{"error": "API limit exceeded"}', 429),
         );
 
-        // Act & Assert
         expect(
           () => mapsApiService.getAddressFromCoordinates(lat, lon),
           throwsA(
@@ -137,7 +134,6 @@ void main() {
           () => mockHttpClient.get(any()),
         ).thenThrow(Exception('Connection failed'));
 
-        // Act & Assert
         expect(
           () => mapsApiService.getAddressFromCoordinates(lat, lon),
           throwsA(
@@ -192,10 +188,8 @@ void main() {
           );
         });
 
-        // Act
         await newService.getAddressFromCoordinates(lat, lon);
 
-        // Assert
         expect(capturedUri, expectedUri, reason: 'URI mismatch');
         verify(() => mockHttpClient.get(expectedUri)).called(1);
       },

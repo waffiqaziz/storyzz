@@ -4,6 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:storyzz/core/data/model/user.dart';
+import 'package:storyzz/core/data/networking/services/api_services.dart';
+import 'package:storyzz/core/data/networking/services/maps_api_services.dart';
 import 'package:storyzz/core/data/repository/auth_repository.dart';
 import 'package:storyzz/core/data/repository/maps_repository.dart';
 import 'package:storyzz/core/data/repository/setting_repository.dart';
@@ -31,6 +35,10 @@ class MockStoryRepository extends Mock implements StoryRepository {}
 
 class MockAuthRepository extends Mock implements AuthRepository {}
 
+class MockApiServices extends Mock implements ApiServices {}
+
+class MockMapsApiService extends Mock implements MapsApiService {}
+
 class MockSettingRepository extends Mock implements SettingRepository {}
 
 class MockPlatformDispatcher extends Mock implements PlatformDispatcher {}
@@ -48,3 +56,7 @@ class MockAppLocalizations extends Mock implements AppLocalizations {
 }
 
 class MockBuildContext extends Mock implements BuildContext {}
+
+class MockUser extends Mock implements User {}
+
+class MockSharedPreferences extends Mock implements SharedPreferences {}
