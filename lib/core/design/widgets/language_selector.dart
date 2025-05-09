@@ -55,7 +55,7 @@ class LanguageSelector extends StatelessWidget {
   ) {
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
-        isExpanded: false,
+        isExpanded: true,
         items: [
           DropdownMenuItem<String>(
             value: 'en',
@@ -64,13 +64,15 @@ class LanguageSelector extends StatelessWidget {
               children: [
                 Image.asset("assets/flag/flag_us.webp", width: 30, height: 25),
                 const SizedBox(width: 8),
-                Text(
-                  localizations.english,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+                Flexible(
+                  child: Text(
+                    localizations.english,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -82,13 +84,15 @@ class LanguageSelector extends StatelessWidget {
               children: [
                 Image.asset("assets/flag/flag_id.webp", width: 30, height: 25),
                 const SizedBox(width: 8),
-                Text(
-                  localizations.indonesian,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+                Flexible(
+                  child: Text(
+                    localizations.indonesian,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),

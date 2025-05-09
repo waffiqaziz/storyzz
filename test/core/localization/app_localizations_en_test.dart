@@ -41,7 +41,7 @@ void main() {
     test('direct_story_access_not_support returns correct value', () {
       expect(
         appLocalizationsEn.direct_story_access_not_support,
-        'Direcct story access not supported. Redirect to home.',
+        'Direct story access not supported. Redirect to home.',
       );
     });
 
@@ -104,7 +104,7 @@ void main() {
     });
 
     test('dont_have_account returns correct value', () {
-      expect(appLocalizationsEn.dont_have_account, 'Don"t have an account?');
+      expect(appLocalizationsEn.dont_have_account, 'Don\'t have an account?');
     });
 
     test('register_lower returns correct value', () {

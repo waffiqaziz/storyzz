@@ -9,7 +9,7 @@
   "refresh": "Refresh",
   "change_map_type": "Change map type",
 
-  "direct_story_access_not_support": "Direcct story access not supported. Redirect to home.",
+  "direct_story_access_not_support": "Direct story access not supported. Redirect to home.",
 
   "welcome_back": "Welcome Back",
   "sign_in_to_continue": "Sign in to continue",
@@ -24,7 +24,7 @@
   "forgot_password": "Forgot Password?",
   "login_upper": "LOGIN",
   "login_lower": "Login",
-  "dont_have_account": "Don\"t have an account?",
+  "dont_have_account": "Don't have an account?",
   "register_lower": "Register",
   "register_upper": "REGISTER",
   "register_success": "Register success",

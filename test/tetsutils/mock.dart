@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
@@ -14,10 +15,13 @@ import 'package:storyzz/core/data/repository/setting_repository.dart';
 import 'package:storyzz/core/data/repository/story_repository.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
 import 'package:storyzz/core/utils/environment.dart';
+import 'package:storyzz/features/map/provider/map_provider.dart';
+import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 
 class MockHttpClient extends Mock implements http.Client {}
 
@@ -28,6 +32,12 @@ class MockAuthProvider extends Mock implements AuthProvider {}
 class MockSettingsProvider extends Mock implements SettingsProvider {}
 
 class MockStoryProvider extends Mock implements StoryProvider {}
+
+class MockAppProvider extends Mock implements AppProvider {}
+
+class MockMapProvider extends Mock implements MapProvider {}
+
+class MockUploadStoryProvider extends Mock implements UploadStoryProvider {}
 
 class MockMapsRepository extends Mock implements MapsRepository {}
 
@@ -49,10 +59,33 @@ class MockJsContextWrapper extends Mock implements JsContextWrapper {}
 
 class MockFile extends Mock implements File {}
 
+// ignore_for_file: non_constant_identifier_names
 class MockAppLocalizations extends Mock implements AppLocalizations {
+  AppLocalizations? call(BuildContext context);
+
   @override
-  // ignore: override_on_non_overriding_member, non_constant_identifier_names
   String get address_not_available => 'Address Not Available';
+
+  @override
+  String get d_ago_singular => 'day ago';
+
+  @override
+  String get d_ago_plural => 'days ago';
+
+  @override
+  String get h_ago_singular => 'hour ago';
+
+  @override
+  String get h_ago_plural => 'hours ago';
+
+  @override
+  String get m_ago_singular => 'minute ago';
+
+  @override
+  String get m_ago_plural => 'minutes ago';
+
+  @override
+  String get just_now => 'just now';
 }
 
 class MockBuildContext extends Mock implements BuildContext {}

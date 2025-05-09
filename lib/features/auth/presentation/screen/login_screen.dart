@@ -253,22 +253,31 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              localizations.dont_have_account,
-                              style: TextStyle(color: Colors.grey.shade600),
+                            Flexible(
+                              child: Text(
+                                localizations.dont_have_account,
+                                style: TextStyle(color: Colors.grey.shade600),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             TextButton(
-                              onPressed:
-                                  () =>
-                                      context
-                                          .read<AppProvider>()
-                                          .openRegister(),
+                              onPressed: () {
+                                context.read<AppProvider>().openRegister();
+                              },
                               style: TextButton.styleFrom(
-                                padding: EdgeInsets.all(8),
-                                minimumSize: Size(50, 30),
+                                padding: EdgeInsets.zero, // Reduce padding
+                                minimumSize: Size(40, 30),
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
-                              child: Text(localizations.register_lower),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0,
+                                ),
+                                child: Text(
+                                  localizations.register_lower,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
                             ),
                           ],
                         ),
