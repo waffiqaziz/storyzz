@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
 import 'package:storyzz/features/map/controller/map_story_controller.dart';
@@ -49,18 +50,20 @@ class _MapStoryScreenState extends State<MapStoryScreen> {
           ],
         ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: mapProvider.refreshStories,
-            tooltip: localizations.refresh,
-          ),
-          SizedBox(width: 4),
-          IconButton(
-            icon: Icon(Icons.layers),
-            onPressed: mapProvider.toggleMapType,
-            tooltip: localizations.change_map_type,
-          ),
-          SizedBox(width: 8),
+          if (context.watch<AppProvider>().selectedStory == null) ...[
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: mapProvider.refreshStories,
+              tooltip: localizations.refresh,
+            ),
+            SizedBox(width: 4),
+            IconButton(
+              icon: Icon(Icons.layers),
+              onPressed: mapProvider.toggleMapType,
+              tooltip: localizations.change_map_type,
+            ),
+            SizedBox(width: 8),
+          ],
         ],
       ),
       body: Consumer2<AuthProvider, StoryProvider>(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/utils/helper.dart';
@@ -82,59 +83,61 @@ class _StoryDetailDialogState extends State<StoryDetailDialog> {
               horizontal: (screenWidth - dialogWidth) / 2,
               vertical: 24,
             ),
-            child: Container(
-              width: dialogWidth,
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Flexible(
-                    child: Scrollbar(
-                      controller: _scrollController,
-                      thumbVisibility: _showScrollbar,
-                      child: SingleChildScrollView(
+            child: PointerInterceptor(
+              child: Container(
+                width: dialogWidth,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: Scrollbar(
                         controller: _scrollController,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildStoryImage(story.photoUrl),
+                        thumbVisibility: _showScrollbar,
+                        child: SingleChildScrollView(
+                          controller: _scrollController,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildStoryImage(story.photoUrl),
 
-                            // content
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // author info
-                                  _buildAuthorInfo(context),
-                                  SizedBox(height: 16),
+                              // content
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // author info
+                                    _buildAuthorInfo(context),
+                                    SizedBox(height: 16),
 
-                                  // description
-                                  Text(
-                                    story.description,
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                  SizedBox(height: 24),
-
-                                  // location info if available
-                                  if (story.lat != null && story.lon != null)
-                                    LocationSection(
-                                      mapControlsEnabled: false,
-                                      mapKeyPrefix: 'dialog',
+                                    // description
+                                    Text(
+                                      story.description,
+                                      style: TextStyle(fontSize: 16),
                                     ),
-                                ],
+                                    SizedBox(height: 24),
+
+                                    // location info if available
+                                    if (story.lat != null && story.lon != null)
+                                      LocationSection(
+                                        mapControlsEnabled: false,
+                                        mapKeyPrefix: 'dialog',
+                                      ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

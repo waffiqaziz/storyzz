@@ -19,24 +19,21 @@ void main() {
       expect(user.token, 'testToken');
     });
 
-    test(
-      'toJson should correctly serialize a User object to a JSON map',
-      () {
-        const user = User(
-          name: 'Test User',
-          email: 'test@example.com',
-          password: 'password123',
-          token: 'testToken',
-        );
+    test('toJson should correctly serialize a User object to a JSON map', () {
+      const user = User(
+        name: 'Test User',
+        email: 'test@example.com',
+        password: 'password123',
+        token: 'testToken',
+      );
 
-        final jsonMap = user.toJson();
+      final jsonMap = user.toJson();
 
-        expect(jsonMap['name'], 'Test User');
-        expect(jsonMap['email'], 'test@example.com');
-        expect(jsonMap['password'], 'password123');
-        expect(jsonMap['token'], 'testToken');
-      },
-    );
+      expect(jsonMap['name'], 'Test User');
+      expect(jsonMap['email'], 'test@example.com');
+      expect(jsonMap['password'], 'password123');
+      expect(jsonMap['token'], 'testToken');
+    });
   });
 
   group('UserExtension', () {

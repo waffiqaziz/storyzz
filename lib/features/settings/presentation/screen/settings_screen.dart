@@ -13,11 +13,12 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final Uri _url = Uri.parse('https://github.com/waffiqaziz/storyzz');
+  final Uri _uriRepository = Uri.parse('https://github.com/waffiqaziz/storyzz');
+  final Uri _uriFlutter = Uri.parse('https://flutter.dev');
 
-  Future<void> _launchUrl() async {
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
+  Future<void> _launchUrl(Uri url) async {
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
     }
   }
 
@@ -58,7 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     provider.setTheme(value);
                   },
                 ),
-                const SizedBox(width: 24),
+                const SizedBox(height: 4),
 
                 // language selector
                 ListTile(
@@ -76,11 +77,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     isCompact: false, // dropdown
                   ),
                 ),
-                const SizedBox(width: 24),
+                const SizedBox(height: 16),
 
                 // github repository link
                 InkWell(
-                  onTap: _launchUrl,
+                  onTap: () => _launchUrl(_uriRepository),
                   onHover: (value) {},
                   borderRadius: BorderRadius.circular(25),
                   child: Container(
@@ -111,6 +112,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ],
                     ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                IconButton(
+                  onPressed: () => _launchUrl(_uriFlutter),
+                  icon: Image.asset(
+                    "assets/icon/lockup_built-w-flutter.png",
+                    width: 100,
                   ),
                 ),
               ],
