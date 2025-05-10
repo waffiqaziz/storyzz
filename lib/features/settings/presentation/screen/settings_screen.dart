@@ -13,11 +13,10 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final Uri _url = Uri.parse('https://github.com/waffiqaziz/storyzz');
-
-  Future<void> _launchUrl() async {
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
+  Future<void> _launchUrl(String urlString) async {
+    final Uri uri = Uri.parse(urlString);
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not launch $urlString');
     }
   }
 
@@ -58,7 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     provider.setTheme(value);
                   },
                 ),
-                const SizedBox(width: 24),
+                const SizedBox(height: 4),
 
                 // language selector
                 ListTile(
@@ -76,11 +75,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     isCompact: false, // dropdown
                   ),
                 ),
-                const SizedBox(width: 24),
+                const SizedBox(height: 16),
 
                 // github repository link
                 InkWell(
-                  onTap: _launchUrl,
+                  onTap:
+                      () => _launchUrl('https://github.com/waffiqaziz/storyzz'),
                   onHover: (value) {},
                   borderRadius: BorderRadius.circular(25),
                   child: Container(
@@ -110,6 +110,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: colorScheme.onSurfaceVariant,
                         ),
                       ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                InkWell(
+                  onTap: () => _launchUrl('https://flutter.dev/'),
+                  onHover: (value) {},
+                  borderRadius: BorderRadius.circular(25),
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    child: Image.asset(
+                      "assets/icon/lockup_built-w-flutter.png",
+                      width: 100,
                     ),
                   ),
                 ),
