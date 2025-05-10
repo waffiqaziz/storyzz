@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/designsystem/theme.dart';
+import 'package:storyzz/core/design/theme.dart';
+import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
-import 'package:storyzz/core/widgets/language_selector.dart';
 
 /// A screen that allows the user to log in to their existing account. It contains fields
 /// for the user's email and password, along with validation for each field.
@@ -253,22 +253,31 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              localizations.dont_have_account,
-                              style: TextStyle(color: Colors.grey.shade600),
+                            Flexible(
+                              child: Text(
+                                localizations.dont_have_account,
+                                style: TextStyle(color: Colors.grey.shade600),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             TextButton(
-                              onPressed:
-                                  () =>
-                                      context
-                                          .read<AppProvider>()
-                                          .openRegister(),
+                              onPressed: () {
+                                context.read<AppProvider>().openRegister();
+                              },
                               style: TextButton.styleFrom(
-                                padding: EdgeInsets.all(8),
-                                minimumSize: Size(50, 30),
+                                padding: EdgeInsets.zero, // Reduce padding
+                                minimumSize: Size(40, 30),
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
-                              child: Text(localizations.register_lower),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0,
+                                ),
+                                child: Text(
+                                  localizations.register_lower,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
                             ),
                           ],
                         ),

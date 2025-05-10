@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storyzz/core/designsystem/theme.dart';
-import 'package:storyzz/core/designsystem/util.dart';
+import 'package:storyzz/core/design/theme.dart';
+import 'package:storyzz/core/design/util.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/navigation/app_router.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
-import 'package:storyzz/core/routes/app_router.dart';
 import 'package:storyzz/core/variant/build_configuration.dart';
 
 /// Used to initialize the app and set up the main MaterialApp widget.

@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
+import 'package:storyzz/core/design/widgets/language_dialog_screen.dart';
+import 'package:storyzz/core/design/widgets/not_found_widget.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
-import 'package:storyzz/core/widgets/language_dialog_screen.dart';
-import 'package:storyzz/core/widgets/not_found_widget.dart';
 import 'package:storyzz/features/auth/presentation/screen/login_screen.dart';
 import 'package:storyzz/features/auth/presentation/screen/register_screen.dart';
 import 'package:storyzz/features/auth/presentation/transition/auth_screen_transition.dart';

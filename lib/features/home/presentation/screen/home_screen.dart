@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/design/widgets/auth_error_view.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
-import 'package:storyzz/core/widgets/auth_error_view.dart';
 import 'package:storyzz/features/home/presentation/widgets/home_story_list_view.dart';
 
 /// Main screen shown after user logs in.

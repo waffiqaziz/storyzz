@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/designsystem/theme.dart';
+import 'package:storyzz/core/design/theme.dart';
+import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
-import 'package:storyzz/core/widgets/language_selector.dart';
 
 /// A screen that allows the user to register a new account. It contains fields
 /// for the user's name, email, password, and confirm password, along with
@@ -262,13 +262,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          localizations.already_have_account,
-                          style: TextStyle(color: Colors.grey.shade600),
+                        Flexible(
+                          child: Text(
+                            localizations.already_have_account,
+                            style: TextStyle(color: Colors.grey.shade600),
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                          ),
                         ),
                         TextButton(
-                          onPressed:
-                              () => context.read<AppProvider>().openLogin(),
+                          onPressed: () {
+                            context.read<AppProvider>().openLogin();
+                          },
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.all(8),
                             minimumSize: Size(50, 30),

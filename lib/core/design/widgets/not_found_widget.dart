@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
-import 'package:storyzz/core/routes/app_router.dart';
+import 'package:storyzz/core/navigation/app_router.dart';
 
 class NotFoundWidget extends StatelessWidget {
   const NotFoundWidget({super.key});
