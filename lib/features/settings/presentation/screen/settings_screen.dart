@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
@@ -14,23 +13,12 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  Future<void> _launchUrl(String urlString) async {
-    final Uri uri = Uri.parse(urlString);
+  final Uri _uriRepository = Uri.parse('https://github.com/waffiqaziz/storyzz');
+  final Uri _uriFlutter = Uri.parse('https://flutter.dev');
 
-    if (kIsWeb) {
-      // web platform
-      if (!await launchUrl(
-        uri,
-        mode: LaunchMode.platformDefault,
-        webOnlyWindowName: '_blank',
-      )) {
-        throw Exception('Could not launch $urlString');
-      }
-    } else {
-      // mobile platforms
-      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-        throw Exception('Could not launch $urlString');
-      }
+  Future<void> _launchUrl(Uri url) async {
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
     }
   }
 
@@ -93,8 +81,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                 // github repository link
                 InkWell(
-                  onTap:
-                      () => _launchUrl('https://github.com/waffiqaziz/storyzz'),
+                  onTap: () => _launchUrl(_uriRepository),
                   onHover: (value) {},
                   borderRadius: BorderRadius.circular(25),
                   child: Container(
@@ -130,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const SizedBox(height: 8),
 
                 IconButton(
-                  onPressed: () => _launchUrl('https://flutter.dev'),
+                  onPressed: () => _launchUrl(_uriFlutter),
                   icon: Image.asset(
                     "assets/icon/lockup_built-w-flutter.png",
                     width: 100,
