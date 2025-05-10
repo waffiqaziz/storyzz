@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
@@ -13,12 +14,28 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  Future<void> _launchUrl(String urlString) async {
-    final Uri uri = Uri.parse(urlString);
-    if (!await launchUrl(uri)) {
+Future<void> _launchUrl(String urlString) async {
+  final Uri uri = Uri.parse(urlString);
+  
+  if (kIsWeb) {
+    // web platform
+    if (!await launchUrl(
+      uri,
+      mode: LaunchMode.platformDefault,
+      webOnlyWindowName: '_blank',
+    )) {
+      throw Exception('Could not launch $urlString');
+    }
+  } else {
+    // mobile platforms
+    if (!await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    )) {
       throw Exception('Could not launch $urlString');
     }
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const SizedBox(height: 8),
 
                 InkWell(
-                  onTap: () => _launchUrl('https://flutter.dev/'),
+                  onTap: () => _launchUrl('https://flutter.dev'),
                   onHover: (value) {},
                   borderRadius: BorderRadius.circular(25),
                   child: Container(
