@@ -129,18 +129,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 const SizedBox(height: 8),
 
-                InkWell(
-                  onTap: () async {
-                    _launchUrl('https://flutter.dev');
-                  },
-                  onHover: (value) {},
-                  borderRadius: BorderRadius.circular(25),
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    child: Image.asset(
-                      "assets/icon/lockup_built-w-flutter.png",
-                      width: 100,
-                    ),
+                IconButton(
+                  onPressed: () => _launchUrl('https://flutter.dev'),
+                  icon: Image.asset(
+                    "assets/icon/lockup_built-w-flutter.png",
+                    width: 100,
                   ),
                 ),
               ],
