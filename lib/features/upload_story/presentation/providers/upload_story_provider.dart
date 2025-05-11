@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:storyzz/core/data/repository/story_repository.dart';
+import 'package:storyzz/core/utils/constants.dart';
 
 /// Manages state for uploading user stories, including image selection and camera usage.
 ///
@@ -15,9 +16,13 @@ import 'package:storyzz/core/data/repository/story_repository.dart';
 ///
 /// Uses [StoryRepository] to perform the actual upload.
 class UploadStoryProvider extends ChangeNotifier {
-  final StoryRepository _storyRepository;
+  final StoryRepository storyRepository;
+  final AppService appService;
 
-  UploadStoryProvider(this._storyRepository);
+  UploadStoryProvider({
+    required this.storyRepository,
+    required this.appService,
+  });
 
   // state properties
   bool _isLoading = false;
@@ -115,7 +120,7 @@ class UploadStoryProvider extends ChangeNotifier {
     _isSuccess = false;
     notifyListeners();
 
-    final result = await _storyRepository.uploadStory(
+    final result = await storyRepository.uploadStory(
       token: token,
       description: description,
       photoFile: photoFile,
@@ -142,7 +147,7 @@ class UploadStoryProvider extends ChangeNotifier {
     double? lat,
     double? lon,
   }) async {
-    if (kIsWeb) {
+    if (appService.getKIsWeb()) {
       final bytes = await imageFile.readAsBytes();
       return uploadStory(
         token: token,

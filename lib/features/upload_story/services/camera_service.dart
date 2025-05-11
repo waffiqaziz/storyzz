@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:developer' show log;
 
 import 'package:camera/camera.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 import 'package:storyzz/features/upload_story/utils/web_utils.dart';
 
@@ -15,6 +15,7 @@ class CameraService {
   late final WebUtils _webUtils = WebUtils();
   late AppLocalizations _localizations;
   late UploadStoryProvider _uploadStoryProvider;
+  final AppService appService = AppService();
 
   void initialize(BuildContext context) {
     _context = context;
@@ -38,7 +39,7 @@ class CameraService {
   }
 
   Future<void> handleWebCamera() async {
-    if (!kIsWeb || _context == null) return;
+    if (!appService.getKIsWeb() || _context == null) return;
 
     final context = _context!;
 
