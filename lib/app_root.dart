@@ -14,6 +14,7 @@ import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
+import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/features/map/provider/map_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_location_loading_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_map_controller_provider.dart';
@@ -31,7 +32,13 @@ class AppRoot extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(create: (_) => SettingRepository(prefs)),
-        Provider(create: (_) => ApiServices(httpClient: http.Client())),
+        Provider(
+          create:
+              (_) => ApiServices(
+                httpClient: http.Client(),
+                appService: AppService(),
+              ),
+        ),
         Provider(create: (_) => MapsApiService(httpClient: http.Client())),
         Provider(
           create:
@@ -55,7 +62,10 @@ class AppRoot extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create:
-              (context) => UploadStoryProvider(context.read<StoryRepository>()),
+              (context) => UploadStoryProvider(
+                storyRepository: context.read<StoryRepository>(),
+                appService: AppService(),
+              ),
         ),
         ChangeNotifierProvider(
           create: (context) => StoryProvider(context.read<StoryRepository>()),

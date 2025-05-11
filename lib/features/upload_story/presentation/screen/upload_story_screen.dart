@@ -1,6 +1,3 @@
-// file: lib/features/story/presentation/screens/upload_story_screen.dart
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +5,7 @@ import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/navigation/app_router.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
+import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/core/variant/build_configuration.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/camera_web_view.dart';
@@ -40,6 +38,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   late UploadStoryProvider _uploadStoryProvider;
   final TextEditingController _captionController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final AppService _appService = AppService();
 
   @override
   void initState() {
@@ -72,7 +71,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   }
 
   Future<void> _handleCameraButton() async {
-    if (kIsWeb) {
+    if (_appService.getKIsWeb()) {
       await _cameraService.handleWebCamera();
     } else {
       await _imagePickerService.pickImage(ImageSource.camera);
@@ -173,6 +172,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     final imageFile = uploadProvider.imageFile;
     final isUploading = uploadProvider.isLoading;
     final showCamera = uploadProvider.showCamera;
+    final AppService appService = AppService();
 
     // get build-time constant for web platform
     final appFlavor = const String.fromEnvironment(
@@ -260,7 +260,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                       // build variant for android
                       // and
                       // build-time constants for web platform
-                      if (kIsWeb) ...[
+                      if (appService.getKIsWeb()) ...[
                         if (isPaidVersion)
                           StatefulBuilder(
                             builder: (

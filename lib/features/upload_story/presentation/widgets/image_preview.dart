@@ -1,12 +1,10 @@
-// file: lib/features/story/presentation/widgets/image_preview.dart
-
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 
 /// Widget as image preview to shows selected image
@@ -97,6 +95,8 @@ class ImagePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppService appService = AppService();
+
     if (imageFile == null) {
       return _buildImagePlaceholder(context);
     }
@@ -116,7 +116,7 @@ class ImagePreview extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child:
-          kIsWeb
+          appService.getKIsWeb()
               ? Image.network(imageFile!.path)
               : Image.file(File(imageFile!.path)),
     );

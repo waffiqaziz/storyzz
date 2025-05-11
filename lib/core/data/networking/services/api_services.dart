@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart' show kIsWeb, Uint8List;
+import 'package:flutter/foundation.dart' show Uint8List;
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
@@ -10,6 +10,7 @@ import 'package:storyzz/core/data/networking/responses/general_response.dart';
 import 'package:storyzz/core/data/networking/responses/login_response.dart';
 import 'package:storyzz/core/data/networking/responses/stories_response.dart';
 import 'package:storyzz/core/data/networking/utils/api_utils.dart';
+import 'package:storyzz/core/utils/constants.dart';
 
 /// A service class responsible for handling API interactions, such as login, registration,
 /// fetching stories, and uploading stories to the server.
@@ -19,8 +20,9 @@ import 'package:storyzz/core/data/networking/utils/api_utils.dart';
 class ApiServices {
   static const String _baseUrl = "https://story-api.dicoding.dev/v1";
   final http.Client httpClient;
+  final AppService appService;
 
-  ApiServices({required this.httpClient});
+  ApiServices({required this.httpClient, required this.appService});
 
   /// Logs the user in with the provided email and password.
   ///
@@ -174,7 +176,7 @@ class ApiServices {
       final extension = path.extension(fileName).toLowerCase();
       final mime = MediaType('image', _getImageMimeType(extension));
 
-      if (kIsWeb && photoBytes != null) {
+      if (appService.getKIsWeb() && photoBytes != null) {
         final multipart = http.MultipartFile.fromBytes(
           'photo',
           photoBytes,

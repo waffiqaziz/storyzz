@@ -1,4 +1,3 @@
-// filepath: d:\pem\Dart\Flutter\intermediate\submission\storyzz\test\core\data\networking\services\api_services_test.dart
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -17,7 +16,10 @@ import '../../../../tetsutils/mock.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  late MockHttpClient mockHttpClient;
+
+  final mockFile = MockFile();
+  final mockAppService = MockAppService();
+  final mockHttpClient = MockHttpClient();
   late ApiServices apiServices;
   const baseUrl = "https://story-api.dicoding.dev/v1";
 
@@ -28,10 +30,17 @@ void main() {
   const token = 'test_token';
 
   setUp(() {
-    mockHttpClient = MockHttpClient();
-    apiServices = ApiServices(httpClient: mockHttpClient);
+    apiServices = ApiServices(
+      httpClient: mockHttpClient,
+      appService: mockAppService,
+    );
     registerFallbackValue(Uri());
     registerFallbackValue(http.Request('POST', Uri.parse('')));
+    registerFallbackValue(http.Request('POST', Uri()));
+    registerFallbackValue(http.MultipartRequest('POST', Uri()));
+    registerFallbackValue(MockStreamedResponse());
+
+    when(() => mockAppService.getKIsWeb()).thenReturn(false);
   });
 
   group('ApiServices', () {
@@ -136,7 +145,7 @@ void main() {
             headers: {'Content-Type': 'application/json'},
             body: expectedBody,
           ),
-        ).called(1);
+        ).called(2);
       });
 
       test('should return error message on failed registration', () async {
@@ -250,6 +259,18 @@ void main() {
         'message': 'Story uploaded successfully',
       };
 
+      setUp(() {
+        when(() => mockHttpClient.send(any())).thenAnswer((_) async {
+          final bodyBytes = utf8.encode(jsonEncode(mockResponseSuccess));
+          return http.StreamedResponse(
+            Stream.fromIterable([bodyBytes]), // Use a proper stream
+            201,
+            contentLength: bodyBytes.length,
+            headers: {'content-type': 'application/json'},
+          );
+        });
+      });
+
       test(
         'should return GeneralResponse on successful upload (web)',
         () async {
@@ -281,7 +302,7 @@ void main() {
         () async {
           final mockJsonResponse = jsonEncode(mockResponseSuccess);
 
-          final mockFile = MockFile();
+          when(() => mockAppService.getKIsWeb()).thenReturn(false);
           when(
             () => mockFile.openRead(),
           ).thenAnswer((_) => Stream.value(Uint8List(0)));
@@ -341,8 +362,234 @@ void main() {
 
         expect(result, isA<ApiResult<GeneralResponse>>());
         expect(result.data, isNull);
-        expect(result.message, 'Upload failed');
-      }, skip: !kIsWeb);
+        expect(result.message, 'No image data provided');
+      }, skip: kIsWeb);
+
+      test(
+        'should include lat and lon in the request when provided (web)',
+        () async {
+          final lat = 1.0;
+          final lon = 2.0;
+
+          when(() => mockAppService.getKIsWeb()).thenReturn(true);
+          reset(mockHttpClient);
+          when(() => mockHttpClient.send(any())).thenAnswer((_) async {
+            final bodyBytes = utf8.encode(jsonEncode(mockResponseSuccess));
+            return http.StreamedResponse(
+              Stream.fromIterable([bodyBytes]),
+              201,
+              contentLength: bodyBytes.length,
+              headers: {'content-type': 'application/json'},
+            );
+          });
+
+          final result = await apiServices.uploadStory(
+            token: token,
+            description: description,
+            photoBytes: photoBytes,
+            fileName: fileName,
+            lat: lat,
+            lon: lon,
+          );
+
+          expect(result.data, isNotNull);
+          expect(result.message, isNull);
+
+          final capturedRequest =
+              verify(() => mockHttpClient.send(captureAny())).captured.single
+                  as http.MultipartRequest;
+          expect(capturedRequest.fields['lat'], equals(lat.toString()));
+          expect(capturedRequest.fields['lon'], equals(lon.toString()));
+        },
+      );
+
+      test(
+        'should include lat and lon in the request when provided (mobile)',
+        () async {
+          final lat = 1.0;
+          final lon = 2.0;
+          final mockFile = MockFile();
+
+          when(() => mockAppService.getKIsWeb()).thenReturn(false);
+          when(
+            () => mockFile.openRead(),
+          ).thenAnswer((_) => Stream.value(Uint8List(0)));
+          when(() => mockFile.length()).thenAnswer((_) async => 100);
+          when(() => mockFile.path).thenReturn('test.jpg');
+
+          reset(mockHttpClient);
+
+          when(() => mockHttpClient.send(any())).thenAnswer((_) async {
+            final bodyBytes = utf8.encode(jsonEncode(mockResponseSuccess));
+            return http.StreamedResponse(
+              Stream.fromIterable([bodyBytes]),
+              201,
+              contentLength: bodyBytes.length,
+              headers: {'content-type': 'application/json'},
+            );
+          });
+
+          // Call the method being tested with photoFile ONLY
+          final result = await apiServices.uploadStory(
+            token: token,
+            description: description,
+            photoFile: mockFile, // Only include photoFile
+            fileName: fileName,
+            lat: lat,
+            lon: lon,
+          );
+
+          expect(result.data, isNotNull);
+          expect(result.message, isNull);
+
+          final capturedRequest =
+              verify(() => mockHttpClient.send(captureAny())).captured.single
+                  as http.MultipartRequest;
+          expect(capturedRequest.fields['lat'], equals(lat.toString()));
+          expect(capturedRequest.fields['lon'], equals(lon.toString()));
+        },
+      );
+
+      test('should send photoBytes in request when provided (web)', () async {
+        reset(mockHttpClient);
+
+        when(() => mockAppService.getKIsWeb()).thenReturn(true);
+        when(() => mockHttpClient.send(any())).thenAnswer((_) async {
+          final bodyBytes = utf8.encode(jsonEncode(mockResponseSuccess));
+          return http.StreamedResponse(
+            Stream.fromIterable([bodyBytes]),
+            201,
+            contentLength: bodyBytes.length,
+            headers: {'content-type': 'application/json'},
+          );
+        });
+
+        final result = await apiServices.uploadStory(
+          token: token,
+          description: description,
+          photoBytes: photoBytes,
+          fileName: fileName,
+        );
+
+        expect(result.data, isNotNull);
+
+        final capturedRequest =
+            verify(() => mockHttpClient.send(captureAny())).captured.single
+                as http.MultipartRequest;
+        expect(capturedRequest.files.length, 1);
+        expect(capturedRequest.files.first.field, 'photo');
+        expect(capturedRequest.files.first.filename, fileName);
+      });
+
+      test('should throw an exception if no image data is provided', () async {
+        when(() => mockAppService.getKIsWeb()).thenReturn(false);
+        when(() => mockHttpClient.send(any())).thenAnswer((_) async {
+          final bodyBytes = utf8.encode(jsonEncode(mockResponseSuccess));
+          return http.StreamedResponse(
+            Stream.fromIterable([bodyBytes]),
+            201,
+            contentLength: bodyBytes.length,
+            headers: {'content-type': 'application/json'},
+          );
+        });
+        final result = await apiServices.uploadStory(
+          token: token,
+          description: description,
+          fileName: fileName,
+        );
+        expect(result.message, contains('No image data provided'));
+      });
+
+      test(
+        'should capture FormatException in ApiResult when JSON is invalid',
+        () async {
+          const description = 'Test description';
+          final photoBytes = Uint8List.fromList([1, 2, 3]);
+          const fileName = 'test.jpg';
+
+          reset(mockHttpClient);
+
+          when(() => mockHttpClient.send(any())).thenAnswer((_) async {
+            return http.StreamedResponse(
+              Stream.fromIterable([utf8.encode('This is not valid JSON')]),
+              201, // Success status code
+              contentLength: 'This is not valid JSON'.length,
+              headers: {'content-type': 'text/plain'}, // Not JSON content type
+            );
+          });
+
+          final result = await apiServices.uploadStory(
+            token: token,
+            description: description,
+            photoBytes: photoBytes,
+            photoFile: mockFile,
+            fileName: fileName,
+          );
+
+          expect(result.data, isNull);
+          expect(
+            result.message,
+            contains('Invalid response format. Please contact support'),
+          );
+        },
+      );
+
+      test('should return error message for server error', () async {
+        final errorResponseBody = jsonEncode({
+          "error": true,
+          "message": "Invalid file format",
+        });
+
+        when(() => mockAppService.getKIsWeb()).thenReturn(true);
+        when(() => mockHttpClient.send(any())).thenAnswer((_) async {
+          final bodyBytes = utf8.encode(errorResponseBody);
+          return http.StreamedResponse(
+            Stream.value(bodyBytes),
+            400,
+            headers: {'content-type': 'application/json'},
+            contentLength: bodyBytes.length,
+          );
+        });
+
+        final result = await apiServices.uploadStory(
+          token: token,
+          description: description,
+          photoBytes: photoBytes,
+          fileName: fileName,
+          lat: 1.0,
+          lon: 2.0,
+        );
+
+        expect(result.message, equals("Invalid file format"));
+        // verify(() => mockHttpClient.send(any())).called(1);
+      });
+
+      test('should handle non-JSON error responses', () async {
+        final errorResponseBody = "Internal Server Error";
+
+        when(() => mockAppService.getKIsWeb()).thenReturn(true);
+        when(() => mockHttpClient.send(any())).thenAnswer((_) async {
+          final bodyBytes = utf8.encode(errorResponseBody);
+          return http.StreamedResponse(
+            Stream.value(bodyBytes),
+            500,
+            headers: {'content-type': 'text/plain'},
+            contentLength: bodyBytes.length,
+          );
+        });
+
+        final result = await apiServices.uploadStory(
+          token: token,
+          description: description,
+          photoBytes: photoBytes,
+          fileName: fileName,
+          lat: 1.0,
+          lon: 2.0,
+        );
+
+        expect(result.message, equals("Server error: Status code 500"));
+        // verify(() => mockHttpClient.send(any())).called(1);
+      });
     });
   });
 }

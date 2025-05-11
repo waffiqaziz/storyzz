@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 
 class ImagePickerService {
   final ImagePicker _picker = ImagePicker();
+  final AppService appService = AppService();
   BuildContext? _context;
 
   void initialize(BuildContext context) {
@@ -34,7 +36,7 @@ class ImagePickerService {
       if (pickedFile != null) {
         int fileSize = 0;
 
-        if (kIsWeb) {
+        if (appService.getKIsWeb()) {
           // Web: use `readAsBytes()` to get size
           Uint8List bytes = await pickedFile.readAsBytes();
           fileSize = bytes.lengthInBytes;

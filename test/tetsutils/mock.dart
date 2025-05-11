@@ -19,6 +19,7 @@ import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
+import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/core/utils/environment.dart';
 import 'package:storyzz/features/map/provider/map_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
@@ -93,3 +94,7 @@ class MockBuildContext extends Mock implements BuildContext {}
 class MockUser extends Mock implements User {}
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
+
+class MockAppService extends Mock implements AppService {}
+
+class MockStreamedResponse extends Mock implements http.StreamedResponse {}
