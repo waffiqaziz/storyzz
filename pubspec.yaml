@@ -58,7 +58,7 @@ dependencies:
 
   pointer_interceptor: ^0.10.1+2
 
-  go_router: ^15.1.1
+  go_router: ^15.1.2
 
   junitreporter_flutter_3x: ^2.0.6
 
