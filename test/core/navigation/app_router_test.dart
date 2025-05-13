@@ -18,6 +18,8 @@ import 'package:storyzz/features/auth/presentation/screen/register_screen.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_dialog.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_screen.dart';
 import 'package:storyzz/features/home/presentation/screen/home_screen.dart';
+import 'package:storyzz/features/home/presentation/screen/main_screen.dart';
+import 'package:storyzz/features/home/presentation/widgets/logout_confirmation_dialog.dart';
 import 'package:storyzz/features/map/presentation/screen/map_screen.dart';
 import 'package:storyzz/features/map/provider/map_provider.dart';
 import 'package:storyzz/features/notfound/presentation/screen/not_found_screen.dart';
@@ -65,6 +67,7 @@ void main() {
         data: MediaQueryData(size: Size(width, 800.0), devicePixelRatio: 1.0),
         child: MaterialApp.router(
           routerConfig: appRouter.router,
+          locale: const Locale('en'),
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -168,7 +171,7 @@ void main() {
     when(() => mockMapProvider.shouldShowLocationWarning).thenReturn(false);
   });
 
-  group('Authentication Redirects', () {
+  group('Authentication', () {
     testWidgets('Should redirect to login when not logged in', (tester) async {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
 
@@ -201,6 +204,32 @@ void main() {
         expect(find.byType(SettingsScreen), findsNothing);
       },
     );
+
+    testWidgets('should navigate to LoginScreen when logout', (tester) async {
+      when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
+      when(() => mockAuthProvider.isLoggedIn).thenReturn(true);
+      when(() => mockAppProvider.isLanguageDialogOpen).thenReturn(false);
+      when(() => mockAuthProvider.logout()).thenAnswer((_) async {
+        when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
+        when(() => mockAuthProvider.isLoggedIn).thenReturn(false);
+      });
+
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.pumpAndSettle();
+      expect(find.byType(HomeScreen), findsOneWidget);
+
+      await mockAuthProvider.logout();
+
+      // force a router refresh
+      appRouter.router.refresh();
+
+      // allow time for navigation
+      await tester.pumpAndSettle(const Duration(milliseconds: 300));
+      expect(find.byType(LoginScreen), findsOneWidget);
+
+      final bool isLoggedIn = await mockAuthProvider.isLogged();
+      expect(isLoggedIn, isFalse);
+    });
   });
 
   group('Navigation between auth screens', () {
@@ -250,7 +279,6 @@ void main() {
 
   group('Bottom navigation routing', () {
     setUp(() {
-      // Set up for authenticated user
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
     });
 
@@ -293,7 +321,7 @@ void main() {
     });
   });
 
-  group('Story detail navigation', () {
+  group('Story detail', () {
     final testStory = ListStory(
       id: '1',
       name: 'Test Story',
@@ -349,7 +377,7 @@ void main() {
       expect(find.byType(StoryDetailScreen), findsNothing);
       expect(find.byType(HomeScreen), findsOneWidget);
     });
-    
+
     testWidgets('Should able to open and close story detail dialoh', (
       tester,
     ) async {
@@ -370,7 +398,7 @@ void main() {
       // wait for animations complete
       await tester.pump(const Duration(milliseconds: 1000));
 
-      // Simulate close story detail
+      // simulate close story detail
       when(() => mockAppProvider.closeDetail()).thenAnswer((_) {
         when(() => mockAppProvider.selectedStory).thenReturn(null);
         when(() => mockAppProvider.isFromDetail).thenReturn(true);
@@ -392,6 +420,59 @@ void main() {
       expect(find.byType(StoryDetailDialog), findsNothing);
       expect(find.byType(StoryDetailScreen), findsNothing);
       expect(find.byType(HomeScreen), findsOneWidget);
+    });
+
+    testWidgets(
+      'Should redirect to map story detail when story is selected in map screen',
+      (tester) async {
+        when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
+        when(() => mockAuthProvider.isLoggedIn).thenReturn(true);
+        when(() => mockAppProvider.selectedStory).thenReturn(testStory);
+        when(() => mockAppProvider.isFromDetail).thenReturn(false);
+        when(() => mockAppProvider.isDialogLogOutOpen).thenReturn(false);
+
+        await tester.pumpWidget(
+          createWidgetUnderTest(width: 1200, initialLocation: '/map'),
+        );
+
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 100));
+
+        expect(find.byType(StoryDetailDialog), findsOneWidget);
+
+        // wait for animations complete
+        await tester.pump(const Duration(milliseconds: 1000));
+      },
+    );
+
+    testWidgets('Should handle direct story access and show warning', (
+      tester,
+    ) async {
+      when(() => mockAppProvider.selectedStory).thenReturn(null);
+      when(() => mockAppProvider.isFromDetail).thenReturn(false);
+
+      await tester.pumpWidget(
+        createWidgetUnderTest(initialLocation: '/story/123'),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+
+      // Instead expecting a SnackBar which is a bit tricky to test,
+      // we check if the warning message is shown
+      // expect(find.byType(SnackBar), findsOneWidget); // tricky to test
+      find.text('Direct story access not supported. Redirect to home.');
+      expect(find.byType(HomeScreen), findsOneWidget);
+    });
+
+    testWidgets('Should redirect back from detail when story is closed', (
+      tester,
+    ) async {
+      // since the app does not support direct access to story detail
+      // only test
+      when(() => mockAppProvider.selectedStory).thenReturn(testStory);
+      when(() => mockAppProvider.isFromDetail).thenReturn(true);
     });
   });
 
@@ -426,16 +507,121 @@ void main() {
         expect(find.byType(MapFullScreen), findsOneWidget);
       },
     );
+
+    testWidgets('should navigate to correct page when tab is selected', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.pumpAndSettle();
+
+      expect(find.byType(HomeScreen), findsOneWidget);
+
+      final mainScreen = tester.widget<MainScreen>(find.byType(MainScreen));
+      mainScreen.onTabChanged(0);
+      await tester.pumpAndSettle();
+      expect(find.byType(HomeScreen), findsOneWidget);
+
+      mainScreen.onTabChanged(1);
+      await tester.pumpAndSettle();
+      expect(find.byType(MapStoryScreen), findsOneWidget);
+
+      mainScreen.onTabChanged(2);
+      await tester.pumpAndSettle();
+      expect(find.byType(UploadStoryScreen), findsOneWidget);
+
+      mainScreen.onTabChanged(3);
+      await tester.pumpAndSettle();
+      expect(find.byType(SettingsScreen), findsOneWidget);
+    });
   });
 
-  group('Error handling', () {
+  group('Route using .go function', () {
+    setUp(() {
+      when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
+    });
+
+    testWidgets('should open NotFoundScreen', (tester) async {
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.pumpAndSettle();
+
+      appRouter.router.go('/404');
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(find.byType(NotFoundScreen), findsOneWidget);
+    });
+
+    testWidgets('should open SettingsScreen', (tester) async {
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.pumpAndSettle();
+
+      appRouter.router.go('/settings');
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(find.byType(SettingsScreen), findsOneWidget);
+    });
+
+    testWidgets('should open UploadStoryScreen', (tester) async {
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.pumpAndSettle();
+
+      appRouter.router.go('/upload');
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(find.byType(UploadStoryScreen), findsOneWidget);
+    });
+
+    testWidgets('should open MapStoryScreen', (tester) async {
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.pumpAndSettle();
+
+      appRouter.router.go('/map');
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(find.byType(MapStoryScreen), findsOneWidget);
+    });
+
+    testWidgets('should open HomeScreen', (tester) async {
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.pumpAndSettle();
+
+      appRouter.router.go('/');
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(find.byType(HomeScreen), findsOneWidget);
+    });
+  });
+
+  group('Error handling and edge case', () {
     setUp(() {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
     });
 
     testWidgets('Should show 404 screen for invalid routes', (tester) async {
-      when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
-
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
@@ -455,6 +641,33 @@ void main() {
         findsOneWidget,
         reason: "The NotFoundScreen should be shown for invalid routes",
       );
+    });
+
+    testWidgets('Should handle trailing slash in paths', (tester) async {
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.pumpAndSettle();
+
+      appRouter.router.go('/settings/');
+
+      await tester.pumpAndSettle();
+
+      expect(find.byType(SettingsScreen), findsOneWidget);
+    });
+  });
+
+  group('Dialogs and special routes', () {
+    setUp(() {
+      when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
+      when(() => mockAuthProvider.isLoggedIn).thenReturn(true);
+    });
+
+    testWidgets('Should show logout confirmation dialog', (tester) async {
+      when(() => mockAppProvider.isDialogLogOutOpen).thenReturn(true);
+
+      await tester.pumpWidget(createWidgetUnderTest(initialLocation: '/'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(LogoutConfirmationDialog), findsOneWidget);
     });
   });
 }

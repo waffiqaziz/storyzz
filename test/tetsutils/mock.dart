@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,6 +48,8 @@ class MockStoryRepository extends Mock implements StoryRepository {}
 class MockAuthRepository extends Mock implements AuthRepository {}
 
 class MockApiServices extends Mock implements ApiServices {}
+
+class MockGoRouter extends Mock implements GoRouter {}
 
 class MockMapsApiService extends Mock implements MapsApiService {}
 
