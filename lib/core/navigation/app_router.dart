@@ -5,6 +5,7 @@ import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/design/widgets/language_dialog_screen.dart';
 import 'package:storyzz/core/design/widgets/not_found_widget.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/navigation/navigation_utils.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
@@ -104,7 +105,7 @@ class AppRouter {
         navigatorKey: _shellNavigatorKey,
         builder: (context, state, child) {
           return MainScreen(
-            currentIndex: _calculateSelectedIndex(state),
+            currentIndex: calculateSelectedIndex(state.matchedLocation),
             onTabChanged: (index) {
               switch (index) {
                 case 0:
@@ -123,7 +124,6 @@ class AppRouter {
             },
             onLogout: () async {
               await authProvider.logout();
-              router.go('/login');
             },
             child: child,
           );
@@ -154,7 +154,7 @@ class AppRouter {
                 name: 'dialogLogOut',
                 parentNavigatorKey: _rootNavigatorKey,
                 pageBuilder: (context, state) {
-                  return _dialogTransition(state, LogoutConfirmationDialog());
+                  return dialogTransition(state, LogoutConfirmationDialog());
                 },
               ),
             ],
@@ -198,7 +198,7 @@ class AppRouter {
                 name: 'upgradeDialog',
                 parentNavigatorKey: _rootNavigatorKey,
                 pageBuilder: (context, state) {
-                  return _dialogTransition(state, UpgradeDialog());
+                  return dialogTransition(state, UpgradeDialog());
                 },
               ),
               GoRoute(
@@ -206,7 +206,7 @@ class AppRouter {
                 name: 'uploadMap',
                 parentNavigatorKey: _rootNavigatorKey,
                 pageBuilder: (context, state) {
-                  return _dialogTransition(state, MapFullScreen());
+                  return dialogTransition(state, MapFullScreen());
                 },
               ),
             ],
@@ -278,28 +278,13 @@ class AppRouter {
     return null;
   }
 
-  int _calculateSelectedIndex(GoRouterState state) {
-    final String location = state.matchedLocation;
-
-    if (location.startsWith('/map')) {
-      return 1;
-    }
-    if (location.startsWith('/upload')) {
-      return 2;
-    }
-    if (location.startsWith('/settings')) {
-      return 3;
-    }
-    return 0;
-  }
-
   GoRoute _languageDialogRoute(String name) {
     return GoRoute(
       path: '/language-dialog',
       name: "${name}LanguageDialog",
       parentNavigatorKey: _rootNavigatorKey,
       pageBuilder: (context, state) {
-        return _dialogTransition(state, LanguageDialogScreen());
+        return dialogTransition(state, LanguageDialogScreen());
       },
     );
   }
@@ -359,7 +344,7 @@ Page _buildStoryDetailPage(
     return MaterialPage(key: state.pageKey, child: NotFoundWidget());
   }
 
-  return _dialogTransition(
+  return dialogTransition(
     state,
     Builder(
       builder: (context) {
@@ -382,28 +367,4 @@ extension GoRouterExtension on BuildContext {
     };
     GoRouter.of(this).go(path);
   }
-}
-
-CustomTransitionPage<dynamic> _dialogTransition(
-  GoRouterState state,
-  Widget childWidget,
-) {
-  return CustomTransitionPage(
-    key: state.pageKey,
-    fullscreenDialog: true,
-    maintainState: true,
-    opaque: false,
-    barrierDismissible: true,
-    barrierColor: Colors.black54,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return FadeTransition(
-        opacity: animation,
-        child: ScaleTransition(
-          scale: CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
-          child: child,
-        ),
-      );
-    },
-    child: childWidget,
-  );
 }

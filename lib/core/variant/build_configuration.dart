@@ -19,8 +19,13 @@ enum BuildVariant { free, paid }
 /// IMPORTANT: Always call [initialize] before using this class, typically
 /// in app's main() function before runApp().
 class BuildConfig {
-  static late final bool _isPaidVersion;
+  static bool? _isPaidVersion;
   static bool _initialized = false;
+
+  static void reset() {
+    _isPaidVersion = false;
+    _initialized = false;
+  }
 
   static Future<void> initialize() async {
     if (_initialized) return;
@@ -33,7 +38,7 @@ class BuildConfig {
 
   static bool get isPaidVersion {
     assert(_initialized, 'BuildConfig must be initialized before use');
-    return _isPaidVersion;
+    return _isPaidVersion ?? false;
   }
 
   static bool get isFreeVersion => !isPaidVersion;
