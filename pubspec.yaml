@@ -80,6 +80,7 @@ dev_dependencies:
   freezed: ^3.0.6
 
   mocktail: ^1.0.4
+  mocktail_image_network: ^1.2.0
 
 
 # used for splash screen, setup for web and android

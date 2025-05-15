@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/utils/helper.dart';
+import 'package:storyzz/features/detail/presentation/widgets/detail_image.dart';
 import 'package:storyzz/features/detail/presentation/widgets/location_section.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// A dialog view that displays the details of a story, similar to the full-screen
 /// `StoryDetailScreen`, but presented in a dialog. This is typically shown for
@@ -29,6 +31,7 @@ class StoryDetailDialog extends StatefulWidget {
 class _StoryDetailDialogState extends State<StoryDetailDialog> {
   final ScrollController _scrollController = ScrollController();
   bool _showScrollbar = true;
+  Timer? _someTimer;
 
   @override
   void initState() {
@@ -36,7 +39,7 @@ class _StoryDetailDialogState extends State<StoryDetailDialog> {
 
     // hide the scrollbar if the user hasn't scrolled
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration(milliseconds: 800), () {
+      _someTimer = Timer(Duration(milliseconds: 800), () {
         if (mounted && _scrollController.offset == 0.0) {
           setState(() => _showScrollbar = false);
         }
@@ -46,15 +49,9 @@ class _StoryDetailDialogState extends State<StoryDetailDialog> {
 
   @override
   void dispose() {
+    _someTimer?.cancel();
     _scrollController.dispose();
     super.dispose();
-  }
-
-  Future<void> _launchUrl(String urlString) async {
-    final Uri uri = Uri.parse(urlString);
-    if (!await launchUrl(uri)) {
-      throw Exception('Could not launch $urlString');
-    }
   }
 
   @override
@@ -161,40 +158,8 @@ class _StoryDetailDialogState extends State<StoryDetailDialog> {
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: 300, minWidth: double.infinity),
       child: GestureDetector(
-        onTap: () => _launchUrl(photoUrl),
-        child: Image.network(
-          photoUrl,
-          fit: BoxFit.contain,
-          width: double.infinity,
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return Container(
-              height: 350,
-              color: Colors.grey[200],
-              child: Center(
-                child: CircularProgressIndicator(
-                  value:
-                      loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                          : null,
-                ),
-              ),
-            );
-          },
-          errorBuilder:
-              (context, error, stackTrace) => Container(
-                height: 350,
-                color: Colors.grey[300],
-                child: Center(
-                  child: Icon(
-                    Icons.broken_image,
-                    size: 64,
-                    color: Colors.grey[400],
-                  ),
-                ),
-              ),
-        ),
+        onTap: () => openUrl(photoUrl),
+        child: DetailImage(photoUrl: photoUrl),
       ),
     );
   }
