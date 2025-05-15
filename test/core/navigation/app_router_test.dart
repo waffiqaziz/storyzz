@@ -172,7 +172,7 @@ void main() {
   });
 
   group('Authentication', () {
-    testWidgets('Should redirect to login when not logged in', (tester) async {
+    testWidgets('should redirect to login when not logged in', (tester) async {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
 
       await tester.pumpWidget(createWidgetUnderTest());
@@ -181,7 +181,7 @@ void main() {
       expect(find.byType(LoginScreen), findsOneWidget);
     });
 
-    testWidgets('Should go to home when logged in', (tester) async {
+    testWidgets('should go to home when logged in', (tester) async {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
 
       await tester.pumpWidget(createWidgetUnderTest());
@@ -191,7 +191,7 @@ void main() {
     });
 
     testWidgets(
-      'Should stay on login page when trying to access protected route but not logged in',
+      'should stay on login page when trying to access protected route but not logged in',
       (tester) async {
         when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
 
@@ -234,7 +234,7 @@ void main() {
 
   group('Navigation between auth screens', () {
     testWidgets(
-      'Should navigate from login to register when appProvider.isRegister is true',
+      'should navigate from login to register when appProvider.isRegister is true',
       (tester) async {
         when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
         when(() => mockAppProvider.isRegister).thenReturn(true);
@@ -249,7 +249,7 @@ void main() {
     );
 
     testWidgets(
-      'Should navigate from register to login when appProvider.isLogin is true',
+      'should navigate from register to login when appProvider.isLogin is true',
       (tester) async {
         when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
         when(() => mockAppProvider.isRegister).thenReturn(false);
@@ -264,7 +264,7 @@ void main() {
       },
     );
 
-    testWidgets('Should open language dialog from login screen', (
+    testWidgets('should open language dialog from login screen', (
       tester,
     ) async {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
@@ -282,7 +282,7 @@ void main() {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
     });
 
-    testWidgets('Should show correct screen for home tab index', (
+    testWidgets('should show correct screen for home tab index', (
       tester,
     ) async {
       await tester.pumpWidget(createWidgetUnderTest(initialLocation: '/'));
@@ -291,14 +291,14 @@ void main() {
       expect(find.byType(HomeScreen), findsOneWidget);
     });
 
-    testWidgets('Should show correct screen for map tab index', (tester) async {
+    testWidgets('should show correct screen for map tab index', (tester) async {
       await tester.pumpWidget(createWidgetUnderTest(initialLocation: '/map'));
       await tester.pumpAndSettle();
 
       expect(find.byType(MapStoryScreen), findsOneWidget);
     });
 
-    testWidgets('Should show correct screen for upload tab index', (
+    testWidgets('should show correct screen for upload tab index', (
       tester,
     ) async {
       await tester.pumpWidget(
@@ -309,7 +309,7 @@ void main() {
       expect(find.byType(UploadStoryScreen), findsOneWidget);
     });
 
-    testWidgets('Should show correct screen for settings tab index', (
+    testWidgets('should show correct screen for settings tab index', (
       tester,
     ) async {
       await tester.pumpWidget(
@@ -334,7 +334,7 @@ void main() {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
     });
 
-    testWidgets('Should able to open and close story detail screen', (
+    testWidgets('should able to open and close story detail screen', (
       tester,
     ) async {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
@@ -378,7 +378,7 @@ void main() {
       expect(find.byType(HomeScreen), findsOneWidget);
     });
 
-    testWidgets('Should able to open and close story detail dialoh', (
+    testWidgets('should able to open and close story detail dialoh', (
       tester,
     ) async {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
@@ -423,7 +423,7 @@ void main() {
     });
 
     testWidgets(
-      'Should redirect to map story detail when story is selected in map screen',
+      'should redirect to map story detail when story is selected in map screen',
       (tester) async {
         when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
         when(() => mockAuthProvider.isLoggedIn).thenReturn(true);
@@ -445,7 +445,7 @@ void main() {
       },
     );
 
-    testWidgets('Should handle direct story access and show warning', (
+    testWidgets('should handle direct story access and show warning', (
       tester,
     ) async {
       when(() => mockAppProvider.selectedStory).thenReturn(null);
@@ -466,7 +466,7 @@ void main() {
       expect(find.byType(HomeScreen), findsOneWidget);
     });
 
-    testWidgets('Should redirect back from detail when story is closed', (
+    testWidgets('should redirect back from detail when story is closed', (
       tester,
     ) async {
       // since the app does not support direct access to story detail
@@ -481,7 +481,7 @@ void main() {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
     });
 
-    testWidgets('Should show upgrade dialog when isUpDialogOpen is true', (
+    testWidgets('should show upgrade dialog when isUpDialogOpen is true', (
       tester,
     ) async {
       when(() => mockAppProvider.isUpDialogOpen).thenReturn(true);
@@ -495,7 +495,7 @@ void main() {
     });
 
     testWidgets(
-      'Should show full screen map when isUploadFullScreenMap is true',
+      'should show full screen map when isUploadFullScreenMap is true',
       (tester) async {
         when(() => mockAppProvider.isUploadFullScreenMap).thenReturn(true);
 
@@ -621,7 +621,7 @@ void main() {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
     });
 
-    testWidgets('Should show 404 screen for invalid routes', (tester) async {
+    testWidgets('should show 404 screen for invalid routes', (tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
@@ -643,7 +643,7 @@ void main() {
       );
     });
 
-    testWidgets('Should handle trailing slash in paths', (tester) async {
+    testWidgets('should handle trailing slash in paths', (tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
@@ -661,7 +661,7 @@ void main() {
       when(() => mockAuthProvider.isLoggedIn).thenReturn(true);
     });
 
-    testWidgets('Should show logout confirmation dialog', (tester) async {
+    testWidgets('should show logout confirmation dialog', (tester) async {
       when(() => mockAppProvider.isDialogLogOutOpen).thenReturn(true);
 
       await tester.pumpWidget(createWidgetUnderTest(initialLocation: '/'));
