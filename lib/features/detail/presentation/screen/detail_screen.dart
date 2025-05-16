@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/utils/helper.dart';
+import 'package:storyzz/features/detail/presentation/widgets/detail_image.dart';
 import 'package:storyzz/features/detail/presentation/widgets/location_section.dart';
 
 /// A full-screen view that displays the details of a story including:
@@ -53,38 +54,7 @@ class StoryDetailScreen extends StatelessWidget {
                   minHeight: 200,
                   minWidth: double.infinity,
                 ),
-                child: Image.network(
-                  story.photoUrl,
-                  fit: BoxFit.contain,
-                  width: double.infinity,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Container(
-                      constraints: BoxConstraints(minHeight: 350),
-                      color: Colors.grey[200],
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          value:
-                              loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null,
-                        ),
-                      ),
-                    );
-                  },
-                  errorBuilder:
-                      (context, error, stackTrace) => Container(
-                        color: Colors.grey[300],
-                        child: Center(
-                          child: Icon(
-                            Icons.broken_image,
-                            size: 64,
-                            color: Colors.grey[400],
-                          ),
-                        ),
-                      ),
-                ),
+                child: DetailImage(photoUrl: story.photoUrl),
               ),
             ),
 

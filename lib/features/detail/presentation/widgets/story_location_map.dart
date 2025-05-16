@@ -80,6 +80,7 @@ class _StoryLocationMapState extends State<StoryLocationMap> {
             borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
           ),
           child: Listener(
+            key: const Key('map_listener'),
             onPointerDown: (_) => FocusScope.of(context).unfocus(),
             child:
                 context

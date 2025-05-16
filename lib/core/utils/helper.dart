@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Converts a [DateTime] object to a localized string format.
 ///
@@ -51,4 +52,13 @@ String getTimeDifference(BuildContext context, DateTime createdAt) {
     timeAgo = localizations.just_now;
   }
   return timeAgo;
+}
+
+/// Opens a URL in the default web browser.
+/// If the URL cannot be launched, an exception is thrown.
+Future<void> openUrl(String urlString) async {
+  final Uri uri = Uri.parse(urlString);
+  if (!await launchUrl(uri)) {
+    throw Exception('Could not launch $urlString');
+  }
 }
