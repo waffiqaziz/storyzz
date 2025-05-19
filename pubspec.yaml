@@ -40,7 +40,7 @@ dependencies:
   image: ^4.5.4
 
   # location
-  google_maps_flutter: ^2.12.1
+  google_maps_flutter: ^2.12.2
   google_maps_flutter_web: ^0.5.12
   google_maps_flutter_android: ^2.16.1
   geolocator: ^14.0.0
