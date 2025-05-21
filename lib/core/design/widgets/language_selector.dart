@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
+import 'package:storyzz/core/providers/settings_provider.dart';
 
 /// A widget that allows users to select a language.
 ///
@@ -14,13 +15,11 @@ import 'package:storyzz/core/providers/app_provider.dart';
 /// - [currentLanguageCode] indicates the currently selected language.
 /// - [isCompact] toggles between dialog and dropdown presentation.
 class LanguageSelector extends StatelessWidget {
-  final Function(String) onChanged;
   final String currentLanguageCode;
   final bool isCompact;
 
   const LanguageSelector({
     super.key,
-    required this.onChanged,
     required this.currentLanguageCode,
     this.isCompact = false,
   });
@@ -53,6 +52,8 @@ class LanguageSelector extends StatelessWidget {
     BuildContext context,
     AppLocalizations localizations,
   ) {
+    final settingsProvider = context.read<SettingsProvider>();
+
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
         isExpanded: true,
@@ -101,7 +102,7 @@ class LanguageSelector extends StatelessWidget {
         value: currentLanguageCode,
         onChanged: (value) {
           if (value != null) {
-            onChanged(value);
+            settingsProvider.setLocale(value);
           }
         },
         buttonStyleData: ButtonStyleData(

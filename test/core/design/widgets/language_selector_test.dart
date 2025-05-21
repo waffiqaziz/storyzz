@@ -7,33 +7,38 @@ import 'package:provider/provider.dart';
 import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
+import 'package:storyzz/core/providers/settings_provider.dart';
 
 import '../../../tetsutils/mock.dart';
 
 void main() {
   late MockAppProvider mockAppProvider;
+  late MockSettingsProvider mockSettingsProvider;
 
-  Widget wrapWithMaterialApp({
-    required Widget child,
-    required AppProvider provider,
-  }) {
-    return ChangeNotifierProvider<AppProvider>.value(
-      value: provider,
-      child: MaterialApp(
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
+  Widget wrapWithMaterialApp(Widget child) {
+    return MaterialApp(
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('en'), Locale('id')],
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<AppProvider>.value(value: mockAppProvider),
+          ChangeNotifierProvider<SettingsProvider>.value(
+            value: mockSettingsProvider,
+          ),
         ],
-        supportedLocales: const [Locale('en'), Locale('id')],
-        home: Scaffold(body: child),
+        child: Scaffold(body: Center(child: child)),
       ),
     );
   }
 
   setUp(() {
     mockAppProvider = MockAppProvider();
+    mockSettingsProvider = MockSettingsProvider();
   });
 
   group('LanguageSelector', () {
@@ -44,12 +49,7 @@ void main() {
 
       await tester.pumpWidget(
         wrapWithMaterialApp(
-          provider: mockAppProvider,
-          child: LanguageSelector(
-            currentLanguageCode: 'en',
-            onChanged: (_) {},
-            isCompact: true,
-          ),
+          LanguageSelector(currentLanguageCode: 'en', isCompact: true),
         ),
       );
 
@@ -63,16 +63,14 @@ void main() {
     testWidgets(
       'full version shows dropdown and triggers onChanged on selection',
       (tester) async {
-        String? selectedLanguage;
+        when(() => mockAppProvider.openLanguageDialog()).thenAnswer((_) {});
+        when(
+          () => mockSettingsProvider.setLocale(any()),
+        ).thenAnswer((_) async {});
 
         await tester.pumpWidget(
           wrapWithMaterialApp(
-            provider: mockAppProvider,
-            child: LanguageSelector(
-              currentLanguageCode: 'en',
-              onChanged: (lang) => selectedLanguage = lang,
-              isCompact: false,
-            ),
+            LanguageSelector(currentLanguageCode: 'en', isCompact: false),
           ),
         );
 
@@ -82,7 +80,7 @@ void main() {
         await tester.tap(find.text('Indonesian').last); // Localized string
         await tester.pumpAndSettle();
 
-        expect(selectedLanguage, 'id');
+        verify(() => mockSettingsProvider.setLocale(any())).called(1);
       },
     );
   });
