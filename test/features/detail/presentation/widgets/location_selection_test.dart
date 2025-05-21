@@ -101,48 +101,44 @@ void main() {
       expect(addressSection.storyId, 'test-story-id');
     });
 
-    testWidgets(
-      'should renders StoryLocationMap with correct props and key',
-      (WidgetTester tester) async {
-        const testKeyPrefix = 'custom';
-        await tester.pumpWidget(
-          createWidgetUnderTest(mapKeyPrefix: testKeyPrefix),
-        );
-        await tester.pumpAndSettle();
+    testWidgets('should renders StoryLocationMap with correct props and key', (
+      WidgetTester tester,
+    ) async {
+      const testKeyPrefix = 'custom';
+      await tester.pumpWidget(
+        createWidgetUnderTest(mapKeyPrefix: testKeyPrefix),
+      );
+      await tester.pumpAndSettle();
 
-        final mapFinder = find.byType(StoryLocationMap);
-        expect(mapFinder, findsOneWidget);
+      final mapFinder = find.byType(StoryLocationMap);
+      expect(mapFinder, findsOneWidget);
 
-        final StoryLocationMap map = tester.widget(mapFinder);
-        expect(map.latitude, 37.7749);
-        expect(map.longitude, -122.4194);
-        expect(map.height, 400.0);
-        expect(map.controlsEnabled, true);
-        expect(map.title, 'Test Story');
-        expect(map.location, '123 Test Street, City, Country');
+      final StoryLocationMap map = tester.widget(mapFinder);
+      expect(map.latitude, 37.7749);
+      expect(map.longitude, -122.4194);
+      expect(map.height, 400.0);
+      expect(map.controlsEnabled, true);
+      expect(map.title, 'Test Story');
+      expect(map.location, '123 Test Street, City, Country');
 
-        expect(
-          (map.key as ValueKey).value,
-          equals('$testKeyPrefix-location-map-test-story-id'),
-        );
-      },
-    );
+      expect(
+        (map.key as ValueKey).value,
+        equals('$testKeyPrefix-location-map-test-story-id'),
+      );
+    });
 
-    testWidgets(
-      'should passes mapControlsEnabled to StoryLocationMap',
-      (WidgetTester tester) async {
-        await tester.pumpWidget(
-          createWidgetUnderTest(mapControlsEnabled: false),
-        );
-        await tester.pumpAndSettle();
+    testWidgets('should passes mapControlsEnabled to StoryLocationMap', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(createWidgetUnderTest(mapControlsEnabled: false));
+      await tester.pumpAndSettle();
 
-        final mapFinder = find.byType(StoryLocationMap);
-        expect(mapFinder, findsOneWidget);
+      final mapFinder = find.byType(StoryLocationMap);
+      expect(mapFinder, findsOneWidget);
 
-        final StoryLocationMap map = tester.widget(mapFinder);
-        expect(map.controlsEnabled, false);
-      },
-    );
+      final StoryLocationMap map = tester.widget(mapFinder);
+      expect(map.controlsEnabled, false);
+    });
 
     testWidgets('should renders divider and spacing', (
       WidgetTester tester,
@@ -153,5 +149,25 @@ void main() {
       expect(find.byType(Divider), findsOneWidget);
       expect(find.byType(SizedBox), findsAtLeastNWidgets(2));
     });
+
+    testWidgets(
+      'should fallback to address_not_available when state is initial',
+      (WidgetTester tester) async {
+        when(
+          () => mockAddressProvider.state,
+        ).thenReturn(const AddressLoadState.initial());
+
+        await tester.pumpWidget(createWidgetUnderTest());
+        await tester.pumpAndSettle();
+
+        final StoryLocationMap map = tester.widget(
+          find.byType(StoryLocationMap),
+        );
+        expect(
+          map.location,
+          'Address not available',
+        ); // default English fallback
+      },
+    );
   });
 }

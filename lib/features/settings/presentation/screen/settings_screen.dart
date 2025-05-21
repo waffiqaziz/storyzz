@@ -73,7 +73,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   trailing: LanguageSelector(
                     currentLanguageCode: provider.locale.languageCode,
-                    onChanged: (code) => provider.setLocale(code),
                     isCompact: false, // dropdown
                   ),
                 ),

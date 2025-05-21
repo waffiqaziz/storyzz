@@ -47,33 +47,34 @@ class _LoginScreenState extends State<LoginScreen> {
         user.email!,
         user.password!,
       );
-      if (result.data != null) {
-        if (mounted) {
-          if (mounted) {
-            context.read<AuthProvider>().isLogged();
-            // Determine if the screen is wide enough to display the NavigationRail
-            bool isWideScreen =
-                MediaQuery.of(context).size.width >= tabletBreakpoint;
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                margin:
-                    isWideScreen
-                        ? EdgeInsets.only(bottom: 16, left: 96, right: 16)
-                        : EdgeInsets.only(bottom: 16, left: 16, right: 16),
-                content: Text(
-                  result.message ?? AppLocalizations.of(context)!.login_succes,
-                ),
-              ),
-            );
-          }
+      if (result.data != null && !result.data!.error) {
+        if (mounted) {
+          context.read<AuthProvider>().isLogged();
+          // Determine if the screen is wide enough to display the NavigationRail
+          bool isWideScreen =
+              MediaQuery.of(context).size.width >= tabletBreakpoint;
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              margin:
+                  isWideScreen
+                      ? EdgeInsets.only(bottom: 16, left: 96, right: 16)
+                      : EdgeInsets.only(bottom: 16, left: 16, right: 16),
+              content: Text(AppLocalizations.of(context)!.login_succes),
+            ),
+          );
         }
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
+              behavior: SnackBarBehavior.floating,
               content: Text(
-                result.message ?? AppLocalizations.of(context)!.login_failed,
+                result.message ??
+                    result.data?.message ??
+                    AppLocalizations.of(context)!.login_failed,
                 style: TextStyle(color: Colors.black),
               ),
               backgroundColor: Theme.of(context).colorScheme.error,
@@ -101,7 +102,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.only(right: 8.0),
                       child: LanguageSelector(
                         currentLanguageCode: provider.locale.languageCode,
-                        onChanged: (code) => provider.setLocale(code),
                         isCompact: true,
                       ),
                     ),
@@ -192,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (value == null || value.isEmpty) {
                                 return localizations.enter_password;
                               }
-                              if (value.length < 6) {
+                              if (value.length < 8) {
                                 return localizations.password_minimum;
                               }
                               return null;

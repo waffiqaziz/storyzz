@@ -65,7 +65,9 @@ void main() {
       );
     });
 
-    testWidgets('should renders loading state correctly', (WidgetTester tester) async {
+    testWidgets('should renders loading state correctly', (
+      WidgetTester tester,
+    ) async {
       when(
         () => mockAddressProvider.state,
       ).thenReturn(AddressLoadStateLoading());
@@ -92,7 +94,9 @@ void main() {
       expect(find.textContaining('Longitude'), findsOneWidget);
     });
 
-    testWidgets('should renders error state correctly', (WidgetTester tester) async {
+    testWidgets('should renders error state correctly', (
+      WidgetTester tester,
+    ) async {
       when(
         () => mockAddressProvider.state,
       ).thenReturn(AddressLoadStateError("error"));
