@@ -26,6 +26,7 @@ story browsing, and creation capabilities with a modern, responsive UI that
 supports both mobile and desktop platforms. Currently build for mobile and web platform.
 
 [![codecov](https://codecov.io/github/waffiqaziz/storyzz/graph/badge.svg?token=KYFE69ZHVN)](https://codecov.io/github/waffiqaziz/storyzz)
+[![Flutter Version](https://img.shields.io/badge/flutter-v3.29.2-blue?logo=flutter&logoColor=white)](https://github.com/flutter/flutter/blob/main/CHANGELOG.md#3292)
 
 ## ✨ Features
 
@@ -63,7 +64,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ### Development Step by Step
 
-To development the project, please read [here](./doc/development.md).
+To develop the project, please read [here](./doc/development.md).
 
 ## 📚 API Documentation
 
