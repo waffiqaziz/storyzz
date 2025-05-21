@@ -31,6 +31,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
+          flutter-version: 3.29.2
           cache: true
 
       - name: Install dependencies
@@ -70,6 +71,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
+          flutter-version: 3.29.2
           cache: true
 
       - name: Install dependencies
@@ -135,6 +137,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
+          flutter-version: 3.29.2
           cache: true
       
       - name: Flutter version
@@ -190,6 +193,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
+          flutter-version: 3.29.2
           cache: true
       
       - name: Flutter version
@@ -246,6 +250,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
+          flutter-version: 3.29.2
           cache: true
       
       - name: Install dependencies & generate files
@@ -292,6 +297,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
+          flutter-version: 3.29.2
           cache: true
           
       - name: Flutter version
@@ -337,6 +343,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
+          flutter-version: 3.29.2
           cache: true
           
       - name: Flutter version
