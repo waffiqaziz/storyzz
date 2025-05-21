@@ -6,7 +6,9 @@ This guide will help you set up the Storyzz project for local development.
 
 - [Git](https://git-scm.com/) (latest stable version)
 - [Flutter SDK](https://docs.flutter.dev/get-started/install)
-- An IDE (VS Code, Android Studio, etc.)
+- [Flutter Version Management (FVM)](https://fvm.app/)
+- An IDE ([VS Code](https://code.visualstudio.com/download),
+[Android Studio](https://developer.android.com/studio), etc.)
 
 ## Setup Steps
 
@@ -17,19 +19,36 @@ git clone https://github.com/waffiqaziz/storyzz.git
 cd storyzz
 ```
 
-### 2. Install dependencies
+### 2. Flutter Version Management (FVM)
+
+This project uses FVM (Flutter Version Management) to ensure consistency across
+development environments.
+
+> **Flutter Version: 3.29.2** <br>
+> We are currently using Flutter 3.29.2 due to a dependency conflict with the
+latest Flutter 3.32 release. Until the issue is resolved, please use this
+version to avoid build or dependency issues.
+
+Install and use the required Flutter version via FVM:
+
+```bash
+fvm install 3.29.2
+fvm use 3.29.2
+```
+
+### 3. Install dependencies
 
 ```bash
 flutter pub get
 ```
 
-### 3. Generate required files
+### 4. Generate required files
 
 ```bash
 dart run build_runner build --delete-conflicting-outputs
 ```
 
-### 4. Configure API Keys
+### 5. Configure API Keys
 
 This project requires two API keys:
 
