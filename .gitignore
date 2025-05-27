@@ -67,3 +67,5 @@ coverage/
 
 # FVM Version Cache
 .fvm/
+TEST-report.xml
+test.jsonl
