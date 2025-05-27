@@ -31,7 +31,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
-          flutter-version: 3.29.2
+          flutter-version: 3.32.0
           cache: true
 
       - name: Install dependencies
@@ -71,7 +71,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
-          flutter-version: 3.29.2
+          flutter-version: 3.32.0
           cache: true
 
       - name: Install dependencies
@@ -110,8 +110,8 @@ jobs:
       
       - name: Generate test report .xml
         run: |
-          dart pub global activate junitreport
-          flutter test --coverage --reporter json | tojunit > TEST-report.xml
+          flutter test --coverage --reporter json > test.jsonl
+          dart pub global run flutter_junitreport:tojunit --input test.jsonl --output TEST-report.xml
 
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}
@@ -137,7 +137,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
-          flutter-version: 3.29.2
+          flutter-version: 3.32.0
           cache: true
       
       - name: Flutter version
@@ -193,7 +193,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
-          flutter-version: 3.29.2
+          flutter-version: 3.32.0
           cache: true
       
       - name: Flutter version
@@ -250,7 +250,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
-          flutter-version: 3.29.2
+          flutter-version: 3.32.0
           cache: true
       
       - name: Install dependencies & generate files
@@ -297,7 +297,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
-          flutter-version: 3.29.2
+          flutter-version: 3.32.0
           cache: true
           
       - name: Flutter version
@@ -343,7 +343,7 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
           channel: stable
-          flutter-version: 3.29.2
+          flutter-version: 3.32.0
           cache: true
           
       - name: Flutter version

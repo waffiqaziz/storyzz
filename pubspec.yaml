@@ -13,7 +13,7 @@ dependencies:
   # localization
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0
+  intl: ^0.20.2
 
   shared_preferences: ^2.5.3
 
@@ -60,7 +60,13 @@ dependencies:
 
   go_router: ^15.1.2
 
-  junitreporter_flutter_3x: ^2.0.6
+  flutter_junitreport:
+    git:
+      url: https://github.com/waffiqaziz/flutter-junitreport.git
+      ref: main
+
+executables:
+  tojunit:
 
 dev_dependencies:
   flutter_test:
