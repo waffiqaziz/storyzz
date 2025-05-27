@@ -24,16 +24,11 @@ cd storyzz
 This project uses FVM (Flutter Version Management) to ensure consistency across
 development environments.
 
-> **Flutter Version: 3.29.2** <br>
-> We are currently using Flutter 3.29.2 due to a dependency conflict with the
-latest Flutter 3.32 release. Until the issue is resolved, please use this
-version to avoid build or dependency issues.
-
-Install and use the required Flutter version via FVM:
+Install and use the required Flutter version `3.32.0` via FVM:
 
 ```bash
-fvm install 3.29.2
-fvm use 3.29.2
+fvm install 3.32.0
+fvm use 3.32.0
 ```
 
 ### 3. Install dependencies
