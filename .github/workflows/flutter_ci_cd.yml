@@ -111,6 +111,7 @@ jobs:
       - name: Generate test report .xml
         run: |
           flutter test --coverage --reporter json > test.jsonl
+          dart pub global activate --source git https://github.com/waffiqaziz/flutter-junitreport.git
           dart pub global run flutter_junitreport:tojunit --input test.jsonl --output TEST-report.xml
 
       - name: Upload test results to Codecov
