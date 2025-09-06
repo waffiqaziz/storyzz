@@ -15,6 +15,9 @@ on:
       - "*.md"
   workflow_dispatch: 
 
+env:
+  FLUTTER_VERSION: 3.35.2
+
 permissions:
   checks: write
   contents: read
@@ -31,7 +34,7 @@ jobs:
         uses: subosito/flutter-action@395322a6cded4e9ed503aebd4cc1965625f8e59a
         with:
           channel: stable
-          flutter-version: 3.32.0
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
 
       - name: Install dependencies
@@ -71,7 +74,7 @@ jobs:
         uses: subosito/flutter-action@395322a6cded4e9ed503aebd4cc1965625f8e59a
         with:
           channel: stable
-          flutter-version: 3.32.0
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
 
       - name: Install dependencies
@@ -138,7 +141,7 @@ jobs:
         uses: subosito/flutter-action@395322a6cded4e9ed503aebd4cc1965625f8e59a
         with:
           channel: stable
-          flutter-version: 3.32.0
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
       
       - name: Flutter version
@@ -194,7 +197,7 @@ jobs:
         uses: subosito/flutter-action@395322a6cded4e9ed503aebd4cc1965625f8e59a
         with:
           channel: stable
-          flutter-version: 3.32.0
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
       
       - name: Flutter version
@@ -251,7 +254,7 @@ jobs:
         uses: subosito/flutter-action@395322a6cded4e9ed503aebd4cc1965625f8e59a
         with:
           channel: stable
-          flutter-version: 3.32.0
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
       
       - name: Install dependencies & generate files
@@ -298,7 +301,7 @@ jobs:
         uses: subosito/flutter-action@395322a6cded4e9ed503aebd4cc1965625f8e59a
         with:
           channel: stable
-          flutter-version: 3.32.0
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
           
       - name: Flutter version
@@ -344,7 +347,7 @@ jobs:
         uses: subosito/flutter-action@395322a6cded4e9ed503aebd4cc1965625f8e59a
         with:
           channel: stable
-          flutter-version: 3.32.0
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
           
       - name: Flutter version
