@@ -66,6 +66,7 @@ dependencies:
     git:
       url: https://github.com/waffiqaziz/flutter-junitreport.git
       ref: main
+    version: 2.0.7-dev.2
 
 executables:
   tojunit:
