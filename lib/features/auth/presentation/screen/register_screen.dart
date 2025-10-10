@@ -91,14 +91,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
             backgroundColor: Colors.transparent,
             actions: [
               Consumer<SettingsProvider>(
-                builder:
-                    (context, provider, _) => Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
+                builder: (context, provider, _) => Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Opacity(
+                    opacity: authProvider.isLoadingRegister ? 0.4 : 1.0,
+                    child: IgnorePointer(
+                      ignoring: authProvider.isLoadingRegister,
                       child: LanguageSelector(
                         currentLanguageCode: provider.locale.languageCode,
                         isCompact: true,
                       ),
                     ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -240,23 +245,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                         // register Button
                         ElevatedButton(
-                          onPressed:
-                              authProvider.isLoadingRegister
-                                  ? null
-                                  : _handleRegister,
-                          child:
-                              authProvider.isLoadingRegister
-                                  ? SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white,
-                                      ),
+                          onPressed: authProvider.isLoadingRegister
+                              ? null
+                              : _handleRegister,
+                          child: authProvider.isLoadingRegister
+                              ? SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white,
                                     ),
-                                  )
-                                  : Text(localizations.register_upper),
+                                  ),
+                                )
+                              : Text(localizations.register_upper),
                         ),
                         const SizedBox(height: 24),
 
@@ -273,9 +276,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             TextButton(
-                              onPressed: () {
-                                context.read<AppProvider>().openLogin();
-                              },
+                              onPressed: authProvider.isLoadingRegister
+                                  ? null
+                                  : () {
+                                      context.read<AppProvider>().openLogin();
+                                    },
                               style: TextButton.styleFrom(
                                 padding: EdgeInsets.all(8),
                                 minimumSize: Size(50, 30),

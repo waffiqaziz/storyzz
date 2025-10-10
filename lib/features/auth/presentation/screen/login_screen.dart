@@ -58,10 +58,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
-              margin:
-                  isWideScreen
-                      ? EdgeInsets.only(bottom: 16, left: 96, right: 16)
-                      : EdgeInsets.only(bottom: 16, left: 16, right: 16),
+              margin: isWideScreen
+                  ? EdgeInsets.only(bottom: 16, left: 96, right: 16)
+                  : EdgeInsets.only(bottom: 16, left: 16, right: 16),
               content: Text(AppLocalizations.of(context)!.login_succes),
             ),
           );
@@ -97,14 +96,19 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: Colors.transparent,
             actions: [
               Consumer<SettingsProvider>(
-                builder:
-                    (context, provider, _) => Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
+                builder: (context, provider, _) => Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Opacity(
+                    opacity: authProvider.isLoadingLogin ? 0.4 : 1.0,
+                    child: IgnorePointer(
+                      ignoring: authProvider.isLoadingLogin,
                       child: LanguageSelector(
                         currentLanguageCode: provider.locale.languageCode,
                         isCompact: true,
                       ),
                     ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -205,20 +209,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                            onPressed:
-                                authProvider.isLoadingLogin
-                                    ? null
-                                    : () {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            localizations.only_for_ui,
-                                          ),
+                            onPressed: authProvider.isLoadingLogin
+                                ? null
+                                : () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          localizations.only_for_ui,
                                         ),
-                                      );
-                                    },
+                                      ),
+                                    );
+                                  },
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.symmetric(horizontal: 8),
                               minimumSize: Size(50, 30),
@@ -231,21 +232,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         // login button
                         ElevatedButton(
-                          onPressed:
-                              authProvider.isLoadingLogin ? null : _handleLogin,
-                          child:
-                              authProvider.isLoadingLogin
-                                  ? SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white,
-                                      ),
+                          onPressed: authProvider.isLoadingLogin
+                              ? null
+                              : _handleLogin,
+                          child: authProvider.isLoadingLogin
+                              ? SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white,
                                     ),
-                                  )
-                                  : Text(localizations.login_upper),
+                                  ),
+                                )
+                              : Text(localizations.login_upper),
                         ),
                         const SizedBox(height: 24),
 
@@ -261,11 +262,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             TextButton(
-                              onPressed: () {
-                                context.read<AppProvider>().openRegister();
-                              },
+                              // Disable button when loading
+                              onPressed: !authProvider.isLoadingLogin
+                                  ? () {
+                                      context
+                                          .read<AppProvider>()
+                                          .openRegister();
+                                    }
+                                  : null,
                               style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero, // Reduce padding
+                                padding: EdgeInsets.zero,
                                 minimumSize: Size(40, 30),
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
