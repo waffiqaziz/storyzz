@@ -77,10 +77,9 @@ class MapService {
             position: position,
             infoWindow: InfoWindow(
               title: story.name,
-              snippet:
-                  story.description.length > 50
-                      ? '${story.description.substring(0, 50)}...'
-                      : story.description,
+              snippet: story.description.length > 50
+                  ? '${story.description.substring(0, 50)}...'
+                  : story.description,
             ),
             onTap: () => onStoryTap(position),
           ),

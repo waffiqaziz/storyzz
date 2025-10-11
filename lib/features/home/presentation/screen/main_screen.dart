@@ -75,39 +75,38 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: AnimatedSwitcher(
         duration: const Duration(milliseconds: 800),
-        child:
-            _isMobile
-                ? content
-                : Row(
-                  key: const ValueKey('desktop_layout'),
-                  children: [
-                    NavigationRail(
-                      selectedIndex: widget.currentIndex,
-                      onDestinationSelected: widget.onTabChanged,
-                      labelType: NavigationRailLabelType.all,
-                      destinations: [
-                        NavigationRailDestination(
-                          icon: const Icon(Icons.home_filled),
-                          label: Text(AppLocalizations.of(context)!.home),
-                        ),
-                        NavigationRailDestination(
-                          icon: const Icon(Icons.map_rounded),
-                          label: Text(AppLocalizations.of(context)!.map),
-                        ),
-                        NavigationRailDestination(
-                          icon: const Icon(Icons.add_box_outlined),
-                          label: Text(AppLocalizations.of(context)!.upload),
-                        ),
-                        NavigationRailDestination(
-                          icon: const Icon(Icons.settings_rounded),
-                          label: Text(AppLocalizations.of(context)!.settings),
-                        ),
-                      ],
-                    ),
-                    const VerticalDivider(width: 1),
-                    Expanded(child: content),
-                  ],
-                ),
+        child: _isMobile
+            ? content
+            : Row(
+                key: const ValueKey('desktop_layout'),
+                children: [
+                  NavigationRail(
+                    selectedIndex: widget.currentIndex,
+                    onDestinationSelected: widget.onTabChanged,
+                    labelType: NavigationRailLabelType.all,
+                    destinations: [
+                      NavigationRailDestination(
+                        icon: const Icon(Icons.home_filled),
+                        label: Text(AppLocalizations.of(context)!.home),
+                      ),
+                      NavigationRailDestination(
+                        icon: const Icon(Icons.map_rounded),
+                        label: Text(AppLocalizations.of(context)!.map),
+                      ),
+                      NavigationRailDestination(
+                        icon: const Icon(Icons.add_box_outlined),
+                        label: Text(AppLocalizations.of(context)!.upload),
+                      ),
+                      NavigationRailDestination(
+                        icon: const Icon(Icons.settings_rounded),
+                        label: Text(AppLocalizations.of(context)!.settings),
+                      ),
+                    ],
+                  ),
+                  const VerticalDivider(width: 1),
+                  Expanded(child: content),
+                ],
+              ),
       ),
       bottomNavigationBar: AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
@@ -120,36 +119,35 @@ class _MainScreenState extends State<MainScreen> {
             child: FadeTransition(opacity: animation, child: child),
           );
         },
-        child:
-            _isMobile
-                ? NavigationBar(
-                  key: const ValueKey('bottom_nav'),
-                  selectedIndex: widget.currentIndex,
-                  onDestinationSelected: widget.onTabChanged,
-                  destinations: [
-                    NavigationDestination(
-                      icon: const Icon(Icons.home_filled),
-                      label: AppLocalizations.of(context)!.home,
-                      tooltip: AppLocalizations.of(context)!.home,
-                    ),
-                    NavigationDestination(
-                      icon: const Icon(Icons.map_rounded),
-                      label: AppLocalizations.of(context)!.map,
-                      tooltip: AppLocalizations.of(context)!.map,
-                    ),
-                    NavigationDestination(
-                      icon: const Icon(Icons.add_box_outlined),
-                      label: AppLocalizations.of(context)!.upload,
-                      tooltip: AppLocalizations.of(context)!.upload,
-                    ),
-                    NavigationDestination(
-                      icon: const Icon(Icons.settings_rounded),
-                      label: AppLocalizations.of(context)!.settings,
-                      tooltip: AppLocalizations.of(context)!.settings,
-                    ),
-                  ],
-                )
-                : const SizedBox.shrink(),
+        child: _isMobile
+            ? NavigationBar(
+                key: const ValueKey('bottom_nav'),
+                selectedIndex: widget.currentIndex,
+                onDestinationSelected: widget.onTabChanged,
+                destinations: [
+                  NavigationDestination(
+                    icon: const Icon(Icons.home_filled),
+                    label: AppLocalizations.of(context)!.home,
+                    tooltip: AppLocalizations.of(context)!.home,
+                  ),
+                  NavigationDestination(
+                    icon: const Icon(Icons.map_rounded),
+                    label: AppLocalizations.of(context)!.map,
+                    tooltip: AppLocalizations.of(context)!.map,
+                  ),
+                  NavigationDestination(
+                    icon: const Icon(Icons.add_box_outlined),
+                    label: AppLocalizations.of(context)!.upload,
+                    tooltip: AppLocalizations.of(context)!.upload,
+                  ),
+                  NavigationDestination(
+                    icon: const Icon(Icons.settings_rounded),
+                    label: AppLocalizations.of(context)!.settings,
+                    tooltip: AppLocalizations.of(context)!.settings,
+                  ),
+                ],
+              )
+            : const SizedBox.shrink(),
       ),
     );
   }

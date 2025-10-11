@@ -31,16 +31,15 @@ class WebUtils {
       final isChromeMobile = isMobileChrome();
 
       // Handling for Chrome on mobile
-      final videoConstraints =
-          isChromeMobile
-              ? {
-                'facingMode': {
-                  'exact': 'environment', // Force to use back camera
-                },
-                'width': {'ideal': 720, 'max': 1280},
-                'height': {'ideal': 480, 'max': 720},
-              }
-              : true;
+      final videoConstraints = isChromeMobile
+          ? {
+              'facingMode': {
+                'exact': 'environment', // Force to use back camera
+              },
+              'width': {'ideal': 720, 'max': 1280},
+              'height': {'ideal': 480, 'max': 720},
+            }
+          : true;
 
       // Request camera permission with specific constraints
       await html.window.navigator.mediaDevices!.getUserMedia({
@@ -58,10 +57,9 @@ class WebUtils {
   Future<void> useFallbackCameraInput(BuildContext context) async {
     try {
       // Create file input with camera capture attribute
-      final inputElement =
-          html.FileUploadInputElement()
-            ..accept = 'image/*'
-            ..setAttribute('capture', 'environment');
+      final inputElement = html.FileUploadInputElement()
+        ..accept = 'image/*'
+        ..setAttribute('capture', 'environment');
 
       // Add to DOM temporarily
       html.document.body!.append(inputElement);

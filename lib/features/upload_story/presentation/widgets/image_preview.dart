@@ -41,10 +41,9 @@ class ImagePreview extends StatelessWidget {
             children: [
               // camera button
               ElevatedButton.icon(
-                onPressed:
-                    uploadProvider.isRequestingPermission
-                        ? null
-                        : onCameraPressed,
+                onPressed: uploadProvider.isRequestingPermission
+                    ? null
+                    : onCameraPressed,
                 icon: Icon(
                   Icons.photo_camera,
                   color: Theme.of(context).colorScheme.onTertiary,
@@ -115,10 +114,9 @@ class ImagePreview extends StatelessWidget {
         ],
       ),
       clipBehavior: Clip.antiAlias,
-      child:
-          appService.getKIsWeb()
-              ? Image.network(imageFile!.path)
-              : Image.file(File(imageFile!.path)),
+      child: appService.getKIsWeb()
+          ? Image.network(imageFile!.path)
+          : Image.file(File(imageFile!.path)),
     );
   }
 }

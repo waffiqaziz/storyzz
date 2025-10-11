@@ -26,10 +26,9 @@ class AuthScreenTransition extends Page {
       reverseTransitionDuration: const Duration(milliseconds: 600),
       pageBuilder: (context, animation, secondaryAnimation) => child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final begin =
-            isForward
-                ? const Offset(1.0, 0.0) // register comes from right
-                : const Offset(-1.0, 0.0); // login comes from left
+        final begin = isForward
+            ? const Offset(1.0, 0.0) // register comes from right
+            : const Offset(-1.0, 0.0); // login comes from left
         const end = Offset.zero;
 
         // Use a custom curve for more natural animation

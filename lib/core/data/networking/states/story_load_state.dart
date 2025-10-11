@@ -18,8 +18,7 @@ class StoryLoadState with _$StoryLoadState {
   bool get isLoading => this is StoryLoadStateLoading;
   bool get isLoaded => this is StoryLoadStateLoaded;
   bool get isError => this is StoryLoadStateError;
-  String? get errorMessage =>
-      this is StoryLoadStateError
-          ? (this as StoryLoadStateError).message
-          : null;
+  String? get errorMessage => this is StoryLoadStateError
+      ? (this as StoryLoadStateError).message
+      : null;
 }
