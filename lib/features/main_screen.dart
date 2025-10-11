@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/utils/constants.dart';
+import 'package:storyzz/core/utils/tab_switcher';
 import 'package:storyzz/features/home/presentation/screen/home_screen.dart';
-import 'package:storyzz/features/home/presentation/transition/tab_switcher';
 import 'package:storyzz/features/map/presentation/screen/map_screen.dart';
 import 'package:storyzz/features/settings/presentation/screen/settings_screen.dart';
 import 'package:storyzz/features/upload_story/presentation/screen/upload_story_screen.dart';
