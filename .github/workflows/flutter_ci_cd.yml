@@ -50,7 +50,17 @@ jobs:
       - name: Create secrets.properties
         run: |
           echo "MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" > android/secrets.properties
-      
+
+      - name: Check Dart format
+        run: |
+          echo "Checking Dart code format..."
+          if ! dart format --output=none --set-exit-if-changed lib; then
+            echo ""
+            echo "Some Dart files are not properly formatted."
+            echo "Please run 'dart format lib' locally and commit the changes."
+            exit 1
+          fi
+
       - name: Analyze Dart code
         run: flutter analyze --no-fatal-infos
       
