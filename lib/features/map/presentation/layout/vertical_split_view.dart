@@ -44,10 +44,10 @@ class _VerticalSplitViewState extends State<VerticalSplitView>
   bool _isAnimating = false;
 
   /// Current width of the left pane based on [_ratio].
-  get _width1 => _ratio * _maxWidth;
+  double get _width1 => _ratio * _maxWidth;
 
   /// Current width of the right pane based on [_ratio].
-  get _width2 => (1 - _ratio) * _maxWidth;
+  double get _width2 => (1 - _ratio) * _maxWidth;
 
   @override
   void initState() {

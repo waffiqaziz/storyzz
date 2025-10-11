@@ -59,10 +59,9 @@ class _NotFoundScreenState extends State<NotFoundScreen>
                     child: child,
                   );
                 },
-                child:
-                    isDark
-                        ? _build404DarkMode(accentColor)
-                        : _build404LightMode(accentColor),
+                child: isDark
+                    ? _build404DarkMode(accentColor)
+                    : _build404LightMode(accentColor),
               ),
               const SizedBox(height: 40),
 
@@ -157,11 +156,10 @@ class _NotFoundScreenState extends State<NotFoundScreen>
           style: TextStyle(
             fontSize: 100,
             fontWeight: FontWeight.bold,
-            foreground:
-                Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 3
-                  ..color = accentColor,
+            foreground: Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 3
+              ..color = accentColor,
           ),
         ),
         Positioned(

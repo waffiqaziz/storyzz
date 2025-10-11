@@ -427,14 +427,12 @@ InputDecoration customInputDecoration({
 }) {
   return InputDecoration(
     labelText: label,
-    prefixIcon:
-        prefixIcon != null
-            ? Container(margin: prefixMargin, child: Icon(prefixIcon))
-            : null,
-    suffixIcon:
-        suffixIcon != null
-            ? Container(margin: suffixMargin, child: suffixIcon)
-            : null,
+    prefixIcon: prefixIcon != null
+        ? Container(margin: prefixMargin, child: Icon(prefixIcon))
+        : null,
+    suffixIcon: suffixIcon != null
+        ? Container(margin: suffixMargin, child: suffixIcon)
+        : null,
   );
 }
 

@@ -68,17 +68,15 @@ class HomeStoryCard extends StatelessWidget {
                                 child: CircularProgressIndicator(
                                   value:
                                       loadingProgress.expectedTotalBytes != null
-                                          ? loadingProgress
-                                                  .cumulativeBytesLoaded /
-                                              loadingProgress
-                                                  .expectedTotalBytes!
-                                          : null,
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                      : null,
                                 ),
                               ),
                             );
                           },
-                          errorBuilder:
-                              (context, error, stackTrace) => Container(
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
                                 color: Colors.grey[300],
                                 child: Center(
                                   child: Icon(

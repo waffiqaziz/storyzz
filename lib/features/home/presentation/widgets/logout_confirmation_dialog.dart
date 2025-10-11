@@ -61,8 +61,9 @@ class LogoutConfirmationDialog extends StatelessWidget {
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.redAccent,
-              foregroundColor:
-                  Theme.of(context).colorScheme.surfaceContainerLowest,
+              foregroundColor: Theme.of(
+                context,
+              ).colorScheme.surfaceContainerLowest,
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 2.0),

@@ -15,8 +15,8 @@ import 'package:storyzz/features/auth/presentation/transition/auth_screen_transi
 import 'package:storyzz/features/detail/presentation/screen/detail_dialog.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_screen.dart';
 import 'package:storyzz/features/home/presentation/screen/home_screen.dart';
-import 'package:storyzz/features/home/presentation/screen/main_screen.dart';
 import 'package:storyzz/features/home/presentation/widgets/logout_confirmation_dialog.dart';
+import 'package:storyzz/features/main_screen.dart';
 import 'package:storyzz/features/map/presentation/screen/map_screen.dart';
 import 'package:storyzz/features/notfound/presentation/screen/not_found_screen.dart';
 import 'package:storyzz/features/settings/presentation/screen/settings_screen.dart';

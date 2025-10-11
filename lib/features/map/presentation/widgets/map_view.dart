@@ -25,23 +25,23 @@ class MapView extends StatelessWidget {
     return context
             .mounted // to prevent error when navigating away from the page
         ? GoogleMap(
-          gestureRecognizers: {
-            Factory<OneSequenceGestureRecognizer>(
-              () => EagerGestureRecognizer(),
+            gestureRecognizers: {
+              Factory<OneSequenceGestureRecognizer>(
+                () => EagerGestureRecognizer(),
+              ),
+            },
+            style: isDark ? customStyleDark : customStyleLight,
+            mapType: mapProvider.selectedMapType,
+            markers: mapProvider.markers,
+            initialCameraPosition: const CameraPosition(
+              target: LatLng(-2.014380, 118.152180),
+              zoom: 4,
             ),
-          },
-          style: isDark ? customStyleDark : customStyleLight,
-          mapType: mapProvider.selectedMapType,
-          markers: mapProvider.markers,
-          initialCameraPosition: const CameraPosition(
-            target: LatLng(-2.014380, 118.152180),
-            zoom: 4,
-          ),
-          myLocationButtonEnabled: true,
-          zoomControlsEnabled: true,
-          zoomGesturesEnabled: true,
-          onMapCreated: mapProvider.onMapCreated,
-        )
+            myLocationButtonEnabled: true,
+            zoomControlsEnabled: true,
+            zoomGesturesEnabled: true,
+            onMapCreated: mapProvider.onMapCreated,
+          )
         : const SizedBox.shrink();
   }
 }
