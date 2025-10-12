@@ -38,8 +38,8 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
   @override
   Widget build(BuildContext context) {
     final uploadProvider = context.watch<UploadStoryProvider>();
-    final locationLoadingProvider =
-        context.watch<UploadLocationLoadingProvider>();
+    final locationLoadingProvider = context
+        .watch<UploadLocationLoadingProvider>();
 
     // initial get the current position when the map is shown
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -74,8 +74,8 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
               onMove: () async {
                 if (!context.mounted) return;
 
-                final controllerProvider =
-                    context.read<UploadMapControllerProvider>();
+                final controllerProvider = context
+                    .read<UploadMapControllerProvider>();
                 final location = uploadProvider.selectedLocation;
 
                 if (location == null) return;
@@ -206,10 +206,10 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
 
   Future<void> _getCurrentPosition(BuildContext context) async {
     final uploadProvider = context.read<UploadStoryProvider>();
-    final locationLoadingProvider =
-        context.read<UploadLocationLoadingProvider>();
-    final uploadMapControllerProvider =
-        context.read<UploadMapControllerProvider>();
+    final locationLoadingProvider = context
+        .read<UploadLocationLoadingProvider>();
+    final uploadMapControllerProvider = context
+        .read<UploadMapControllerProvider>();
 
     locationLoadingProvider.setIsLoading(true);
     locationLoadingProvider.setErrorMessage(null);

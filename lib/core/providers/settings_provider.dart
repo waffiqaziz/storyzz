@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:storyzz/core/data/model/setting.dart';
 import 'package:storyzz/core/data/repository/setting_repository.dart';
@@ -35,10 +34,9 @@ class SettingsProvider extends ChangeNotifier {
           WidgetsBinding.instance.platformDispatcher.platformBrightness ==
           Brightness.dark;
 
-      final bool savedIsDark =
-          _settingRepository.isDarkModeSet()
-              ? _settingRepository.getSettingValue().isDark
-              : isDarkSystem;
+      final bool savedIsDark = _settingRepository.isDarkModeSet()
+          ? _settingRepository.getSettingValue().isDark
+          : isDarkSystem;
 
       // get language setting
       final String savedLanguage = _settingRepository.getLanguage() ?? 'en';

@@ -46,10 +46,10 @@ class HorizontalSplitViewState extends State<HorizontalSplitView>
   bool _isAnimating = false;
 
   /// Current height of the top section based on [_ratio].
-  get _height1 => _ratio * _maxHeight;
+  double get _height1 => _ratio * _maxHeight;
 
   /// Current height of the bottom section based on [_ratio].
-  get _height2 => (1 - _ratio) * _maxHeight;
+  double get _height2 => (1 - _ratio) * _maxHeight;
 
   /// Expands the top view to a minimum visible height if it's mostly closed.
   ///

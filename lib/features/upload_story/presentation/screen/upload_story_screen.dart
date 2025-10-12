@@ -219,10 +219,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                       ImagePreview(
                         imageFile: imageFile,
                         onCameraPressed: _handleCameraButton,
-                        onGalleryPressed:
-                            () => _imagePickerService.pickImage(
-                              ImageSource.gallery,
-                            ),
+                        onGalleryPressed: () =>
+                            _imagePickerService.pickImage(ImageSource.gallery),
                       ),
                     const SizedBox(height: 16),
 
@@ -231,8 +229,9 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                       TextField(
                         controller: _captionController,
                         decoration: InputDecoration(
-                          hintText:
-                              AppLocalizations.of(context)!.write_a_caption,
+                          hintText: AppLocalizations.of(
+                            context,
+                          )!.write_a_caption,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -263,12 +262,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                       if (appService.getKIsWeb()) ...[
                         if (isPaidVersion)
                           StatefulBuilder(
-                            builder: (
-                              BuildContext context,
-                              StateSetter setState,
-                            ) {
-                              return LocationMapSelector();
-                            },
+                            builder:
+                                (BuildContext context, StateSetter setState) {
+                                  return LocationMapSelector();
+                                },
                           )
                         else
                           PremiumFeaturePromotion(),
@@ -276,12 +273,10 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                           TargetPlatform.android) ...[
                         if (BuildConfig.canAddLocation) ...[
                           StatefulBuilder(
-                            builder: (
-                              BuildContext context,
-                              StateSetter setState,
-                            ) {
-                              return LocationMapSelector();
-                            },
+                            builder:
+                                (BuildContext context, StateSetter setState) {
+                                  return LocationMapSelector();
+                                },
                           ),
                         ] else ...[
                           PremiumFeaturePromotion(),
@@ -291,14 +286,14 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
                       // button to reset image
                       ElevatedButton.icon(
-                        onPressed:
-                            isUploading ? null : () => uploadProvider.reset(),
+                        onPressed: isUploading
+                            ? null
+                            : () => uploadProvider.reset(),
                         icon: Icon(
                           Icons.refresh,
-                          color:
-                              Theme.of(
-                                context,
-                              ).colorScheme.surfaceContainerLowest,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.surfaceContainerLowest,
                         ),
                         label: Text(AppLocalizations.of(context)!.change_image),
                       ),

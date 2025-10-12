@@ -90,8 +90,9 @@ class MapStoryController {
 
   /// Toggles the map type between normal and satellite.
   void toggleMapType() {
-    selectedMapType =
-        selectedMapType == MapType.normal ? MapType.satellite : MapType.normal;
+    selectedMapType = selectedMapType == MapType.normal
+        ? MapType.satellite
+        : MapType.normal;
   }
 
   /// Updates the markers on the map based on the provided list of stories.

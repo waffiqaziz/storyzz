@@ -33,16 +33,13 @@ class AppRoot extends StatelessWidget {
       providers: [
         Provider(create: (_) => SettingRepository(prefs)),
         Provider(
-          create:
-              (_) => ApiServices(
-                httpClient: http.Client(),
-                appService: AppService(),
-              ),
+          create: (_) =>
+              ApiServices(httpClient: http.Client(), appService: AppService()),
         ),
         Provider(create: (_) => MapsApiService(httpClient: http.Client())),
         Provider(
-          create:
-              (context) => AuthRepository(prefs, context.read<ApiServices>()),
+          create: (context) =>
+              AuthRepository(prefs, context.read<ApiServices>()),
         ),
         Provider(
           create: (context) => StoryRepository(context.read<ApiServices>()),
@@ -61,35 +58,32 @@ class AppRoot extends StatelessWidget {
           create: (context) => AuthProvider(context.read<AuthRepository>()),
         ),
         ChangeNotifierProvider(
-          create:
-              (context) => UploadStoryProvider(
-                storyRepository: context.read<StoryRepository>(),
-                appService: AppService(),
-              ),
+          create: (context) => UploadStoryProvider(
+            storyRepository: context.read<StoryRepository>(),
+            appService: AppService(),
+          ),
         ),
         ChangeNotifierProvider(
           create: (context) => StoryProvider(context.read<StoryRepository>()),
         ),
         ChangeNotifierProvider(
-          create:
-              (context) => SettingsProvider(context.read<SettingRepository>()),
+          create: (context) =>
+              SettingsProvider(context.read<SettingRepository>()),
         ),
         ChangeNotifierProvider(
-          create:
-              (context) => MapProvider(
-                authProvider: context.read<AuthProvider>(),
-                storyProvider: context.read<StoryProvider>(),
-              ),
+          create: (context) => MapProvider(
+            authProvider: context.read<AuthProvider>(),
+            storyProvider: context.read<StoryProvider>(),
+          ),
         ),
         ChangeNotifierProvider(
           create: (context) => AddressProvider(context.read<MapsRepository>()),
         ),
         Provider(
-          create:
-              (context) => AppRouter(
-                appProvider: context.read<AppProvider>(),
-                authProvider: context.read<AuthProvider>(),
-              ),
+          create: (context) => AppRouter(
+            appProvider: context.read<AppProvider>(),
+            authProvider: context.read<AuthProvider>(),
+          ),
         ),
       ],
       child: MyApp(),
