@@ -25,7 +25,10 @@ class StoryProvider extends ChangeNotifier {
   bool _hasMoreStories = true;
   int _currentPage = 1;
   final int _pageSize = 10;
+
   bool _isLoadingMore = false;
+  bool get isLoadingMore => _isLoadingMore;
+
   List<ListStory> get stories => _stories;
   bool get hasMoreStories => _hasMoreStories;
 
@@ -33,18 +36,14 @@ class StoryProvider extends ChangeNotifier {
     // return if already loading more items in pagination mode
     if (_isLoadingMore && !refresh) return;
 
+    // Reset state if reload page
     if (refresh) {
       _currentPage = 1;
       _stories = [];
       _hasMoreStories = true;
-    }
-
-    if (!_hasMoreStories && !refresh) return;
-
-    // set loading flag based on is refresh or pagination
-    if (refresh) {
       _state = const StoryLoadState.loading();
     } else {
+      // Pagination mode
       _isLoadingMore = true;
     }
     notifyListeners();

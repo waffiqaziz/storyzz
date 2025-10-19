@@ -49,7 +49,8 @@ class MapStoryListView extends StatelessWidget {
         controller: mapProvider.scrollController,
         slivers: [
           // handle all story state
-          if (storyProvider.state.isLoading && storyProvider.stories.isEmpty ||
+          if ((storyProvider.state.isLoading &&
+                  storyProvider.stories.isEmpty) ||
               storyProvider.state.isInitial)
             const SliverFillRemaining(
               child: Center(child: CircularProgressIndicator()),
@@ -67,7 +68,7 @@ class MapStoryListView extends StatelessWidget {
             _buildSliverStoryList(context),
 
           // Loading indicator at bottom for pagination
-          if (storyProvider.state.isLoading && storyProvider.stories.isNotEmpty)
+          if (storyProvider.isLoadingMore)
             const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.all(16.0),
