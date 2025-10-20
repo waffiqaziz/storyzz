@@ -19,7 +19,7 @@ import 'package:storyzz/features/home/presentation/widgets/home_story_card.dart'
 /// Required parameters:
 /// - [scrollController]: Controls scrolling and pagination
 /// - [onLogout]: Callback to log out the user
-class HomeStoriesListView extends StatelessWidget {
+class HomeStoriesListView extends StatefulWidget {
   final ScrollController scrollController;
   final VoidCallback onLogout;
 
@@ -28,6 +28,51 @@ class HomeStoriesListView extends StatelessWidget {
     required this.scrollController,
     required this.onLogout,
   });
+
+  @override
+  State<HomeStoriesListView> createState() => _HomeStoriesListViewState();
+}
+
+class _HomeStoriesListViewState extends State<HomeStoriesListView> {
+  @override
+  void initState() {
+    super.initState();
+    widget.scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    widget.scrollController.removeListener(_onScroll);
+    super.dispose();
+  }
+
+  /// Handles scroll events to trigger pagination when nearing the bottom of the list.
+  void _onScroll() {
+    if (_isBottom) {
+      final storyProvider = context.read<StoryProvider>();
+      final authProvider = context.read<AuthProvider>();
+
+      // Prevent multiple calls - check if not already loading
+      if (authProvider.user != null &&
+          storyProvider.hasMoreStories &&
+          !storyProvider.state.isLoading) {
+        storyProvider.getStories(user: authProvider.user!, refresh: false);
+      }
+    }
+  }
+
+  /// Checks if the scroll position is near the bottom of the list.
+  bool get _isBottom {
+    if (!widget.scrollController.hasClients) {
+      return false; // return false if no clients
+    }
+
+    final maxScroll = widget.scrollController.position.maxScrollExtent;
+    final currentScroll = widget.scrollController.offset;
+    final isAtBottom = currentScroll >= (maxScroll * 0.9);
+
+    return isAtBottom;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +86,13 @@ class HomeStoriesListView extends StatelessWidget {
         }
       },
       child: CustomScrollView(
-        controller: scrollController,
+        controller: widget.scrollController,
         slivers: [
           _buildAppBar(context),
 
           // handle all story state
-          if (storyProvider.state.isLoading && storyProvider.stories.isEmpty ||
+          if ((storyProvider.state.isLoading &&
+                  storyProvider.stories.isEmpty) ||
               storyProvider.state.isInitial)
             const SliverFillRemaining(
               child: Center(child: CircularProgressIndicator()),
@@ -67,7 +113,7 @@ class HomeStoriesListView extends StatelessWidget {
             _buildStoryList(context),
 
           // Loading indicator at bottom for pagination
-          if (storyProvider.state.isLoading && storyProvider.stories.isNotEmpty)
+          if (storyProvider.isLoadingMore)
             const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.all(16.0),
@@ -111,7 +157,10 @@ class HomeStoriesListView extends StatelessWidget {
             },
           ),
           const SizedBox(width: 4),
-          IconButton(icon: const Icon(Icons.logout), onPressed: onLogout),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: widget.onLogout,
+          ),
           const SizedBox(width: 8),
         ],
       ],
