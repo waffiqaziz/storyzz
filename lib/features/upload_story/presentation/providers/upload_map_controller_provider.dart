@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -30,7 +31,7 @@ class UploadMapControllerProvider extends ChangeNotifier {
       final controller = await _controllerCompleter.future;
       await controller.animateCamera(CameraUpdate.newCameraPosition(position));
     } catch (e) {
-      debugPrint('Error animating camera: $e');
+      log('Error animating camera: $e');
     }
   }
 }

@@ -1,4 +1,6 @@
 // lib/router/app_router.dart
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
@@ -295,11 +297,9 @@ class AppRouter {
       name: "${name}StoryDetail",
       parentNavigatorKey: _rootNavigatorKey,
       redirect: (context, state) {
-        debugPrint('isFullScreenMap: ${appProvider.isDetailFullScreenMap}');
-        debugPrint(
-          'selectedStory != null: ${appProvider.selectedStory != null}',
-        );
-        debugPrint('ID from path: ${state.pathParameters['id']}');
+        log('isFullScreenMap: ${appProvider.isDetailFullScreenMap}');
+        log('selectedStory != null: ${appProvider.selectedStory != null}');
+        log('ID from path: ${state.pathParameters['id']}');
 
         // close the detail page
         if (appProvider.selectedStory == null && appProvider.isFromDetail) {
@@ -339,7 +339,7 @@ Page _buildStoryDetailPage(
   ListStory? persistedStory,
 ) {
   if (persistedStory == null) {
-    debugPrint('Warning: Invalid or missing story data. Redirecting to home.');
+    log('Warning: Invalid or missing story data. Redirecting to home.');
     // Return a redirect page or an error page
     return MaterialPage(key: state.pageKey, child: NotFoundWidget());
   }

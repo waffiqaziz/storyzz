@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:universal_html/js.dart' as js;
@@ -14,7 +16,7 @@ class JsContextWrapper {
         }
       }
     } catch (e) {
-      debugPrint('Error accessing JS context: $e');
+      log('Error accessing JS context: $e');
       return null;
     }
     return null;
@@ -106,7 +108,7 @@ class MapsEnvironment {
           return apiKey;
         }
       } catch (e) {
-        debugPrint('Error accessing ENV from JavaScript: $e');
+        log('Error accessing ENV from JavaScript: $e');
       }
       return 'NO_API_KEY';
     } else {

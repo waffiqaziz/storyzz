@@ -145,6 +145,7 @@ void main() {
       ]),
     );
     when(() => mockStoryProvider.hasMoreStories).thenReturn(true);
+    when(() => mockStoryProvider.isLoadingMore).thenReturn(false);
     when(() => mockStoryProvider.stories).thenReturn([
       ListStory(
         id: '1',

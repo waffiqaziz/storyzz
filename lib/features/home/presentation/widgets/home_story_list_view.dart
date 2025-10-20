@@ -63,8 +63,9 @@ class _HomeStoriesListViewState extends State<HomeStoriesListView> {
 
   /// Checks if the scroll position is near the bottom of the list.
   bool get _isBottom {
-    if (!widget.scrollController.hasClients)
+    if (!widget.scrollController.hasClients) {
       return false; // return false if no clients
+    }
 
     final maxScroll = widget.scrollController.position.maxScrollExtent;
     final currentScroll = widget.scrollController.offset;

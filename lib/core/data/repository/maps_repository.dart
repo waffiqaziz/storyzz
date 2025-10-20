@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'dart:developer';
+
 import 'package:storyzz/core/data/networking/responses/geocoding_response.dart';
 import 'package:storyzz/core/data/networking/services/maps_api_services.dart';
 
@@ -19,7 +20,7 @@ class MapsRepository {
       );
       return response;
     } catch (e) {
-      debugPrint('Error getting address from coordinates: $e');
+      log('Error getting address from coordinates: $e');
       return null;
     }
   }
