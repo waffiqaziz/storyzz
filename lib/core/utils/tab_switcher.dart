@@ -15,7 +15,6 @@ class AnimatedTabSwitcher extends StatefulWidget {
 }
 
 class _AnimatedTabSwitcherState extends State<AnimatedTabSwitcher> {
-
   @override
   Widget build(BuildContext context) {
     return Stack(
