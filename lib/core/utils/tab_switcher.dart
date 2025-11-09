@@ -15,30 +15,16 @@ class AnimatedTabSwitcher extends StatefulWidget {
 }
 
 class _AnimatedTabSwitcherState extends State<AnimatedTabSwitcher> {
-  int _oldIndex = 0;
-
-  @override
-  void didUpdateWidget(covariant AnimatedTabSwitcher oldWidget) {
-    if (widget.index != oldWidget.index) {
-      _oldIndex = oldWidget.index;
-    }
-    super.didUpdateWidget(oldWidget);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: List.generate(widget.children.length, (i) {
         final isActive = i == widget.index;
-        final isOld = i == _oldIndex;
 
         return AnimatedOpacity(
           duration: const Duration(milliseconds: 700),
           opacity: isActive ? 1.0 : 0.0,
-          child: IgnorePointer(
-            ignoring: !isActive,
-            child: widget.children[i],
-          ),
+          child: IgnorePointer(ignoring: !isActive, child: widget.children[i]),
         );
       }),
     );
