@@ -45,11 +45,11 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+          echo "GEOCODE_API_KEY=$(echo ${{ secrets.GEOCODE_API_KEY }} | base64 --decode)" > assets/.env
       
       - name: Create secrets.properties
         run: |
-          echo "MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" > android/secrets.properties
+          echo "MAPS_API_KEY=$(echo ${{ secrets.GOOGLE_MAPS_API_KEY }} | base64 --decode)" > android/secrets.properties
 
       - name: Check Dart format
         run: |
@@ -95,11 +95,11 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+          echo "GEOCODE_API_KEY=$(echo ${{ secrets.GEOCODE_API_KEY }} | base64 --decode)" > assets/.env
       
       - name: Create secrets.properties
         run: |
-          echo "MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" > android/secrets.properties
+          echo "MAPS_API_KEY=$(echo ${{ secrets.GOOGLE_MAPS_API_KEY }} | base64 --decode)" > android/secrets.properties
 
       - name: Run Flutter Tests
         run: flutter test --coverage
@@ -165,11 +165,11 @@ jobs:
       
       - name: Create .env file
         run: |
-          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+          echo "GEOCODE_API_KEY=$(echo ${{ secrets.GEOCODE_API_KEY }} | base64 --decode)" > assets/.env
       
       - name: Create secrets.properties
         run: |
-          echo "MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" > android/secrets.properties
+          echo "MAPS_API_KEY=$(echo ${{ secrets.GOOGLE_MAPS_API_KEY }} | base64 --decode)" > android/secrets.properties
       
       - name: Build APK (Free)
         run: flutter build apk --flavor free -t lib/main.dart --debug
@@ -221,11 +221,11 @@ jobs:
       
       - name: Create .env file
         run: |
-          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+          echo "GEOCODE_API_KEY=$(echo ${{ secrets.GEOCODE_API_KEY }} | base64 --decode)" > assets/.env
       
       - name: Create secrets.properties
         run: |
-          echo "MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" > android/secrets.properties
+          echo "MAPS_API_KEY=$(echo ${{ secrets.GOOGLE_MAPS_API_KEY }} | base64 --decode)" > android/secrets.properties
       
       - name: Build APK (Paid)
         run: flutter build apk --flavor paid -t lib/main.dart --debug
@@ -275,11 +275,11 @@ jobs:
       
       - name: Create .env file
         run: |
-          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+          echo "GEOCODE_API_KEY=$(echo ${{ secrets.GEOCODE_API_KEY }} | base64 --decode)" > assets/.env
       
       - name: Create secrets.properties
         run: |
-          echo "MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" > android/secrets.properties
+          echo "MAPS_API_KEY=$(echo ${{ secrets.GOOGLE_MAPS_API_KEY }} | base64 --decode)" > android/secrets.properties
       
       - name: Build App Bundle (Free)
         run: flutter build appbundle --flavor free -t lib/main.dart
@@ -325,14 +325,14 @@ jobs:
       
       - name: Create .env file
         run: |
-          echo "GEOCODE_API_KEY='${{ secrets.GEOCODE_API_KEY }}'" > assets/.env
+          echo "GEOCODE_API_KEY=$(echo ${{ secrets.GEOCODE_API_KEY }} | base64 --decode)" > assets/.env
           
       - name: Create environment file
         run: |
-          echo "window.ENV = { 
-            GOOGLE_MAPS_API_KEY: '${{ secrets.GOOGLE_MAPS_API_KEY }}',
-            GEOCODE_API_KEY: '${{ secrets.GEOCODE_API_KEY }}'
-          };" > web/env.js
+          echo "window.ENV = {" > web/env.js
+          echo "  GOOGLE_MAPS_API_KEY: '$(echo "${{ secrets.GOOGLE_MAPS_API_KEY }}" | base64 --decode)'," >> web/env.js
+          echo "  GEOCODE_API_KEY: '$(echo "${{ secrets.GEOCODE_API_KEY }}" | base64 --decode)'" >> web/env.js
+          echo "};" >> web/env.js
           
       - name: Build Flutter Web
         run: flutter build web --release --dart-define=APP_FLAVOR=paid
@@ -375,10 +375,10 @@ jobs:
           
       - name: Create environment file
         run: |
-          echo "window.ENV = { 
-            GOOGLE_MAPS_API_KEY: '${{ secrets.GOOGLE_MAPS_API_KEY }}',
-            GEOCODE_API_KEY: '${{ secrets.GEOCODE_API_KEY }}'
-          };" > web/env.js
+          echo "window.ENV = {" > web/env.js
+          echo "  GOOGLE_MAPS_API_KEY: '$(echo "${{ secrets.GOOGLE_MAPS_API_KEY_PREVIEW }}" | base64 --decode)'," >> web/env.js
+          echo "  GEOCODE_API_KEY: '$(echo "${{ secrets.GEOCODE_API_KEY }}" | base64 --decode)'" >> web/env.js
+          echo "};" >> web/env.js
           
       - name: Build Flutter Web
         run: flutter build web --release --dart-define=APP_FLAVOR=paid
