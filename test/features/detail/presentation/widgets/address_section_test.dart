@@ -31,7 +31,6 @@ void main() {
           body: AddressSection(
             latitude: testLatitude,
             longitude: testLongitude,
-            storyId: testStoryId,
           ),
         ),
       ),

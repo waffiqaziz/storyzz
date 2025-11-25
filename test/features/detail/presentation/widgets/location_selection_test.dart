@@ -98,7 +98,6 @@ void main() {
       final AddressSection addressSection = tester.widget(addressSectionFinder);
       expect(addressSection.latitude, 37.7749);
       expect(addressSection.longitude, -122.4194);
-      expect(addressSection.storyId, 'test-story-id');
     });
 
     testWidgets('should renders StoryLocationMap with correct props and key', (

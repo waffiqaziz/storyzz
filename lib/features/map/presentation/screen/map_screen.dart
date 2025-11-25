@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
-import 'package:storyzz/core/providers/story_provider.dart';
 import 'package:storyzz/features/map/controller/map_story_controller.dart';
 import 'package:storyzz/features/map/presentation/layout/landscape_layout.dart';
 import 'package:storyzz/features/map/presentation/layout/potrait_layout.dart';
@@ -66,8 +65,8 @@ class _MapStoryScreenState extends State<MapStoryScreen> {
           ],
         ],
       ),
-      body: Consumer2<AuthProvider, StoryProvider>(
-        builder: (context, authProvider, storyProvider, child) {
+      body: Consumer<AuthProvider>(
+        builder: (context, authProvider, child) {
           // Location warning snackbar
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mapProvider.shouldShowLocationWarning) {
