@@ -13,7 +13,6 @@ import '../../../../tetsutils/mock.dart';
 void main() {
   const testLatitude = 1.0;
   const testLongitude = 1.0;
-  const testStoryId = '123';
   late MockAddressProvider mockAddressProvider;
 
   Widget createTestApp() {
