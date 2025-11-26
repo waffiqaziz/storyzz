@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/states/address_load_state.dart';
-import 'package:storyzz/core/data/networking/states/geocoding_state.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
-import 'package:storyzz/core/providers/geocoding_provider.dart';
-import 'package:storyzz/features/detail/presentation/widgets/address_section.dart';
+import 'package:storyzz/features/detail/presentation/widgets/address_section_web.dart';
 
 import '../../../../tetsutils/mock.dart';
 
 void main() {
-  const testLatitude = 1.0;
-  const testLongitude = 1.0;
+  const latText = 'Latitude: 1.000000';
+  const lonText = 'Longitude: 1.000000';
+
   late MockAddressProvider mockAddressProvider;
-  late MockGeocodingProvider mockGeocodingProvider;
 
   Widget createTestApp() {
     return MaterialApp(
@@ -28,20 +25,10 @@ void main() {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [Locale('en')],
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<AddressProvider>.value(
-            value: mockAddressProvider,
-          ),
-          ChangeNotifierProvider<GeocodingProvider>.value(
-            value: mockGeocodingProvider,
-          ),
-        ],
+      home: ChangeNotifierProvider<AddressProvider>.value(
+        value: mockAddressProvider,
         child: Scaffold(
-          body: AddressSection(
-            latitude: testLatitude,
-            longitude: testLongitude,
-          ),
+          body: AddressSectionWeb(latText: latText, lonText: lonText),
         ),
       ),
     );
@@ -54,30 +41,19 @@ void main() {
 
   setUp(() {
     mockAddressProvider = MockAddressProvider();
-    mockGeocodingProvider = MockGeocodingProvider();
-    when(() => mockGeocodingProvider.state).thenReturn(
-      GeocodingState.loaded(
-        formattedAddress: "Address",
-        placemark: Placemark(),
-      ),
-    );
-    when(
-      () => mockGeocodingProvider.fetchAddress(any(), any()),
-    ).thenAnswer((_) async {});
   });
 
-  group('AddressSection', () {
+  group('AddressSectionWeb', () {
     testWidgets('should renders initial state with latitude and longitude', (
       WidgetTester tester,
     ) async {
       when(
-        () => mockGeocodingProvider.state,
-      ).thenReturn(GeocodingState.initial());
+        () => mockAddressProvider.state,
+      ).thenReturn(AddressLoadStateInitial());
 
       await tester.pumpWidget(createTestApp());
       await tester.pumpAndSettle();
 
-      expect(find.byIcon(Icons.location_on), findsOneWidget);
       expect(
         find.text("Latitude: 1.000000, Longitude: 1.000000"),
         findsOneWidget,
@@ -88,8 +64,8 @@ void main() {
       WidgetTester tester,
     ) async {
       when(
-        () => mockGeocodingProvider.state,
-      ).thenReturn(GeocodingState.loading());
+        () => mockAddressProvider.state,
+      ).thenReturn(AddressLoadStateLoading());
 
       await tester.pumpWidget(createTestApp());
       await tester.pump();
@@ -101,12 +77,9 @@ void main() {
     testWidgets('should renders loaded state with formatted address', (
       WidgetTester tester,
     ) async {
-      when(() => mockGeocodingProvider.state).thenReturn(
-        GeocodingState.loaded(
-          formattedAddress: '123 Test Street, City, Country',
-          placemark: Placemark(),
-        ),
-      );
+      when(
+        () => mockAddressProvider.state,
+      ).thenReturn(AddressLoadStateLoaded('123 Test Street, City, Country'));
 
       await tester.pumpWidget(createTestApp());
       await tester.pumpAndSettle();
@@ -120,8 +93,8 @@ void main() {
       WidgetTester tester,
     ) async {
       when(
-        () => mockGeocodingProvider.state,
-      ).thenReturn(GeocodingState.error("error"));
+        () => mockAddressProvider.state,
+      ).thenReturn(AddressLoadStateError("error"));
 
       await tester.pumpWidget(createTestApp());
       await tester.pumpAndSettle();

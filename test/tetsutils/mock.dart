@@ -18,6 +18,7 @@ import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
+import 'package:storyzz/core/providers/geocoding_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
@@ -34,6 +35,8 @@ class MockAuthProvider extends Mock implements AuthProvider {}
 class MockSettingsProvider extends Mock implements SettingsProvider {}
 
 class MockStoryProvider extends Mock implements StoryProvider {}
+
+class MockGeocodingProvider extends Mock implements GeocodingProvider {}
 
 class MockAppProvider extends Mock implements AppProvider {}
 
@@ -90,6 +93,9 @@ class MockAppLocalizations extends Mock implements AppLocalizations {
 
   @override
   String get just_now => 'just now';
+
+  @override
+  String get loading_address => 'Loading address...';
 }
 
 class MockBuildContext extends Mock implements BuildContext {}

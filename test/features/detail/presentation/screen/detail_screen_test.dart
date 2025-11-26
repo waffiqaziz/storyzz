@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mocktail_image_network/mocktail_image_network.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/responses/list_story.dart';
 import 'package:storyzz/core/data/networking/states/address_load_state.dart';
+import 'package:storyzz/core/data/networking/states/geocoding_state.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
+import 'package:storyzz/core/providers/geocoding_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_screen.dart';
 import 'package:storyzz/features/detail/presentation/widgets/location_section.dart';
@@ -20,6 +23,7 @@ void main() {
   late MockAddressProvider mockAddressProvider;
   late MockAppProvider mockAppProvider;
   late MockSettingsProvider mockSettingsProvider;
+  late MockGeocodingProvider mockGeocodingProvider;
 
   List<String> launchedUrls = [];
 
@@ -37,6 +41,7 @@ void main() {
     mockAddressProvider = MockAddressProvider();
     mockAppProvider = MockAppProvider();
     mockSettingsProvider = MockSettingsProvider();
+    mockGeocodingProvider = MockGeocodingProvider();
 
     launchedUrls = [];
 
@@ -47,6 +52,15 @@ void main() {
     when(
       () => mockAddressProvider.getAddressFromCoordinates(any(), any()),
     ).thenAnswer((_) async {});
+    when(
+      () => mockGeocodingProvider.fetchAddress(any(), any()),
+    ).thenAnswer((_) async {});
+    when(() => mockGeocodingProvider.state).thenReturn(
+      GeocodingState.loaded(
+        formattedAddress: "Address",
+        placemark: Placemark(),
+      ),
+    );
 
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(
@@ -91,6 +105,9 @@ void main() {
           ChangeNotifierProvider<AppProvider>.value(value: mockAppProvider),
           ChangeNotifierProvider<SettingsProvider>.value(
             value: mockSettingsProvider,
+          ),
+          ChangeNotifierProvider<GeocodingProvider>.value(
+            value: mockGeocodingProvider,
           ),
         ],
         child: Scaffold(body: StoryDetailScreen()),
