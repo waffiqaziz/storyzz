@@ -66,7 +66,7 @@ class StoryDetailScreen extends StatelessWidget {
                   child: DetailImage(photoUrl: story.photoUrl),
                 ),
               ),
-      
+
               // content
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -76,11 +76,11 @@ class StoryDetailScreen extends StatelessWidget {
                     // author info
                     _buildAuthorInfo(context),
                     SizedBox(height: 16),
-      
+
                     // description
                     Text(story.description, style: TextStyle(fontSize: 16)),
                     SizedBox(height: 24),
-      
+
                     // location info if available
                     if (story.lat != null && story.lon != null)
                       LocationSection(
