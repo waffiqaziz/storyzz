@@ -12,6 +12,7 @@ import 'package:storyzz/core/navigation/app_router.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
+import 'package:storyzz/core/providers/geocoding_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
@@ -47,6 +48,7 @@ class AppRoot extends StatelessWidget {
         Provider(
           create: (context) => MapsRepository(context.read<MapsApiService>()),
         ),
+        ChangeNotifierProvider(create: (_) => GeocodingProvider()),
         ChangeNotifierProvider(create: (_) => AppProvider()),
         ChangeNotifierProvider(
           create: (context) => UploadLocationLoadingProvider(),

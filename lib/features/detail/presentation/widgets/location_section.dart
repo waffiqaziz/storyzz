@@ -63,11 +63,7 @@ class _LocationSectionState extends State<LocationSection> {
         const SizedBox(height: 16),
 
         // address
-        AddressSection(
-          latitude: story.lat!,
-          longitude: story.lon!,
-          storyId: story.id,
-        ),
+        AddressSection(latitude: story.lat!, longitude: story.lon!),
 
         const SizedBox(height: 16),
 

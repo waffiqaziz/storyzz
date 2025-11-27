@@ -24,7 +24,4 @@ void main() {
       expect(state, isA<AddressLoadStateError>());
     });
   });
-
-  // TODO: Not yet tested
-  group('AddressLoadStateX', () {});
 }

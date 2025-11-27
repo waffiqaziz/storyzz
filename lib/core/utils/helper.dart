@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -61,4 +62,19 @@ Future<void> openUrl(String urlString) async {
   if (!await launchUrl(uri)) {
     throw Exception('Could not launch $urlString');
   }
+}
+
+/// Format geocoding placemark into readable format
+String formatAddress(Placemark placemark) {
+  final parts = <String>[
+    if (placemark.street?.isNotEmpty ?? false) placemark.street!,
+    if (placemark.subLocality?.isNotEmpty ?? false) placemark.subLocality!,
+    if (placemark.locality?.isNotEmpty ?? false) placemark.locality!,
+    if (placemark.administrativeArea?.isNotEmpty ?? false)
+      placemark.administrativeArea!,
+    if (placemark.postalCode?.isNotEmpty ?? false) placemark.postalCode!,
+    if (placemark.country?.isNotEmpty ?? false) placemark.country!,
+  ];
+
+  return parts.isNotEmpty ? parts.join(', ') : 'Unknown location';
 }

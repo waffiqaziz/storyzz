@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:storyzz/core/data/networking/states/address_load_state.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
+import 'package:storyzz/features/detail/presentation/widgets/address_section_mobile.dart';
+import 'package:storyzz/features/detail/presentation/widgets/address_section_web.dart';
 
 /// A widget that displays a formatted address for given coordinates.
 ///
@@ -17,13 +18,11 @@ import 'package:storyzz/core/providers/address_provider.dart';
 class AddressSection extends StatefulWidget {
   final double latitude;
   final double longitude;
-  final String storyId;
 
   const AddressSection({
     super.key,
     required this.latitude,
     required this.longitude,
-    required this.storyId,
   });
 
   @override
@@ -34,7 +33,16 @@ class _AddressSectionState extends State<AddressSection> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final latText =
+        '${localizations.latitude}: ${widget.latitude.toStringAsFixed(6)}';
+    final lonText =
+        '${localizations.longitude}: ${widget.longitude.toStringAsFixed(6)}';
 
+    if (kIsWeb) {
+      debugPrint('[WEB] AddressSection: Using web implementation');
+    } else {
+      debugPrint('[MOBILE] AddressSection: Using mobile implementation');
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -50,81 +58,17 @@ class _AddressSectionState extends State<AddressSection> {
         ),
         const SizedBox(height: 8),
 
-        // Show readable address
-        Consumer<AddressProvider>(
-          builder: (context, addressProvider, child) {
-            final latText =
-                '${localizations.latitude}: ${widget.latitude.toStringAsFixed(6)}';
-            final lonText =
-                '${localizations.longitude}: ${widget.longitude.toStringAsFixed(6)}';
-
-            switch (addressProvider.state) {
-              // show loading
-              case AddressLoadStateLoading():
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                      SizedBox(width: 8),
-                      Text("${localizations.loading_address}..."),
-                    ],
-                  ),
-                );
-
-              // show actual formatted addresss
-              case AddressLoadStateLoaded(formattedAddress: final address):
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
-                        address,
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ),
-                    Text(
-                      '$latText, $lonText',
-                      style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-                    ),
-                  ],
-                );
-
-              // shows not available if theres an error
-              case AddressLoadStateError():
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      localizations.address_not_available,
-                      style: TextStyle(color: Colors.red[400], fontSize: 14),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '$latText, $lonText',
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                  ],
-                );
-
-              // show the latitude and longiture on initial
-              case AddressLoadStateInitial():
-                return Text(
-                  '$latText, $lonText',
-                  style: const TextStyle(fontSize: 14),
-                );
-
-              // should not show
-              default:
-                return Text('Unknown state: ${addressProvider.state}');
-            }
-          },
-        ),
+        /// Readable address based on platform
+        /// - for mobile use geocoding package
+        /// - for website use geocoding rest API
+        if (kIsWeb) ...[
+          AddressSectionWeb(latText: latText, lonText: lonText),
+        ] else ...[
+          AddressSectionMobile(
+            latitude: widget.latitude,
+            longitude: widget.longitude,
+          ),
+        ],
       ],
     );
   }
