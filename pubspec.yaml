@@ -43,7 +43,7 @@ dependencies:
   # location
   google_maps_flutter: ^2.14.0
   google_maps_flutter_web: ^0.5.14+2
-  google_maps_flutter_android: ^2.18.4
+  google_maps_flutter_android: ^2.18.6
   geolocator: ^14.0.2
   geocoding: ^4.0.0
 
