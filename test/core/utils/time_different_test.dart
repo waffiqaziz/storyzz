@@ -7,7 +7,7 @@ import 'package:storyzz/core/utils/helper.dart';
 
 void main() {
   final now = DateTime.now();
-  final dateFormat = DateFormat('MMM d, yyyy · HH:mm');
+  final dateFormat = DateFormat('MMMM d, yyyy · HH:mm');
 
   Widget createTestApp(Widget child) {
     return MaterialApp(
@@ -46,23 +46,6 @@ void main() {
     return capturedContext;
   }
 
-  group('formattedLocalTime', () {
-    test('should format DateTime correctly', () {
-      final dateTime = DateTime(2025, 4, 14, 22, 54);
-      final result = formattedLocalTime(dateTime);
-      expect(result, 'April 14, 2025 · 22:54');
-    });
-
-    test('should handle UTC conversion', () {
-      final utcTime = DateTime.utc(2025, 4, 14, 22, 54);
-      final result = formattedLocalTime(utcTime);
-      final localDateTime = utcTime.toLocal();
-      final expected =
-          '${localDateTime.month == 4 ? 'April' : ''} ${localDateTime.day}, 2025 · ${localDateTime.hour.toString().padLeft(2, '0')}:${localDateTime.minute.toString().padLeft(2, '0')}';
-      expect(result, expected);
-    });
-  });
-
   group('getTimeDifference', () {
     testWidgets('formats a date more than 7 days ago', (
       WidgetTester tester,
@@ -76,9 +59,22 @@ void main() {
       expect(result, expected);
     });
 
-    testWidgets('formats a date within the last week (plural days)', (
+    testWidgets('formats yesterday with time only', (
       WidgetTester tester,
     ) async {
+      final context = await getLocalizationContext(tester);
+      final localizations = AppLocalizations.of(context)!;
+
+      final yesterday = now.subtract(const Duration(days: 1));
+
+      final result = getTimeDifference(context, yesterday);
+      expect(result, startsWith(localizations.yesterday));
+      expect(result, contains('·'));
+      // Should contain time in HH:mm format
+      expect(result, matches(RegExp(r'\d{2}:\d{2}')));
+    });
+
+    testWidgets('formats 2-7 days ago (plural)', (WidgetTester tester) async {
       final context = await getLocalizationContext(tester);
 
       final threeDaysAgo = now.subtract(const Duration(days: 3));
@@ -86,18 +82,6 @@ void main() {
       final result = getTimeDifference(context, threeDaysAgo);
       expect(result, contains('3'));
       expect(result, contains(AppLocalizations.of(context)!.d_ago_plural));
-    });
-
-    testWidgets('formats a date within the last week (singular day)', (
-      WidgetTester tester,
-    ) async {
-      final context = await getLocalizationContext(tester);
-
-      final oneDayAgo = now.subtract(const Duration(days: 1));
-
-      final result = getTimeDifference(context, oneDayAgo);
-      expect(result, contains('1')); // Should contain the number 1
-      expect(result, contains(AppLocalizations.of(context)!.d_ago_singular));
     });
 
     testWidgets('formats a date within hours (plural)', (

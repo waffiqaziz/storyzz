@@ -4,23 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// Converts a [DateTime] object to a localized string format.
-///
-/// The returned string is formatted as "MMMM d, yyyy · HH:mm" (e.g., "April 14, 2025 · 22:54").
-///
-/// Example:
-/// ```dart
-/// String isoString = '2025-04-14T22:54:29.233Z';
-/// DateTime createdAt = DateTime.parse(isoString);
-/// String formattedTime = formattedLocalTime(createdAt);
-/// print(formattedTime); // Output: "April 14, 2025 · 22:54"
-/// ```
-/// Parameters:
-/// - [createdAt] is the [DateTime] object to be formatted.
-String formattedLocalTime(DateTime createdAt) {
-  return DateFormat('MMMM d, yyyy · HH:mm').format(createdAt.toLocal());
-}
-
 /// Returns a localized time difference string based on the given [createdAt] date.
 ///
 /// The function compares the current time with the provided [createdAt] and returns
@@ -30,25 +13,29 @@ String formattedLocalTime(DateTime createdAt) {
 /// If the difference is within the past week, it returns the relative time (e.g., "3 days ago").
 String getTimeDifference(BuildContext context, DateTime createdAt) {
   final localizations = AppLocalizations.of(context)!;
-  final dateFormat = DateFormat('MMM d, yyyy · HH:mm');
+  final localeTag = Localizations.localeOf(context).toLanguageTag();
+  final dateFormat = DateFormat('MMMM d, yyyy · HH:mm', localeTag);
   final formattedDate = dateFormat.format(createdAt);
 
   // calculate time difference
   final now = DateTime.now();
-  final difference = now.difference(createdAt);
+  final diff = now.difference(createdAt);
   String timeAgo;
 
-  if (difference.inDays > 7) {
+  if (diff.inDays > 7) {
     timeAgo = formattedDate;
-  } else if (difference.inDays > 0) {
+  } else if (diff.inDays > 1) {
     timeAgo =
-        '${difference.inDays} ${difference.inDays == 1 ? localizations.d_ago_singular : localizations.d_ago_plural}';
-  } else if (difference.inHours > 0) {
+        '${diff.inDays} ${diff.inDays == 1 ? localizations.d_ago_singular : localizations.d_ago_plural}';
+  } else if (diff.inDays == 1) {
+    final timeFormat = DateFormat('HH:mm', localeTag);
+    timeAgo = '${localizations.yesterday} · ${timeFormat.format(createdAt)}';
+  } else if (diff.inHours > 0) {
     timeAgo =
-        '${difference.inHours} ${difference.inHours == 1 ? localizations.h_ago_singular : localizations.h_ago_plural}';
-  } else if (difference.inMinutes > 0) {
+        '${diff.inHours} ${diff.inHours == 1 ? localizations.h_ago_singular : localizations.h_ago_plural}';
+  } else if (diff.inMinutes > 0) {
     timeAgo =
-        '${difference.inMinutes} ${difference.inMinutes == 1 ? localizations.m_ago_singular : localizations.m_ago_plural}';
+        '${diff.inMinutes} ${diff.inMinutes == 1 ? localizations.m_ago_singular : localizations.m_ago_plural}';
   } else {
     timeAgo = localizations.just_now;
   }
