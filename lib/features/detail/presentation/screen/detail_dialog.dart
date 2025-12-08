@@ -186,7 +186,7 @@ class _StoryDetailDialogState extends State<StoryDetailDialog> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               Text(
-                formattedLocalTime(story.createdAt),
+                getTimeDifference(context, story.createdAt),
                 style: TextStyle(color: Colors.grey[600], fontSize: 14),
               ),
             ],
