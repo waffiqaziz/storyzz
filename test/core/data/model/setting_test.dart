@@ -1,6 +1,6 @@
 // filepath: lib/core/data/model/setting_test.dart
 import 'package:flutter_test/flutter_test.dart';
-import 'package:storyzz/core/data/model/setting.dart';
+import 'package:storyzz/core/data/models/setting.dart';
 
 void main() {
   group('Setting', () {

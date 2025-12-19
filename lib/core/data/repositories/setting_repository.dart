@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:storyzz/core/constants/my_prefs_key.dart';
-import 'package:storyzz/core/data/model/setting.dart';
+import 'package:storyzz/core/data/models/setting.dart';
 
 class SettingRepository {
   final SharedPreferences _preferences;

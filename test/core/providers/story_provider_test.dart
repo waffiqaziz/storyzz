@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:storyzz/core/data/networking/responses/list_story.dart';
-import 'package:storyzz/core/data/networking/responses/stories_response.dart';
+import 'package:storyzz/core/data/networking/models/story/list_story.dart';
+import 'package:storyzz/core/data/networking/models/story/stories_response.dart';
 import 'package:storyzz/core/data/networking/states/story_load_state.dart';
 import 'package:storyzz/core/data/networking/utils/api_utils.dart';
 import 'package:storyzz/core/providers/story_provider.dart';

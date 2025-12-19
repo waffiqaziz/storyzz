@@ -7,23 +7,23 @@ import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/data/networking/services/api_services.dart';
-import 'package:storyzz/core/data/networking/services/maps_api_services.dart';
-import 'package:storyzz/core/data/repository/auth_repository.dart';
-import 'package:storyzz/core/data/repository/maps_repository.dart';
-import 'package:storyzz/core/data/repository/setting_repository.dart';
-import 'package:storyzz/core/data/repository/story_repository.dart';
+import 'package:storyzz/core/data/models/user.dart';
+import 'package:storyzz/core/data/networking/api/services/maps_api_services.dart';
+import 'package:storyzz/core/data/networking/api/services/story_api_services.dart';
+import 'package:storyzz/core/data/repositories/auth_repository.dart';
+import 'package:storyzz/core/data/repositories/maps_repository.dart';
+import 'package:storyzz/core/data/repositories/setting_repository.dart';
+import 'package:storyzz/core/data/repositories/story_repository.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
-import 'package:storyzz/core/providers/geocoding_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/core/utils/environment.dart';
-import 'package:storyzz/features/map/provider/map_provider.dart';
+import 'package:storyzz/features/detail/presentation/providers/geocoding_provider.dart';
+import 'package:storyzz/features/map/presentations/providers/map_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 
 class MockHttpClient extends Mock implements http.Client {}
@@ -50,7 +50,7 @@ class MockStoryRepository extends Mock implements StoryRepository {}
 
 class MockAuthRepository extends Mock implements AuthRepository {}
 
-class MockApiServices extends Mock implements ApiServices {}
+class MockApiServices extends Mock implements StoryApiServices {}
 
 class MockGoRouter extends Mock implements GoRouter {}
 

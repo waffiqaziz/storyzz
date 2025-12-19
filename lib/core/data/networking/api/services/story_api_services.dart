@@ -5,10 +5,11 @@ import 'package:flutter/foundation.dart' show Uint8List;
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
-import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/data/networking/responses/general_response.dart';
-import 'package:storyzz/core/data/networking/responses/login_response.dart';
-import 'package:storyzz/core/data/networking/responses/stories_response.dart';
+import 'package:storyzz/core/data/models/user.dart';
+import 'package:storyzz/core/data/networking/api/endpoints.dart';
+import 'package:storyzz/core/data/networking/models/general/general_response.dart';
+import 'package:storyzz/core/data/networking/models/login/login_response.dart';
+import 'package:storyzz/core/data/networking/models/story/stories_response.dart';
 import 'package:storyzz/core/data/networking/utils/api_utils.dart';
 import 'package:storyzz/core/utils/constants.dart';
 
@@ -17,12 +18,12 @@ import 'package:storyzz/core/utils/constants.dart';
 ///
 /// The class provides methods for interacting with the story API (https://story-api.dicoding.dev/v1),
 /// handling responses, and managing errors in a safe way.
-class ApiServices {
-  static const String _baseUrl = "https://story-api.dicoding.dev/v1";
+class StoryApiServices {
+  static const String _baseUrl = storyBaseURL;
   final http.Client httpClient;
   final AppService appService;
 
-  ApiServices({required this.httpClient, required this.appService});
+  StoryApiServices({required this.httpClient, required this.appService});
 
   /// Logs the user in with the provided email and password.
   ///

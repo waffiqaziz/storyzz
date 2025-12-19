@@ -1,7 +1,7 @@
 import 'dart:developer' show log;
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:storyzz/core/data/networking/responses/list_story.dart';
+import 'package:storyzz/core/data/networking/models/story/list_story.dart';
 import 'package:storyzz/features/map/models/map_bounds.dart';
 
 /// A service class for:

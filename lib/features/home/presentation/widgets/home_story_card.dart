@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
-import 'package:storyzz/core/data/networking/responses/list_story.dart';
+import 'package:storyzz/core/data/networking/models/story/list_story.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/utils/helper.dart';

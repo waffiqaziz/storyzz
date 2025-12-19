@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
-import 'package:storyzz/features/map/controller/map_story_controller.dart';
-import 'package:storyzz/features/map/provider/map_provider.dart';
+import 'package:storyzz/features/map/presentations/controllers/map_story_controller.dart';
+import 'package:storyzz/features/map/presentations/providers/map_provider.dart';
 import 'package:storyzz/features/map/utils/map_style.dart';
 
 /// A widget that displays a [GoogleMap] with dynamic theming, markers,

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:storyzz/core/data/networking/responses/login_result.dart';
+import 'package:storyzz/core/data/networking/models/login/login_result.dart';
 
 part 'login_response.freezed.dart';
 part 'login_response.g.dart';

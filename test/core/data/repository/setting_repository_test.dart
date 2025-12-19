@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:storyzz/core/constants/my_prefs_key.dart';
-import 'package:storyzz/core/data/model/setting.dart';
-import 'package:storyzz/core/data/repository/setting_repository.dart';
+import 'package:storyzz/core/data/models/setting.dart';
+import 'package:storyzz/core/data/repositories/setting_repository.dart';
 
 import '../../../tetsutils/mock.dart';
 

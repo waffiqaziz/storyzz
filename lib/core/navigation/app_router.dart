@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storyzz/core/data/networking/responses/list_story.dart';
+import 'package:storyzz/core/data/networking/models/story/list_story.dart';
 import 'package:storyzz/core/design/widgets/language_dialog_screen.dart';
 import 'package:storyzz/core/design/widgets/not_found_widget.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
@@ -19,10 +19,10 @@ import 'package:storyzz/features/detail/presentation/screen/detail_screen.dart';
 import 'package:storyzz/features/home/presentation/screen/home_screen.dart';
 import 'package:storyzz/features/home/presentation/widgets/logout_confirmation_dialog.dart';
 import 'package:storyzz/features/main_screen.dart';
-import 'package:storyzz/features/map/presentation/screen/map_screen.dart';
+import 'package:storyzz/features/map/presentations/screens/map_screen.dart';
 import 'package:storyzz/features/notfound/presentation/screen/not_found_screen.dart';
 import 'package:storyzz/features/settings/presentation/screen/settings_screen.dart';
-import 'package:storyzz/features/upload_story/presentation/screen/upload_story_screen.dart';
+import 'package:storyzz/features/upload_story/presentation/screens/upload_story_screen.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/location_map_fullscreen.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/upgrade_dialog.dart';
 

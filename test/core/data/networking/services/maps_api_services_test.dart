@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
-import 'package:storyzz/core/data/networking/responses/geocoding_response.dart';
-import 'package:storyzz/core/data/networking/services/maps_api_services.dart';
+import 'package:storyzz/core/data/networking/api/services/maps_api_services.dart';
+import 'package:storyzz/core/data/networking/models/geocoding/geocoding_response.dart';
 import 'package:storyzz/core/utils/environment.dart';
 
 import '../../../../tetsutils/mock.dart' show MockHttpClient;

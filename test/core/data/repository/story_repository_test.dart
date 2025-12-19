@@ -2,11 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/data/networking/responses/general_response.dart';
-import 'package:storyzz/core/data/networking/responses/stories_response.dart';
+import 'package:storyzz/core/data/models/user.dart';
+import 'package:storyzz/core/data/networking/models/general/general_response.dart';
+import 'package:storyzz/core/data/networking/models/story/stories_response.dart';
 import 'package:storyzz/core/data/networking/utils/api_utils.dart';
-import 'package:storyzz/core/data/repository/story_repository.dart';
+import 'package:storyzz/core/data/repositories/story_repository.dart';
 
 import '../../../tetsutils/mock.dart';
 

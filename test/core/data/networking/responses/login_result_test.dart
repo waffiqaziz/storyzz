@@ -1,7 +1,7 @@
 // filepath: d:\pem\Dart\Flutter\intermediate\submission\storyzz\test\core\data\networking\responses\login_response_test.dart
 import 'package:flutter_test/flutter_test.dart';
-import 'package:storyzz/core/data/networking/responses/login_response.dart';
-import 'package:storyzz/core/data/networking/responses/login_result.dart';
+import 'package:storyzz/core/data/networking/models/login/login_response.dart';
+import 'package:storyzz/core/data/networking/models/login/login_result.dart';
 
 void main() {
   group('LoginResponse', () {

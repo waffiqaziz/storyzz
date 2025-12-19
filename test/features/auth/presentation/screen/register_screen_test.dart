@@ -3,8 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
-import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/data/networking/responses/general_response.dart';
+import 'package:storyzz/core/data/models/user.dart';
+import 'package:storyzz/core/data/networking/models/general/general_response.dart';
 import 'package:storyzz/core/data/networking/utils/api_utils.dart';
 import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
@@ -198,8 +198,9 @@ void main() {
       await tester.pump();
 
       // Test toggling confirm password visibility
-      final confirmPasswordVisibilityToggle =
-          find.byIcon(Icons.visibility_off).first;
+      final confirmPasswordVisibilityToggle = find
+          .byIcon(Icons.visibility_off)
+          .first;
       await tester.tap(confirmPasswordVisibilityToggle);
       await tester.pump();
 

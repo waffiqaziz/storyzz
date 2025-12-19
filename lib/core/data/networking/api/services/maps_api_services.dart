@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:storyzz/core/data/networking/responses/geocoding_response.dart';
+import 'package:storyzz/core/data/networking/api/endpoints.dart';
+import 'package:storyzz/core/data/networking/models/geocoding/geocoding_response.dart';
 import 'package:storyzz/core/utils/environment.dart';
 
 class MapsApiService {
-  static const String _baseUrl = 'geocode.maps.co';
+  static const String _baseUrl = geocodeBaseURL;
   static const String _reversePath = '/reverse';
   static String get _apiKey => MapsEnvironment.mapsCoApiKey;
 

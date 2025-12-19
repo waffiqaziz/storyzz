@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storyzz/core/data/model/user.dart';
+import 'package:storyzz/core/data/models/user.dart';
 import 'package:storyzz/core/design/theme.dart';
 import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
