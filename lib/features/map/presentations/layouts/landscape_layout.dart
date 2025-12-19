@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:storyzz/features/map/presentation/layout/vertical_split_view.dart';
-import 'package:storyzz/features/map/presentation/widgets/map_story_list_view.dart';
-import 'package:storyzz/features/map/presentation/widgets/map_view.dart';
+import 'package:storyzz/features/map/presentations/layouts/vertical_split_view.dart';
+import 'package:storyzz/features/map/presentations/widgets/map_story_list_view.dart';
+import 'package:storyzz/features/map/presentations/widgets/map_view.dart';
 
 /// A responsive layout for landscape orientation that displays
 /// a list of stories on the left and a map on the right side.

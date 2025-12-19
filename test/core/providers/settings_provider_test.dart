@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:storyzz/core/data/model/setting.dart';
+import 'package:storyzz/core/data/models/setting.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 
 import '../../tetsutils/mock.dart';

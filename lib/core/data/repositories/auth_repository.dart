@@ -1,14 +1,14 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:storyzz/core/constants/my_prefs_key.dart';
-import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/data/networking/responses/general_response.dart';
-import 'package:storyzz/core/data/networking/responses/login_response.dart';
-import 'package:storyzz/core/data/networking/services/api_services.dart';
+import 'package:storyzz/core/data/models/user.dart';
+import 'package:storyzz/core/data/networking/api/services/story_api_services.dart';
+import 'package:storyzz/core/data/networking/models/general/general_response.dart';
+import 'package:storyzz/core/data/networking/models/login/login_response.dart';
 import 'package:storyzz/core/data/networking/utils/api_utils.dart';
 
 class AuthRepository {
   final SharedPreferences _preferences;
-  final ApiServices _apiServices;
+  final StoryApiServices _apiServices;
 
   AuthRepository(this._preferences, this._apiServices);
 

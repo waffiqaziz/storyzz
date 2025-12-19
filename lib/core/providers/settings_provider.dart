@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:storyzz/core/data/model/setting.dart';
-import 'package:storyzz/core/data/repository/setting_repository.dart';
+import 'package:storyzz/core/data/models/setting.dart';
+import 'package:storyzz/core/data/repositories/setting_repository.dart';
 
 /// Manages app settings such as theme and language preferences.
 ///

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/data/networking/responses/list_story.dart';
+import 'package:storyzz/core/data/models/user.dart';
+import 'package:storyzz/core/data/networking/models/story/list_story.dart';
 import 'package:storyzz/core/data/networking/states/story_load_state.dart';
-import 'package:storyzz/core/data/repository/story_repository.dart';
+import 'package:storyzz/core/data/repositories/story_repository.dart';
 
 /// Manages the state of paginated user stories fetched from the server.
 ///

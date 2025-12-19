@@ -5,11 +5,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart' show ByteStream;
 import 'package:mocktail/mocktail.dart';
-import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/data/networking/responses/general_response.dart';
-import 'package:storyzz/core/data/networking/responses/login_response.dart';
-import 'package:storyzz/core/data/networking/responses/stories_response.dart';
-import 'package:storyzz/core/data/networking/services/api_services.dart';
+import 'package:storyzz/core/data/models/user.dart';
+import 'package:storyzz/core/data/networking/api/services/story_api_services.dart';
+import 'package:storyzz/core/data/networking/models/general/general_response.dart';
+import 'package:storyzz/core/data/networking/models/login/login_response.dart';
+import 'package:storyzz/core/data/networking/models/story/stories_response.dart';
 import 'package:storyzz/core/data/networking/utils/api_utils.dart';
 
 import '../../../../tetsutils/mock.dart';
@@ -20,7 +20,7 @@ void main() {
   final mockFile = MockFile();
   final mockAppService = MockAppService();
   final mockHttpClient = MockHttpClient();
-  late ApiServices apiServices;
+  late StoryApiServices apiServices;
   const baseUrl = "https://story-api.dicoding.dev/v1";
 
   const email = 'test@example.com';
@@ -30,7 +30,7 @@ void main() {
   const token = 'test_token';
 
   setUp(() {
-    apiServices = ApiServices(
+    apiServices = StoryApiServices(
       httpClient: mockHttpClient,
       appService: mockAppService,
     );

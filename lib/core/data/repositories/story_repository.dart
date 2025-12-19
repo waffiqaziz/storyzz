@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:storyzz/core/data/model/user.dart';
-import 'package:storyzz/core/data/networking/responses/general_response.dart';
-import 'package:storyzz/core/data/networking/responses/stories_response.dart';
-import 'package:storyzz/core/data/networking/services/api_services.dart';
+import 'package:storyzz/core/data/models/user.dart';
+import 'package:storyzz/core/data/networking/api/services/story_api_services.dart';
+import 'package:storyzz/core/data/networking/models/general/general_response.dart';
+import 'package:storyzz/core/data/networking/models/story/stories_response.dart';
 import 'package:storyzz/core/data/networking/utils/api_utils.dart';
 
 class StoryRepository {
-  final ApiServices _apiServices;
+  final StoryApiServices _apiServices;
 
   StoryRepository(this._apiServices);
 

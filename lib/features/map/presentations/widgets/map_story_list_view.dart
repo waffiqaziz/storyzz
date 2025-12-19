@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storyzz/core/data/networking/responses/list_story.dart';
+import 'package:storyzz/core/data/networking/models/story/list_story.dart';
 import 'package:storyzz/core/design/widgets/empty_story.dart';
 import 'package:storyzz/core/design/widgets/story_error_view.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
-import 'package:storyzz/features/map/presentation/widgets/map_story_card.dart';
-import 'package:storyzz/features/map/provider/map_provider.dart';
+import 'package:storyzz/features/map/presentations/providers/map_provider.dart';
+import 'package:storyzz/features/map/presentations/widgets/map_story_card.dart';
 
 /// A widget that displays a list of stories with support for
 /// pull-to-refresh, loading states, error handling, and empty states.

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:storyzz/core/data/model/user.dart';
+import 'package:storyzz/core/data/models/user.dart';
 
 void main() {
   group('User Model', () {

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:storyzz/core/data/networking/responses/geocoding_response.dart';
-import 'package:storyzz/core/data/networking/services/maps_api_services.dart';
+import 'package:storyzz/core/data/networking/api/services/maps_api_services.dart';
+import 'package:storyzz/core/data/networking/models/geocoding/geocoding_response.dart';
 
 class MapsRepository {
   final MapsApiService _mapsApiService;

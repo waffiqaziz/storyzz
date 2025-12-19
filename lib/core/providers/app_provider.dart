@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storyzz/core/data/networking/responses/list_story.dart';
+import 'package:storyzz/core/data/networking/models/story/list_story.dart';
 
 class AppProvider extends ChangeNotifier {
   bool _isLanguageDialogOpen = false;

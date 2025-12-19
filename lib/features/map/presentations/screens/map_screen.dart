@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
-import 'package:storyzz/features/map/controller/map_story_controller.dart';
-import 'package:storyzz/features/map/presentation/layout/landscape_layout.dart';
-import 'package:storyzz/features/map/presentation/layout/potrait_layout.dart';
-import 'package:storyzz/features/map/provider/map_provider.dart';
+import 'package:storyzz/features/map/presentations/controllers/map_story_controller.dart';
+import 'package:storyzz/features/map/presentations/layouts/landscape_layout.dart';
+import 'package:storyzz/features/map/presentations/layouts/potrait_layout.dart';
+import 'package:storyzz/features/map/presentations/providers/map_provider.dart';
 
 /// A screen that displays stories on a map with either portrait or landscape layout,
 /// depending on the screen width.

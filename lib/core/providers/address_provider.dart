@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:storyzz/core/data/networking/states/address_load_state.dart';
-import 'package:storyzz/core/data/repository/maps_repository.dart';
+import 'package:storyzz/core/data/repositories/maps_repository.dart';
 
 /// A provider that handles fetching and storing address data from coordinates.
 class AddressProvider extends ChangeNotifier {

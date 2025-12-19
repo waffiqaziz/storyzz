@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storyzz/core/data/networking/responses/list_story.dart';
+import 'package:storyzz/core/data/networking/models/story/list_story.dart';
 import 'package:storyzz/core/utils/helper.dart';
 
 /// A card widget that displays a single story's image, title, timestamp,

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:storyzz/core/data/repository/story_repository.dart';
+import 'package:storyzz/core/data/repositories/story_repository.dart';
 import 'package:storyzz/core/utils/constants.dart';
 
 /// Manages state for uploading user stories, including image selection and camera usage.

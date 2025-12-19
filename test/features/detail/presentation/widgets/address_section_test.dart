@@ -8,7 +8,7 @@ import 'package:storyzz/core/data/networking/states/address_load_state.dart';
 import 'package:storyzz/core/data/networking/states/geocoding_state.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
-import 'package:storyzz/core/providers/geocoding_provider.dart';
+import 'package:storyzz/features/detail/presentation/providers/geocoding_provider.dart';
 import 'package:storyzz/features/detail/presentation/widgets/address_section.dart';
 
 import '../../../../tetsutils/mock.dart';

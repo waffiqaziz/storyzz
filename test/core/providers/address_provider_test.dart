@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:storyzz/core/data/networking/responses/geocoding_address.dart';
-import 'package:storyzz/core/data/networking/responses/geocoding_response.dart';
+import 'package:storyzz/core/data/networking/models/geocoding/geocoding_address.dart';
+import 'package:storyzz/core/data/networking/models/geocoding/geocoding_response.dart';
 import 'package:storyzz/core/data/networking/states/address_load_state.dart';
-import 'package:storyzz/core/data/repository/maps_repository.dart';
+import 'package:storyzz/core/data/repositories/maps_repository.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
 
 import '../../tetsutils/mock.dart';

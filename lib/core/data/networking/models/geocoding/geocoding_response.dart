@@ -1,7 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:storyzz/core/data/networking/responses/geocoding_address.dart';
+import 'package:storyzz/core/data/networking/models/geocoding/geocoding_address.dart';
 
 part 'geocoding_response.freezed.dart';
 part 'geocoding_response.g.dart';
