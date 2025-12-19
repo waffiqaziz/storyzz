@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-int tabletBreakpoint = 600;
+const int mobileBreakpoint = 600;
+const int tabletBreakpoint = 840;
 
 class AppService {
   bool getKIsWeb() {

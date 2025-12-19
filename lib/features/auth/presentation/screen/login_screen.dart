@@ -51,16 +51,30 @@ class _LoginScreenState extends State<LoginScreen> {
       if (result.data != null && !result.data!.error) {
         if (mounted) {
           context.read<AuthProvider>().isLogged();
-          // Determine if the screen is wide enough to display the NavigationRail
-          bool isWideScreen =
-              MediaQuery.of(context).size.width >= tabletBreakpoint;
 
+          double screenWidth = MediaQuery.of(context).size.width;
+
+          // show snackbar with dynamic margin based on screen
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
-              margin: isWideScreen
-                  ? EdgeInsets.only(bottom: 16, left: 96, right: 16)
-                  : EdgeInsets.only(bottom: 16, left: 16, right: 16),
+              margin: switch (screenWidth) {
+                < mobileBreakpoint => EdgeInsets.only(
+                  bottom: 16,
+                  left: 16,
+                  right: 16,
+                ), // phone screen
+                >= tabletBreakpoint => EdgeInsets.only(
+                  bottom: 16,
+                  left: screenWidth * 0.20 + 16,
+                  right: 16,
+                ), // wide screen
+                _ => EdgeInsets.only(
+                  bottom: 16,
+                  left: 96,
+                  right: 16,
+                ), // tablet screen
+              },
               content: Text(AppLocalizations.of(context)!.login_succes),
             ),
           );
