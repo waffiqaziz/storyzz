@@ -166,10 +166,14 @@ class _MainScreenState extends State<MainScreen> {
     final theme = Theme.of(context);
 
     return NavigationRail(
+      leading: Padding(
+        padding: const EdgeInsets.only(bottom: 24, left: 8, right: 8, top: 16),
+        child: Image.asset('assets/icon/icon.png', height: 30),
+      ),
       selectedIndex: widget.currentIndex,
       onDestinationSelected: widget.onTabChanged,
       extended: false,
-      labelType: NavigationRailLabelType.all,
+      labelType: NavigationRailLabelType.none,
       destinations: [
         _createRailDestination(
           icon: AmazingIconTwotone.home,

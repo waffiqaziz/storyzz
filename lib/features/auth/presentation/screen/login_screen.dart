@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
       < mobileBreakpoint => EdgeInsets.only(bottom: 16, left: 16, right: 16),
       >= tabletBreakpoint => EdgeInsets.only(
         bottom: 16,
-        left: 300 + 16,
+        left: 306 + 16,
         right: 16,
       ),
       _ => EdgeInsets.only(bottom: 16, left: 96, right: 16),
