@@ -1,7 +1,9 @@
+import 'package:amazing_icons/outlined.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -75,6 +77,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     currentLanguageCode: provider.locale.languageCode,
                     isCompact: false, // dropdown
                   ),
+                ),
+                const SizedBox(height: 16),
+
+                // logout button
+                ElevatedButton.icon(
+                  icon: const Icon(AmazingIconOutlined.logout1),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.only(
+                      left: 16.0,
+                      right: 16.0,
+                      top: 8.0,
+                      bottom: 8.0,
+                    ),
+                  ),
+                  label: Text(AppLocalizations.of(context)!.logout),
+                  onPressed: () =>
+                      context.read<AppProvider>().openDialogLogOut(),
                 ),
                 const SizedBox(height: 16),
 

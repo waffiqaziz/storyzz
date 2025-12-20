@@ -1,6 +1,8 @@
 import 'package:amazing_icons/amazing_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/core/utils/tab_switcher.dart';
 import 'package:storyzz/features/home/presentation/screen/home_screen.dart';
@@ -24,7 +26,6 @@ class MainScreen extends StatefulWidget {
   final Widget child;
   final int currentIndex;
   final Function(int) onTabChanged;
-  final VoidCallback onLogout;
   final Object? routeExtra;
 
   const MainScreen({
@@ -32,7 +33,6 @@ class MainScreen extends StatefulWidget {
     required this.child,
     required this.currentIndex,
     required this.onTabChanged,
-    required this.onLogout,
     this.routeExtra,
   });
 
@@ -90,6 +90,7 @@ class _MainScreenState extends State<MainScreen> {
       selectedIndex: widget.currentIndex,
       onDestinationSelected: widget.onTabChanged,
       surfaceTintColor: null,
+      footer: _buildDrawerFooter(),
       children: _buildDrawerDestinations(),
     );
   }
@@ -106,6 +107,29 @@ class _MainScreenState extends State<MainScreen> {
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDrawerFooter() {
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Row(
+        children: [
+          ElevatedButton.icon(
+            icon: const Icon(AmazingIconOutlined.logout1),
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.only(
+                left: 16.0,
+                right: 16.0,
+                top: 8.0,
+                bottom: 8.0,
+              ),
+            ),
+            label: Text(AppLocalizations.of(context)!.logout),
+            onPressed: () => context.read<AppProvider>().openDialogLogOut(),
           ),
         ],
       ),
@@ -153,7 +177,7 @@ class _MainScreenState extends State<MainScreen> {
     return NavigationDrawerDestination(
       icon: icon(
         size: 24.0,
-        color: theme.colorScheme.secondaryFixedDim,
+        color: theme.colorScheme.surfaceTint,
         opacity: 0.6,
       ),
       selectedIcon: Icon(selectedIcon),
@@ -174,6 +198,7 @@ class _MainScreenState extends State<MainScreen> {
       onDestinationSelected: widget.onTabChanged,
       extended: false,
       labelType: NavigationRailLabelType.none,
+      trailing: _buildTrailing(),
       destinations: [
         _createRailDestination(
           icon: AmazingIconTwotone.home,
@@ -203,6 +228,17 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  Widget _buildTrailing() {
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: IconButton(
+        icon: const Icon(AmazingIconOutlined.logout1),
+        style: IconButton.styleFrom(padding: EdgeInsets.all(16.0)),
+        onPressed: () => context.read<AppProvider>().openDialogLogOut(),
+      ),
+    );
+  }
+
   NavigationRailDestination _createRailDestination({
     required Function icon,
     required IconData selectedIcon,
@@ -212,7 +248,7 @@ class _MainScreenState extends State<MainScreen> {
     return NavigationRailDestination(
       icon: icon(
         size: 24.0,
-        color: theme.colorScheme.secondaryFixedDim,
+        color: theme.colorScheme.surfaceTint,
         opacity: 0.6,
       ),
       selectedIcon: Icon(selectedIcon),
