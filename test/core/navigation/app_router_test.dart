@@ -40,6 +40,7 @@ void main() {
   late MockUploadStoryProvider mockUploadStoryProvider;
   late AppRouter appRouter;
 
+  // default test will use wide screen
   Widget createWidgetUnderTest({String? initialLocation, double width = 1200}) {
     appRouter = AppRouter(
       authProvider: mockAuthProvider,
@@ -322,6 +323,56 @@ void main() {
     });
   });
 
+  group('Navigation Rail routing', () {
+    const screenSize = 700.0;
+
+    setUp(() {
+      when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
+    });
+
+    testWidgets('should show correct screen for home tab index', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        createWidgetUnderTest(initialLocation: '/', width: screenSize),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(HomeScreen), findsOneWidget);
+    });
+
+    testWidgets('should show correct screen for map tab index', (tester) async {
+      await tester.pumpWidget(
+        createWidgetUnderTest(initialLocation: '/map', width: screenSize),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(MapStoryScreen), findsOneWidget);
+    });
+
+    testWidgets('should show correct screen for upload tab index', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        createWidgetUnderTest(initialLocation: '/upload', width: screenSize),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(UploadStoryScreen), findsOneWidget);
+    });
+
+    testWidgets('should show correct screen for settings tab index', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        createWidgetUnderTest(initialLocation: '/settings', width: screenSize),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(SettingsScreen), findsOneWidget);
+    });
+  });
+
   group('Story detail', () {
     final testStory = ListStory(
       id: '1',
@@ -379,7 +430,7 @@ void main() {
       expect(find.byType(HomeScreen), findsOneWidget);
     });
 
-    testWidgets('should able to open and close story detail dialoh', (
+    testWidgets('should able to open and close story detail dialog', (
       tester,
     ) async {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);

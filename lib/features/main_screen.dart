@@ -41,31 +41,17 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  bool _isMobile = true;
-  bool _isWide = false;
-  double _previousWidth = 0;
-
   @override
   Widget build(BuildContext context) {
-    _updateLayoutMode(context);
-    final content = _buildContent();
+    // check if layout needs update without calling setState to prevent error on widget test
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < mobileBreakpoint;
+    final isWide = screenWidth >= tabletBreakpoint;
 
     return Scaffold(
-      body: _buildBody(content),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+      body: _buildBody(_buildContent(), isMobile, isWide),
+      bottomNavigationBar: _buildBottomNavigationBar(isMobile),
     );
-  }
-
-  void _updateLayoutMode(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    if ((screenWidth - _previousWidth).abs() <= 5) return;
-
-    setState(() {
-      _isMobile = screenWidth < mobileBreakpoint;
-      _isWide = screenWidth >= tabletBreakpoint;
-      _previousWidth = screenWidth;
-    });
   }
 
   Widget _buildContent() {
@@ -80,34 +66,31 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget _buildBody(Widget content) {
+  Widget _buildBody(Widget content, bool isMobile, bool isWide) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 800),
-      child: _isMobile ? content : _buildWideLayout(content),
+      child: isMobile ? content : _buildWideLayout(content, isWide),
     );
   }
 
-  Widget _buildWideLayout(Widget content) {
+  Widget _buildWideLayout(Widget content, bool isWide) {
     return Row(
-      key: ValueKey('desktop_layout_${_isWide ? "wide" : "medium"}'),
+      key: ValueKey('desktop_layout_${isWide ? "wide" : "medium"}'),
       children: [
-        _isWide ? _buildNavigationDrawer() : _buildNavigationRail(),
-        if (!_isWide) const VerticalDivider(width: 1),
+        isWide ? _buildNavigationDrawer() : _buildNavigationRail(),
+        if (!isWide) const VerticalDivider(width: 1),
         Expanded(child: content),
       ],
     );
   }
 
   Widget _buildNavigationDrawer() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.20,
-      child: NavigationDrawer(
-        header: _buildDrawerHeader(),
-        selectedIndex: widget.currentIndex,
-        onDestinationSelected: widget.onTabChanged,
-        surfaceTintColor: null,
-        children: _buildDrawerDestinations(),
-      ),
+    return NavigationDrawer(
+      header: _buildDrawerHeader(),
+      selectedIndex: widget.currentIndex,
+      onDestinationSelected: widget.onTabChanged,
+      surfaceTintColor: null,
+      children: _buildDrawerDestinations(),
     );
   }
 
@@ -169,7 +152,7 @@ class _MainScreenState extends State<MainScreen> {
   }) {
     return NavigationDrawerDestination(
       icon: icon(
-        size: 24,
+        size: 24.0,
         color: theme.colorScheme.secondaryFixedDim,
         opacity: 0.6,
       ),
@@ -224,7 +207,7 @@ class _MainScreenState extends State<MainScreen> {
   }) {
     return NavigationRailDestination(
       icon: icon(
-        size: 24,
+        size: 24.0,
         color: theme.colorScheme.secondaryFixedDim,
         opacity: 0.6,
       ),
@@ -233,8 +216,8 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget _buildBottomNavigationBar() {
-    if (!_isMobile) return const SizedBox.shrink();
+  Widget _buildBottomNavigationBar(bool isMobile) {
+    if (!isMobile) return const SizedBox.shrink();
 
     final l10n = AppLocalizations.of(context)!;
 

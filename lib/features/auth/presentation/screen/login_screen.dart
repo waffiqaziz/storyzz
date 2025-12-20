@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _handleLogin() async {
     if (_formKey.currentState!.validate()) {
-      FocusScope.of(context).unfocus(); // close virtual keyboard
+      FocusScope.of(context).unfocus();
       final authProvider = context.read<AuthProvider>();
       final User user = User(
         email: _emailController.text,
@@ -48,54 +48,54 @@ class _LoginScreenState extends State<LoginScreen> {
         user.password!,
       );
 
+      if (!mounted) return;
+
+      // Clear success path
       if (result.data != null && !result.data!.error) {
-        if (mounted) {
-          context.read<AuthProvider>().isLogged();
-
-          double screenWidth = MediaQuery.of(context).size.width;
-
-          // show snackbar with dynamic margin based on screen
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              behavior: SnackBarBehavior.floating,
-              margin: switch (screenWidth) {
-                < mobileBreakpoint => EdgeInsets.only(
-                  bottom: 16,
-                  left: 16,
-                  right: 16,
-                ), // phone screen
-                >= tabletBreakpoint => EdgeInsets.only(
-                  bottom: 16,
-                  left: screenWidth * 0.20 + 16,
-                  right: 16,
-                ), // wide screen
-                _ => EdgeInsets.only(
-                  bottom: 16,
-                  left: 96,
-                  right: 16,
-                ), // tablet screen
-              },
-              content: Text(AppLocalizations.of(context)!.login_succes),
-            ),
-          );
-        }
-      } else {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              behavior: SnackBarBehavior.floating,
-              content: Text(
-                result.message ??
-                    result.data?.message ??
-                    AppLocalizations.of(context)!.login_failed,
-                style: TextStyle(color: Colors.black),
-              ),
-              backgroundColor: Theme.of(context).colorScheme.error,
-            ),
-          );
-        }
+        context.read<AuthProvider>().isLogged();
+        _showSuccessSnackbar();
+        return;
       }
+
+      final errorMessage =
+          result.message ??
+          result.data?.message ??
+          AppLocalizations.of(context)!.login_failed;
+      _showErrorSnackbar(errorMessage);
     }
+  }
+
+  void _showSuccessSnackbar() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        margin: _getSnackbarMargin(screenWidth),
+        content: Text(AppLocalizations.of(context)!.login_succes),
+      ),
+    );
+  }
+
+  void _showErrorSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text(message, style: TextStyle(color: Colors.black)),
+        backgroundColor: Theme.of(context).colorScheme.error,
+      ),
+    );
+  }
+
+  EdgeInsets _getSnackbarMargin(double screenWidth) {
+    return switch (screenWidth) {
+      < mobileBreakpoint => EdgeInsets.only(bottom: 16, left: 16, right: 16),
+      >= tabletBreakpoint => EdgeInsets.only(
+        bottom: 16,
+        left: 300 + 16,
+        right: 16,
+      ),
+      _ => EdgeInsets.only(bottom: 16, left: 96, right: 16),
+    };
   }
 
   @override
