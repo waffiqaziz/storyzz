@@ -32,6 +32,7 @@ dependencies:
   flutter_native_splash: ^2.4.7
   readmore: ^3.0.0
   dropdown_button2: ^2.3.9
+  amazing_icons: ^3.1.1
 
   # camera and image picker deps
   image_picker: ^1.2.1

@@ -45,7 +45,7 @@ void main() {
     when(() => mockAuthProvider.isLoadingLogin).thenReturn(false);
   });
 
-  Widget createWidgetUnderTest() {
+  Widget createWidgetUnderTest({double width = 1200}) {
     return MaterialApp(
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -53,6 +53,7 @@ void main() {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      supportedLocales: const [Locale('en')],
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider<AuthProvider>.value(value: mockAuthProvider),
@@ -61,7 +62,10 @@ void main() {
             value: mockSettingsProvider,
           ),
         ],
-        child: Scaffold(body: LoginScreen()),
+        child: MediaQuery(
+          data: MediaQueryData(size: Size(width, 800.0), devicePixelRatio: 1.0),
+          child: Scaffold(body: LoginScreen()),
+        ),
       ),
     );
   }
@@ -296,52 +300,51 @@ void main() {
       },
     );
 
+    Future<void> testSuccessfulLogin(
+      WidgetTester tester, {
+      required double width,
+      required String screenType,
+    }) async {
+      when(
+        () => mockAuthProvider.loginNetwork(any(), any()),
+      ).thenAnswer((_) async => mockLoginResponseSuccess);
+      when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
+
+      await tester.pumpWidget(createWidgetUnderTest(width: width));
+      await tester.pumpAndSettle();
+
+      await tester.enterText(
+        find.byType(TextFormField).at(0),
+        'test@example.com',
+      );
+      await tester.enterText(find.byType(TextFormField).at(1), 'password123');
+
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Login success!'), findsOneWidget);
+      verify(() => mockAuthProvider.isLogged()).called(1);
+    }
+
     testWidgets(
-      'should show success snackbar and call isLogged on successful login',
+      'should show success snackbar and call isLogged on successful login for phone screen',
       (tester) async {
-        final dpi = tester.view.devicePixelRatio;
-        tester.view.physicalSize = Size(412 * dpi, 1200 * dpi);
-        when(
-          () => mockAuthProvider.loginNetwork(any(), any()),
-        ).thenAnswer((_) async => mockLoginResponseSuccess);
-        when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
-
-        await tester.pumpWidget(createWidgetUnderTest());
-        await tester.pumpAndSettle();
-
-        await tester.enterText(
-          find.byType(TextFormField).at(0),
-          'test@example.com',
-        );
-        await tester.enterText(find.byType(TextFormField).at(1), 'password123');
-
-        await tester.tap(find.byType(ElevatedButton));
-        await tester.pumpAndSettle();
-
-        expect(find.text('Login success!'), findsOneWidget);
-        verify(() => mockAuthProvider.isLogged()).called(1);
+        await testSuccessfulLogin(tester, width: 400, screenType: 'phone');
       },
     );
 
-    // test('loginNetwork sets loading and updates listeners correctly', () async {
-    //   final repository = MockAuthRepository();
+    testWidgets(
+      'should show success snackbar and call isLogged on successful login for tablet screen',
+      (tester) async {
+        await testSuccessfulLogin(tester, width: 700, screenType: 'tablet');
+      },
+    );
 
-    //   when(
-    //     () => repository.loginRemote(any(), any()),
-    //   ).thenAnswer((_) async => mockLoginResponseSuccess);
-    //   when(() => repository.isLoggedIn()).thenAnswer((_) async => true);
-
-    //   bool isLoadingCalled = false;
-    //   mockAuthProvider.addListener(() {
-    //     isLoadingCalled =
-    //         mockAuthProvider.isLoadingLogin || !mockAuthProvider.isLoadingLogin;
-    //   });
-
-    //   final result = await mockAuthProvider.loginNetwork('email', 'pass');
-
-    //   expect(result.data, isA<LoginResponse>());
-    //   expect(mockAuthProvider.isLoadingLogin, isFalse);
-    //   expect(isLoadingCalled, isTrue);
-    // });
+    testWidgets(
+      'should show success snackbar and call isLogged on successful login for wide screen',
+      (tester) async {
+        await testSuccessfulLogin(tester, width: 1200, screenType: 'wide');
+      },
+    );
   });
 }

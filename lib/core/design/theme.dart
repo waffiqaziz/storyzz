@@ -413,6 +413,13 @@ class MaterialTheme {
     ),
     scaffoldBackgroundColor: colorScheme.surface,
     canvasColor: colorScheme.surface,
+    navigationDrawerTheme: NavigationDrawerThemeData(
+      surfaceTintColor: Colors.transparent,
+      indicatorColor: Colors.transparent,
+      indicatorShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
   );
 
   List<ExtendedColor> get extendedColors => [];
