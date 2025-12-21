@@ -290,7 +290,7 @@ class AppRouter {
 
     return null;
   }
-  
+
   GoRoute _logOutRoute(String name) {
     return GoRoute(
       path: 'logout-confirmation',

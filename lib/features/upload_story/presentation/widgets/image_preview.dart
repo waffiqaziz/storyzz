@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:amazing_icons/amazing_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/design/theme.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
@@ -34,8 +36,8 @@ class ImagePreview extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.image, size: 80, color: Colors.grey),
-          const SizedBox(height: 20),
+          const Icon(AmazingIconFilled.gallery, size: 80, color: Colors.grey),
+          const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -45,7 +47,7 @@ class ImagePreview extends StatelessWidget {
                     ? null
                     : onCameraPressed,
                 icon: Icon(
-                  Icons.photo_camera,
+                  AmazingIconOutlined.camera,
                   color: Theme.of(context).colorScheme.onTertiary,
                 ),
                 label: Text(
@@ -56,10 +58,7 @@ class ImagePreview extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.tertiary,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
+                  padding: MaterialTheme.buttonPadding,
                 ),
               ),
               const SizedBox(width: 16),
@@ -68,7 +67,7 @@ class ImagePreview extends StatelessWidget {
               ElevatedButton.icon(
                 onPressed: onGalleryPressed,
                 icon: Icon(
-                  Icons.photo_library,
+                  AmazingIconOutlined.galleryAdd,
                   color: Theme.of(context).colorScheme.onSecondary,
                 ),
                 label: Text(
@@ -79,10 +78,7 @@ class ImagePreview extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.secondary,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
+                  padding: MaterialTheme.buttonPadding,
                 ),
               ),
             ],

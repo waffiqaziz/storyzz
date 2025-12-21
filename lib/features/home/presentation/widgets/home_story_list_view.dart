@@ -137,7 +137,7 @@ class _HomeStoriesListViewState extends State<HomeStoriesListView> {
       forceElevated: false,
       title: Row(
         children: [
-          Image.asset('assets/icon/icon.png', height: 30),
+          Image.asset('assets/icons/icon.png', height: 30),
           const SizedBox(width: 8),
           const Text('Storyzz', style: TextStyle(fontWeight: FontWeight.bold)),
         ],

@@ -1,6 +1,7 @@
 import 'package:amazing_icons/amazing_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/design/theme.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
@@ -100,7 +101,7 @@ class _MainScreenState extends State<MainScreen> {
       padding: const EdgeInsets.all(24.0),
       child: Row(
         children: [
-          Image.asset('assets/icon/icon.png', height: 30),
+          Image.asset('assets/icons/icon.png', height: 30),
           const SizedBox(width: 8),
           Text(
             'Storyzz',
@@ -191,8 +192,8 @@ class _MainScreenState extends State<MainScreen> {
 
     return NavigationRail(
       leading: Padding(
-        padding: const EdgeInsets.only(bottom: 24, left: 8, right: 8, top: 16),
-        child: Image.asset('assets/icon/icon.png', height: 30),
+        padding: MaterialTheme.buttonPadding,
+        child: Image.asset('assets/icons/icon.png', height: 30),
       ),
       selectedIndex: widget.currentIndex,
       onDestinationSelected: widget.onTabChanged,
