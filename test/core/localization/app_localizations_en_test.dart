@@ -270,7 +270,7 @@ void main() {
     });
 
     test('logout_confirmation returns correct value', () {
-      expect(appLocalizationsEn.logout_confirmation, 'Log out Confirmation');
+      expect(appLocalizationsEn.logout_confirmation, 'Log Out Confirmation');
     });
 
     test('logout_confirmation_msg returns correct value', () {
