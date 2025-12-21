@@ -265,14 +265,18 @@ void main() {
       expect(appLocalizationsEn.logout, 'Logout');
     });
 
+    test('logout_description  returns correct value', () {
+      expect(appLocalizationsEn.logout_description, 'Log out of your account');
+    });
+
     test('logout_confirmation returns correct value', () {
-      expect(appLocalizationsEn.logout_confirmation, 'Logout Confirmation');
+      expect(appLocalizationsEn.logout_confirmation, 'Log out Confirmation');
     });
 
     test('logout_confirmation_msg returns correct value', () {
       expect(
         appLocalizationsEn.logout_confirmation_msg,
-        'Are you sure you want to logout?',
+        'Are you sure you want to log out?',
       );
     });
 
@@ -296,6 +300,10 @@ void main() {
 
     test('just_now returns correct value', () {
       expect(appLocalizationsEn.just_now, 'Just now');
+    });    
+    
+    test('yesterday returns correct value', () {
+      expect(appLocalizationsEn.yesterday, 'Yesterday');
     });
 
     test('d_ago_singular returns correct value', () {
@@ -523,6 +531,18 @@ void main() {
 
     test('go_to_home returns correct value', () {
       expect(appLocalizationsEn.go_to_home, 'Go to Home');
+    });    
+    
+    test('account returns correct value', () {
+      expect(appLocalizationsEn.account, 'Account');
+    });    
+    
+    test('appearance returns correct value', () {
+      expect(appLocalizationsEn.appearance, 'Appearance');
+    });    
+    
+    test('about returns correct value', () {
+      expect(appLocalizationsEn.about, 'About Us');
     });
   });
 }
