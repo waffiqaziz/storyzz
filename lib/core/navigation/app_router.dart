@@ -124,9 +124,6 @@ class AppRouter {
                   break;
               }
             },
-            onLogout: () async {
-              await authProvider.logout();
-            },
             child: child,
           );
         },
@@ -146,20 +143,9 @@ class AppRouter {
               if (!appProvider.isDialogLogOutOpen) {
                 return '/';
               }
-
               return null;
             },
-            routes: [
-              _detailRoute(''),
-              GoRoute(
-                path: 'logout-confirmation',
-                name: 'dialogLogOut',
-                parentNavigatorKey: _rootNavigatorKey,
-                pageBuilder: (context, state) {
-                  return dialogTransition(state, LogoutConfirmationDialog());
-                },
-              ),
-            ],
+            routes: [_detailRoute(''), _logOutRoute('')],
           ),
           GoRoute(
             path: '/map',
@@ -170,9 +156,15 @@ class AppRouter {
               if (appProvider.selectedStory != null) {
                 return '/map/story/${appProvider.selectedStory!.id}';
               }
+              if (appProvider.isDialogLogOutOpen) {
+                return '/map/logout-confirmation';
+              }
+              if (!appProvider.isDialogLogOutOpen) {
+                return '/map';
+              }
               return null;
             },
-            routes: [_detailRoute('map')],
+            routes: [_detailRoute('map'), _logOutRoute('map')],
           ),
           GoRoute(
             path: '/upload',
@@ -187,9 +179,15 @@ class AppRouter {
               if (appProvider.isUploadFullScreenMap) {
                 return '/upload/map';
               }
+              if (appProvider.isDialogLogOutOpen) {
+                return '/upload/logout-confirmation';
+              }
               // back to upload screen
               if (!appProvider.isUpDialogOpen &&
                   !appProvider.isUploadFullScreenMap) {
+                return '/upload';
+              }
+              if (!appProvider.isDialogLogOutOpen) {
                 return '/upload';
               }
               return null;
@@ -211,12 +209,23 @@ class AppRouter {
                   return dialogTransition(state, MapFullScreen());
                 },
               ),
+              _logOutRoute('upload'),
             ],
           ),
           GoRoute(
             path: '/settings',
             name: 'settings',
             builder: (context, state) => SettingsScreen(),
+            redirect: (context, state) {
+              if (appProvider.isDialogLogOutOpen) {
+                return '/settings/logout-confirmation';
+              }
+              if (!appProvider.isDialogLogOutOpen) {
+                return '/settings';
+              }
+              return null;
+            },
+            routes: [_logOutRoute('settings')],
           ),
         ],
       ),
@@ -242,7 +251,9 @@ class AppRouter {
       '/login',
       '/login/language-dialog',
       '/register',
-      '/register/language-dialog',
+      '/map/logout-confirmation',
+      '/upload/logout-confirmation',
+      '/settings/logout-confirmation',
       '/map',
       '/upload',
       '/upload/upgrade',
@@ -280,9 +291,20 @@ class AppRouter {
     return null;
   }
 
+  GoRoute _logOutRoute(String name) {
+    return GoRoute(
+      path: 'logout-confirmation',
+      name: '${name}DialogLogOut',
+      parentNavigatorKey: _rootNavigatorKey,
+      pageBuilder: (context, state) {
+        return dialogTransition(state, LogoutConfirmationDialog());
+      },
+    );
+  }
+
   GoRoute _languageDialogRoute(String name) {
     return GoRoute(
-      path: '/language-dialog',
+      path: 'language-dialog',
       name: "${name}LanguageDialog",
       parentNavigatorKey: _rootNavigatorKey,
       pageBuilder: (context, state) {

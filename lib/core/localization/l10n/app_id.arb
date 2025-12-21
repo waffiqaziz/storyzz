@@ -67,6 +67,7 @@
   "logout_success": "Berhasil keluar",
   "retry": "Coba Lagi",
   "logout": "Keluar",
+  "logout_description": "Keluar dari akun Anda",
   "logout_confirmation": "Konfirmasi keluar",
   "logout_confirmation_msg": "Apakah Anda yakin ingin keluar?",
 
@@ -123,5 +124,10 @@
   "story_not_found": "Postingan Tidak Ditemukan",
   "page_not_found": "Halaman Tidak Ditemukan",
   "page_not_found_description": "Halaman yang Anda cari tidak ada atau telah dipindahkan.",
-  "go_to_home": "Kembali ke Beranda"
+  "go_to_home": "Kembali ke Beranda",
+
+
+  "account": "Akun",
+  "appearance": "Tampilan",
+  "about": "Tentang Aplikasi"
 }

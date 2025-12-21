@@ -1,8 +1,14 @@
+import 'package:amazing_icons/outlined.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
+import 'package:storyzz/features/settings/presentation/widgets/section_header.dart';
+import 'package:storyzz/features/settings/presentation/widgets/settings_card.dart';
+import 'package:storyzz/features/settings/presentation/widgets/settings_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -33,95 +39,150 @@ class _SettingsScreenState extends State<SettingsScreen> {
         centerTitle: true,
         title: Text(
           localizations.settings,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Center(
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 600),
+            constraints: const BoxConstraints(maxWidth: 600),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // dark theme toggle
-                SwitchListTile(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  secondary: const Icon(Icons.dark_mode_rounded),
-                  title: Text(
-                    localizations.dark_theme,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  value: provider.setting?.isDark ?? false,
-                  onChanged: (bool value) {
-                    provider.setTheme(value);
-                  },
+                // appearance
+                SectionHeader(
+                  title: localizations.appearance,
+                  icon: Icons.palette_outlined,
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 12),
+                SettingsCard(
+                  child: Column(
+                    children: [
+                      // dark theme toggle
+                      SettingsTile(
+                        icon: Icon(Icons.dark_mode_rounded),
+                        title: localizations.dark_theme,
+                        trailing: Switch(
+                          value: provider.setting?.isDark ?? false,
+                          onChanged: (bool value) {
+                            provider.setTheme(value);
+                          },
+                        ),
+                      ),
+                      Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: colorScheme.outlineVariant.withValues(
+                          alpha: 0.3,
+                        ),
+                      ),
 
-                // language selector
-                ListTile(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
+                      // Language selector
+                      SettingsTile(
+                        icon: Icon(AmazingIconOutlined.global),
+                        title: localizations.language,
+                        trailing: LanguageSelector(
+                          currentLanguageCode: provider.locale.languageCode,
+                          isCompact: false,
+                        ),
+                      ),
+                    ],
                   ),
-                  leading: const Icon(Icons.language),
-                  title: Text(
-                    AppLocalizations.of(context)!.language,
-                    style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: 32),
+
+                // ACCOUNT SECTION
+                SectionHeader(
+                  title: localizations.account,
+                  icon: AmazingIconOutlined.user,
+                ),
+                const SizedBox(height: 12),
+                SettingsCard(
+                  child: SettingsTile(
+                    icon: Icon(AmazingIconOutlined.logout1),
+                    title: localizations.logout,
+                    subtitle: localizations.logout_description,
+                    trailing: Icon(
+                      Icons.chevron_right_rounded,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    onTap: () => context.read<AppProvider>().openDialogLogOut(),
                   ),
-                  trailing: LanguageSelector(
-                    currentLanguageCode: provider.locale.languageCode,
-                    isCompact: false, // dropdown
+                ),
+                const SizedBox(height: 32),
+
+                // about
+                SectionHeader(
+                  title: localizations.about,
+                  icon: AmazingIconOutlined.infoCircle,
+                ),
+                const SizedBox(height: 12),
+                SettingsCard(
+                  child: Column(
+                    children: [
+                      // source code link
+                      SettingsTile(
+                        icon: Icon(Icons.code_rounded),
+                        title: localizations.view_source_code,
+                        subtitle: 'View on GitHub',
+                        trailing: Icon(
+                          Icons.open_in_new_rounded,
+                          size: 20,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        onTap: () => _launchUrl(_uriRepository),
+                      ),
+                      Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: colorScheme.outlineVariant.withValues(
+                          alpha: 0.3,
+                        ),
+                      ),
+
+                      // built with Flutter
+                      SettingsTile(
+                        icon: SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: Center(
+                            child: SvgPicture.asset(
+                              'assets/icons/flutter.svg',
+                              width: 20,
+                              height: 20,
+                              colorFilter: ColorFilter.mode(
+                                colorScheme.onSurfaceVariant,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          ),
+                        ),
+                        title: 'Built with Flutter',
+                        subtitle: 'Learn more about Flutter',
+                        trailing: Icon(
+                          Icons.open_in_new_rounded,
+                          size: 20,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        onTap: () => _launchUrl(_uriFlutter),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                // app version
+                Center(
+                  child: Text(
+                    'Version 0.1.0',
+                    style: TextStyle(
+                      color: colorScheme.onSurfaceVariant,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
-
-                // github repository link
-                InkWell(
-                  onTap: () => _launchUrl(_uriRepository),
-                  onHover: (value) {},
-                  borderRadius: BorderRadius.circular(25),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 16,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.code, color: colorScheme.onSurfaceVariant),
-                        const SizedBox(width: 12),
-                        Text(
-                          localizations.view_source_code,
-                          style: TextStyle(
-                            color: colorScheme.onSurfaceVariant,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Icon(
-                          Icons.open_in_new,
-                          size: 16,
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-
-                IconButton(
-                  onPressed: () => _launchUrl(_uriFlutter),
-                  icon: Image.asset(
-                    "assets/icon/lockup_built-w-flutter.png",
-                    width: 100,
-                  ),
-                ),
               ],
             ),
           ),

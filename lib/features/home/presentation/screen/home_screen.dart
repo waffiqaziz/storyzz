@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storyzz/core/design/widgets/auth_error_view.dart';
-import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
 import 'package:storyzz/features/home/presentation/widgets/home_story_list_view.dart';
@@ -11,9 +9,6 @@ import 'package:storyzz/features/home/presentation/widgets/home_story_list_view.
 /// Displays a scrollable list of stories and handles:
 /// - Initial data loading (user + stories)
 /// - Infinite scrolling (load more stories near bottom)
-/// - Error handling and logout flow
-///
-/// - [onLogout]: Callback triggered after a successful logout.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -23,8 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 /// State logic for [HomeScreen].
 ///
-/// Manages story fetching, scroll-based pagination, error views,
-/// and logout feedback.
+/// Manages story fetching, scroll-based pagination
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
 
@@ -90,30 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
         _scrollController.position.maxScrollExtent - 500;
   }
 
-  /// Logs out the user and opens a confirmation dialog.
-  void _logOut(AuthProvider authProvider) {
-    context.read<AppProvider>().openDialogLogOut();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer2<AuthProvider, StoryProvider>(
-        builder: (context, authProvider, storyProvider, child) {
-          if (authProvider.errorMessage.isNotEmpty) {
-            return AuthErrorView(
-              errorMessage: authProvider.errorMessage,
-              onLogout: () => _logOut(authProvider),
-            );
-          }
-
-          // show list of story
-          return HomeStoriesListView(
-            scrollController: _scrollController,
-            onLogout: () => _logOut(authProvider),
-          );
-        },
-      ),
+      body: HomeStoriesListView(scrollController: _scrollController),
     );
   }
 }

@@ -45,7 +45,7 @@ class LogoutConfirmationDialog extends StatelessWidget {
           ),
           TextButton(
             onPressed: () async {
-              await context.read<AuthProvider>().logout();
+              await authProvider.logout();
               if (context.mounted) {
                 appProvider.closeDialogLogOut();
                 if (authProvider.logoutSuccess) {

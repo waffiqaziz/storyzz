@@ -423,6 +423,11 @@ class MaterialTheme {
   );
 
   List<ExtendedColor> get extendedColors => [];
+
+  static EdgeInsetsGeometry buttonPadding = const EdgeInsets.symmetric(
+    horizontal: 16,
+    vertical: 12,
+  );
 }
 
 InputDecoration customInputDecoration({

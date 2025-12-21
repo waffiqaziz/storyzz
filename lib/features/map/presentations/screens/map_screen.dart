@@ -43,7 +43,7 @@ class _MapStoryScreenState extends State<MapStoryScreen> {
       appBar: AppBar(
         title: Row(
           children: [
-            Image.asset('assets/icon/icon.png', height: 30),
+            Image.asset('assets/icons/icon.png', height: 30),
             SizedBox(width: 8),
             Text('Storyzz Map', style: TextStyle(fontWeight: FontWeight.bold)),
           ],

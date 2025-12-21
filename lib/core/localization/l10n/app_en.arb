@@ -67,8 +67,9 @@
   "logout_success": "Logout success",
   "retry": "Retry",
   "logout": "Logout",
-  "logout_confirmation": "Logout Confirmation",
-  "logout_confirmation_msg": "Are you sure you want to logout?",
+  "logout_description": "Log out of your account",
+  "logout_confirmation": "Log Out Confirmation",
+  "logout_confirmation_msg": "Are you sure you want to log out?",
   
   "login_succes": "Login success!",
   "login_failed": "Login failed. Please try again.",
@@ -123,5 +124,9 @@
   "story_not_found": "Story Not Found",
   "page_not_found": "Page Not Found",
   "page_not_found_description": "The page you're looking for doesn't exist or has been moved.",
-  "go_to_home": "Go to Home"
+  "go_to_home": "Go to Home",
+
+  "account": "Account",
+  "appearance": "Appearance",
+  "about": "About Us"
 }

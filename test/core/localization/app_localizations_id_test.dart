@@ -294,6 +294,10 @@ void main() {
       expect(appLocalizations.logout, 'Keluar');
     });
 
+    test('logout_description  returns correct value', () {
+      expect(appLocalizations.logout_description, 'Keluar dari akun Anda');
+    });
+
     test('logout_confirmation should return "Konfirmasi keluar"', () {
       expect(appLocalizations.logout_confirmation, 'Konfirmasi keluar');
     });
@@ -325,6 +329,10 @@ void main() {
 
     test('just_now should return "Baru saja"', () {
       expect(appLocalizations.just_now, 'Baru saja');
+    });
+
+    test('yesterday returns correct value', () {
+      expect(appLocalizations.yesterday, 'Kemarin');
     });
 
     test('d_ago_singular should return "hari yang lalu"', () {
@@ -603,6 +611,18 @@ void main() {
 
     test('go_to_home should return "Kembali ke Beranda"', () {
       expect(appLocalizations.go_to_home, 'Kembali ke Beranda');
+    });
+
+    test('account returns correct value', () {
+      expect(appLocalizations.account, 'Akun');
+    });    
+    
+    test('appearance returns correct value', () {
+      expect(appLocalizations.appearance, 'Tampilan');
+    });    
+    
+    test('about returns correct value', () {
+      expect(appLocalizations.about, 'Tentang Aplikasi');
     });
   });
 }

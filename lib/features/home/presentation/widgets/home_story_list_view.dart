@@ -11,23 +11,17 @@ import 'package:storyzz/features/home/presentation/widgets/home_story_card.dart'
 /// A scrollable list view that displays stories in a card format with pull-to-refresh support.
 ///
 /// This widget shows:
-/// - A sliver app bar with refresh and logout actions
+/// - A sliver app bar with refresh actions
 /// - A loading indicator while fetching stories
 /// - An empty state if no stories are available
 /// - A paginated list of [HomeStoryCard] widgets
 ///
 /// Required parameters:
 /// - [scrollController]: Controls scrolling and pagination
-/// - [onLogout]: Callback to log out the user
 class HomeStoriesListView extends StatefulWidget {
   final ScrollController scrollController;
-  final VoidCallback onLogout;
 
-  const HomeStoriesListView({
-    super.key,
-    required this.scrollController,
-    required this.onLogout,
-  });
+  const HomeStoriesListView({super.key, required this.scrollController});
 
   @override
   State<HomeStoriesListView> createState() => _HomeStoriesListViewState();
@@ -143,7 +137,7 @@ class _HomeStoriesListViewState extends State<HomeStoriesListView> {
       forceElevated: false,
       title: Row(
         children: [
-          Image.asset('assets/icon/icon.png', height: 30),
+          Image.asset('assets/icons/icon.png', height: 30),
           const SizedBox(width: 8),
           const Text('Storyzz', style: TextStyle(fontWeight: FontWeight.bold)),
         ],
@@ -157,11 +151,6 @@ class _HomeStoriesListViewState extends State<HomeStoriesListView> {
             },
           ),
           const SizedBox(width: 4),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: widget.onLogout,
-          ),
-          const SizedBox(width: 8),
         ],
       ],
       elevation: 0,

@@ -120,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         // logo/app title
-                        Image.asset('assets/icon/icon.png', height: 80),
+                        Image.asset('assets/icons/icon.png', height: 80),
                         const SizedBox(height: 16),
                         Text(
                           localizations.create_account,
