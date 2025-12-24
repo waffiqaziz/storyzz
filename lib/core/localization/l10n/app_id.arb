@@ -43,7 +43,10 @@
 
   "dark_theme": "Tema Gelap",
   "language": "Bahasa",
-  "view_source_code": "Lihat Kode Sumber",
+  "view_source_code": "Sumber Kode",
+  "view_on_github": "Buka Repositori GitHub",
+  "build_with_flutter": "Dikembangkan dengan Flutter",
+  "learn_flutter": "Pelajari lebih lanjut tentang Flutter",
   "english": "Inggris",
   "indonesian": "Indonesia",
 

@@ -43,7 +43,10 @@
   
   "dark_theme": "Dark Theme",
   "language": "Language",
-  "view_source_code": "View Source Code",
+  "view_source_code": "Source Code",
+  "view_on_github": "Open GitHub Repository",
+  "build_with_flutter": "Built with Flutter",
+  "learn_flutter": "Learn more about Flutter",
   "english": "English",
   "indonesian": "Indonesian",
   

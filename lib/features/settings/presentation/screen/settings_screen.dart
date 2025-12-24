@@ -125,7 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       SettingsTile(
                         icon: Icon(Icons.code_rounded),
                         title: localizations.view_source_code,
-                        subtitle: 'View on GitHub',
+                        subtitle: localizations.view_on_github,
                         trailing: Icon(
                           Icons.open_in_new_rounded,
                           size: 20,
@@ -158,8 +158,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                           ),
                         ),
-                        title: 'Built with Flutter',
-                        subtitle: 'Learn more about Flutter',
+                        title: localizations.build_with_flutter,
+                        subtitle: localizations.learn_flutter,
                         trailing: Icon(
                           Icons.open_in_new_rounded,
                           size: 20,
