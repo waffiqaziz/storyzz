@@ -180,7 +180,19 @@ void main() {
     });
 
     test('view_source_code returns correct value', () {
-      expect(appLocalizationsEn.view_source_code, 'View Source Code');
+      expect(appLocalizationsEn.view_source_code, 'Source Code');
+    });
+
+    test('view_on_github should  returns correct value', () {
+      expect(appLocalizationsEn.view_on_github, 'Open GitHub Repository');
+    });
+
+    test('build_with_flutter should  returns correct value', () {
+      expect(appLocalizationsEn.build_with_flutter, 'Built with Flutter');
+    });
+
+    test('learn_flutter should  returns correct value', () {
+      expect(appLocalizationsEn.learn_flutter, 'Learn more about Flutter');
     });
 
     test('english returns correct value', () {
@@ -300,8 +312,8 @@ void main() {
 
     test('just_now returns correct value', () {
       expect(appLocalizationsEn.just_now, 'Just now');
-    });    
-    
+    });
+
     test('yesterday returns correct value', () {
       expect(appLocalizationsEn.yesterday, 'Yesterday');
     });
@@ -531,16 +543,16 @@ void main() {
 
     test('go_to_home returns correct value', () {
       expect(appLocalizationsEn.go_to_home, 'Go to Home');
-    });    
-    
+    });
+
     test('account returns correct value', () {
       expect(appLocalizationsEn.account, 'Account');
-    });    
-    
+    });
+
     test('appearance returns correct value', () {
       expect(appLocalizationsEn.appearance, 'Appearance');
-    });    
-    
+    });
+
     test('about returns correct value', () {
       expect(appLocalizationsEn.about, 'About Us');
     });

@@ -202,8 +202,20 @@ void main() {
       expect(appLocalizations.language, 'Bahasa');
     });
 
-    test('view_source_code should return "Lihat Kode Sumber"', () {
-      expect(appLocalizations.view_source_code, 'Lihat Kode Sumber');
+    test('view_source_code should return "Sumber Kode"', () {
+      expect(appLocalizations.view_source_code, 'Sumber Kode');
+    });
+
+    test('view_on_github should return "Buka Repositori GitHub"', () {
+      expect(appLocalizations.view_on_github, 'Buka Repositori GitHub');
+    });    
+    
+    test('build_with_flutter should return "Dikembangkan dengan Flutter"', () {
+      expect(appLocalizations.build_with_flutter, 'Dikembangkan dengan Flutter');
+    });    
+    
+    test('learn_flutter should return "Pelajari lebih lanjut tentang Flutter"', () {
+      expect(appLocalizations.learn_flutter, 'Pelajari lebih lanjut tentang Flutter');
     });
 
     test('english should return "Inggris"', () {
@@ -615,12 +627,12 @@ void main() {
 
     test('account returns correct value', () {
       expect(appLocalizations.account, 'Akun');
-    });    
-    
+    });
+
     test('appearance returns correct value', () {
       expect(appLocalizations.appearance, 'Tampilan');
-    });    
-    
+    });
+
     test('about returns correct value', () {
       expect(appLocalizations.about, 'Tentang Aplikasi');
     });
