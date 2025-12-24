@@ -41,7 +41,11 @@ void main() {
   late AppRouter appRouter;
 
   // default test will use wide screen
-  Widget createWidgetUnderTest({String? initialLocation, double width = 1200}) {
+  Widget createWidgetUnderTest({
+    String? initialLocation,
+    double width = 1200,
+    ThemeMode themeMode = ThemeMode.light,
+  }) {
     appRouter = AppRouter(
       authProvider: mockAuthProvider,
       appProvider: mockAppProvider,
@@ -67,6 +71,9 @@ void main() {
       child: MediaQuery(
         data: MediaQueryData(size: Size(width, 800.0), devicePixelRatio: 1.0),
         child: MaterialApp.router(
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          themeMode: themeMode,
           routerConfig: appRouter.router,
           locale: const Locale('en'),
           localizationsDelegates: const [
@@ -605,6 +612,32 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.byType(NotFoundScreen), findsOneWidget);
+    });
+
+    testWidgets('should render 404 dark mode UI', (tester) async {
+      await tester.pumpWidget(createWidgetUnderTest(themeMode: ThemeMode.dark));
+
+      appRouter.router.go('/404');
+
+      // pump a few frames
+      await tester.pump(); // start navigation
+      await tester.pump(const Duration(milliseconds: 300));
+
+      expect(find.byType(NotFoundScreen), findsOneWidget);
+
+      final textWidgets = tester.widgetList<Text>(find.text('404')).toList();
+
+      final hasStrokePaint = textWidgets.any(
+        (text) => text.style?.foreground?.style == PaintingStyle.stroke,
+      );
+
+      expect(hasStrokePaint, isTrue);
+
+      await tester.tap(find.byKey(const Key('go_home_button')));
+      await tester.pump(); // start navigation
+      await tester.pump(const Duration(milliseconds: 300));
+
+      expect(find.byType(HomeScreen), findsOneWidget);
     });
 
     testWidgets('should open SettingsScreen', (tester) async {

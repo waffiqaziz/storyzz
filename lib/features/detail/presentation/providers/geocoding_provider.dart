@@ -6,6 +6,11 @@ import 'package:storyzz/core/utils/helper.dart';
 class GeocodingProvider extends ChangeNotifier {
   GeocodingState _state = const GeocodingState.initial();
 
+  // injection for testing
+  final Future<List<Placemark>> Function(double, double)? geocodingFunction;
+
+  GeocodingProvider({this.geocodingFunction});
+
   GeocodingState get state => _state;
 
   /// Fetches address from coordinates using geocoding package
@@ -14,7 +19,9 @@ class GeocodingProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final placemarks = await placemarkFromCoordinates(latitude, longitude);
+      final placemarks = geocodingFunction != null
+          ? await geocodingFunction!(latitude, longitude)
+          : await placemarkFromCoordinates(latitude, longitude);
 
       if (placemarks.isEmpty) {
         _state = const GeocodingState.error('No address found');
