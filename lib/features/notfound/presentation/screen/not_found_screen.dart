@@ -91,6 +91,7 @@ class _NotFoundScreenState extends State<NotFoundScreen>
 
               // button to go home
               ElevatedButton.icon(
+                key: const Key('go_home_button'),
                 onPressed: () => context.go('/'),
                 icon: Icon(
                   color: theme.colorScheme.surfaceContainerLowest,
