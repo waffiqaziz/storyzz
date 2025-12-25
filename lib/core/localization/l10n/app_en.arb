@@ -131,5 +131,8 @@
 
   "account": "Account",
   "appearance": "Appearance",
-  "about": "About Us"
+  "about": "About Us",
+
+  "version": "Version: ",
+  "last_update": "Last updated: "
 }

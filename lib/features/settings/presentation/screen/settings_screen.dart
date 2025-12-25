@@ -6,9 +6,11 @@ import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
+import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/features/settings/presentation/widgets/section_header.dart';
 import 'package:storyzz/features/settings/presentation/widgets/settings_card.dart';
 import 'package:storyzz/features/settings/presentation/widgets/settings_tile.dart';
+import 'package:storyzz/features/settings/presentation/widgets/version_display.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -173,15 +175,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const SizedBox(height: 24),
 
                 // app version
-                Center(
-                  child: Text(
-                    'Version 0.1.0',
-                    style: TextStyle(
-                      color: colorScheme.onSurfaceVariant,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
+                VersionDisplay(appService: AppService()),
                 const SizedBox(height: 16),
               ],
             ),

@@ -132,5 +132,8 @@
 
   "account": "Akun",
   "appearance": "Tampilan",
-  "about": "Tentang Aplikasi"
+  "about": "Tentang Aplikasi",
+
+  "version": "Versi: ",
+  "last_update": "Terakhir diperbaharui: "
 }
