@@ -116,23 +116,8 @@ void main() {
     });
   });
 
-  // TODO: Not yet tested
+  // TODO: missing test
   group('setLocale', () {
-    // test('should update locale successfully', () async {
-    //   // when(() => mockRepository.setLocale("id")).thenAnswer((_) async => {});
-    //   // when(
-    //   //   () => mockRepository.getString(SettingsPrefsKeys.languageKey),
-    //   // ).thenReturn('id');
-
-    //   await provider.setLocale('id');
-
-    //   expect(provider.locale.languageCode, 'id');
-    //   expect(provider.setting?.locale, 'id');
-    //   expect(provider.message, 'Language successfully updated');
-
-    //   verify(() => mockRepository.setLocale('es')).called(1);
-    // });
-
     test('should handle locale update error when preferences fails', () async {
       when(
         () => mockRepository.setLocale('es'),
@@ -143,22 +128,5 @@ void main() {
       expect(provider.message, 'Failed to update language. Please try again.');
       verify(() => mockRepository.setLocale('es')).called(1);
     });
-
-    // TODO:
-    // test('should create new setting if null using system theme', () async {
-    //   when(() => mockRepository.isDarkModeSet()).thenReturn(false);
-    //   when(() => mockRepository.getLanguage()).thenReturn('es');
-    //   when(() => mockRepository.setLocale('es')).thenAnswer((_) async => {});
-
-    //   provider = SettingsProvider(mockRepository);
-
-    //   await provider.setLocale('es');
-
-    //   expect(provider.setting?.locale, 'es');
-    //   expect(provider.setting?.isDark, true);
-    //   expect(provider.locale.languageCode, 'es');
-    //   verify(() => mockRepository.setLocale('es')).called(1);
-    //   verify(() => mockRepository.getLanguage()).called(2);
-    // });
   });
 }
