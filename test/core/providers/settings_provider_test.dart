@@ -26,14 +26,16 @@ void main() {
     ).thenReturn(Setting(isDark: true, locale: 'en'));
 
     TestWidgetsFlutterBinding
-        .instance
-        .platformDispatcher
-        .platformBrightnessTestValue = Brightness.dark;
+            .instance
+            .platformDispatcher
+            .platformBrightnessTestValue =
+        Brightness.dark;
     provider = SettingsProvider(mockRepository);
     TestWidgetsFlutterBinding
-        .instance
-        .platformDispatcher
-        .platformBrightnessTestValue = Brightness.light;
+            .instance
+            .platformDispatcher
+            .platformBrightnessTestValue =
+        Brightness.light;
 
     reset(mockRepository);
   });

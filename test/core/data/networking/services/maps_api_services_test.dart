@@ -56,7 +56,6 @@ void main() {
     test(
       'getAddressFromCoordinates returns GeocodingResponse on successful API call',
       () async {
-        // Arrange
         final double lat = 37.7749;
         final double lon = -122.4194;
 
@@ -102,7 +101,6 @@ void main() {
     test(
       'getAddressFromCoordinates throws exception on non-200 response',
       () async {
-        // Arrange
         final double lat = 37.7749;
         final double lon = -122.4194;
 
@@ -126,7 +124,6 @@ void main() {
     test(
       'getAddressFromCoordinates throws exception on client error',
       () async {
-        // Arrange
         final double lat = 37.7749;
         final double lon = -122.4194;
 
@@ -150,11 +147,9 @@ void main() {
     test(
       'getAddressFromCoordinates uses correct API key from environment',
       () async {
-        // Arrange
         final double lat = 40.7128;
         final double lon = -74.0060;
 
-        // Create a new service instance with the updated environment
         final newService = MapsApiService(httpClient: mockHttpClient);
 
         final expectedUri = Uri.https('geocode.maps.co', '/reverse', {

@@ -40,10 +40,9 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      final localizedError =
-          AppLocalizations.of(
-            tester.element(find.byType(StoryErrorView)),
-          )!.error_loading_stories;
+      final localizedError = AppLocalizations.of(
+        tester.element(find.byType(StoryErrorView)),
+      )!.error_loading_stories;
       expect(find.byIcon(Icons.warning_amber_rounded), findsOneWidget);
       expect(find.text('$localizedError $testErrorMessage'), findsOneWidget);
       expect(find.byType(ElevatedButton), findsOneWidget);

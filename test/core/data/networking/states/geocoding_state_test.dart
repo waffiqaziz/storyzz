@@ -128,7 +128,7 @@ void main() {
       expect(const GeocodingState.error('Error').hasAddress, false);
     });
   });
-  
+
   group('GeocodingStateX Extension - Context Localizations', () {
     testWidgets(
       'getAddressOrFallback uses AppLocalizations.of(context) when localizations parameter is null',

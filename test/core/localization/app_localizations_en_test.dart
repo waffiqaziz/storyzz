@@ -556,5 +556,13 @@ void main() {
     test('about returns correct value', () {
       expect(appLocalizationsEn.about, 'About Us');
     });
+
+    test('version returns correct value', () {
+      expect(appLocalizationsEn.version, 'Version: ');
+    });
+
+    test('last_update returns correct value', () {
+      expect(appLocalizationsEn.last_update, 'Last updated: ');
+    });
   });
 }

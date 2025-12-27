@@ -208,15 +208,24 @@ void main() {
 
     test('view_on_github should return "Buka Repositori GitHub"', () {
       expect(appLocalizations.view_on_github, 'Buka Repositori GitHub');
-    });    
-    
-    test('build_with_flutter should return "Dikembangkan dengan Flutter"', () {
-      expect(appLocalizations.build_with_flutter, 'Dikembangkan dengan Flutter');
-    });    
-    
-    test('learn_flutter should return "Pelajari lebih lanjut tentang Flutter"', () {
-      expect(appLocalizations.learn_flutter, 'Pelajari lebih lanjut tentang Flutter');
     });
+
+    test('build_with_flutter should return "Dikembangkan dengan Flutter"', () {
+      expect(
+        appLocalizations.build_with_flutter,
+        'Dikembangkan dengan Flutter',
+      );
+    });
+
+    test(
+      'learn_flutter should return "Pelajari lebih lanjut tentang Flutter"',
+      () {
+        expect(
+          appLocalizations.learn_flutter,
+          'Pelajari lebih lanjut tentang Flutter',
+        );
+      },
+    );
 
     test('english should return "Inggris"', () {
       expect(appLocalizations.english, 'Inggris');
@@ -635,6 +644,14 @@ void main() {
 
     test('about returns correct value', () {
       expect(appLocalizations.about, 'Tentang Aplikasi');
+    });
+
+    test('version returns correct value', () {
+      expect(appLocalizations.version, 'Versi: ');
+    });
+
+    test('last_update returns correct value', () {
+      expect(appLocalizations.last_update, 'Terakhir diperbaharui: ');
     });
   });
 }
