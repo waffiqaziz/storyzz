@@ -26,14 +26,16 @@ void main() {
     ).thenReturn(Setting(isDark: true, locale: 'en'));
 
     TestWidgetsFlutterBinding
-        .instance
-        .platformDispatcher
-        .platformBrightnessTestValue = Brightness.dark;
+            .instance
+            .platformDispatcher
+            .platformBrightnessTestValue =
+        Brightness.dark;
     provider = SettingsProvider(mockRepository);
     TestWidgetsFlutterBinding
-        .instance
-        .platformDispatcher
-        .platformBrightnessTestValue = Brightness.light;
+            .instance
+            .platformDispatcher
+            .platformBrightnessTestValue =
+        Brightness.light;
 
     reset(mockRepository);
   });
@@ -142,6 +144,7 @@ void main() {
       verify(() => mockRepository.setLocale('es')).called(1);
     });
 
+    // TODO:
     // test('should create new setting if null using system theme', () async {
     //   when(() => mockRepository.isDarkModeSet()).thenReturn(false);
     //   when(() => mockRepository.getLanguage()).thenReturn('es');

@@ -1,4 +1,3 @@
-// filepath: d:\pem\Dart\Flutter\intermediate\submission\storyzz\test\core\data\networking\responses\stories_response_test.dart
 import 'package:flutter_test/flutter_test.dart';
 import 'package:storyzz/core/data/networking/models/story/list_story.dart';
 import 'package:storyzz/core/data/networking/models/story/stories_response.dart';

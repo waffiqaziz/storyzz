@@ -7,6 +7,7 @@ import 'package:storyzz/core/data/models/user.dart';
 import 'package:storyzz/core/data/networking/models/story/list_story.dart';
 import 'package:storyzz/core/data/networking/states/story_load_state.dart';
 import 'package:storyzz/core/design/widgets/language_dialog_screen.dart';
+import 'package:storyzz/core/design/widgets/logout_confirmation_dialog.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/navigation/app_router.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
@@ -18,7 +19,6 @@ import 'package:storyzz/features/auth/presentation/screen/register_screen.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_dialog.dart';
 import 'package:storyzz/features/detail/presentation/screen/detail_screen.dart';
 import 'package:storyzz/features/home/presentation/screen/home_screen.dart';
-import 'package:storyzz/features/home/presentation/widgets/logout_confirmation_dialog.dart';
 import 'package:storyzz/features/main_screen.dart';
 import 'package:storyzz/features/map/presentations/providers/map_provider.dart';
 import 'package:storyzz/features/map/presentations/screens/map_screen.dart';
@@ -239,9 +239,7 @@ void main() {
       final bool isLoggedIn = await mockAuthProvider.isLogged();
       expect(isLoggedIn, isFalse);
     });
-  });
 
-  group('Navigation between auth screens', () {
     testWidgets(
       'should navigate from login to register when appProvider.isRegister is true',
       (tester) async {
@@ -326,6 +324,32 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      expect(find.byType(SettingsScreen), findsOneWidget);
+    });
+
+    testWidgets('should navigate to correct page when tab is selected', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.pumpAndSettle();
+
+      expect(find.byType(HomeScreen), findsOneWidget);
+
+      final mainScreen = tester.widget<MainScreen>(find.byType(MainScreen));
+      mainScreen.onTabChanged(0);
+      await tester.pumpAndSettle();
+      expect(find.byType(HomeScreen), findsOneWidget);
+
+      mainScreen.onTabChanged(1);
+      await tester.pumpAndSettle();
+      expect(find.byType(MapStoryScreen), findsOneWidget);
+
+      mainScreen.onTabChanged(2);
+      await tester.pumpAndSettle();
+      expect(find.byType(UploadStoryScreen), findsOneWidget);
+
+      mainScreen.onTabChanged(3);
+      await tester.pumpAndSettle();
       expect(find.byType(SettingsScreen), findsOneWidget);
     });
   });
@@ -567,30 +591,17 @@ void main() {
       },
     );
 
-    testWidgets('should navigate to correct page when tab is selected', (
+    testWidgets('should show logout dialog when isDialogLogOutOpen is true', (
       tester,
     ) async {
-      await tester.pumpWidget(createWidgetUnderTest());
+      when(() => mockAppProvider.isDialogLogOutOpen).thenReturn(true);
+
+      await tester.pumpWidget(
+        createWidgetUnderTest(initialLocation: '/upload'),
+      );
       await tester.pumpAndSettle();
 
-      expect(find.byType(HomeScreen), findsOneWidget);
-
-      final mainScreen = tester.widget<MainScreen>(find.byType(MainScreen));
-      mainScreen.onTabChanged(0);
-      await tester.pumpAndSettle();
-      expect(find.byType(HomeScreen), findsOneWidget);
-
-      mainScreen.onTabChanged(1);
-      await tester.pumpAndSettle();
-      expect(find.byType(MapStoryScreen), findsOneWidget);
-
-      mainScreen.onTabChanged(2);
-      await tester.pumpAndSettle();
-      expect(find.byType(UploadStoryScreen), findsOneWidget);
-
-      mainScreen.onTabChanged(3);
-      await tester.pumpAndSettle();
-      expect(find.byType(SettingsScreen), findsOneWidget);
+      expect(find.byType(AlertDialog), findsOneWidget);
     });
   });
 

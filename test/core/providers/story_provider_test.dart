@@ -152,15 +152,11 @@ void main() {
         await storyProvider.getStories(user: mockUser);
 
         expect(storyProvider.stories.length, equals(2));
-        expect(
-          storyProvider.hasMoreStories,
-          false,
-        ); // Because length < pageSize
+        expect(storyProvider.hasMoreStories, false);
 
-        // Second page shouldn't be called because hasMoreStories is false
         await storyProvider.getStories(user: mockUser);
 
-        // Stories length should still be 2 because no more stories were loaded
+        // stories length should still be 2 because no more stories were loaded
         expect(storyProvider.stories.length, equals(2));
       });
     });
