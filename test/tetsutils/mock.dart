@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -107,3 +109,9 @@ class MockSharedPreferences extends Mock implements SharedPreferences {}
 class MockAppService extends Mock implements AppService {}
 
 class MockStreamedResponse extends Mock implements http.StreamedResponse {}
+
+class MockGoogleMapController extends Mock implements GoogleMapController {}
+
+class MockXFile extends Mock implements XFile {}
+
+class FakeCameraDescription extends Fake implements CameraDescription {}

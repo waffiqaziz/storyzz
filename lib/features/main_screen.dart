@@ -58,11 +58,11 @@ class _MainScreenState extends State<MainScreen> {
   Widget _buildContent() {
     return AnimatedTabSwitcher(
       index: widget.currentIndex,
-      children: const [
-        HomeScreen(),
-        MapStoryScreen(),
-        UploadStoryScreen(),
-        SettingsScreen(),
+      children: [
+        const HomeScreen(),
+        const MapStoryScreen(),
+        UploadStoryScreen(appService: AppService()),
+        const SettingsScreen(),
       ],
     );
   }
