@@ -26,6 +26,9 @@ import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/core/utils/environment.dart';
 import 'package:storyzz/features/detail/presentation/providers/geocoding_provider.dart';
 import 'package:storyzz/features/map/presentations/providers/map_provider.dart';
+import 'package:storyzz/features/map/services/map_service.dart';
+import 'package:storyzz/features/upload_story/presentation/providers/upload_location_loading_provider.dart';
+import 'package:storyzz/features/upload_story/presentation/providers/upload_map_controller_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 
 class MockHttpClient extends Mock implements http.Client {}
@@ -115,3 +118,15 @@ class MockGoogleMapController extends Mock implements GoogleMapController {}
 class MockXFile extends Mock implements XFile {}
 
 class FakeCameraDescription extends Fake implements CameraDescription {}
+
+class MockUploadLocationLoadingProvider extends Mock
+    implements UploadLocationLoadingProvider {}
+
+class MockUploadMapControllerProvider extends Mock
+    implements UploadMapControllerProvider {}
+
+class MockScrollPosition extends Mock implements ScrollPosition {}
+
+class FakeCameraUpdate extends Fake implements CameraUpdate {}
+
+class MockMapService extends Mock implements MapService {}

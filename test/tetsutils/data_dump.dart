@@ -8,21 +8,22 @@ final dumpTestUser = const User(
   password: 'password123',
 );
 
-final dumpTestStory = [
-  ListStory(
-    id: '1',
-    name: 'My Name',
-    description: 'Test story 1',
-    photoUrl: 'https://example.com/photo1.jpg',
-    createdAt: DateTime.now(),
-    lat: -6.2088,
-    lon: 106.8456,
-  ),
-  ListStory(
-    id: '2',
-    name: 'Your Name',
-    description: 'Test story 2',
-    photoUrl: 'https://example.com/photo2.jpg',
-    createdAt: DateTime.now(),
-  ),
-];
+final dumpTestlistStory1 = ListStory(
+  id: '1',
+  name: 'My Name',
+  description: 'Test story 1',
+  photoUrl: 'https://example.com/photo1.jpg',
+  createdAt: DateTime.now(),
+  lat: -6.2088,
+  lon: 106.8456,
+);
+
+final dumpTestlistStory2 = ListStory(
+  id: '2',
+  name: 'Your Name',
+  description: 'Test story 2',
+  photoUrl: 'https://example.com/photo2.jpg',
+  createdAt: DateTime.now(),
+);
+
+final dumpTestStoryList = [dumpTestlistStory1, dumpTestlistStory2];
