@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +26,9 @@ import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/core/utils/environment.dart';
 import 'package:storyzz/features/detail/presentation/providers/geocoding_provider.dart';
 import 'package:storyzz/features/map/presentations/providers/map_provider.dart';
+import 'package:storyzz/features/map/services/map_service.dart';
+import 'package:storyzz/features/upload_story/presentation/providers/upload_location_loading_provider.dart';
+import 'package:storyzz/features/upload_story/presentation/providers/upload_map_controller_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 
 class MockHttpClient extends Mock implements http.Client {}
@@ -107,3 +112,21 @@ class MockSharedPreferences extends Mock implements SharedPreferences {}
 class MockAppService extends Mock implements AppService {}
 
 class MockStreamedResponse extends Mock implements http.StreamedResponse {}
+
+class MockGoogleMapController extends Mock implements GoogleMapController {}
+
+class MockXFile extends Mock implements XFile {}
+
+class FakeCameraDescription extends Fake implements CameraDescription {}
+
+class MockUploadLocationLoadingProvider extends Mock
+    implements UploadLocationLoadingProvider {}
+
+class MockUploadMapControllerProvider extends Mock
+    implements UploadMapControllerProvider {}
+
+class MockScrollPosition extends Mock implements ScrollPosition {}
+
+class FakeCameraUpdate extends Fake implements CameraUpdate {}
+
+class MockMapService extends Mock implements MapService {}

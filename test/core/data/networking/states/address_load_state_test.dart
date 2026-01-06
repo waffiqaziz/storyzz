@@ -1,4 +1,3 @@
-// filepath: lib/core/data/networking/states/address_load_state_test.dart
 import 'package:flutter_test/flutter_test.dart';
 import 'package:storyzz/core/data/networking/states/address_load_state.dart';
 

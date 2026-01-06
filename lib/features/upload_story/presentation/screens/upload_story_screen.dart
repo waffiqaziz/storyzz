@@ -26,7 +26,8 @@ import 'package:storyzz/features/upload_story/services/image_picker_services.dar
 /// The camera and gallery behavior is abstracted via [CameraService] and [ImagePickerService].
 /// Premium gating for location features is handled by [BuildConfig.canAddLocation].
 class UploadStoryScreen extends StatefulWidget {
-  const UploadStoryScreen({super.key});
+  final AppService appService;
+  const UploadStoryScreen({super.key, required this.appService});
 
   @override
   State<UploadStoryScreen> createState() => _UploadStoryScreenState();
@@ -38,7 +39,6 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   late UploadStoryProvider _uploadStoryProvider;
   final TextEditingController _captionController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final AppService _appService = AppService();
 
   @override
   void initState() {
@@ -71,7 +71,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
   }
 
   Future<void> _handleCameraButton() async {
-    if (_appService.getKIsWeb()) {
+    if (widget.appService.getKIsWeb()) {
       await _cameraService.handleWebCamera();
     } else {
       await _imagePickerService.pickImage(ImageSource.camera);
@@ -172,7 +172,6 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     final imageFile = uploadProvider.imageFile;
     final isUploading = uploadProvider.isLoading;
     final showCamera = uploadProvider.showCamera;
-    final AppService appService = AppService();
 
     // get build-time constant for web platform
     final appFlavor = const String.fromEnvironment(
@@ -259,7 +258,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                       // build variant for android
                       // and
                       // build-time constants for web platform
-                      if (appService.getKIsWeb()) ...[
+                      if (widget.appService.getKIsWeb()) ...[
                         if (isPaidVersion)
                           StatefulBuilder(
                             builder:

@@ -9,8 +9,6 @@ void main() {
   late GoRouter router;
 
   setUp(() {
-    // test router, just for testing purposes and not the real scenario
-    // in the real scenario, the router will be initialized in the my_app.dart file
     router = GoRouter(
       initialLocation: '/',
       routes: [

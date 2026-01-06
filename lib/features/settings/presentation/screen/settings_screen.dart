@@ -7,11 +7,11 @@ import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
+import 'package:storyzz/core/utils/helper.dart';
 import 'package:storyzz/features/settings/presentation/widgets/section_header.dart';
 import 'package:storyzz/features/settings/presentation/widgets/settings_card.dart';
 import 'package:storyzz/features/settings/presentation/widgets/settings_tile.dart';
 import 'package:storyzz/features/settings/presentation/widgets/version_display.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -21,15 +21,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final Uri _uriRepository = Uri.parse('https://github.com/waffiqaziz/storyzz');
-  final Uri _uriFlutter = Uri.parse('https://flutter.dev');
-
-  Future<void> _launchUrl(Uri url) async {
-    if (!await launchUrl(url)) {
-      throw Exception('Could not launch $url');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<SettingsProvider>();
@@ -133,7 +124,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           size: 20,
                           color: colorScheme.onSurfaceVariant,
                         ),
-                        onTap: () => _launchUrl(_uriRepository),
+                        onTap: () =>
+                            openUrl('https://github.com/waffiqaziz/storyzz'),
                       ),
                       Divider(
                         height: 1,
@@ -167,7 +159,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           size: 20,
                           color: colorScheme.onSurfaceVariant,
                         ),
-                        onTap: () => _launchUrl(_uriFlutter),
+                        onTap: () => openUrl('https://flutter.dev'),
                       ),
                     ],
                   ),

@@ -115,14 +115,16 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
-      await tester.enterText(find.byType(TextFormField).at(0), 'John Doe');
+      await tester.enterText(find.byType(TextFormField).at(0), userTest.name!);
+      await tester.enterText(find.byType(TextFormField).at(1), userTest.email!);
       await tester.enterText(
-        find.byType(TextFormField).at(1),
-        'john@example.com',
+        find.byType(TextFormField).at(2),
+        userTest.password!,
       );
-      final password = 'password123';
-      await tester.enterText(find.byType(TextFormField).at(2), password);
-      await tester.enterText(find.byType(TextFormField).at(3), password);
+      await tester.enterText(
+        find.byType(TextFormField).at(3),
+        userTest.password!,
+      );
 
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
@@ -140,14 +142,16 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
-      await tester.enterText(find.byType(TextFormField).at(0), 'John Doe');
+      await tester.enterText(find.byType(TextFormField).at(0), userTest.name!);
+      await tester.enterText(find.byType(TextFormField).at(1), userTest.email!);
       await tester.enterText(
-        find.byType(TextFormField).at(1),
-        'john@example.com',
+        find.byType(TextFormField).at(2),
+        userTest.password!,
       );
-      final password = 'password123';
-      await tester.enterText(find.byType(TextFormField).at(2), password);
-      await tester.enterText(find.byType(TextFormField).at(3), password);
+      await tester.enterText(
+        find.byType(TextFormField).at(3),
+        userTest.password!,
+      );
 
       await tester.tap(find.byType(ElevatedButton));
       await tester.pump();
@@ -168,14 +172,16 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
-      await tester.enterText(find.byType(TextFormField).at(0), 'John Doe');
+      await tester.enterText(find.byType(TextFormField).at(0), userTest.name!);
+      await tester.enterText(find.byType(TextFormField).at(1), userTest.email!);
       await tester.enterText(
-        find.byType(TextFormField).at(1),
-        'john@example.com',
+        find.byType(TextFormField).at(2),
+        userTest.password!,
       );
-      final password = 'password123';
-      await tester.enterText(find.byType(TextFormField).at(2), password);
-      await tester.enterText(find.byType(TextFormField).at(3), password);
+      await tester.enterText(
+        find.byType(TextFormField).at(3),
+        userTest.password!,
+      );
 
       await tester.tap(find.byType(ElevatedButton));
       await tester.pump();
@@ -212,13 +218,15 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
+      await tester.enterText(find.byType(TextFormField).at(1), userTest.email!);
       await tester.enterText(
-        find.byType(TextFormField).at(1),
-        'john@example.com',
+        find.byType(TextFormField).at(2),
+        userTest.password!,
       );
-      final password = 'password123';
-      await tester.enterText(find.byType(TextFormField).at(2), password);
-      await tester.enterText(find.byType(TextFormField).at(3), password);
+      await tester.enterText(
+        find.byType(TextFormField).at(3),
+        userTest.password!,
+      );
 
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
@@ -230,10 +238,15 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
-      await tester.enterText(find.byType(TextFormField).at(0), 'John Doe');
-      final password = 'password123';
-      await tester.enterText(find.byType(TextFormField).at(2), password);
-      await tester.enterText(find.byType(TextFormField).at(3), password);
+      await tester.enterText(find.byType(TextFormField).at(0), userTest.name!);
+      await tester.enterText(
+        find.byType(TextFormField).at(2),
+        userTest.password!,
+      );
+      await tester.enterText(
+        find.byType(TextFormField).at(3),
+        userTest.password!,
+      );
 
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
@@ -245,11 +258,8 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
-      await tester.enterText(find.byType(TextFormField).at(0), 'John Doe');
-      await tester.enterText(
-        find.byType(TextFormField).at(1),
-        'john@example.com',
-      );
+      await tester.enterText(find.byType(TextFormField).at(0), userTest.name!);
+      await tester.enterText(find.byType(TextFormField).at(1), userTest.email!);
 
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
@@ -262,11 +272,16 @@ void main() {
       await tester.pumpAndSettle();
 
       // Fill all fields with invalid email
-      await tester.enterText(find.byType(TextFormField).at(0), 'John Doe');
+      await tester.enterText(find.byType(TextFormField).at(0), userTest.name!);
       await tester.enterText(find.byType(TextFormField).at(1), 'invalid-email');
-      final password = 'password123';
-      await tester.enterText(find.byType(TextFormField).at(2), password);
-      await tester.enterText(find.byType(TextFormField).at(3), password);
+      await tester.enterText(
+        find.byType(TextFormField).at(2),
+        userTest.password!,
+      );
+      await tester.enterText(
+        find.byType(TextFormField).at(3),
+        userTest.password!,
+      );
 
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
@@ -279,11 +294,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Fill all fields with short password
-      await tester.enterText(find.byType(TextFormField).at(0), 'John Doe');
-      await tester.enterText(
-        find.byType(TextFormField).at(1),
-        'john@example.com',
-      );
+      await tester.enterText(find.byType(TextFormField).at(0), userTest.name!);
+      await tester.enterText(find.byType(TextFormField).at(1), userTest.email!);
       final shortPassword = '123';
       await tester.enterText(find.byType(TextFormField).at(2), shortPassword);
       await tester.enterText(find.byType(TextFormField).at(3), shortPassword);
@@ -303,12 +315,8 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
-      await tester.enterText(find.byType(TextFormField).at(0), 'John Doe');
-      await tester.enterText(
-        find.byType(TextFormField).at(1),
-        'john@example.com',
-      );
-      await tester.enterText(find.byType(TextFormField).at(2), 'password123');
+      await tester.enterText(find.byType(TextFormField).at(0), userTest.name!);
+      await tester.enterText(find.byType(TextFormField).at(1), userTest.email!);
       await tester.enterText(find.byType(TextFormField).at(3), 'password456');
 
       await tester.tap(find.byType(ElevatedButton));
@@ -322,7 +330,6 @@ void main() {
       (tester) async {
         final dpi = tester.view.devicePixelRatio;
         tester.view.physicalSize = Size(412 * dpi, 1200 * dpi);
-        final password = 'password123';
 
         when(() => mockAuthProvider.isLoadingRegister).thenReturn(false);
         when(() => mockAuthProvider.register(userTest)).thenAnswer((_) async {
@@ -338,11 +345,17 @@ void main() {
         final registerButton = find.byType(ElevatedButton);
         final loadingIndicator = find.byType(CircularProgressIndicator);
 
-        await tester.enterText(nameField, 'John Doe');
-        await tester.enterText(emailField, 'john@example.com');
+        await tester.enterText(nameField, userTest.name!);
+        await tester.enterText(emailField, userTest.email!);
 
-        await tester.enterText(find.byType(TextFormField).at(2), password);
-        await tester.enterText(find.byType(TextFormField).at(3), password);
+        await tester.enterText(
+          find.byType(TextFormField).at(2),
+          userTest.password!,
+        );
+        await tester.enterText(
+          find.byType(TextFormField).at(3),
+          userTest.password!,
+        );
         await tester.tap(registerButton);
 
         await tester.pump();
@@ -363,14 +376,22 @@ void main() {
         await tester.pumpWidget(createWidgetUnderTest());
         await tester.pumpAndSettle();
 
-        await tester.enterText(find.byType(TextFormField).at(0), 'John Doe');
+        await tester.enterText(
+          find.byType(TextFormField).at(0),
+          userTest.name!,
+        );
         await tester.enterText(
           find.byType(TextFormField).at(1),
-          'john@example.com',
+          userTest.email!,
         );
-        final password = 'password123';
-        await tester.enterText(find.byType(TextFormField).at(2), password);
-        await tester.enterText(find.byType(TextFormField).at(3), password);
+        await tester.enterText(
+          find.byType(TextFormField).at(2),
+          userTest.password!,
+        );
+        await tester.enterText(
+          find.byType(TextFormField).at(3),
+          userTest.password!,
+        );
 
         await tester.tap(find.byType(ElevatedButton));
         await tester.pumpAndSettle();

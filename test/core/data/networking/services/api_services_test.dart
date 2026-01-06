@@ -561,6 +561,7 @@ void main() {
         );
 
         expect(result.message, equals("Invalid file format"));
+        // TODO: not yet
         // verify(() => mockHttpClient.send(any())).called(1);
       });
 
@@ -588,6 +589,7 @@ void main() {
         );
 
         expect(result.message, equals("Server error: Status code 500"));
+        // TODO: not yet
         // verify(() => mockHttpClient.send(any())).called(1);
       });
     });

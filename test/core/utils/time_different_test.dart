@@ -17,10 +17,7 @@ void main() {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en'), // English
-        // Add other supported locales as needed
-      ],
+      supportedLocales: const [Locale('en')],
       home: child,
     );
   }

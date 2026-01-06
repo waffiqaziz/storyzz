@@ -1,4 +1,3 @@
-// filepath: lib/core/data/networking/states/story_load_state_test.dart
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:storyzz/core/data/networking/models/story/list_story.dart';

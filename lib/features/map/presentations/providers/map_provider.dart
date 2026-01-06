@@ -17,7 +17,7 @@ import 'package:storyzz/features/map/services/map_service.dart';
 /// Requires [AuthProvider] and [StoryProvider].
 /// Call [initData] to load initial data.
 class MapProvider extends ChangeNotifier {
-  final MapService _mapService = MapService();
+  final MapService _mapService;
   final AuthProvider _authProvider;
   final StoryProvider _storyProvider;
   final ScrollController scrollController = ScrollController();
@@ -26,9 +26,11 @@ class MapProvider extends ChangeNotifier {
   bool isMapReady = false;
 
   MapProvider({
+    MapService? mapService,
     required AuthProvider authProvider,
     required StoryProvider storyProvider,
-  }) : _authProvider = authProvider,
+  }) : _mapService = mapService ?? MapService(),
+       _authProvider = authProvider,
        _storyProvider = storyProvider {
     _setupScrollListener();
   }

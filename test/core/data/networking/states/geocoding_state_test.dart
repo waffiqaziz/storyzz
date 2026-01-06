@@ -1,4 +1,3 @@
-// filepath: lib/core/data/networking/states/address_load_state_test.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -128,7 +127,7 @@ void main() {
       expect(const GeocodingState.error('Error').hasAddress, false);
     });
   });
-  
+
   group('GeocodingStateX Extension - Context Localizations', () {
     testWidgets(
       'getAddressOrFallback uses AppLocalizations.of(context) when localizations parameter is null',

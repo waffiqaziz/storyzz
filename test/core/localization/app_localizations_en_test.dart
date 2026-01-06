@@ -1,4 +1,3 @@
-// filepath: lib/core/localization/l10n/app_localizations_en_test.dart
 import 'package:flutter_test/flutter_test.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations_en.dart';
 
@@ -555,6 +554,14 @@ void main() {
 
     test('about returns correct value', () {
       expect(appLocalizationsEn.about, 'About Us');
+    });
+
+    test('version returns correct value', () {
+      expect(appLocalizationsEn.version, 'Version: ');
+    });
+
+    test('last_update returns correct value', () {
+      expect(appLocalizationsEn.last_update, 'Last updated: ');
     });
   });
 }
