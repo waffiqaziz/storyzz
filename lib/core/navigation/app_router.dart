@@ -249,6 +249,7 @@ class AppRouter {
       '/login',
       '/login/language-dialog',
       '/register',
+      '/register/language-dialog',
       '/map/logout-confirmation',
       '/upload/logout-confirmation',
       '/settings/logout-confirmation',
