@@ -277,17 +277,17 @@ void main() {
     });
 
     test('logout_description  returns correct value', () {
-      expect(appLocalizationsEn.logout_description, 'Log out of your account');
+      expect(appLocalizationsEn.logout_description, 'Logout of your account');
     });
 
     test('logout_confirmation returns correct value', () {
-      expect(appLocalizationsEn.logout_confirmation, 'Log Out Confirmation');
+      expect(appLocalizationsEn.logout_confirmation, 'Logout Confirmation');
     });
 
     test('logout_confirmation_msg returns correct value', () {
       expect(
         appLocalizationsEn.logout_confirmation_msg,
-        'Are you sure you want to log out?',
+        'Are you sure you want to logout ?',
       );
     });
 

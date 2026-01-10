@@ -37,7 +37,7 @@ class DetailFullScreenMap extends StatelessWidget {
                 foregroundColor: Colors.black,
                 child: const Icon(Icons.close),
                 onPressed: () {
-                  context.read<AppProvider>().closeDetailFullScreenMap();
+                  context.read<AppProvider>().closeDetailMapFullScreen();
                 },
               ),
             ),

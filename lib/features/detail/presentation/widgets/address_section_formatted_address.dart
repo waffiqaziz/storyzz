@@ -15,15 +15,17 @@ class AddressSectionFormattedAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
-          child: Text(address, style: const TextStyle(fontSize: 16)),
+          child: Text(address, style: Theme.of(context).textTheme.bodyMedium),
         ),
         Text(
           '$latText, $lonText',
-          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+          style: Theme.of(
+            context,
+          ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
         ),
       ],
     );

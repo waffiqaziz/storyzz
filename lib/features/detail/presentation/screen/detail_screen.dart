@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
-import 'package:storyzz/core/utils/helper.dart';
+import 'package:storyzz/features/detail/presentation/widgets/author_info.dart';
 import 'package:storyzz/features/detail/presentation/widgets/detail_image.dart';
 import 'package:storyzz/features/detail/presentation/widgets/location_section.dart';
 
@@ -31,7 +31,7 @@ class StoryDetailScreen extends StatelessWidget {
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.read<AppProvider>().closeDetail();
+            context.read<AppProvider>().closeDetailScreen();
           });
         }
       },
@@ -39,21 +39,21 @@ class StoryDetailScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             localizations.story_details,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: .bold),
           ),
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.read<AppProvider>().closeDetail();
+                context.read<AppProvider>().closeDetailScreen();
               });
             },
           ),
         ),
         body: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               // Hero image
               Hero(
@@ -71,14 +71,14 @@ class StoryDetailScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     // author info
-                    _buildAuthorInfo(context),
+                    AuthorInfo(),
                     SizedBox(height: 16),
 
                     // description
-                    Text(story.description, style: TextStyle(fontSize: 16)),
+                    Text(story.description),
                     SizedBox(height: 24),
 
                     // location info if available
@@ -94,38 +94,6 @@ class StoryDetailScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildAuthorInfo(BuildContext context) {
-    final story = context.read<AppProvider>().selectedStory!;
-
-    return Row(
-      children: [
-        CircleAvatar(
-          backgroundColor: Theme.of(context).primaryColor,
-          child: Text(
-            story.name.isNotEmpty ? story.name[0].toUpperCase() : '?',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                story.name,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              Text(
-                getTimeDifference(context, story.createdAt),
-                style: TextStyle(color: Colors.grey[600], fontSize: 14),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

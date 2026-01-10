@@ -1,3 +1,4 @@
+import 'package:amazing_icons/outlined.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -185,7 +186,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
         centerTitle: true,
         title: Text(
           AppLocalizations.of(context)!.upload_story,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: .bold),
         ),
         actions: [
           if (imageFile != null && !showCamera)
@@ -194,7 +195,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
               // button trigger to upload story
               child: IconButton(
-                icon: const Icon(Icons.check),
+                icon: Icon(AmazingIconOutlined.send2),
                 onPressed: isUploading ? null : _uploadStory,
               ),
             ),
@@ -209,8 +210,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: .center,
+                  crossAxisAlignment: .stretch,
                   children: [
                     if (showCamera)
                       CameraViewWeb(cameraService: _cameraService)
@@ -232,20 +233,39 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                             context,
                           )!.write_a_caption,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: .circular(16),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: .circular(16),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.outline,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: .circular(16),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
+                          suffixIconConstraints: const BoxConstraints(
+                            minHeight: 0,
+                            minWidth: 0,
+                          ),
+                          suffixIcon: _captionController.text.isNotEmpty
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.clear),
+                                      onPressed: () {
+                                        _captionController.clear();
+                                        uploadProvider.setCaption('');
+                                        setState(() {});
+                                      },
+                                    ),
+                                  ],
+                                )
+                              : null,
                         ),
                         maxLines: 3,
                         onChanged: (value) {

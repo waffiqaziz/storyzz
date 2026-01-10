@@ -51,13 +51,13 @@ class CameraViewWeb extends StatelessWidget {
         AspectRatio(
           aspectRatio: 1,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: .circular(16),
             child: CameraPreview(cameraService.cameraController!),
           ),
         ),
         const SizedBox(height: 20),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: .spaceAround,
           children: [
             IconButton(
               icon: const Icon(Icons.close),

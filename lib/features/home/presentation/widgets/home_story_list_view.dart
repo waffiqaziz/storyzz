@@ -6,6 +6,7 @@ import 'package:storyzz/core/design/widgets/story_error_view.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
+import 'package:storyzz/core/utils/helper.dart';
 import 'package:storyzz/features/home/presentation/widgets/home_story_card.dart';
 
 /// A scrollable list view that displays stories in a card format with pull-to-refresh support.
@@ -82,7 +83,7 @@ class _HomeStoriesListViewState extends State<HomeStoriesListView> {
       child: CustomScrollView(
         controller: widget.scrollController,
         slivers: [
-          _buildAppBar(context),
+          if (context.isMobile) _buildAppBar(context),
 
           // handle all story state
           if ((storyProvider.state.isLoading &&
@@ -139,7 +140,7 @@ class _HomeStoriesListViewState extends State<HomeStoriesListView> {
         children: [
           Image.asset('assets/icons/icon.png', height: 30),
           const SizedBox(width: 8),
-          const Text('Storyzz', style: TextStyle(fontWeight: FontWeight.bold)),
+          const Text('Storyzz', style: TextStyle(fontWeight: .bold)),
         ],
       ),
       actions: [
