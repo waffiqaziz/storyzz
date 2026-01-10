@@ -36,6 +36,8 @@ class AppRouter {
   final GlobalKey<NavigatorState> _shellNavigatorKey =
       GlobalKey<NavigatorState>();
 
+  final appService = AppService();
+
   AppRouter({required this.appProvider, required this.authProvider}) {
     _initAuthState();
   }
@@ -102,7 +104,7 @@ class AppRouter {
         },
       ),
 
-      // main app shell with bottom navigation
+      // main app shell with navigation
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (context, state, child) {
@@ -137,10 +139,10 @@ class AppRouter {
               if (appProvider.selectedStory != null) {
                 return '/story/${appProvider.selectedStory!.id}';
               }
-              if (appProvider.isDialogLogOutOpen) {
+              if (appProvider.isLogoutDialogOpen) {
                 return '/logout-confirmation';
               }
-              if (!appProvider.isDialogLogOutOpen) {
+              if (!appProvider.isLogoutDialogOpen) {
                 return '/';
               }
               return null;
@@ -156,10 +158,10 @@ class AppRouter {
               if (appProvider.selectedStory != null) {
                 return '/map/story/${appProvider.selectedStory!.id}';
               }
-              if (appProvider.isDialogLogOutOpen) {
+              if (appProvider.isLogoutDialogOpen) {
                 return '/map/logout-confirmation';
               }
-              if (!appProvider.isDialogLogOutOpen) {
+              if (!appProvider.isLogoutDialogOpen) {
                 return '/map';
               }
               return null;
@@ -170,7 +172,7 @@ class AppRouter {
             path: '/upload',
             name: 'upload',
             builder: (context, state) =>
-                UploadStoryScreen(appService: AppService()),
+                UploadStoryScreen(appService: appService),
             redirect: (context, state) {
               // open dialog upgrade promotion
               if (appProvider.isUpDialogOpen) {
@@ -180,7 +182,7 @@ class AppRouter {
               if (appProvider.isUploadFullScreenMap) {
                 return '/upload/map';
               }
-              if (appProvider.isDialogLogOutOpen) {
+              if (appProvider.isLogoutDialogOpen) {
                 return '/upload/logout-confirmation';
               }
               // back to upload screen
@@ -215,10 +217,10 @@ class AppRouter {
             name: 'settings',
             builder: (context, state) => SettingsScreen(),
             redirect: (context, state) {
-              if (appProvider.isDialogLogOutOpen) {
+              if (appProvider.isLogoutDialogOpen) {
                 return '/settings/logout-confirmation';
               }
-              if (!appProvider.isDialogLogOutOpen) {
+              if (!appProvider.isLogoutDialogOpen) {
                 return '/settings';
               }
               return null;
@@ -293,7 +295,7 @@ class AppRouter {
   GoRoute _logOutRoute(String name) {
     return GoRoute(
       path: 'logout-confirmation',
-      name: '${name}DialogLogOut',
+      name: '${name}LogoutDialog',
       parentNavigatorKey: _rootNavigatorKey,
       pageBuilder: (context, state) {
         return dialogTransition(state, LogoutConfirmationDialog());

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
-import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
+import 'package:storyzz/core/utils/constants.dart';
 import 'package:storyzz/features/map/presentations/controllers/map_story_controller.dart';
 import 'package:storyzz/features/map/presentations/layouts/landscape_layout.dart';
 import 'package:storyzz/features/map/presentations/layouts/potrait_layout.dart';
@@ -36,35 +36,10 @@ class _MapStoryScreenState extends State<MapStoryScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final isLandscape = MediaQuery.of(context).size.width > 600;
+    final isLandscape = MediaQuery.of(context).size.width > mobileBreakpoint;
     final mapProvider = context.watch<MapProvider>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            Image.asset('assets/icons/icon.png', height: 30),
-            SizedBox(width: 8),
-            Text('Storyzz Map', style: TextStyle(fontWeight: FontWeight.bold)),
-          ],
-        ),
-        actions: [
-          if (context.watch<AppProvider>().selectedStory == null) ...[
-            IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: mapProvider.refreshStories,
-              tooltip: localizations.refresh,
-            ),
-            SizedBox(width: 4),
-            IconButton(
-              icon: Icon(Icons.layers),
-              onPressed: mapProvider.toggleMapType,
-              tooltip: localizations.change_map_type,
-            ),
-            SizedBox(width: 8),
-          ],
-        ],
-      ),
       body: Consumer<AuthProvider>(
         builder: (context, authProvider, child) {
           // Location warning snackbar
@@ -89,14 +64,14 @@ class _MapStoryScreenState extends State<MapStoryScreen> {
           if (authProvider.errorMessage.isNotEmpty) {
             return Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: .center,
                 children: [
                   Icon(Icons.error_outline, size: 64, color: Colors.red),
                   SizedBox(height: 16),
                   Text(
-                    'Error: ${authProvider.errorMessage}',
-                    style: TextStyle(fontSize: 16),
-                    textAlign: TextAlign.center,
+                    authProvider.errorMessage,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    textAlign: .center,
                   ),
                 ],
               ),

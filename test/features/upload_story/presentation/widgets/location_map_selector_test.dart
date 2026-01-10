@@ -62,7 +62,7 @@ void main() {
     when(
       () => mockAddressProvider.state,
     ).thenReturn(const AddressLoadState.initial());
-    when(() => mockAppProvider.openUploadFullScreenMap()).thenReturn(null);
+    when(() => mockAppProvider.openUploadMapFullScreen()).thenReturn(null);
   });
 
   Widget createTestWidget() {
@@ -160,7 +160,7 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.fullscreen));
 
-    verify(() => mockAppProvider.openUploadFullScreenMap()).called(1);
+    verify(() => mockAppProvider.openUploadMapFullScreen()).called(1);
   });
 
   testWidgets('shows error message when error occurs', (tester) async {

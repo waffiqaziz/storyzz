@@ -27,7 +27,7 @@ class MapStoryCard extends StatelessWidget {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 8),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Stack(
             children: [
@@ -64,7 +64,7 @@ class MapStoryCard extends StatelessWidget {
                     padding: EdgeInsets.all(6),
                     decoration: BoxDecoration(
                       color: Colors.black.withValues(alpha: 0.6),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: .circular(12),
                     ),
                     child: Icon(
                       Icons.location_on,
@@ -78,18 +78,17 @@ class MapStoryCard extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(12),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: [
                     Expanded(
                       child: Text(
                         story.name,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyLarge?.copyWith(fontWeight: .bold),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -97,7 +96,9 @@ class MapStoryCard extends StatelessWidget {
                     Flexible(
                       child: Text(
                         getTimeDifference(context, story.createdAt),
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.grey[600],
+                        ),
                         maxLines: 1,
                       ),
                     ),
@@ -106,7 +107,6 @@ class MapStoryCard extends StatelessWidget {
                 SizedBox(height: 8),
                 Text(
                   story.description,
-                  style: TextStyle(fontSize: 14),
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),

@@ -16,14 +16,17 @@ class AddressSectionError extends StatelessWidget {
     final localizations = AppLocalizations.of(context)!;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Text(
           localizations.address_not_available,
-          style: TextStyle(color: Colors.red[400], fontSize: 14),
+          style: TextStyle(color: Colors.red[400]),
         ),
         const SizedBox(height: 4),
-        Text('$latText, $lonText', style: const TextStyle(fontSize: 14)),
+        Text(
+          '$latText, $lonText',
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
       ],
     );
   }

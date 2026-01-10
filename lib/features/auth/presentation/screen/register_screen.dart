@@ -1,3 +1,4 @@
+import 'package:amazing_icons/amazing_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/models/user.dart';
@@ -7,6 +8,10 @@ import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
+import 'package:storyzz/features/auth/presentation/widgets/auth_action_button.dart';
+import 'package:storyzz/features/auth/presentation/widgets/auth_bottom_link.dart';
+import 'package:storyzz/features/auth/presentation/widgets/auth_form_container.dart';
+import 'package:storyzz/features/auth/presentation/widgets/auth_screen_wrapper.dart';
 
 /// A screen that allows the user to register a new account. It contains fields
 /// for the user's name, email, password, and confirm password, along with
@@ -52,7 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       final result = await authProvider.register(user);
       if (result.data != null && !result.data!.error) {
         if (mounted) {
-          context.read<AppProvider>().openLogin();
+          context.read<AppProvider>().openLoginScreen();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -107,193 +112,131 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ],
           ),
-          body: Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 400),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        // logo/app title
-                        Image.asset('assets/icons/icon.png', height: 80),
-                        const SizedBox(height: 16),
-                        Text(
-                          localizations.create_account,
-                          style: Theme.of(context).textTheme.headlineMedium,
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          localizations.sign_up_to_get_started,
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(color: Colors.grey.shade600),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 32),
+          body: AuthScreenWrapper(
+            child: AuthFormContainer(
+              formKey: _formKey,
+              title: localizations.create_account,
+              subtitle: localizations.sign_up_to_get_started,
+              isLoading: authProvider.isLoadingRegister,
+              fields: [
+                // name field
+                TextFormField(
+                  enabled: !authProvider.isLoadingRegister,
+                  controller: _nameController,
+                  decoration: customInputDecoration(
+                    label: localizations.full_name,
+                    prefixIcon: AmazingIconOutlined.user,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return localizations.enter_full_name;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
 
-                        // name field
-                        TextFormField(
-                          enabled: !authProvider.isLoadingRegister,
-                          controller: _nameController,
-                          decoration: customInputDecoration(
-                            label: localizations.full_name,
-                            prefixIcon: Icons.person_outline,
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return localizations.enter_full_name;
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 16),
+                // email Field
+                TextFormField(
+                  enabled: !authProvider.isLoadingRegister,
+                  controller: _emailController,
+                  decoration: customInputDecoration(
+                    label: localizations.email,
+                    prefixIcon: AmazingIconOutlined.email,
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return localizations.enter_email;
+                    }
+                    if (!RegExp(
+                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                    ).hasMatch(value)) {
+                      return localizations.enter_valid_email;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
 
-                        // email Field
-                        TextFormField(
-                          enabled: !authProvider.isLoadingRegister,
-                          controller: _emailController,
-                          decoration: customInputDecoration(
-                            label: localizations.email,
-                            prefixIcon: Icons.email_outlined,
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return localizations.enter_email;
-                            }
-                            if (!RegExp(
-                              r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                            ).hasMatch(value)) {
-                              return localizations.enter_valid_email;
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 16),
-
-                        // password field
-                        TextFormField(
-                          enabled: !authProvider.isLoadingRegister,
-                          controller: _passwordController,
-                          decoration: customInputDecoration(
-                            label: localizations.password,
-                            prefixIcon: Icons.lock_outline,
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscurePassword
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _obscurePassword = !_obscurePassword;
-                                });
-                              },
-                            ),
-                          ),
-                          obscureText: _obscurePassword,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return localizations.enter_password;
-                            }
-                            if (value.length < 8) {
-                              return localizations.password_minimum;
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 16),
-
-                        // confirm password field
-                        TextFormField(
-                          enabled: !authProvider.isLoadingRegister,
-                          controller: _confirmPasswordController,
-                          decoration: customInputDecoration(
-                            label: localizations.confirm_password,
-                            prefixIcon: Icons.lock_outline,
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscureConfirmPassword
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _obscureConfirmPassword =
-                                      !_obscureConfirmPassword;
-                                });
-                              },
-                            ),
-                          ),
-                          obscureText: _obscureConfirmPassword,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return localizations.confirm_your_password;
-                            }
-                            if (value != _passwordController.text) {
-                              return localizations.password_is_not_same;
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 24),
-
-                        // register Button
-                        ElevatedButton(
-                          onPressed: authProvider.isLoadingRegister
-                              ? null
-                              : _handleRegister,
-                          child: authProvider.isLoadingRegister
-                              ? SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white,
-                                    ),
-                                  ),
-                                )
-                              : Text(localizations.register_upper),
-                        ),
-                        const SizedBox(height: 24),
-
-                        // login link
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                localizations.already_have_account,
-                                style: TextStyle(color: Colors.grey.shade600),
-                                overflow: TextOverflow.ellipsis,
-                                softWrap: true,
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: authProvider.isLoadingRegister
-                                  ? null
-                                  : () {
-                                      context.read<AppProvider>().openLogin();
-                                    },
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.all(8),
-                                minimumSize: Size(50, 30),
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
-                              child: Text(localizations.login_lower),
-                            ),
-                          ],
-                        ),
-                      ],
+                // password field
+                TextFormField(
+                  enabled: !authProvider.isLoadingRegister,
+                  controller: _passwordController,
+                  decoration: customInputDecoration(
+                    label: localizations.password,
+                    prefixIcon: AmazingIconOutlined.lock,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword
+                            ? AmazingIconFilled.eyeSlash
+                            : AmazingIconFilled.eye,
+                        size: 26,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        });
+                      },
                     ),
                   ),
+                  obscureText: _obscurePassword,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return localizations.enter_password;
+                    }
+                    if (value.length < 8) {
+                      return localizations.password_minimum;
+                    }
+                    return null;
+                  },
                 ),
+                const SizedBox(height: 16),
+
+                // confirm password field
+                TextFormField(
+                  enabled: !authProvider.isLoadingRegister,
+                  controller: _confirmPasswordController,
+                  decoration: customInputDecoration(
+                    label: localizations.confirm_password,
+                    prefixIcon: AmazingIconOutlined.lock,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscureConfirmPassword
+                            ? AmazingIconFilled.eyeSlash
+                            : AmazingIconFilled.eye,
+                        size: 26,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscureConfirmPassword = !_obscureConfirmPassword;
+                        });
+                      },
+                    ),
+                  ),
+                  obscureText: _obscureConfirmPassword,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return localizations.confirm_your_password;
+                    }
+                    if (value != _passwordController.text) {
+                      return localizations.password_is_not_same;
+                    }
+                    return null;
+                  },
+                ),
+              ],
+              actionButton: AuthActionButton(
+                text: localizations.register_upper,
+                isLoading: authProvider.isLoadingRegister,
+                onPressed: _handleRegister,
+              ),
+              bottomLink: AuthBottomLink(
+                text: localizations.already_have_account,
+                linkText: localizations.login_lower,
+                onPressed: authProvider.isLoadingRegister
+                    ? null
+                    : () => context.read<AppProvider>().openLoginScreen(),
               ),
             ),
           ),

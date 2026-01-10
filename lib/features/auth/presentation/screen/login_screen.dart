@@ -1,6 +1,8 @@
+import 'package:amazing_icons/amazing_icons.dart' show AmazingIconFilled;
+import 'package:amazing_icons/outlined.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storyzz/core/data/models/user.dart';
+import 'package:storyzz/core/design/insets.dart';
 import 'package:storyzz/core/design/theme.dart';
 import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
@@ -8,6 +10,10 @@ import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
+import 'package:storyzz/features/auth/presentation/widgets/auth_action_button.dart';
+import 'package:storyzz/features/auth/presentation/widgets/auth_bottom_link.dart';
+import 'package:storyzz/features/auth/presentation/widgets/auth_form_container.dart';
+import 'package:storyzz/features/auth/presentation/widgets/auth_screen_wrapper.dart';
 
 /// A screen that allows the user to log in to their existing account. It contains fields
 /// for the user's email and password, along with validation for each field.
@@ -38,14 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       FocusScope.of(context).unfocus();
       final authProvider = context.read<AuthProvider>();
-      final User user = User(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
 
       final result = await authProvider.loginNetwork(
-        user.email!,
-        user.password!,
+        _emailController.text,
+        _passwordController.text,
       );
 
       if (!mounted) return;
@@ -80,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-        content: Text(message, style: TextStyle(color: Colors.black)),
+        content: Text(message),
         backgroundColor: Theme.of(context).colorScheme.error,
       ),
     );
@@ -126,185 +128,109 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ],
           ),
-          body: Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 400),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        // logo/app title
-                        Image.asset('assets/icons/icon.png', height: 80),
-                        const SizedBox(height: 16),
-                        Text(
-                          localizations.welcome_back,
-                          style: Theme.of(context).textTheme.headlineMedium,
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          localizations.sign_in_to_continue,
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(color: Colors.grey.shade600),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 32),
-
-                        // email field
-                        Semantics(
-                          label: localizations.email_form,
-                          textField: true,
-                          child: TextFormField(
-                            enabled: !authProvider.isLoadingLogin,
-                            controller: _emailController,
-                            decoration: customInputDecoration(
-                              label: localizations.email,
-                              prefixIcon: Icons.email_outlined,
-                            ),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return localizations.enter_email;
-                              }
-                              if (!RegExp(
-                                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                              ).hasMatch(value)) {
-                                return localizations.enter_valid_email;
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-
-                        // password field
-                        Semantics(
-                          label: localizations.password_form,
-                          textField: true,
-                          child: TextFormField(
-                            enabled: !authProvider.isLoadingLogin,
-                            controller: _passwordController,
-                            decoration: customInputDecoration(
-                              label: localizations.password,
-                              prefixIcon: Icons.lock_outline,
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _obscurePassword = !_obscurePassword;
-                                  });
-                                },
-                              ),
-                            ),
-                            obscureText: _obscurePassword,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return localizations.enter_password;
-                              }
-                              if (value.length < 8) {
-                                return localizations.password_minimum;
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-
-                        // forgot password link
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: authProvider.isLoadingLogin
-                                ? null
-                                : () {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          localizations.only_for_ui,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsets.symmetric(horizontal: 8),
-                              minimumSize: Size(50, 30),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            child: Text(localizations.forgot_password),
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-
-                        // login button
-                        ElevatedButton(
-                          onPressed: authProvider.isLoadingLogin
-                              ? null
-                              : _handleLogin,
-                          child: authProvider.isLoadingLogin
-                              ? SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white,
-                                    ),
-                                  ),
-                                )
-                              : Text(localizations.login_upper),
-                        ),
-                        const SizedBox(height: 24),
-
-                        // register link
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                localizations.dont_have_account,
-                                style: TextStyle(color: Colors.grey.shade600),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            TextButton(
-                              // Disable button when loading
-                              onPressed: !authProvider.isLoadingLogin
-                                  ? () {
-                                      context
-                                          .read<AppProvider>()
-                                          .openRegister();
-                                    }
-                                  : null,
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                minimumSize: Size(40, 30),
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0,
-                                ),
-                                child: Text(
-                                  localizations.register_lower,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+          body: AuthScreenWrapper(
+            child: AuthFormContainer(
+              formKey: _formKey,
+              title: localizations.welcome_back,
+              subtitle: localizations.sign_in_to_continue,
+              isLoading: authProvider.isLoadingLogin,
+              fields: [
+                // Email Field
+                Semantics(
+                  label: localizations.email_form,
+                  textField: true,
+                  child: TextFormField(
+                    enabled: !authProvider.isLoadingLogin,
+                    controller: _emailController,
+                    decoration: customInputDecoration(
+                      label: localizations.email,
+                      prefixIcon: AmazingIconOutlined.email,
                     ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return localizations.enter_email;
+                      }
+                      if (!RegExp(
+                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                      ).hasMatch(value)) {
+                        return localizations.enter_valid_email;
+                      }
+                      return null;
+                    },
                   ),
                 ),
+                const SizedBox(height: 16),
+
+                // Password Field
+                Semantics(
+                  label: localizations.password_form,
+                  textField: true,
+                  child: TextFormField(
+                    enabled: !authProvider.isLoadingLogin,
+                    controller: _passwordController,
+                    decoration: customInputDecoration(
+                      label: localizations.password,
+                      prefixIcon: AmazingIconOutlined.lock,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? AmazingIconFilled.eyeSlash
+                              : AmazingIconFilled.eye,
+                          size: 26,
+                        ),
+                        onPressed: () {
+                          setState(() => _obscurePassword = !_obscurePassword);
+                        },
+                      ),
+                    ),
+                    obscureText: _obscurePassword,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return localizations.enter_password;
+                      }
+                      if (value.length < 8) {
+                        return localizations.password_minimum;
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                // Forgot Password Link
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: authProvider.isLoadingLogin
+                        ? null
+                        : () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(localizations.only_for_ui),
+                              ),
+                            );
+                          },
+                    style: TextButton.styleFrom(
+                      padding: Insets.h8,
+                      minimumSize: const Size(50, 30),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: Text(localizations.forgot_password),
+                  ),
+                ),
+              ],
+              actionButton: AuthActionButton(
+                text: localizations.login_upper,
+                isLoading: authProvider.isLoadingLogin,
+                onPressed: _handleLogin,
+              ),
+              bottomLink: AuthBottomLink(
+                text: localizations.dont_have_account,
+                linkText: localizations.register_lower,
+                onPressed: !authProvider.isLoadingLogin
+                    ? () => context.read<AppProvider>().openRegisterScreen()
+                    : null,
               ),
             ),
           ),

@@ -5,6 +5,7 @@ import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/utils/helper.dart';
+import 'package:storyzz/features/detail/presentation/widgets/author_info.dart';
 import 'package:storyzz/features/detail/presentation/widgets/detail_image.dart';
 import 'package:storyzz/features/detail/presentation/widgets/location_section.dart';
 
@@ -67,7 +68,7 @@ class _StoryDetailDialogState extends State<StoryDetailDialog> {
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.read<AppProvider>().closeDetail();
+            context.read<AppProvider>().closeDetailScreen();
           });
         }
       },
@@ -86,7 +87,7 @@ class _StoryDetailDialogState extends State<StoryDetailDialog> {
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   color: Theme.of(context).scaffoldBackgroundColor,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: .circular(12),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -98,7 +99,7 @@ class _StoryDetailDialogState extends State<StoryDetailDialog> {
                         child: SingleChildScrollView(
                           controller: _scrollController,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: .start,
                             children: [
                               _buildStoryImage(story.photoUrl),
 
@@ -106,17 +107,14 @@ class _StoryDetailDialogState extends State<StoryDetailDialog> {
                               Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: .start,
                                   children: [
                                     // author info
-                                    _buildAuthorInfo(context),
+                                    AuthorInfo(),
                                     SizedBox(height: 16),
 
                                     // description
-                                    Text(
-                                      story.description,
-                                      style: TextStyle(fontSize: 16),
-                                    ),
+                                    Text(story.description),
                                     SizedBox(height: 24),
 
                                     // location info if available
@@ -145,7 +143,7 @@ class _StoryDetailDialogState extends State<StoryDetailDialog> {
             child: IconButton(
               icon: Icon(Icons.close_rounded, size: 28, color: Colors.white),
               onPressed: () {
-                context.read<AppProvider>().closeDetail();
+                context.read<AppProvider>().closeDetailScreen();
               },
             ),
           ),
@@ -161,38 +159,6 @@ class _StoryDetailDialogState extends State<StoryDetailDialog> {
         onTap: () => openUrl(photoUrl),
         child: DetailImage(photoUrl: photoUrl),
       ),
-    );
-  }
-
-  Widget _buildAuthorInfo(BuildContext context) {
-    final story = context.read<AppProvider>().selectedStory!;
-
-    return Row(
-      children: [
-        CircleAvatar(
-          backgroundColor: Theme.of(context).primaryColor,
-          child: Text(
-            story.name.isNotEmpty ? story.name[0].toUpperCase() : '?',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                story.name,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              Text(
-                getTimeDifference(context, story.createdAt),
-                style: TextStyle(color: Colors.grey[600], fontSize: 14),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

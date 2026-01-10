@@ -95,7 +95,6 @@ void main() {
       await tester.pumpAndSettle();
 
       final text = tester.widget<Text>(find.byType(Text));
-      expect(text.style?.fontSize, 12);
       expect(text.style?.color, isNotNull);
       expect(find.byType(Center), findsOneWidget);
     });

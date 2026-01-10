@@ -57,7 +57,7 @@ class _LocationSectionState extends State<LocationSection> {
     final story = context.read<AppProvider>().selectedStory!;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         const Divider(),
         const SizedBox(height: 16),

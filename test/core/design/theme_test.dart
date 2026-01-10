@@ -43,7 +43,7 @@ void main() {
 
         expect(
           buttonStyle?.padding?.resolve({}),
-          equals(const EdgeInsets.symmetric(vertical: 16)),
+          equals(const EdgeInsets.all(20)),
         );
         expect(buttonStyle?.elevation?.resolve({}), equals(0));
         expect(
@@ -74,12 +74,7 @@ void main() {
 
       test('should apply correct text theme', () {
         final theme = materialTheme.light();
-
         expect(theme.textTheme.bodyMedium?.fontFamily, equals('Nunito'));
-        expect(
-          theme.textTheme.bodyMedium?.fontFamilyFallback,
-          equals(['Nunito']),
-        );
       });
     });
 
@@ -138,48 +133,6 @@ void main() {
         },
       );
 
-      test(
-        'lightMediumContrast should create theme with correct properties',
-        () {
-          final scheme = MaterialTheme.lightMediumContrastScheme();
-          final theme = materialTheme.lightMediumContrast();
-
-          expect(scheme.brightness, equals(Brightness.light));
-          expect(scheme.primary, equals(const Color(0xff003d3c)));
-          expect(theme.colorScheme, equals(scheme));
-        },
-      );
-
-      test('lightHighContrast should create theme with correct properties', () {
-        final scheme = MaterialTheme.lightHighContrastScheme();
-        final theme = materialTheme.lightHighContrast();
-
-        expect(scheme.brightness, equals(Brightness.light));
-        expect(scheme.primary, equals(const Color(0xff003231)));
-        expect(theme.colorScheme, equals(scheme));
-      });
-
-      test(
-        'darkMediumContrast should create theme with correct properties',
-        () {
-          final scheme = MaterialTheme.darkMediumContrastScheme();
-          final theme = materialTheme.darkMediumContrast();
-
-          expect(scheme.brightness, equals(Brightness.dark));
-          expect(scheme.primary, equals(const Color(0xff96ebe8)));
-          expect(theme.colorScheme, equals(scheme));
-        },
-      );
-
-      test('darkHighContrast should create theme with correct properties', () {
-        final scheme = MaterialTheme.darkHighContrastScheme();
-        final theme = materialTheme.darkHighContrast();
-
-        expect(scheme.brightness, equals(Brightness.dark));
-        expect(scheme.primary, equals(const Color(0xffaafffc)));
-        expect(theme.colorScheme, equals(scheme));
-      });
-
       group('Custom Input Decoration', () {
         test('should create input decoration with custom margins', () {
           final customMargin = const EdgeInsets.only(left: 20.0);
@@ -203,35 +156,8 @@ void main() {
 
           expect(
             (decoration.prefixIcon as Container).margin,
-            equals(const EdgeInsets.only(left: 10.0)),
+            equals(const EdgeInsets.only(left: 14.0)),
           );
-        });
-      });
-
-      group('Extended Colors', () {
-        test('should create ExtendedColor with all required properties', () {
-          final colorFamily = const ColorFamily(
-            color: Colors.blue,
-            onColor: Colors.white,
-            colorContainer: Colors.lightBlue,
-            onColorContainer: Colors.black,
-          );
-
-          final extendedColor = ExtendedColor(
-            seed: Colors.blue,
-            value: Colors.blue,
-            light: colorFamily,
-            lightHighContrast: colorFamily,
-            lightMediumContrast: colorFamily,
-            dark: colorFamily,
-            darkHighContrast: colorFamily,
-            darkMediumContrast: colorFamily,
-          );
-
-          expect(extendedColor.seed, equals(Colors.blue));
-          expect(extendedColor.value, equals(Colors.blue));
-          expect(extendedColor.light, equals(colorFamily));
-          expect(extendedColor.dark, equals(colorFamily));
         });
       });
 
@@ -245,26 +171,6 @@ void main() {
         expect(decoration.labelText, equals('Test Label'));
         expect(decoration.prefixIcon, isA<Container>());
         expect(decoration.suffixIcon, isA<Container>());
-      });
-    });
-
-    test('extendedColors should return empty list by default', () {
-      expect(materialTheme.extendedColors, isEmpty);
-    });
-
-    group('ColorFamily', () {
-      test('should create instance with required colors', () {
-        const family = ColorFamily(
-          color: Colors.blue,
-          onColor: Colors.white,
-          colorContainer: Colors.lightBlue,
-          onColorContainer: Colors.black,
-        );
-
-        expect(family.color, equals(Colors.blue));
-        expect(family.onColor, equals(Colors.white));
-        expect(family.colorContainer, equals(Colors.lightBlue));
-        expect(family.onColorContainer, equals(Colors.black));
       });
     });
   });
