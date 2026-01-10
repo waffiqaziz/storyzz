@@ -1,10 +1,11 @@
+import 'package:amazing_icons/amazing_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 
-/// A dialog that confirms whether the user wants to log out or not.
+/// A dialog that confirms whether the user wants to logout or not.
 /// It is shown when the user taps on the logout button in the app bar.
 class LogoutConfirmationDialog extends StatelessWidget {
   const LogoutConfirmationDialog({super.key});
@@ -19,26 +20,32 @@ class LogoutConfirmationDialog extends StatelessWidget {
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            appProvider.closeDialogLogOut();
+            appProvider.closeLogoutDialog();
           });
         }
       },
       child: AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
+        icon: Icon(
+          AmazingIconFilled.danger,
+          color: Colors.amberAccent.shade200,
+          size: 75,
         ),
+        shape: RoundedRectangleBorder(borderRadius: .circular(16.0)),
         title: Text(
           localizations.logout_confirmation,
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: .bold),
         ),
         content: Text(
           localizations.logout_confirmation_msg,
-          style: TextStyle(fontSize: 16.0),
+          style: Theme.of(context).textTheme.bodyMedium,
+          textAlign: .center,
         ),
         actions: [
           TextButton(
             onPressed: () {
-              appProvider.closeDialogLogOut();
+              appProvider.closeLogoutDialog();
             },
             style: TextButton.styleFrom(foregroundColor: Colors.grey),
             child: Text(localizations.cancel),
@@ -47,7 +54,7 @@ class LogoutConfirmationDialog extends StatelessWidget {
             onPressed: () async {
               await authProvider.logout();
               if (context.mounted) {
-                appProvider.closeDialogLogOut();
+                appProvider.closeLogoutDialog();
                 if (authProvider.logoutSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(localizations.logout_success)),
@@ -65,9 +72,9 @@ class LogoutConfirmationDialog extends StatelessWidget {
                 context,
               ).colorScheme.surfaceContainerLowest,
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2.0),
-              child: Text(localizations.logout),
+            child: Text(
+              localizations.logout,
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ],

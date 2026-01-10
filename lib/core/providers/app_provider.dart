@@ -26,8 +26,8 @@ class AppProvider extends ChangeNotifier {
   bool _isDetailFullScreenMap = false;
   bool get isDetailFullScreenMap => _isDetailFullScreenMap;
 
-  bool _isDialogLogOutOpen = false;
-  bool get isDialogLogOutOpen => _isDialogLogOutOpen;
+  bool _isLogoutDialogOpen = false;
+  bool get isLogoutDialogOpen => _isLogoutDialogOpen;
 
   void openLanguageDialog() {
     _isLanguageDialogOpen = true;
@@ -39,13 +39,13 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void openRegister() {
+  void openRegisterScreen() {
     _isRegister = true;
     _isLogin = false;
     notifyListeners();
   }
 
-  void openLogin() {
+  void openLoginScreen() {
     _isLogin = true;
     _isRegister = false;
     notifyListeners();
@@ -67,45 +67,45 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void openUploadFullScreenMap() {
+  void openUploadMapFullScreen() {
     _isUploadFullScreenMap = true;
     notifyListeners();
   }
 
-  void closeUploadFullScreenMap() {
+  void closeUploadMapFullScreen() {
     _isUploadFullScreenMap = false;
     notifyListeners();
   }
 
-  void openDetailFullScreenMap() {
+  void openDetailMapFullScreen() {
     _isDetailFullScreenMap = true;
     notifyListeners();
   }
 
-  void closeDetailFullScreenMap() {
+  void closeDetailMapFullScreen() {
     _isDetailFullScreenMap = false;
     notifyListeners();
   }
 
-  void openDetail(ListStory? story) {
+  void openDetailScreen(ListStory? story) {
     _selectedStory = story;
     _isFromDetail = false;
     notifyListeners();
   }
 
-  void closeDetail() {
+  void closeDetailScreen() {
     _selectedStory = null;
     _isFromDetail = true;
     notifyListeners();
   }
 
-  void openDialogLogOut() {
-    _isDialogLogOutOpen = true;
+  void openLogoutDialog() {
+    _isLogoutDialogOpen = true;
     notifyListeners();
   }
 
-  void closeDialogLogOut() {
-    _isDialogLogOutOpen = false;
+  void closeLogoutDialog() {
+    _isLogoutDialogOpen = false;
     notifyListeners();
   }
 

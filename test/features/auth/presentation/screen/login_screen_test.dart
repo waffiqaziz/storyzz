@@ -1,3 +1,4 @@
+import 'package:amazing_icons/filled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -101,7 +102,7 @@ void main() {
         await tester.tap(registerButton);
         await tester.pumpAndSettle();
 
-        verify(() => mockAppProvider.openRegister()).called(1);
+        verify(() => mockAppProvider.openRegisterScreen()).called(1);
       },
     );
 
@@ -198,15 +199,15 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
-      expect(find.byIcon(Icons.visibility_off), findsOneWidget);
+      expect(find.byIcon(AmazingIconFilled.eyeSlash), findsOneWidget);
 
-      final visibilityToggle = find.byIcon(Icons.visibility_off);
+      final visibilityToggle = find.byIcon(AmazingIconFilled.eyeSlash);
       expect(visibilityToggle, findsOneWidget);
 
       await tester.tap(visibilityToggle);
       await tester.pump();
 
-      expect(find.byIcon(Icons.visibility), findsOneWidget);
+      expect(find.byIcon(AmazingIconFilled.eye), findsOneWidget);
     });
 
     testWidgets('should show error for invalid email format', (tester) async {

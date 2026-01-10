@@ -2,10 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/features/map/presentations/controllers/map_story_controller.dart';
 import 'package:storyzz/features/map/presentations/providers/map_provider.dart';
+import 'package:storyzz/features/map/presentations/widgets/button_map_action.dart';
 import 'package:storyzz/features/map/utils/map_style.dart';
 
 /// A widget that displays a [GoogleMap] with dynamic theming, markers,
@@ -24,23 +26,33 @@ class MapView extends StatelessWidget {
 
     return context
             .mounted // to prevent error when navigating away from the page
-        ? GoogleMap(
-            gestureRecognizers: {
-              Factory<OneSequenceGestureRecognizer>(
-                () => EagerGestureRecognizer(),
+        ? Stack(
+            // clipBehavior: Clip.none,
+            children: [
+              GoogleMap(
+                gestureRecognizers: {
+                  Factory<OneSequenceGestureRecognizer>(
+                    () => EagerGestureRecognizer(),
+                  ),
+                },
+                style: isDark ? customStyleDark : customStyleLight,
+                mapType: mapProvider.selectedMapType,
+                markers: mapProvider.markers,
+                initialCameraPosition: const CameraPosition(
+                  target: LatLng(-2.014380, 118.152180),
+                  zoom: 4,
+                ),
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
+                onMapCreated: mapProvider.onMapCreated,
               ),
-            },
-            style: isDark ? customStyleDark : customStyleLight,
-            mapType: mapProvider.selectedMapType,
-            markers: mapProvider.markers,
-            initialCameraPosition: const CameraPosition(
-              target: LatLng(-2.014380, 118.152180),
-              zoom: 4,
-            ),
-            myLocationButtonEnabled: true,
-            zoomControlsEnabled: true,
-            zoomGesturesEnabled: true,
-            onMapCreated: mapProvider.onMapCreated,
+
+              Positioned(
+                top: 8,
+                right: 8,
+                child: PointerInterceptor(child: ButtonMapAction()),
+              ),
+            ],
           )
         : const SizedBox.shrink();
   }

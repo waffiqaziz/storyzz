@@ -41,7 +41,7 @@ class AddressSectionWeb extends StatelessWidget {
           case AddressLoadStateInitial():
             return Text(
               '$latText, $lonText',
-              style: const TextStyle(fontSize: 14),
+              style: Theme.of(context).textTheme.bodySmall,
             );
 
           // should not show

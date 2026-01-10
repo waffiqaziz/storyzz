@@ -77,7 +77,7 @@ class _StoryLocationMapState extends State<StoryLocationMap> {
           width: double.infinity,
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
-            borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
+            borderRadius: widget.borderRadius ?? .circular(12),
           ),
           child: Listener(
             key: const Key('map_listener'),

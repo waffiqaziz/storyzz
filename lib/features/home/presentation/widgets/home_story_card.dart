@@ -30,20 +30,20 @@ class HomeStoryCard extends StatelessWidget {
     return Card(
       margin: EdgeInsets.only(bottom: 16),
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(12)),
       child: InkWell(
         onTap: () {
-          context.read<AppProvider>().openDetail(story);
+          context.read<AppProvider>().openDetailScreen(story);
         },
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: .circular(12),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
             // story image with hero animation for smooth transitions
             Hero(
               tag: 'story-image-${story.id}',
               child: ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                borderRadius: .vertical(top: Radius.circular(12)),
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     return Container(
@@ -98,7 +98,7 @@ class HomeStoryCard extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(16),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   // author and time
                   Row(
@@ -115,21 +115,16 @@ class HomeStoryCard extends StatelessWidget {
                       SizedBox(width: 12),
                       Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: .start,
                           children: [
                             Text(
                               story.name,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(fontWeight: .bold),
                             ),
                             Text(
                               getTimeDifference(context, story.createdAt),
-                              style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 12,
-                              ),
+                              style: TextStyle(color: Colors.grey[600]),
                             ),
                           ],
                         ),
@@ -149,16 +144,18 @@ class HomeStoryCard extends StatelessWidget {
                   // description
                   Padding(
                     padding: EdgeInsets.only(top: 12),
-                    child: ReadMoreText(
-                      story.description,
-                      trimMode: TrimMode.Line,
-                      trimLines: 2,
-                      trimCollapsedText: localizations.show_more,
-                      trimExpandedText: localizations.show_less,
-                      style: TextStyle(fontSize: 14),
-                      moreStyle: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                    child: AnimatedSize(
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.easeInOut,
+                      alignment: .topCenter,
+                      child: ReadMoreText(
+                        story.description,
+                        trimMode: TrimMode.Line,
+                        trimLines: 2,
+                        trimCollapsedText: localizations.show_more,
+                        trimExpandedText: localizations.show_less,
+                        moreStyle: TextStyle(fontWeight: .bold),
+                        lessStyle: TextStyle(fontWeight: .bold),
                       ),
                     ),
                   ),

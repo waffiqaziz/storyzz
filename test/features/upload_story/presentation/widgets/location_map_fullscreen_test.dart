@@ -25,7 +25,7 @@ void main() {
     mockAddressProvider = MockAddressProvider();
     mockUploadProvider = MockUploadStoryProvider();
 
-    when(() => mockAppProvider.closeUploadFullScreenMap()).thenReturn(null);
+    when(() => mockAppProvider.closeUploadMapFullScreen()).thenReturn(null);
     when(
       () => mockUploadProvider.selectedLocation,
     ).thenReturn(LatLng(10, 10)); // set default not null
@@ -83,6 +83,6 @@ void main() {
     await tester.tap(closeButton);
     await tester.pump();
 
-    verify(() => mockAppProvider.closeUploadFullScreenMap()).called(1);
+    verify(() => mockAppProvider.closeUploadMapFullScreen()).called(1);
   });
 }

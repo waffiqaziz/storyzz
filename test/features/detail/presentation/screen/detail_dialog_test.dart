@@ -143,7 +143,7 @@ void main() {
       await tester.tap(closeButton);
       await tester.pumpAndSettle();
 
-      verify(() => mockAppProvider.closeDetail()).called(1);
+      verify(() => mockAppProvider.closeDetailScreen()).called(1);
     });
 
     testWidgets('should opens URL when image is tapped', (

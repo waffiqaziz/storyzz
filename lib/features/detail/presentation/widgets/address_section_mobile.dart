@@ -45,8 +45,10 @@ class _AddressSectionMobileState extends State<AddressSectionMobile> {
     return Consumer<GeocodingProvider>(
       builder: (context, provider, child) {
         return provider.state.when(
-          initial: () =>
-              Text('$latText, $lonText', style: const TextStyle(fontSize: 14)),
+          initial: () => Text(
+            '$latText, $lonText',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
 
           // Loading state
           loading: () => AddressSectionLoading(),

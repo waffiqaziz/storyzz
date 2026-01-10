@@ -41,8 +41,8 @@ void main() {
     await tester.pumpWidget(createTestWidget());
 
     expect(find.byType(AlertDialog), findsOneWidget);
-    expect(find.text('Log Out Confirmation'), findsOneWidget);
-    expect(find.text('Are you sure you want to log out?'), findsOneWidget);
+    expect(find.text('Logout Confirmation'), findsOneWidget);
+    expect(find.text('Are you sure you want to logout ?'), findsOneWidget);
   });
 
   testWidgets('cancel button calls closeDialogLogOut', (tester) async {
@@ -54,7 +54,7 @@ void main() {
     await tester.tap(cancelButton);
     await tester.pump();
 
-    verify(() => mockAppProvider.closeDialogLogOut()).called(1);
+    verify(() => mockAppProvider.closeLogoutDialog()).called(1);
   });
 
   testWidgets('logout button calls logout and shows success snackbar', (
@@ -62,7 +62,7 @@ void main() {
   ) async {
     when(() => mockAuthProvider.logout()).thenAnswer((_) async {});
     when(() => mockAuthProvider.logoutSuccess).thenReturn(true);
-    when(() => mockAppProvider.closeDialogLogOut()).thenReturn(null);
+    when(() => mockAppProvider.closeLogoutDialog()).thenReturn(null);
 
     await tester.pumpWidget(createTestWidget());
 
@@ -73,7 +73,7 @@ void main() {
     await tester.pump();
 
     verify(() => mockAuthProvider.logout()).called(1);
-    verify(() => mockAppProvider.closeDialogLogOut()).called(1);
+    verify(() => mockAppProvider.closeLogoutDialog()).called(1);
 
     await tester.pump();
     expect(find.text('Logout success'), findsOneWidget);
@@ -83,7 +83,7 @@ void main() {
     when(() => mockAuthProvider.logout()).thenAnswer((_) async {});
     when(() => mockAuthProvider.logoutSuccess).thenReturn(false);
     when(() => mockAuthProvider.errorMessage).thenReturn('Logout failed');
-    when(() => mockAppProvider.closeDialogLogOut()).thenReturn(null);
+    when(() => mockAppProvider.closeLogoutDialog()).thenReturn(null);
 
     await tester.pumpWidget(createTestWidget());
 
@@ -104,6 +104,6 @@ void main() {
     Navigator.of(tester.element(find.byType(LogoutConfirmationDialog))).pop();
     await tester.pumpAndSettle();
 
-    verify(() => mockAppProvider.closeDialogLogOut()).called(1);
+    verify(() => mockAppProvider.closeLogoutDialog()).called(1);
   });
 }

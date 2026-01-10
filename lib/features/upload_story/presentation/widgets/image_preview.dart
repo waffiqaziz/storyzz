@@ -31,15 +31,15 @@ class ImagePreview extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: .circular(16),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: .center,
         children: [
           const Icon(AmazingIconFilled.gallery, size: 80, color: Colors.grey),
           const SizedBox(height: 24),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
             children: [
               // camera button
               ElevatedButton.icon(
@@ -99,7 +99,7 @@ class ImagePreview extends StatelessWidget {
     return Container(
       constraints: const BoxConstraints(maxHeight: 400),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: .circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withAlpha(50),

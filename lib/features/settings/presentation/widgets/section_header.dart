@@ -18,9 +18,8 @@ class SectionHeader extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             title.toUpperCase(),
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              fontWeight: .w600,
               color: colorScheme.primary,
               letterSpacing: 0.5,
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/utils/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Returns a localized time difference string based on the given [createdAt] date.
@@ -64,4 +65,14 @@ String formatAddress(Placemark placemark) {
   ];
 
   return parts.isNotEmpty ? parts.join(', ') : 'Unknown location';
+}
+
+/// Screensize helper
+extension ResponsiveExt on BuildContext {
+  double get screenWidth => MediaQuery.of(this).size.width;
+
+  bool get isMobile => screenWidth < mobileBreakpoint;
+  bool get isTablet =>
+      screenWidth >= mobileBreakpoint && screenWidth <= tabletBreakpoint;
+  bool get isDesktop => screenWidth >= tabletBreakpoint;
 }

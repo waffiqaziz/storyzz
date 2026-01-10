@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/design/widgets/square_icon_button.dart';
+import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/providers/upload_story_provider.dart';
 import 'package:storyzz/features/upload_story/presentation/widgets/build_google_map.dart';
@@ -31,13 +33,12 @@ class MapFullScreen extends StatelessWidget {
             top: 16,
             left: 16,
             child: PointerInterceptor(
-              child: FloatingActionButton.small(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
+              child: SquareIconAction(
+                tooltip: AppLocalizations.of(context)!.close,
+                icon: Icons.close,
                 onPressed: () {
-                  context.read<AppProvider>().closeUploadFullScreenMap();
+                  context.read<AppProvider>().closeUploadMapFullScreen();
                 },
-                child: const Icon(Icons.close),
               ),
             ),
           ),

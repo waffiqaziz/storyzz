@@ -46,7 +46,6 @@ void main() {
       final textWidget1 = tester.widget<Text>(
         find.text('Tidak ada cerita yang tersedia'),
       );
-      expect(textWidget1.style?.fontSize, 18);
       expect(textWidget1.style?.fontWeight, FontWeight.bold);
 
       final textWidget2 = tester.widget<Text>(

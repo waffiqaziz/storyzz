@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       locale: settingsProvider.locale,
       theme: theme.lightWithCustomStyles(),
       darkTheme: theme.darkWithCustomStyles(),
-      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+      themeMode: isDark ? .dark : .light,
       debugShowCheckedModeBanner: true, // show debug banner
       routerConfig: router,
     );

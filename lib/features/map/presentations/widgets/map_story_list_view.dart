@@ -105,7 +105,7 @@ class MapStoryListView extends StatelessWidget {
                 }
               },
               onDoubleTap: () {
-                context.read<AppProvider>().openDetail(story);
+                context.read<AppProvider>().openDetailScreen(story);
               },
               child: Card(
                 margin: EdgeInsets.only(bottom: 16),

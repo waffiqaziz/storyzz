@@ -5,6 +5,7 @@ import 'package:storyzz/core/design/theme.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
+import 'package:storyzz/core/utils/helper.dart';
 import 'package:storyzz/core/utils/tab_switcher.dart';
 import 'package:storyzz/features/home/presentation/screen/home_screen.dart';
 import 'package:storyzz/features/map/presentations/screens/map_screen.dart';
@@ -45,12 +46,12 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     // check if layout needs update without calling setState to prevent error on widget test
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth < mobileBreakpoint;
-    final isWide = screenWidth >= tabletBreakpoint;
+    final isMobile = context.isMobile;
+    final isTablet = context.isTablet;
+    final isDesktop = context.isDesktop;
 
     return Scaffold(
-      body: _buildBody(_buildContent(), isMobile, isWide),
+      body: _buildBody(isMobile, isTablet, isDesktop),
       bottomNavigationBar: _buildBottomNavigationBar(isMobile),
     );
   }
@@ -67,20 +68,20 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget _buildBody(Widget content, bool isMobile, bool isWide) {
+  Widget _buildBody(bool isMobile, bool isTablet, bool isDesktop) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 800),
-      child: isMobile ? content : _buildWideLayout(content, isWide),
+      child: isMobile ? _buildContent() : _buildWideLayout(isTablet, isDesktop),
     );
   }
 
-  Widget _buildWideLayout(Widget content, bool isWide) {
+  Widget _buildWideLayout(bool isTablet, isDesktop) {
     return Row(
-      key: ValueKey('desktop_layout_${isWide ? "wide" : "medium"}'),
+      key: ValueKey('desktop_layout_${isDesktop ? "desktop" : "tablet"}'),
       children: [
-        isWide ? _buildNavigationDrawer() : _buildNavigationRail(),
-        if (!isWide) const VerticalDivider(width: 1),
-        Expanded(child: content),
+        isDesktop ? _buildNavigationDrawer() : _buildNavigationRail(),
+        VerticalDivider(width: 1),
+        Expanded(child: _buildContent()),
       ],
     );
   }
@@ -91,7 +92,10 @@ class _MainScreenState extends State<MainScreen> {
       selectedIndex: widget.currentIndex,
       onDestinationSelected: widget.onTabChanged,
       surfaceTintColor: null,
-      footer: _buildDrawerFooter(),
+      footer: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [const Divider(height: 1), _buildDrawerFooter()],
+      ),
       children: _buildDrawerDestinations(),
     );
   }
@@ -107,7 +111,7 @@ class _MainScreenState extends State<MainScreen> {
             'Storyzz',
             style: Theme.of(
               context,
-            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+            ).textTheme.titleLarge?.copyWith(fontWeight: .bold),
           ),
         ],
       ),
@@ -119,18 +123,18 @@ class _MainScreenState extends State<MainScreen> {
       padding: const EdgeInsets.all(24.0),
       child: Row(
         children: [
-          ElevatedButton.icon(
-            icon: const Icon(AmazingIconOutlined.logout1),
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.only(
-                left: 16.0,
-                right: 16.0,
-                top: 8.0,
-                bottom: 8.0,
-              ),
+          TextButton.icon(
+            icon: Icon(
+              AmazingIconOutlined.logout1,
+              color: Theme.of(context).colorScheme.error,
             ),
             label: Text(AppLocalizations.of(context)!.logout),
-            onPressed: () => context.read<AppProvider>().openDialogLogOut(),
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              foregroundColor: Theme.of(context).colorScheme.onSurface,
+              shape: RoundedRectangleBorder(borderRadius: .circular(12)),
+            ),
+            onPressed: () => context.read<AppProvider>().openLogoutDialog(),
           ),
         ],
       ),
@@ -233,9 +237,12 @@ class _MainScreenState extends State<MainScreen> {
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: IconButton(
-        icon: const Icon(AmazingIconOutlined.logout1),
-        style: IconButton.styleFrom(padding: EdgeInsets.all(16.0)),
-        onPressed: () => context.read<AppProvider>().openDialogLogOut(),
+        icon: Icon(
+          AmazingIconOutlined.logout1,
+          color: Theme.of(context).colorScheme.error,
+        ),
+        style: IconButton.styleFrom(padding: EdgeInsets.all(12.0)),
+        onPressed: () => context.read<AppProvider>().openLogoutDialog(),
       ),
     );
   }

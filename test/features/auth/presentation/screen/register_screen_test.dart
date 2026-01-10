@@ -1,3 +1,4 @@
+import 'package:amazing_icons/filled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -103,7 +104,7 @@ void main() {
         await tester.tap(loginButton);
         await tester.pumpAndSettle();
 
-        verify(() => mockAppProvider.openLogin()).called(1);
+        verify(() => mockAppProvider.openLoginScreen()).called(1);
       },
     );
 
@@ -196,22 +197,24 @@ void main() {
       await tester.pumpAndSettle();
 
       // Initially both password fields should be obscured
-      expect(find.byIcon(Icons.visibility_off), findsNWidgets(2));
+      expect(find.byIcon(AmazingIconFilled.eyeSlash), findsNWidgets(2));
 
       // Test toggling password visibility
-      final passwordVisibilityToggle = find.byIcon(Icons.visibility_off).first;
+      final passwordVisibilityToggle = find
+          .byIcon(AmazingIconFilled.eyeSlash)
+          .first;
       await tester.tap(passwordVisibilityToggle);
       await tester.pump();
 
       // Test toggling confirm password visibility
       final confirmPasswordVisibilityToggle = find
-          .byIcon(Icons.visibility_off)
+          .byIcon(AmazingIconFilled.eyeSlash)
           .first;
       await tester.tap(confirmPasswordVisibilityToggle);
       await tester.pump();
 
       // After toggling, both fields should show the visibility icon
-      expect(find.byIcon(Icons.visibility), findsNWidgets(2));
+      expect(find.byIcon(AmazingIconFilled.eye), findsNWidgets(2));
     });
 
     testWidgets('should show error for empty name', (tester) async {
@@ -397,7 +400,7 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.text('Register success'), findsOneWidget);
-        verify(() => mockAppProvider.openLogin()).called(1);
+        verify(() => mockAppProvider.openLoginScreen()).called(1);
       },
     );
   });

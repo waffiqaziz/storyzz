@@ -13,7 +13,7 @@ class SettingsCard extends StatelessWidget {
       elevation: 0,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: .circular(16),
         side: BorderSide(
           color: colorScheme.outlineVariant.withValues(alpha: 0.5),
           width: 1,

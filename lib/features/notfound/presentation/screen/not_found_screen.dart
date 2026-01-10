@@ -1,7 +1,9 @@
 import 'dart:math' as math;
 
+import 'package:amazing_icons/amazing_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storyzz/core/design/insets.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 
 /// A screen that displays a 404 error message when url is not found.
@@ -48,7 +50,7 @@ class _NotFoundScreenState extends State<NotFoundScreen>
       body: SafeArea(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
             children: [
               // animated 404 illustration
               AnimatedBuilder(
@@ -69,9 +71,9 @@ class _NotFoundScreenState extends State<NotFoundScreen>
               Text(
                 AppLocalizations.of(context)!.page_not_found,
                 style: theme.textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                 ),
-                textAlign: TextAlign.center,
+                textAlign: .center,
               ),
               const SizedBox(height: 16),
 
@@ -84,7 +86,7 @@ class _NotFoundScreenState extends State<NotFoundScreen>
                       alpha: 0.7,
                     ),
                   ),
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                 ),
               ),
               const SizedBox(height: 40),
@@ -95,17 +97,12 @@ class _NotFoundScreenState extends State<NotFoundScreen>
                 onPressed: () => context.go('/'),
                 icon: Icon(
                   color: theme.colorScheme.surfaceContainerLowest,
-                  Icons.home,
+                  AmazingIconFilled.home,
                 ),
                 label: Text(AppLocalizations.of(context)!.go_to_home),
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 12,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
+                  padding: Insets.h16v12,
+                  shape: RoundedRectangleBorder(borderRadius: .circular(25)),
                 ),
               ),
             ],
@@ -117,13 +114,13 @@ class _NotFoundScreenState extends State<NotFoundScreen>
 
   Widget _build404LightMode(Color accentColor) {
     return Stack(
-      alignment: Alignment.center,
+      alignment: .center,
       children: [
         Text(
           '404',
           style: TextStyle(
             fontSize: 120,
-            fontWeight: FontWeight.bold,
+            fontWeight: .bold,
             color: Colors.grey.shade200,
           ),
         ),
@@ -131,7 +128,7 @@ class _NotFoundScreenState extends State<NotFoundScreen>
           '404',
           style: TextStyle(
             fontSize: 100,
-            fontWeight: FontWeight.bold,
+            fontWeight: .bold,
             color: accentColor,
           ),
         ),
@@ -142,13 +139,13 @@ class _NotFoundScreenState extends State<NotFoundScreen>
 
   Widget _build404DarkMode(Color accentColor) {
     return Stack(
-      alignment: Alignment.center,
+      alignment: .center,
       children: [
         Text(
           '404',
           style: TextStyle(
             fontSize: 120,
-            fontWeight: FontWeight.bold,
+            fontWeight: .bold,
             color: Colors.grey.shade800,
           ),
         ),
@@ -156,9 +153,9 @@ class _NotFoundScreenState extends State<NotFoundScreen>
           '404',
           style: TextStyle(
             fontSize: 100,
-            fontWeight: FontWeight.bold,
+            fontWeight: .bold,
             foreground: Paint()
-              ..style = PaintingStyle.stroke
+              ..style = .stroke
               ..strokeWidth = 3
               ..color = accentColor,
           ),

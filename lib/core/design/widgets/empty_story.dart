@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:storyzz/core/design/insets.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 
 /// A placeholder widget displayed when there are no stories to show.
@@ -14,17 +15,19 @@ class EmptyStory extends StatelessWidget {
       hasScrollBody: false,
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           children: [
             const Icon(Icons.auto_stories, size: 80, color: Colors.grey),
             const SizedBox(height: 16),
             Text(
               AppLocalizations.of(context)!.no_stories,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: .bold),
             ),
             const SizedBox(height: 8),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: Insets.v16,
               child: Text(
                 AppLocalizations.of(context)!.pull_to_refresh,
                 style: TextStyle(color: Colors.grey[600]),

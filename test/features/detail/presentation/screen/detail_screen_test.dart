@@ -144,7 +144,7 @@ void main() {
       await tester.tap(closeButton);
       await tester.pumpAndSettle();
 
-      verify(() => mockAppProvider.closeDetail()).called(1);
+      verify(() => mockAppProvider.closeDetailScreen()).called(1);
     });
 
     testWidgets('shows loading indicator then loaded image', (tester) async {

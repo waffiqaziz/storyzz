@@ -24,6 +24,7 @@ void main() {
     late MockStoryProvider mockStoryProvider;
     late MockAppProvider mockAppProvider;
     late ScrollController scrollController;
+    late MockAppService mockAppService;
     late User testUser;
     late List<ListStory> testStories;
 
@@ -32,12 +33,14 @@ void main() {
       mockStoryProvider = MockStoryProvider();
       mockAppProvider = MockAppProvider();
       scrollController = ScrollController();
+      mockAppService = MockAppService();
 
       testUser = dumpTestUser;
 
       testStories = dumpTestStoryList;
 
       // Default stubs
+      when(() => mockAppService.getKIsWeb()).thenReturn(false);
       when(() => mockAuthProvider.user).thenReturn(testUser);
       when(
         () => mockStoryProvider.state,
@@ -65,23 +68,26 @@ void main() {
       scrollController.dispose();
     });
 
-    Widget createTestWidget() {
+    Widget createTestWidget({double width = 1200}) {
       return MultiProvider(
         providers: [
           ChangeNotifierProvider<AuthProvider>.value(value: mockAuthProvider),
           ChangeNotifierProvider<StoryProvider>.value(value: mockStoryProvider),
           ChangeNotifierProvider<AppProvider>.value(value: mockAppProvider),
         ],
-        child: MaterialApp(
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [Locale('en')],
-          home: Scaffold(
-            body: HomeStoriesListView(scrollController: scrollController),
+        child: MediaQuery(
+          data: MediaQueryData(size: Size(width, 800.0), devicePixelRatio: 1.0),
+          child: MaterialApp(
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [Locale('en')],
+            home: Scaffold(
+              body: HomeStoriesListView(scrollController: scrollController),
+            ),
           ),
         ),
       );
@@ -102,10 +108,20 @@ void main() {
         },
       );
 
-      testWidgets('should render SliverAppBar with correct title', (
+      testWidgets('wide screen should not render SliverAppBar', (
         WidgetTester tester,
       ) async {
+        when(() => mockAppService.getKIsWeb()).thenReturn(true);
         await tester.pumpWidget(createTestWidget());
+        await tester.pumpAndSettle();
+
+        expect(find.byType(SliverAppBar), findsNothing);
+      });
+
+      testWidgets('mobile should render SliverAppBar with correct title', (
+        WidgetTester tester,
+      ) async {
+        await tester.pumpWidget(createTestWidget(width: 500));
         await tester.pumpAndSettle();
 
         expect(find.byType(SliverAppBar), findsOneWidget);
@@ -512,7 +528,7 @@ void main() {
       testWidgets('should open detail when story card is tapped', (
         WidgetTester tester,
       ) async {
-        when(() => mockAppProvider.openDetail(any())).thenReturn(null);
+        when(() => mockAppProvider.openDetailScreen(any())).thenReturn(null);
 
         await tester.pumpWidget(createTestWidget());
         await tester.pump();
@@ -521,7 +537,9 @@ void main() {
         await tester.tap(find.byType(HomeStoryCard).first);
         await tester.pump();
 
-        verify(() => mockAppProvider.openDetail(testStories[0])).called(1);
+        verify(
+          () => mockAppProvider.openDetailScreen(testStories[0]),
+        ).called(1);
       });
     });
   });

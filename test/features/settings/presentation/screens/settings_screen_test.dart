@@ -22,7 +22,7 @@ void main() {
     mockAppProvider = MockAppProvider();
     mockSettingsProvider = MockSettingsProvider();
 
-    when(() => mockAppProvider.closeUploadFullScreenMap()).thenReturn(null);
+    when(() => mockAppProvider.closeUploadMapFullScreen()).thenReturn(null);
     when(() => mockSettingsProvider.setLocale(any())).thenAnswer((_) async {});
     when(() => mockSettingsProvider.setTheme(any())).thenAnswer((_) async {});
     when(() => mockSettingsProvider.locale).thenReturn(const Locale('en'));
@@ -78,7 +78,7 @@ void main() {
     await tester.tap(tileFinder);
     await tester.pump();
 
-    verify(() => mockAppProvider.openDialogLogOut()).called(1);
+    verify(() => mockAppProvider.openLogoutDialog()).called(1);
   });
 
   testWidgets('tap view source code opens github url', (tester) async {

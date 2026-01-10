@@ -1,3 +1,4 @@
+import 'package:amazing_icons/outlined.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -43,7 +44,7 @@ void main() {
       final localizedError = AppLocalizations.of(
         tester.element(find.byType(StoryErrorView)),
       )!.error_loading_stories;
-      expect(find.byIcon(Icons.warning_amber_rounded), findsOneWidget);
+      expect(find.byIcon(AmazingIconOutlined.danger), findsOneWidget);
       expect(find.text('$localizedError $testErrorMessage'), findsOneWidget);
       expect(find.byType(ElevatedButton), findsOneWidget);
     });

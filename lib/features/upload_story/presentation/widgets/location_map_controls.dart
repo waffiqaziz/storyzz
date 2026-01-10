@@ -31,7 +31,6 @@ class LocationMapControls extends StatelessWidget {
             '${location.latitude.toStringAsFixed(6)}, '
             '${location.longitude.toStringAsFixed(6)}',
             style: TextStyle(
-              fontSize: 12,
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
