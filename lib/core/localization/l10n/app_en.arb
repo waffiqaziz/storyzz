@@ -70,9 +70,9 @@
   "logout_success": "Logout success",
   "retry": "Retry",
   "logout": "Logout",
-  "logout_description": "Log out of your account",
-  "logout_confirmation": "Log Out Confirmation",
-  "logout_confirmation_msg": "Are you sure you want to log out?",
+  "logout_description": "Logout of your account",
+  "logout_confirmation": "Logout Confirmation",
+  "logout_confirmation_msg": "Are you sure you want to logout?",
   
   "login_succes": "Login success!",
   "login_failed": "Login failed. Please try again.",
