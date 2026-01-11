@@ -6,6 +6,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/states/address_load_state.dart';
+import 'package:storyzz/core/design/widgets/square_icon_button.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
@@ -71,13 +72,13 @@ void main() {
     expect(find.byType(BuildGoogleMap), findsOneWidget);
     expect(find.byType(Positioned), findsOneWidget);
     expect(find.byType(PointerInterceptor), findsOneWidget);
-    expect(find.byType(FloatingActionButton), findsOneWidget);
+    expect(find.byType(SquareIconAction), findsOneWidget);
   });
 
   testWidgets('close button open upgrade dialog', (tester) async {
     await tester.pumpWidget(createTestWidget());
 
-    final closeButton = find.byType(FloatingActionButton);
+    final closeButton = find.byType(SquareIconAction);
     expect(closeButton, findsOneWidget);
 
     await tester.tap(closeButton);

@@ -154,7 +154,7 @@ void main() {
         expect(provider.isLoading, false);
         expect(provider.isSuccess, false);
         expect(provider.errorMessage, null);
-        expect(provider.caption, '');
+        expect(provider.caption, 'Test'); // keep the caption
         expect(provider.imageFile, null);
         expect(listenerCallCount, 1);
       });
@@ -180,7 +180,8 @@ void main() {
 
         provider.resetAll();
 
-        expect(provider.caption, '');
+        expect(provider.caption, 'Test');
+        expect(provider.isLoading, false);
         expect(provider.showCamera, false);
       });
     });

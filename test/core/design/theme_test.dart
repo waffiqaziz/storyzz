@@ -43,7 +43,7 @@ void main() {
 
         expect(
           buttonStyle?.padding?.resolve({}),
-          equals(const EdgeInsets.all(20)),
+          equals(const EdgeInsets.all(18)),
         );
         expect(buttonStyle?.elevation?.resolve({}), equals(0));
         expect(
@@ -51,7 +51,7 @@ void main() {
           isA<RoundedRectangleBorder>().having(
             (shape) => shape.borderRadius,
             'borderRadius',
-            equals(BorderRadius.circular(25)),
+            equals(BorderRadius.circular(50)),
           ),
         );
       });

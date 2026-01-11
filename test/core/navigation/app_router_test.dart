@@ -83,7 +83,7 @@ void main() {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [Locale('en'), Locale('id')],
+          supportedLocales: const [Locale('en')],
         ),
       ),
     );
@@ -123,8 +123,6 @@ void main() {
     mockUploadStoryProvider = MockUploadStoryProvider();
 
     when(() => mockAppProvider.isLanguageDialogOpen).thenReturn(false);
-    when(() => mockAppProvider.isRegister).thenReturn(false);
-    when(() => mockAppProvider.isLogin).thenReturn(false);
     when(() => mockAppProvider.isFromDetail).thenReturn(false);
     when(() => mockAppProvider.selectedStory).thenReturn(null);
     when(() => mockAppProvider.isLogoutDialogOpen).thenReturn(false);
@@ -182,6 +180,7 @@ void main() {
   });
 
   group('Authentication', () {
+
     testWidgets('should redirect to login when not logged in', (tester) async {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
 
@@ -189,6 +188,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(LoginScreen), findsOneWidget);
+      await tester.tap(find.text('Register'));
+      await tester.pumpAndSettle();
+      expect(find.byType(RegisterScreen), findsOneWidget);
     });
 
     testWidgets('should go to home when logged in', (tester) async {
@@ -240,37 +242,6 @@ void main() {
       final bool isLoggedIn = await mockAuthProvider.isLogged();
       expect(isLoggedIn, isFalse);
     });
-
-    testWidgets(
-      'should navigate from login to register when appProvider.isRegister is true',
-      (tester) async {
-        when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
-        when(() => mockAppProvider.isRegister).thenReturn(true);
-
-        await tester.pumpWidget(
-          createWidgetUnderTest(initialLocation: '/login'),
-        );
-        await tester.pumpAndSettle();
-
-        expect(find.byType(RegisterScreen), findsOneWidget);
-      },
-    );
-
-    testWidgets(
-      'should navigate from register to login when appProvider.isLogin is true',
-      (tester) async {
-        when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
-        when(() => mockAppProvider.isRegister).thenReturn(false);
-        when(() => mockAppProvider.isLogin).thenReturn(true);
-
-        await tester.pumpWidget(
-          createWidgetUnderTest(initialLocation: '/register'),
-        );
-        await tester.pumpAndSettle();
-
-        expect(find.byType(LoginScreen), findsOneWidget);
-      },
-    );
 
     testWidgets('should open language dialog from login screen', (
       tester,

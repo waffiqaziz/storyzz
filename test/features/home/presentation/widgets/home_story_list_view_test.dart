@@ -137,17 +137,18 @@ void main() {
         expect(find.byType(RefreshIndicator), findsOneWidget);
       });
 
-      testWidgets('for mobile should show refresh button when no story is selected', (
-        WidgetTester tester,
-      ) async {
-        when(() => mockAppProvider.selectedStory).thenReturn(null);
+      testWidgets(
+        'for mobile should show refresh button when no story is selected',
+        (WidgetTester tester) async {
+          when(() => mockAppProvider.selectedStory).thenReturn(null);
 
-        await tester.pumpWidget(createTestWidget(width: 400));
-        await tester.pumpAndSettle();
-        await tester.pump();
+          await tester.pumpWidget(createTestWidget(width: 400));
+          await tester.pumpAndSettle();
+          await tester.pump();
 
-        expect(find.byIcon(Icons.refresh), findsOneWidget);
-      });
+          expect(find.byIcon(Icons.refresh), findsOneWidget);
+        },
+      );
 
       testWidgets('should hide refresh button when story is selected', (
         WidgetTester tester,
@@ -474,10 +475,10 @@ void main() {
     });
 
     group('AppBar Action Tests', () {
-      testWidgets('should refresh stories when refresh button is tapped', (
+      testWidgets('on mobile should refresh stories when refresh button is tapped', (
         WidgetTester tester,
       ) async {
-        await tester.pumpWidget(createTestWidget());
+        await tester.pumpWidget(createTestWidget(width: 400));
         await tester.pumpAndSettle();
 
         clearInteractions(mockStoryProvider);

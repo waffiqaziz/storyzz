@@ -42,7 +42,7 @@ void main() {
 
     expect(find.byType(AlertDialog), findsOneWidget);
     expect(find.text('Logout Confirmation'), findsOneWidget);
-    expect(find.text('Are you sure you want to logout ?'), findsOneWidget);
+    expect(find.text('Are you sure you want to logout?'), findsOneWidget);
   });
 
   testWidgets('cancel button calls closeDialogLogOut', (tester) async {

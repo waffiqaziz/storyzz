@@ -287,7 +287,7 @@ void main() {
     test('logout_confirmation_msg returns correct value', () {
       expect(
         appLocalizationsEn.logout_confirmation_msg,
-        'Are you sure you want to logout ?',
+        'Are you sure you want to logout?',
       );
     });
 
@@ -519,6 +519,10 @@ void main() {
 
     test('close returns correct value', () {
       expect(appLocalizationsEn.close, 'Close');
+    });    
+    
+    test('open_full_screen  returns correct value', () {
+      expect(appLocalizationsEn.open_full_screen , 'Open Full Screen');
     });
 
     test('coming_soon returns correct value', () {
