@@ -1,12 +1,12 @@
 import 'package:amazing_icons/amazing_icons.dart' show AmazingIconFilled;
 import 'package:amazing_icons/outlined.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/design/insets.dart';
 import 'package:storyzz/core/design/theme.dart';
 import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
-import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
@@ -229,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 text: localizations.dont_have_account,
                 linkText: localizations.register_lower,
                 onPressed: !authProvider.isLoadingLogin
-                    ? () => context.read<AppProvider>().openRegisterScreen()
+                    ? () => context.go('/register')
                     : null,
               ),
             ),

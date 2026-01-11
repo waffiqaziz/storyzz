@@ -14,8 +14,6 @@ void main() {
       expect(appProvider.isDetailFullScreenMap, false);
       expect(appProvider.isFromDetail, false);
       expect(appProvider.isLanguageDialogOpen, false);
-      expect(appProvider.isLogin, false);
-      expect(appProvider.isRegister, false);
       expect(appProvider.isUpDialogOpen, false);
       expect(appProvider.isUploadFullScreenMap, false);
       expect(appProvider.isLogoutDialogOpen, false);
@@ -28,20 +26,6 @@ void main() {
 
       appProvider.closeLanguageDialog();
       expect(appProvider.isLanguageDialogOpen, false);
-    });
-
-    test('should handle authentication state changes', () {
-      appProvider.openRegisterScreen();
-      expect(appProvider.isRegister, true);
-      expect(appProvider.isLogin, false);
-
-      appProvider.openLoginScreen();
-      expect(appProvider.isLogin, true);
-      expect(appProvider.isRegister, false);
-
-      appProvider.resetAuthentication();
-      expect(appProvider.isLogin, false);
-      expect(appProvider.isRegister, false);
     });
 
     test('should handle upgrade dialog operations', () {

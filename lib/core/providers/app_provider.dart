@@ -14,12 +14,6 @@ class AppProvider extends ChangeNotifier {
   ListStory? _selectedStory;
   ListStory? get selectedStory => _selectedStory;
 
-  bool _isRegister = false;
-  bool get isRegister => _isRegister;
-
-  bool _isLogin = false;
-  bool get isLogin => _isLogin;
-
   bool _isUploadFullScreenMap = false;
   bool get isUploadFullScreenMap => _isUploadFullScreenMap;
 
@@ -36,24 +30,6 @@ class AppProvider extends ChangeNotifier {
 
   void closeLanguageDialog() {
     _isLanguageDialogOpen = false;
-    notifyListeners();
-  }
-
-  void openRegisterScreen() {
-    _isRegister = true;
-    _isLogin = false;
-    notifyListeners();
-  }
-
-  void openLoginScreen() {
-    _isLogin = true;
-    _isRegister = false;
-    notifyListeners();
-  }
-
-  void resetAuthentication() {
-    _isRegister = false;
-    _isLogin = false;
     notifyListeners();
   }
 
@@ -108,14 +84,4 @@ class AppProvider extends ChangeNotifier {
     _isLogoutDialogOpen = false;
     notifyListeners();
   }
-
-  // void resetAll() {
-  //   _isLanguageDialogOpen = false;
-  //   _isUpDialogOpen = false;
-  //   _isFullScreenMap = false;
-  //   _isFromDetail = false;
-  //   _selectedStory = null;
-  //   _isFromDetail = false;
-  //   notifyListeners();
-  // }
 }

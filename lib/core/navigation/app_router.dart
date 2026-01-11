@@ -64,9 +64,6 @@ class AppRouter {
         path: '/login',
         name: 'login',
         redirect: (context, state) {
-          if (appProvider.isRegister) {
-            return '/register';
-          }
           if (appProvider.isLanguageDialogOpen) {
             return '/login/language-dialog';
           }
@@ -86,9 +83,6 @@ class AppRouter {
         path: '/register',
         name: 'register',
         redirect: (context, state) {
-          if (appProvider.isLogin) {
-            return '/login';
-          }
           if (appProvider.isLanguageDialogOpen) {
             return '/register/language-dialog';
           }

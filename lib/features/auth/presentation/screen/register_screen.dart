@@ -1,11 +1,11 @@
 import 'package:amazing_icons/amazing_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/models/user.dart';
 import 'package:storyzz/core/design/theme.dart';
 import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
-import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/features/auth/presentation/widgets/auth_action_button.dart';
@@ -57,7 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       final result = await authProvider.register(user);
       if (result.data != null && !result.data!.error) {
         if (mounted) {
-          context.read<AppProvider>().openLoginScreen();
+          context.go('/login');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -88,160 +88,166 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    return Consumer<AuthProvider>(
-      builder: (context, authProvider, child) {
-        return Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            actions: [
-              Consumer<SettingsProvider>(
-                builder: (context, provider, _) => Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Opacity(
-                    opacity: authProvider.isLoadingRegister ? 0.4 : 1.0,
-                    child: IgnorePointer(
-                      ignoring: authProvider.isLoadingRegister,
-                      child: LanguageSelector(
-                        currentLanguageCode: provider.locale.languageCode,
-                        isCompact: true,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) context.go('/login');
+      },
+      child: Consumer<AuthProvider>(
+        builder: (context, authProvider, _) {
+          return Scaffold(
+            extendBodyBehindAppBar: true,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              actions: [
+                Consumer<SettingsProvider>(
+                  builder: (context, provider, _) => Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Opacity(
+                      opacity: authProvider.isLoadingRegister ? 0.4 : 1.0,
+                      child: IgnorePointer(
+                        ignoring: authProvider.isLoadingRegister,
+                        child: LanguageSelector(
+                          currentLanguageCode: provider.locale.languageCode,
+                          isCompact: true,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ],
-          ),
-          body: AuthScreenWrapper(
-            child: AuthFormContainer(
-              formKey: _formKey,
-              title: localizations.create_account,
-              subtitle: localizations.sign_up_to_get_started,
-              isLoading: authProvider.isLoadingRegister,
-              fields: [
-                // name field
-                TextFormField(
-                  enabled: !authProvider.isLoadingRegister,
-                  controller: _nameController,
-                  decoration: customInputDecoration(
-                    label: localizations.full_name,
-                    prefixIcon: AmazingIconOutlined.user,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return localizations.enter_full_name;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                // email Field
-                TextFormField(
-                  enabled: !authProvider.isLoadingRegister,
-                  controller: _emailController,
-                  decoration: customInputDecoration(
-                    label: localizations.email,
-                    prefixIcon: AmazingIconOutlined.email,
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return localizations.enter_email;
-                    }
-                    if (!RegExp(
-                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                    ).hasMatch(value)) {
-                      return localizations.enter_valid_email;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                // password field
-                TextFormField(
-                  enabled: !authProvider.isLoadingRegister,
-                  controller: _passwordController,
-                  decoration: customInputDecoration(
-                    label: localizations.password,
-                    prefixIcon: AmazingIconOutlined.lock,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword
-                            ? AmazingIconFilled.eyeSlash
-                            : AmazingIconFilled.eye,
-                        size: 26,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
-                      },
-                    ),
-                  ),
-                  obscureText: _obscurePassword,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return localizations.enter_password;
-                    }
-                    if (value.length < 8) {
-                      return localizations.password_minimum;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                // confirm password field
-                TextFormField(
-                  enabled: !authProvider.isLoadingRegister,
-                  controller: _confirmPasswordController,
-                  decoration: customInputDecoration(
-                    label: localizations.confirm_password,
-                    prefixIcon: AmazingIconOutlined.lock,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscureConfirmPassword
-                            ? AmazingIconFilled.eyeSlash
-                            : AmazingIconFilled.eye,
-                        size: 26,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscureConfirmPassword = !_obscureConfirmPassword;
-                        });
-                      },
-                    ),
-                  ),
-                  obscureText: _obscureConfirmPassword,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return localizations.confirm_your_password;
-                    }
-                    if (value != _passwordController.text) {
-                      return localizations.password_is_not_same;
-                    }
-                    return null;
-                  },
                 ),
               ],
-              actionButton: AuthActionButton(
-                text: localizations.register_upper,
+            ),
+            body: AuthScreenWrapper(
+              child: AuthFormContainer(
+                formKey: _formKey,
+                title: localizations.create_account,
+                subtitle: localizations.sign_up_to_get_started,
                 isLoading: authProvider.isLoadingRegister,
-                onPressed: _handleRegister,
-              ),
-              bottomLink: AuthBottomLink(
-                text: localizations.already_have_account,
-                linkText: localizations.login_lower,
-                onPressed: authProvider.isLoadingRegister
-                    ? null
-                    : () => context.read<AppProvider>().openLoginScreen(),
+                fields: [
+                  // name field
+                  TextFormField(
+                    enabled: !authProvider.isLoadingRegister,
+                    controller: _nameController,
+                    decoration: customInputDecoration(
+                      label: localizations.full_name,
+                      prefixIcon: AmazingIconOutlined.user,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return localizations.enter_full_name;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+                  // email Field
+                  TextFormField(
+                    enabled: !authProvider.isLoadingRegister,
+                    controller: _emailController,
+                    decoration: customInputDecoration(
+                      label: localizations.email,
+                      prefixIcon: AmazingIconOutlined.email,
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return localizations.enter_email;
+                      }
+                      if (!RegExp(
+                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                      ).hasMatch(value)) {
+                        return localizations.enter_valid_email;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+                  // password field
+                  TextFormField(
+                    enabled: !authProvider.isLoadingRegister,
+                    controller: _passwordController,
+                    decoration: customInputDecoration(
+                      label: localizations.password,
+                      prefixIcon: AmazingIconOutlined.lock,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? AmazingIconFilled.eyeSlash
+                              : AmazingIconFilled.eye,
+                          size: 26,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                      ),
+                    ),
+                    obscureText: _obscurePassword,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return localizations.enter_password;
+                      }
+                      if (value.length < 8) {
+                        return localizations.password_minimum;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+                  // confirm password field
+                  TextFormField(
+                    enabled: !authProvider.isLoadingRegister,
+                    controller: _confirmPasswordController,
+                    decoration: customInputDecoration(
+                      label: localizations.confirm_password,
+                      prefixIcon: AmazingIconOutlined.lock,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscureConfirmPassword
+                              ? AmazingIconFilled.eyeSlash
+                              : AmazingIconFilled.eye,
+                          size: 26,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureConfirmPassword = !_obscureConfirmPassword;
+                          });
+                        },
+                      ),
+                    ),
+                    obscureText: _obscureConfirmPassword,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return localizations.confirm_your_password;
+                      }
+                      if (value != _passwordController.text) {
+                        return localizations.password_is_not_same;
+                      }
+                      return null;
+                    },
+                  ),
+                ],
+                actionButton: AuthActionButton(
+                  text: localizations.register_upper,
+                  isLoading: authProvider.isLoadingRegister,
+                  onPressed: _handleRegister,
+                ),
+                bottomLink: AuthBottomLink(
+                  text: localizations.already_have_account,
+                  linkText: localizations.login_lower,
+                  onPressed: authProvider.isLoadingRegister
+                      ? null
+                      : () => context.go('/login'),
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
