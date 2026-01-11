@@ -15,3 +15,5 @@ String getLocalizedErrorMessage(BuildContext context, String error) {
   }
   return AppLocalizations.of(context)!.location_error;
 }
+
+typedef OnLocationEnabled = void Function(bool enabled);

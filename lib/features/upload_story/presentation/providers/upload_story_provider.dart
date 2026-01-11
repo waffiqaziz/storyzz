@@ -87,7 +87,6 @@ class UploadStoryProvider extends ChangeNotifier {
     _isLoading = false;
     _isSuccess = false;
     _errorMessage = null;
-    _caption = '';
     _imageFile = null;
     notifyListeners();
   }

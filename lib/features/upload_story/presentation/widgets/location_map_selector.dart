@@ -30,7 +30,9 @@ import 'package:storyzz/features/upload_story/utils/helper.dart';
 /// - Latitude and longitude display of the selected location.
 /// - A button to clear the selected location.
 class LocationMapSelector extends StatefulWidget {
-  const LocationMapSelector({super.key});
+  final OnLocationEnabled onLocationEnabled;
+
+  const LocationMapSelector({super.key, required this.onLocationEnabled});
 
   @override
   State<LocationMapSelector> createState() => _LocationMapSelectorState();
@@ -111,7 +113,7 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
           value: uploadProvider.includeLocation,
           onChanged: (value) {
             uploadProvider.toggleLocationIncluded(value);
-
+            widget.onLocationEnabled(value);
             // if turning on and no location is set, try to get current position
             if (value &&
                 uploadProvider.selectedLocation == null &&
