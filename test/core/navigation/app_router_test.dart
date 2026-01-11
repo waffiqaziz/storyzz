@@ -1,3 +1,4 @@
+import 'package:amazing_icons/amazing_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -44,7 +45,7 @@ void main() {
   Widget createWidgetUnderTest({
     String? initialLocation,
     double width = 1200,
-    ThemeMode themeMode = ThemeMode.light,
+    ThemeMode themeMode = .light,
   }) {
     appRouter = AppRouter(
       authProvider: mockAuthProvider,
@@ -82,7 +83,7 @@ void main() {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [Locale('en'), Locale('id')],
+          supportedLocales: const [Locale('en')],
         ),
       ),
     );
@@ -122,11 +123,9 @@ void main() {
     mockUploadStoryProvider = MockUploadStoryProvider();
 
     when(() => mockAppProvider.isLanguageDialogOpen).thenReturn(false);
-    when(() => mockAppProvider.isRegister).thenReturn(false);
-    when(() => mockAppProvider.isLogin).thenReturn(false);
     when(() => mockAppProvider.isFromDetail).thenReturn(false);
     when(() => mockAppProvider.selectedStory).thenReturn(null);
-    when(() => mockAppProvider.isDialogLogOutOpen).thenReturn(false);
+    when(() => mockAppProvider.isLogoutDialogOpen).thenReturn(false);
     when(() => mockAppProvider.isUpDialogOpen).thenReturn(false);
     when(() => mockAppProvider.isUploadFullScreenMap).thenReturn(false);
     when(() => mockAppProvider.isDetailFullScreenMap).thenReturn(false);
@@ -181,6 +180,7 @@ void main() {
   });
 
   group('Authentication', () {
+
     testWidgets('should redirect to login when not logged in', (tester) async {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
 
@@ -188,6 +188,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(LoginScreen), findsOneWidget);
+      await tester.tap(find.text('Register'));
+      await tester.pumpAndSettle();
+      expect(find.byType(RegisterScreen), findsOneWidget);
     });
 
     testWidgets('should go to home when logged in', (tester) async {
@@ -239,37 +242,6 @@ void main() {
       final bool isLoggedIn = await mockAuthProvider.isLogged();
       expect(isLoggedIn, isFalse);
     });
-
-    testWidgets(
-      'should navigate from login to register when appProvider.isRegister is true',
-      (tester) async {
-        when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
-        when(() => mockAppProvider.isRegister).thenReturn(true);
-
-        await tester.pumpWidget(
-          createWidgetUnderTest(initialLocation: '/login'),
-        );
-        await tester.pumpAndSettle();
-
-        expect(find.byType(RegisterScreen), findsOneWidget);
-      },
-    );
-
-    testWidgets(
-      'should navigate from register to login when appProvider.isLogin is true',
-      (tester) async {
-        when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
-        when(() => mockAppProvider.isRegister).thenReturn(false);
-        when(() => mockAppProvider.isLogin).thenReturn(true);
-
-        await tester.pumpWidget(
-          createWidgetUnderTest(initialLocation: '/register'),
-        );
-        await tester.pumpAndSettle();
-
-        expect(find.byType(LoginScreen), findsOneWidget);
-      },
-    );
 
     testWidgets('should open language dialog from login screen', (
       tester,
@@ -361,6 +333,18 @@ void main() {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
     });
 
+    testWidgets('logout button open logout dialog', (tester) async {
+      await tester.pumpWidget(
+        createWidgetUnderTest(initialLocation: '/', width: screenSize),
+      );
+
+      await tester.pumpAndSettle();
+      final logoutButton = find.byIcon(AmazingIconOutlined.logout1).first;
+      await tester.tap(logoutButton);
+      await tester.pump();
+      verify(() => mockAppProvider.openLogoutDialog()).called(1);
+    });
+
     testWidgets('should show correct screen for home tab index', (
       tester,
     ) async {
@@ -404,6 +388,24 @@ void main() {
     });
   });
 
+  group('Navigation Drawer routing', () {
+    setUp(() {
+      when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
+    });
+
+    testWidgets('logout button open logout dialog', (tester) async {
+      await tester.pumpWidget(
+        createWidgetUnderTest(initialLocation: '/', width: 1200),
+      );
+
+      await tester.pumpAndSettle();
+      final logoutButton = find.byIcon(AmazingIconOutlined.logout1).first;
+      await tester.tap(logoutButton);
+      await tester.pump();
+      verify(() => mockAppProvider.openLogoutDialog()).called(1);
+    });
+  });
+
   group('Story detail', () {
     final testStory = ListStory(
       id: '1',
@@ -424,7 +426,7 @@ void main() {
       when(() => mockAuthProvider.isLoggedIn).thenReturn(true);
       when(() => mockAppProvider.selectedStory).thenReturn(testStory);
       when(() => mockAppProvider.isFromDetail).thenReturn(false);
-      when(() => mockAppProvider.isDialogLogOutOpen).thenReturn(false);
+      when(() => mockAppProvider.isLogoutDialogOpen).thenReturn(false);
 
       await tester.pumpWidget(createWidgetUnderTest(width: 400));
 
@@ -438,13 +440,13 @@ void main() {
       await tester.pump(const Duration(milliseconds: 1000));
 
       // Simulate close story detail
-      when(() => mockAppProvider.closeDetail()).thenAnswer((_) {
+      when(() => mockAppProvider.closeDetailScreen()).thenAnswer((_) {
         when(() => mockAppProvider.selectedStory).thenReturn(null);
         when(() => mockAppProvider.isFromDetail).thenReturn(true);
         mockAppProvider.notifyListeners();
       });
 
-      mockAppProvider.closeDetail();
+      mockAppProvider.closeDetailScreen();
 
       // manually trigger the router refresh
       // because using mocks and not real state management
@@ -468,7 +470,7 @@ void main() {
       when(() => mockAuthProvider.isLoggedIn).thenReturn(true);
       when(() => mockAppProvider.selectedStory).thenReturn(testStory);
       when(() => mockAppProvider.isFromDetail).thenReturn(false);
-      when(() => mockAppProvider.isDialogLogOutOpen).thenReturn(false);
+      when(() => mockAppProvider.isLogoutDialogOpen).thenReturn(false);
 
       await tester.pumpWidget(createWidgetUnderTest(width: 1200));
 
@@ -482,13 +484,13 @@ void main() {
       await tester.pump(const Duration(milliseconds: 1000));
 
       // simulate close story detail
-      when(() => mockAppProvider.closeDetail()).thenAnswer((_) {
+      when(() => mockAppProvider.closeDetailScreen()).thenAnswer((_) {
         when(() => mockAppProvider.selectedStory).thenReturn(null);
         when(() => mockAppProvider.isFromDetail).thenReturn(true);
         mockAppProvider.notifyListeners();
       });
 
-      mockAppProvider.closeDetail();
+      mockAppProvider.closeDetailScreen();
 
       // manually trigger the router refresh
       // because using mocks and not real state management
@@ -512,7 +514,7 @@ void main() {
         when(() => mockAuthProvider.isLoggedIn).thenReturn(true);
         when(() => mockAppProvider.selectedStory).thenReturn(testStory);
         when(() => mockAppProvider.isFromDetail).thenReturn(false);
-        when(() => mockAppProvider.isDialogLogOutOpen).thenReturn(false);
+        when(() => mockAppProvider.isLogoutDialogOpen).thenReturn(false);
 
         await tester.pumpWidget(
           createWidgetUnderTest(width: 1200, initialLocation: '/map'),
@@ -594,7 +596,7 @@ void main() {
     testWidgets('should show logout dialog when isDialogLogOutOpen is true', (
       tester,
     ) async {
-      when(() => mockAppProvider.isDialogLogOutOpen).thenReturn(true);
+      when(() => mockAppProvider.isLogoutDialogOpen).thenReturn(true);
 
       await tester.pumpWidget(
         createWidgetUnderTest(initialLocation: '/upload'),
@@ -626,7 +628,7 @@ void main() {
     });
 
     testWidgets('should render 404 dark mode UI', (tester) async {
-      await tester.pumpWidget(createWidgetUnderTest(themeMode: ThemeMode.dark));
+      await tester.pumpWidget(createWidgetUnderTest(themeMode: .dark));
 
       appRouter.router.go('/404');
 
@@ -758,7 +760,7 @@ void main() {
     });
 
     testWidgets('should show logout confirmation dialog', (tester) async {
-      when(() => mockAppProvider.isDialogLogOutOpen).thenReturn(true);
+      when(() => mockAppProvider.isLogoutDialogOpen).thenReturn(true);
 
       await tester.pumpWidget(createWidgetUnderTest(initialLocation: '/'));
       await tester.pumpAndSettle();

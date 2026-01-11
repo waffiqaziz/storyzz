@@ -14,7 +14,7 @@ void main() {
 
   setUp(() {
     mockAppProvider = MockAppProvider();
-    when(() => mockAppProvider.closeDialogLogOut()).thenReturn(null);
+    when(() => mockAppProvider.closeLogoutDialog()).thenReturn(null);
   });
 
   Widget createTestWidget() {

@@ -130,3 +130,7 @@ class MockScrollPosition extends Mock implements ScrollPosition {}
 class FakeCameraUpdate extends Fake implements CameraUpdate {}
 
 class MockMapService extends Mock implements MapService {}
+
+class MockOnLocationEnabled extends Mock {
+  void call(bool enabled);
+}

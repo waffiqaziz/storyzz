@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/models/setting.dart';
 import 'package:storyzz/core/data/networking/states/story_load_state.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
+import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/core/providers/story_provider.dart';
@@ -22,12 +23,14 @@ void main() {
   late MockAuthProvider mockAuthProvider;
   late MockStoryProvider mockStoryProvider;
   late MockSettingsProvider mockSettingsProvider;
+  late MockAppProvider mockAppProvider;
 
   setUp(() {
     mockAuthProvider = MockAuthProvider();
     mockMapProvider = MockMapProvider();
     mockStoryProvider = MockStoryProvider();
     mockSettingsProvider = MockSettingsProvider();
+    mockAppProvider = MockAppProvider();
 
     when(() => mockAuthProvider.user).thenReturn(null);
     when(() => mockMapProvider.isMapReady).thenReturn(false);
@@ -53,6 +56,7 @@ void main() {
         MultiProvider(
           providers: [
             ChangeNotifierProvider<AuthProvider>.value(value: mockAuthProvider),
+            ChangeNotifierProvider<AppProvider>.value(value: mockAppProvider),
             ChangeNotifierProvider<SettingsProvider>.value(
               value: mockSettingsProvider,
             ),

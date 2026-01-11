@@ -1,3 +1,4 @@
+import 'package:amazing_icons/outlined.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -56,9 +57,6 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     // initialize services with context
     _cameraService.initialize(context);
     _imagePickerService.initialize(context);
-    if (_uploadStoryProvider.includeLocation) {
-      _scrollToLocationSelector();
-    }
   }
 
   @override
@@ -156,7 +154,9 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
     }
   }
 
-  void _scrollToLocationSelector() {
+  void _scrollToLocationSelector(bool enabled) {
+    if (!enabled) return;
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
@@ -185,7 +185,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
         centerTitle: true,
         title: Text(
           AppLocalizations.of(context)!.upload_story,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: .bold),
         ),
         actions: [
           if (imageFile != null && !showCamera)
@@ -194,7 +194,7 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
               // button trigger to upload story
               child: IconButton(
-                icon: const Icon(Icons.check),
+                icon: Icon(AmazingIconOutlined.send2),
                 onPressed: isUploading ? null : _uploadStory,
               ),
             ),
@@ -209,8 +209,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: .center,
+                  crossAxisAlignment: .stretch,
                   children: [
                     if (showCamera)
                       CameraViewWeb(cameraService: _cameraService)
@@ -225,32 +225,57 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
 
                     // show caption field and location selector
                     if (imageFile != null && !showCamera) ...[
-                      TextField(
-                        controller: _captionController,
-                        decoration: InputDecoration(
-                          hintText: AppLocalizations.of(
-                            context,
-                          )!.write_a_caption,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.outline,
+                      Stack(
+                        children: [
+                          TextField(
+                            controller: _captionController,
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(
+                                context,
+                              )!.write_a_caption,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.fromLTRB(
+                                12,
+                                12,
+                                40,
+                                12,
+                              ),
                             ),
+                            minLines: 3,
+                            maxLines: 10,
+                            onChanged: (value) {
+                              uploadProvider.setCaption(value);
+                            },
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
+                          if (_captionController.text.isNotEmpty)
+                            Positioned(
+                              top: 4,
+                              right: 4,
+                              child: IconButton(
+                                icon: const Icon(Icons.clear),
+                                constraints: const BoxConstraints(),
+                                onPressed: () {
+                                  _captionController.clear();
+                                  uploadProvider.setCaption('');
+                                  setState(() {});
+                                },
+                              ),
                             ),
-                          ),
-                        ),
-                        maxLines: 3,
-                        onChanged: (value) {
-                          uploadProvider.setCaption(value);
-                        },
+                        ],
                       ),
                       const SizedBox(height: 16),
 
@@ -261,10 +286,11 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                       if (widget.appService.getKIsWeb()) ...[
                         if (isPaidVersion)
                           StatefulBuilder(
-                            builder:
-                                (BuildContext context, StateSetter setState) {
-                                  return LocationMapSelector();
-                                },
+                            builder: (BuildContext _, StateSetter _) {
+                              return LocationMapSelector(
+                                onLocationEnabled: _scrollToLocationSelector,
+                              );
+                            },
                           )
                         else
                           PremiumFeaturePromotion(),
@@ -272,10 +298,11 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                           TargetPlatform.android) ...[
                         if (BuildConfig.canAddLocation) ...[
                           StatefulBuilder(
-                            builder:
-                                (BuildContext context, StateSetter setState) {
-                                  return LocationMapSelector();
-                                },
+                            builder: (BuildContext _, StateSetter _) {
+                              return LocationMapSelector(
+                                onLocationEnabled: _scrollToLocationSelector,
+                              );
+                            },
                           ),
                         ] else ...[
                           PremiumFeaturePromotion(),

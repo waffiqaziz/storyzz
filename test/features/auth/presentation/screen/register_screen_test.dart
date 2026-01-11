@@ -1,6 +1,8 @@
+import 'package:amazing_icons/filled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/models/user.dart';
@@ -48,23 +50,35 @@ void main() {
   });
 
   Widget createWidgetUnderTest() {
-    return MaterialApp(
+    final router = GoRouter(
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => MultiProvider(
+            providers: [
+              ChangeNotifierProvider<AuthProvider>.value(
+                value: mockAuthProvider,
+              ),
+              ChangeNotifierProvider<AppProvider>.value(value: mockAppProvider),
+              ChangeNotifierProvider<SettingsProvider>.value(
+                value: mockSettingsProvider,
+              ),
+            ],
+            child: const Scaffold(body: RegisterScreen()),
+          ),
+        ),
+      ],
+    );
+
+    return MaterialApp.router(
+      routerConfig: router,
+      supportedLocales: const [Locale('en')],
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<AuthProvider>.value(value: mockAuthProvider),
-          ChangeNotifierProvider<AppProvider>.value(value: mockAppProvider),
-          ChangeNotifierProvider<SettingsProvider>.value(
-            value: mockSettingsProvider,
-          ),
-        ],
-        child: const Scaffold(body: RegisterScreen()),
-      ),
     );
   }
 
@@ -102,8 +116,6 @@ void main() {
 
         await tester.tap(loginButton);
         await tester.pumpAndSettle();
-
-        verify(() => mockAppProvider.openLogin()).called(1);
       },
     );
 
@@ -196,22 +208,24 @@ void main() {
       await tester.pumpAndSettle();
 
       // Initially both password fields should be obscured
-      expect(find.byIcon(Icons.visibility_off), findsNWidgets(2));
+      expect(find.byIcon(AmazingIconFilled.eyeSlash), findsNWidgets(2));
 
       // Test toggling password visibility
-      final passwordVisibilityToggle = find.byIcon(Icons.visibility_off).first;
+      final passwordVisibilityToggle = find
+          .byIcon(AmazingIconFilled.eyeSlash)
+          .first;
       await tester.tap(passwordVisibilityToggle);
       await tester.pump();
 
       // Test toggling confirm password visibility
       final confirmPasswordVisibilityToggle = find
-          .byIcon(Icons.visibility_off)
+          .byIcon(AmazingIconFilled.eyeSlash)
           .first;
       await tester.tap(confirmPasswordVisibilityToggle);
       await tester.pump();
 
       // After toggling, both fields should show the visibility icon
-      expect(find.byIcon(Icons.visibility), findsNWidgets(2));
+      expect(find.byIcon(AmazingIconFilled.eye), findsNWidgets(2));
     });
 
     testWidgets('should show error for empty name', (tester) async {
@@ -397,7 +411,6 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.text('Register success'), findsOneWidget);
-        verify(() => mockAppProvider.openLogin()).called(1);
       },
     );
   });

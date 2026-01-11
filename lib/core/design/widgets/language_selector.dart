@@ -53,6 +53,7 @@ class LanguageSelector extends StatelessWidget {
     AppLocalizations localizations,
   ) {
     final settingsProvider = context.read<SettingsProvider>();
+    final colorScheme = Theme.of(context).colorScheme;
 
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
@@ -62,18 +63,17 @@ class LanguageSelector extends StatelessWidget {
           DropdownMenuItem<String>(
             value: 'en',
             child: Row(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: .min,
               children: [
                 Image.asset("assets/flag/flag_us.webp", width: 30, height: 25),
                 const SizedBox(width: 8),
                 Flexible(
                   child: Text(
                     localizations.english,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.copyWith(fontWeight: .bold),
+                    overflow: .ellipsis,
                   ),
                 ),
               ],
@@ -89,11 +89,10 @@ class LanguageSelector extends StatelessWidget {
                 Flexible(
                   child: Text(
                     localizations.indonesian,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.copyWith(fontWeight: .bold),
+                    overflow: .ellipsis,
                   ),
                 ),
               ],
@@ -109,34 +108,34 @@ class LanguageSelector extends StatelessWidget {
         buttonStyleData: ButtonStyleData(
           height: 40,
           width: 150,
-          padding: const EdgeInsets.only(left: 16, right: 8),
+          padding: const .only(left: 16, right: 8),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: Theme.of(context).colorScheme.primaryContainer,
+            borderRadius: .circular(25),
+            color: colorScheme.primaryContainer,
           ),
           elevation: 2,
         ),
         iconStyleData: IconStyleData(
           icon: const Icon(Icons.arrow_drop_down),
-          iconEnabledColor: Theme.of(context).colorScheme.onPrimaryContainer,
-          iconDisabledColor: Theme.of(context).colorScheme.onSurfaceVariant,
+          iconEnabledColor: colorScheme.onPrimaryContainer,
+          iconDisabledColor: colorScheme.onSurfaceVariant,
         ),
         dropdownStyleData: DropdownStyleData(
           maxHeight: 200,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            color: Theme.of(context).colorScheme.primaryContainer,
+            borderRadius: .circular(14),
+            color: colorScheme.primaryContainer,
           ),
           offset: const Offset(0, 0),
           scrollbarTheme: ScrollbarThemeData(
-            radius: const Radius.circular(40),
-            thickness: WidgetStateProperty.all(6),
-            thumbVisibility: WidgetStateProperty.all(true),
+            radius: const .circular(40),
+            thickness: .all(6),
+            thumbVisibility: .all(true),
           ),
         ),
         menuItemStyleData: const MenuItemStyleData(
           height: 40,
-          padding: EdgeInsets.only(left: 10, right: 10),
+          padding: .only(left: 10, right: 10),
         ),
       ),
     );

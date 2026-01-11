@@ -16,7 +16,7 @@ class PremiumFeaturePromotion extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: .center,
           children: [
             Icon(
               Icons.location_on,
@@ -28,12 +28,12 @@ class PremiumFeaturePromotion extends StatelessWidget {
               localizations.premium_feature,
               style: Theme.of(
                 context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+              ).textTheme.titleMedium?.copyWith(fontWeight: .bold),
             ),
             const SizedBox(height: 8),
             Text(
               localizations.upgrade_to_add_location,
-              textAlign: TextAlign.center,
+              textAlign: .center,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 16),

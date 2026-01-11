@@ -605,6 +605,11 @@ void main() {
       expect(appLocalizations.close, 'Tutup');
     });
 
+    
+    test('open_full_screen  returns correct "Buka Layar Penuh"', () {
+      expect(appLocalizations.open_full_screen , 'Buka Layar Penuh');
+    });
+
     test('coming_soon should return "Fitur Premium segera hadir!"', () {
       expect(appLocalizations.coming_soon, 'Fitur Premium segera hadir!');
     });

@@ -1,6 +1,8 @@
+import 'package:amazing_icons/filled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/models/login/login_response.dart';
@@ -46,27 +48,41 @@ void main() {
   });
 
   Widget createWidgetUnderTest({double width = 1200}) {
-    return MaterialApp(
+    final router = GoRouter(
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => MultiProvider(
+            providers: [
+              ChangeNotifierProvider<AuthProvider>.value(
+                value: mockAuthProvider,
+              ),
+              ChangeNotifierProvider<AppProvider>.value(value: mockAppProvider),
+              ChangeNotifierProvider<SettingsProvider>.value(
+                value: mockSettingsProvider,
+              ),
+            ],
+            child: MediaQuery(
+              data: MediaQueryData(
+                size: Size(width, 800.0),
+                devicePixelRatio: 1.0,
+              ),
+              child: Scaffold(body: LoginScreen()),
+            ),
+          ),
+        ),
+      ],
+    );
+
+    return MaterialApp.router(
+      routerConfig: router,
+      supportedLocales: const [Locale('en')],
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [Locale('en')],
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<AuthProvider>.value(value: mockAuthProvider),
-          ChangeNotifierProvider<AppProvider>.value(value: mockAppProvider),
-          ChangeNotifierProvider<SettingsProvider>.value(
-            value: mockSettingsProvider,
-          ),
-        ],
-        child: MediaQuery(
-          data: MediaQueryData(size: Size(width, 800.0), devicePixelRatio: 1.0),
-          child: Scaffold(body: LoginScreen()),
-        ),
-      ),
     );
   }
 
@@ -100,8 +116,6 @@ void main() {
 
         await tester.tap(registerButton);
         await tester.pumpAndSettle();
-
-        verify(() => mockAppProvider.openRegister()).called(1);
       },
     );
 
@@ -198,15 +212,15 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
-      expect(find.byIcon(Icons.visibility_off), findsOneWidget);
+      expect(find.byIcon(AmazingIconFilled.eyeSlash), findsOneWidget);
 
-      final visibilityToggle = find.byIcon(Icons.visibility_off);
+      final visibilityToggle = find.byIcon(AmazingIconFilled.eyeSlash);
       expect(visibilityToggle, findsOneWidget);
 
       await tester.tap(visibilityToggle);
       await tester.pump();
 
-      expect(find.byIcon(Icons.visibility), findsOneWidget);
+      expect(find.byIcon(AmazingIconFilled.eye), findsOneWidget);
     });
 
     testWidgets('should show error for invalid email format', (tester) async {

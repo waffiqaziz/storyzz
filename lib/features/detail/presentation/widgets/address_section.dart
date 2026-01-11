@@ -38,13 +38,8 @@ class _AddressSectionState extends State<AddressSection> {
     final lonText =
         '${localizations.longitude}: ${widget.longitude.toStringAsFixed(6)}';
 
-    if (kIsWeb) {
-      debugPrint('[WEB] AddressSection: Using web implementation');
-    } else {
-      debugPrint('[MOBILE] AddressSection: Using mobile implementation');
-    }
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Row(
           children: [
@@ -52,7 +47,9 @@ class _AddressSectionState extends State<AddressSection> {
             const SizedBox(width: 8),
             Text(
               localizations.location,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: .bold),
             ),
           ],
         ),

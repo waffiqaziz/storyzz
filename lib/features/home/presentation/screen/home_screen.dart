@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<StoryProvider>(
-        builder: (context, storyProvider, child) {
+        builder: (_, _, _) {
           return HomeStoriesListView(scrollController: _scrollController);
         },
       ),

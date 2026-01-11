@@ -1,3 +1,4 @@
+import 'package:amazing_icons/outlined.dart' show AmazingIconOutlined;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -26,6 +27,7 @@ void main() {
   late MockUploadMapControllerProvider mockMapControllerProvider;
   late MockAddressProvider mockAddressProvider;
   late MockAppProvider mockAppProvider;
+  late MockOnLocationEnabled mockOnLocationEnabled;
 
   setUpAll(() {
     registerFallbackValue(const LatLng(0, 0));
@@ -38,6 +40,7 @@ void main() {
     mockMapControllerProvider = MockUploadMapControllerProvider();
     mockAddressProvider = MockAddressProvider();
     mockAppProvider = MockAppProvider();
+    mockOnLocationEnabled = MockOnLocationEnabled();
 
     when(() => mockUploadProvider.includeLocation).thenReturn(false);
     when(() => mockUploadProvider.selectedLocation).thenReturn(null);
@@ -62,7 +65,7 @@ void main() {
     when(
       () => mockAddressProvider.state,
     ).thenReturn(const AddressLoadState.initial());
-    when(() => mockAppProvider.openUploadFullScreenMap()).thenReturn(null);
+    when(() => mockAppProvider.openUploadMapFullScreen()).thenReturn(null);
   });
 
   Widget createTestWidget() {
@@ -90,7 +93,11 @@ void main() {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: const [Locale('en')],
-        home: const Scaffold(body: LocationMapSelector()),
+        home: Scaffold(
+          body: LocationMapSelector(
+            onLocationEnabled: mockOnLocationEnabled.call,
+          ),
+        ),
       ),
     );
   }
@@ -118,6 +125,7 @@ void main() {
 
     await tester.tap(find.byType(Switch));
 
+    verify(() => mockOnLocationEnabled(true)).called(1);
     verify(() => mockUploadProvider.toggleLocationIncluded(true)).called(1);
   });
 
@@ -155,12 +163,9 @@ void main() {
     ).thenReturn(const LatLng(1.0, 1.0));
 
     await tester.pumpWidget(createTestWidget());
+    await tester.tap(find.byIcon(AmazingIconOutlined.maximize4));
 
-    expect(find.byIcon(Icons.fullscreen), findsOneWidget);
-
-    await tester.tap(find.byIcon(Icons.fullscreen));
-
-    verify(() => mockAppProvider.openUploadFullScreenMap()).called(1);
+    verify(() => mockAppProvider.openUploadMapFullScreen()).called(1);
   });
 
   testWidgets('shows error message when error occurs', (tester) async {

@@ -14,20 +14,14 @@ class AppProvider extends ChangeNotifier {
   ListStory? _selectedStory;
   ListStory? get selectedStory => _selectedStory;
 
-  bool _isRegister = false;
-  bool get isRegister => _isRegister;
-
-  bool _isLogin = false;
-  bool get isLogin => _isLogin;
-
   bool _isUploadFullScreenMap = false;
   bool get isUploadFullScreenMap => _isUploadFullScreenMap;
 
   bool _isDetailFullScreenMap = false;
   bool get isDetailFullScreenMap => _isDetailFullScreenMap;
 
-  bool _isDialogLogOutOpen = false;
-  bool get isDialogLogOutOpen => _isDialogLogOutOpen;
+  bool _isLogoutDialogOpen = false;
+  bool get isLogoutDialogOpen => _isLogoutDialogOpen;
 
   void openLanguageDialog() {
     _isLanguageDialogOpen = true;
@@ -36,24 +30,6 @@ class AppProvider extends ChangeNotifier {
 
   void closeLanguageDialog() {
     _isLanguageDialogOpen = false;
-    notifyListeners();
-  }
-
-  void openRegister() {
-    _isRegister = true;
-    _isLogin = false;
-    notifyListeners();
-  }
-
-  void openLogin() {
-    _isLogin = true;
-    _isRegister = false;
-    notifyListeners();
-  }
-
-  void resetAuthentication() {
-    _isRegister = false;
-    _isLogin = false;
     notifyListeners();
   }
 
@@ -67,55 +43,45 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void openUploadFullScreenMap() {
+  void openUploadMapFullScreen() {
     _isUploadFullScreenMap = true;
     notifyListeners();
   }
 
-  void closeUploadFullScreenMap() {
+  void closeUploadMapFullScreen() {
     _isUploadFullScreenMap = false;
     notifyListeners();
   }
 
-  void openDetailFullScreenMap() {
+  void openDetailMapFullScreen() {
     _isDetailFullScreenMap = true;
     notifyListeners();
   }
 
-  void closeDetailFullScreenMap() {
+  void closeDetailMapFullScreen() {
     _isDetailFullScreenMap = false;
     notifyListeners();
   }
 
-  void openDetail(ListStory? story) {
+  void openDetailScreen(ListStory? story) {
     _selectedStory = story;
     _isFromDetail = false;
     notifyListeners();
   }
 
-  void closeDetail() {
+  void closeDetailScreen() {
     _selectedStory = null;
     _isFromDetail = true;
     notifyListeners();
   }
 
-  void openDialogLogOut() {
-    _isDialogLogOutOpen = true;
+  void openLogoutDialog() {
+    _isLogoutDialogOpen = true;
     notifyListeners();
   }
 
-  void closeDialogLogOut() {
-    _isDialogLogOutOpen = false;
+  void closeLogoutDialog() {
+    _isLogoutDialogOpen = false;
     notifyListeners();
   }
-
-  // void resetAll() {
-  //   _isLanguageDialogOpen = false;
-  //   _isUpDialogOpen = false;
-  //   _isFullScreenMap = false;
-  //   _isFromDetail = false;
-  //   _selectedStory = null;
-  //   _isFromDetail = false;
-  //   notifyListeners();
-  // }
 }

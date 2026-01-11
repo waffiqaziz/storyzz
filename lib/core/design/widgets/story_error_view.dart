@@ -1,4 +1,6 @@
+import 'package:amazing_icons/outlined.dart';
 import 'package:flutter/material.dart';
+import 'package:storyzz/core/design/insets.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 
 /// A widget that displays an error message when story data fails to load.
@@ -20,29 +22,32 @@ class StoryErrorView extends StatelessWidget {
     final localizations = AppLocalizations.of(context)!;
 
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            size: 64,
-            color: Colors.orange,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            '${localizations.error_loading_stories} $errorMessage',
-            style: const TextStyle(fontSize: 16),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: onRetry,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Text(localizations.retry),
+      child: Padding(
+        padding: Insets.all16,
+        child: Column(
+          mainAxisAlignment: .center,
+          children: [
+            const Icon(
+              AmazingIconOutlined.danger,
+              size: 64,
+              color: Colors.orange,
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            Text(
+              '${localizations.error_loading_stories} $errorMessage',
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: .center,
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: onRetry,
+              child: Padding(
+                padding: Insets.h24,
+                child: Text(localizations.retry),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

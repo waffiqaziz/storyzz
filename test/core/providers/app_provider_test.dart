@@ -14,11 +14,9 @@ void main() {
       expect(appProvider.isDetailFullScreenMap, false);
       expect(appProvider.isFromDetail, false);
       expect(appProvider.isLanguageDialogOpen, false);
-      expect(appProvider.isLogin, false);
-      expect(appProvider.isRegister, false);
       expect(appProvider.isUpDialogOpen, false);
       expect(appProvider.isUploadFullScreenMap, false);
-      expect(appProvider.isDialogLogOutOpen, false);
+      expect(appProvider.isLogoutDialogOpen, false);
       expect(appProvider.selectedStory, null);
     });
 
@@ -30,20 +28,6 @@ void main() {
       expect(appProvider.isLanguageDialogOpen, false);
     });
 
-    test('should handle authentication state changes', () {
-      appProvider.openRegister();
-      expect(appProvider.isRegister, true);
-      expect(appProvider.isLogin, false);
-
-      appProvider.openLogin();
-      expect(appProvider.isLogin, true);
-      expect(appProvider.isRegister, false);
-
-      appProvider.resetAuthentication();
-      expect(appProvider.isLogin, false);
-      expect(appProvider.isRegister, false);
-    });
-
     test('should handle upgrade dialog operations', () {
       appProvider.openUpgradeDialog();
       expect(appProvider.isUpDialogOpen, true);
@@ -53,27 +37,27 @@ void main() {
     });
 
     test('should handle upload full screen map operations', () {
-      appProvider.openUploadFullScreenMap();
+      appProvider.openUploadMapFullScreen();
       expect(appProvider.isUploadFullScreenMap, true);
 
-      appProvider.closeUploadFullScreenMap();
+      appProvider.closeUploadMapFullScreen();
       expect(appProvider.isUploadFullScreenMap, false);
     });
 
     test('should handle detail full screen map operations', () {
-      appProvider.openDetailFullScreenMap();
+      appProvider.openDetailMapFullScreen();
       expect(appProvider.isDetailFullScreenMap, true);
 
-      appProvider.closeDetailFullScreenMap();
+      appProvider.closeDetailMapFullScreen();
       expect(appProvider.isDetailFullScreenMap, false);
     });
 
     test('should handle dialog logout operations', () {
-      appProvider.openDialogLogOut();
-      expect(appProvider.isDialogLogOutOpen, true);
+      appProvider.openLogoutDialog();
+      expect(appProvider.isLogoutDialogOpen, true);
 
-      appProvider.closeDialogLogOut();
-      expect(appProvider.isDialogLogOutOpen, false);
+      appProvider.closeLogoutDialog();
+      expect(appProvider.isLogoutDialogOpen, false);
     });
 
     test('should handle story detail operations', () {
@@ -87,11 +71,11 @@ void main() {
         lon: 0.0,
       );
 
-      appProvider.openDetail(mockStory);
+      appProvider.openDetailScreen(mockStory);
       expect(appProvider.selectedStory, mockStory);
       expect(appProvider.isFromDetail, false);
 
-      appProvider.closeDetail();
+      appProvider.closeDetailScreen();
       expect(appProvider.selectedStory, null);
       expect(appProvider.isFromDetail, true);
     });

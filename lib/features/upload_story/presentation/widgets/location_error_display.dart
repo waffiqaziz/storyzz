@@ -17,15 +17,14 @@ class LocationErrorDisplay extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.errorContainer,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: .circular(8),
         ),
         child: Text(
           errorMessage,
           style: TextStyle(
             color: Theme.of(context).colorScheme.onErrorContainer,
-            fontSize: 12,
           ),
-          textAlign: TextAlign.center,
+          textAlign: .center,
         ),
       ),
     );

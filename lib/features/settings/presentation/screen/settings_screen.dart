@@ -32,7 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         centerTitle: true,
         title: Text(
           localizations.settings,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: .bold),
         ),
       ),
       body: SingleChildScrollView(
@@ -41,7 +41,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 600),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 // appearance
                 SectionHeader(
@@ -100,7 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Icons.chevron_right_rounded,
                       color: colorScheme.onSurfaceVariant,
                     ),
-                    onTap: () => context.read<AppProvider>().openDialogLogOut(),
+                    onTap: () => context.read<AppProvider>().openLogoutDialog(),
                   ),
                 ),
                 const SizedBox(height: 32),

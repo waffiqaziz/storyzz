@@ -29,11 +29,11 @@ class LocationMapPlaceholder extends StatelessWidget {
                 color: Theme.of(
                   context,
                 ).colorScheme.surface.withValues(alpha: 0.8),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: .circular(16),
               ),
               child: Text(
                 AppLocalizations.of(context)!.tap_to_select_location,
-                textAlign: TextAlign.center,
+                textAlign: .center,
               ),
             ),
           ],

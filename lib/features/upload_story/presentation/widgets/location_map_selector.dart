@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:amazing_icons/amazing_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/design/widgets/square_icon_button.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/address_provider.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
@@ -28,7 +30,9 @@ import 'package:storyzz/features/upload_story/utils/helper.dart';
 /// - Latitude and longitude display of the selected location.
 /// - A button to clear the selected location.
 class LocationMapSelector extends StatefulWidget {
-  const LocationMapSelector({super.key});
+  final OnLocationEnabled onLocationEnabled;
+
+  const LocationMapSelector({super.key, required this.onLocationEnabled});
 
   @override
   State<LocationMapSelector> createState() => _LocationMapSelectorState();
@@ -52,7 +56,7 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
     });
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         _buildMapHeader(context, uploadProvider),
 
@@ -100,7 +104,7 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
         // location text
         Text(
           AppLocalizations.of(context)!.location,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: .bold),
         ),
         const Spacer(),
 
@@ -109,7 +113,7 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
           value: uploadProvider.includeLocation,
           onChanged: (value) {
             uploadProvider.toggleLocationIncluded(value);
-
+            widget.onLocationEnabled(value);
             // if turning on and no location is set, try to get current position
             if (value &&
                 uploadProvider.selectedLocation == null &&
@@ -132,7 +136,7 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
       duration: const Duration(milliseconds: 700),
       child: Container(
         height: 250,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+        decoration: BoxDecoration(borderRadius: .circular(16)),
         clipBehavior: Clip.antiAlias,
         child: Stack(
           children: [
@@ -148,13 +152,12 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
                 top: 12,
                 left: 12,
                 child: PointerInterceptor(
-                  child: FloatingActionButton.small(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
+                  child: SquareIconAction(
+                    icon: AmazingIconOutlined.maximize4,
+                    tooltip: AppLocalizations.of(context)!.open_full_screen,
                     onPressed: () {
-                      context.read<AppProvider>().openUploadFullScreenMap();
+                      context.read<AppProvider>().openUploadMapFullScreen();
                     },
-                    child: const Icon(Icons.fullscreen),
                   ),
                 ),
               ),
@@ -190,7 +193,7 @@ class _LocationMapSelectorState extends State<LocationMapSelector> {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.black.withValues(alpha: 0.5),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: .circular(8),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.3),
