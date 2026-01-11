@@ -38,11 +38,6 @@ class _AddressSectionState extends State<AddressSection> {
     final lonText =
         '${localizations.longitude}: ${widget.longitude.toStringAsFixed(6)}';
 
-    if (kIsWeb) {
-      debugPrint('[WEB] AddressSection: Using web implementation');
-    } else {
-      debugPrint('[MOBILE] AddressSection: Using mobile implementation');
-    }
     return Column(
       crossAxisAlignment: .start,
       children: [

@@ -12,12 +12,6 @@ import 'package:storyzz/features/map/services/map_service.dart';
 /// - Managing the state of the map (such as the selected map type).
 /// - Updating markers on the map based on story data.
 /// - Listening for scroll events to load more stories when the user reaches the end of the list (pagination).
-///
-/// Example usage:
-/// ```dart
-/// final controller = MapStoryController(context);
-/// controller.initData();
-/// ```
 class MapStoryController {
   final BuildContext context;
   final ScrollController scrollController = ScrollController();
