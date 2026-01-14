@@ -272,8 +272,12 @@ class AppRouter {
 
     final bool isGoingToAuth = path == '/login' || path == '/register';
 
+    final bool isComingFromLanguageDialog =
+        path == '/login/language-dialog' || path == '/register/language-dialog';
+
     if (!isLoggedIn &&
         !isGoingToAuth &&
+        !isComingFromLanguageDialog &&
         path != '/404' &&
         !appProvider.isLanguageDialogOpen) {
       return '/login';
@@ -304,6 +308,10 @@ class AppRouter {
       parentNavigatorKey: _rootNavigatorKey,
       pageBuilder: (context, state) {
         return dialogTransition(state, LanguageDialogScreen());
+      },
+      redirect: (context, state) {
+        if (!appProvider.isLanguageDialogOpen) return '/$name';
+        return null;
       },
     );
   }
