@@ -84,7 +84,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.4
 
   # runner
-  build_runner: ^2.10.4
+  build_runner: ^2.10.5
 
   # code generator
   json_serializable: ^6.11.4
