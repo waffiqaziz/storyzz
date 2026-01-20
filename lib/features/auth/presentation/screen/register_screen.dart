@@ -173,6 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       label: localizations.password,
                       prefixIcon: AmazingIconOutlined.lock,
                       suffixIcon: IconButton(
+                        key: const Key('password_visibility_toggle'),
                         icon: AnimatedIconSwitcher(
                           icon: _obscurePassword
                               ? AmazingIconFilled.eyeSlash
@@ -208,6 +209,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       label: localizations.confirm_password,
                       prefixIcon: AmazingIconOutlined.lock,
                       suffixIcon: IconButton(
+                        key: const Key('confirm_password_visibility_toggle'),
                         icon: AnimatedIconSwitcher(
                           icon: _obscureConfirmPassword
                               ? AmazingIconFilled.eyeSlash
