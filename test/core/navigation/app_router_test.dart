@@ -180,7 +180,6 @@ void main() {
   });
 
   group('Authentication', () {
-
     testWidgets('should redirect to login when not logged in', (tester) async {
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
 

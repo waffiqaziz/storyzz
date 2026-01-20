@@ -519,10 +519,10 @@ void main() {
 
     test('close returns correct value', () {
       expect(appLocalizationsEn.close, 'Close');
-    });    
-    
+    });
+
     test('open_full_screen  returns correct value', () {
-      expect(appLocalizationsEn.open_full_screen , 'Open Full Screen');
+      expect(appLocalizationsEn.open_full_screen, 'Open Full Screen');
     });
 
     test('coming_soon returns correct value', () {
