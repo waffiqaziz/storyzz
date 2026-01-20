@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/design/widgets/loading_view.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
 import 'package:storyzz/core/utils/constants.dart';
@@ -57,7 +58,7 @@ class _MapStoryScreenState extends State<MapStoryScreen> {
 
           // Loading state
           if (authProvider.isLoadingLogin) {
-            return Center(child: CircularProgressIndicator());
+            return const LoadingView();
           }
 
           // Error user state

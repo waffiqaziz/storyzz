@@ -475,22 +475,23 @@ void main() {
     });
 
     group('AppBar Action Tests', () {
-      testWidgets('on mobile should refresh stories when refresh button is tapped', (
-        WidgetTester tester,
-      ) async {
-        await tester.pumpWidget(createTestWidget(width: 400));
-        await tester.pumpAndSettle();
+      testWidgets(
+        'on mobile should refresh stories when refresh button is tapped',
+        (WidgetTester tester) async {
+          await tester.pumpWidget(createTestWidget(width: 400));
+          await tester.pumpAndSettle();
 
-        clearInteractions(mockStoryProvider);
+          clearInteractions(mockStoryProvider);
 
-        // tap refresh button
-        await tester.tap(find.byIcon(Icons.refresh));
-        await tester.pumpAndSettle();
+          // tap refresh button
+          await tester.tap(find.byIcon(Icons.refresh));
+          await tester.pumpAndSettle();
 
-        verify(
-          () => mockStoryProvider.refreshStories(user: testUser),
-        ).called(1);
-      });
+          verify(
+            () => mockStoryProvider.refreshStories(user: testUser),
+          ).called(1);
+        },
+      );
     });
 
     group('Error Retry Tests', () {

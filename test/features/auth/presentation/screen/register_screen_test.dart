@@ -207,25 +207,20 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
-      // Initially both password fields should be obscured
-      expect(find.byIcon(AmazingIconFilled.eyeSlash), findsNWidgets(2));
+      expect(find.byType(IconButton), findsNWidgets(3));
 
       // Test toggling password visibility
-      final passwordVisibilityToggle = find
-          .byIcon(AmazingIconFilled.eyeSlash)
-          .first;
-      await tester.tap(passwordVisibilityToggle);
-      await tester.pump();
+      await tester.tap(find.byKey(const Key('password_visibility_toggle')));
+      await tester.pumpAndSettle();
 
       // Test toggling confirm password visibility
-      final confirmPasswordVisibilityToggle = find
-          .byIcon(AmazingIconFilled.eyeSlash)
-          .first;
-      await tester.tap(confirmPasswordVisibilityToggle);
-      await tester.pump();
+      await tester.tap(
+        find.byKey(const Key('confirm_password_visibility_toggle')),
+      );
+      await tester.pumpAndSettle();
 
       // After toggling, both fields should show the visibility icon
-      expect(find.byIcon(AmazingIconFilled.eye), findsNWidgets(2));
+      expect(find.byIcon(AmazingIconFilled.eyeSlash), findsNWidgets(2));
     });
 
     testWidgets('should show error for empty name', (tester) async {

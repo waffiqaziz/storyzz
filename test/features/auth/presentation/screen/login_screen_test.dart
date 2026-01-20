@@ -212,15 +212,12 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
-      expect(find.byIcon(AmazingIconFilled.eyeSlash), findsOneWidget);
+      expect(find.byIcon(AmazingIconFilled.eye), findsOneWidget);
 
-      final visibilityToggle = find.byIcon(AmazingIconFilled.eyeSlash);
-      expect(visibilityToggle, findsOneWidget);
-
-      await tester.tap(visibilityToggle);
+      await tester.tap(find.byIcon(AmazingIconFilled.eye));
       await tester.pump();
 
-      expect(find.byIcon(AmazingIconFilled.eye), findsOneWidget);
+      expect(find.byIcon(AmazingIconFilled.eyeSlash), findsOneWidget);
     });
 
     testWidgets('should show error for invalid email format', (tester) async {

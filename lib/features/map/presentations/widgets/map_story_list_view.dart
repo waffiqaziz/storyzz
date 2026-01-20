@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/networking/models/story/list_story.dart';
 import 'package:storyzz/core/design/widgets/empty_story.dart';
+import 'package:storyzz/core/design/widgets/loading_view.dart';
 import 'package:storyzz/core/design/widgets/story_error_view.dart';
 import 'package:storyzz/core/providers/app_provider.dart';
 import 'package:storyzz/core/providers/auth_provider.dart';
@@ -52,9 +53,7 @@ class MapStoryListView extends StatelessWidget {
           if ((storyProvider.state.isLoading &&
                   storyProvider.stories.isEmpty) ||
               storyProvider.state.isInitial)
-            const SliverFillRemaining(
-              child: Center(child: CircularProgressIndicator()),
-            )
+            const SliverFillRemaining(child: LoadingView())
           else if (storyProvider.state.isError)
             SliverFillRemaining(
               child: StoryErrorView(
@@ -72,7 +71,7 @@ class MapStoryListView extends StatelessWidget {
             const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Center(child: CircularProgressIndicator()),
+                child: LoadingView(),
               ),
             ),
         ],

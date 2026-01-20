@@ -67,6 +67,10 @@ void main() {
 
     test('email_form should return "Kolom email"', () {
       expect(appLocalizations.email_form, 'Kolom email');
+    });    
+    
+    test('name_form should return "Kolom nama"', () {
+      expect(appLocalizations.name_form, 'Kolom nama');
     });
 
     test('enter_email should return "Mohon masukkan alamat email Anda"', () {
@@ -93,6 +97,30 @@ void main() {
 
     test('enter_password should return "Mohon masukkan kata sandi Anda"', () {
       expect(appLocalizations.enter_password, 'Mohon masukkan kata sandi Anda');
+    });
+
+    test('show_password should return "Tampilkan kata sandi"', () {
+      expect(appLocalizations.show_password, 'Tampilkan kata sandi');
+    });
+
+    test('visible should return "ditampilkan"', () {
+      expect(appLocalizations.visible, 'ditampilkan');
+    });
+
+    test('hidden should return "disembunyikan"', () {
+      expect(appLocalizations.hidden, 'disembunyikan');
+    });
+
+    test('password_visibility should return "Visibilitas kata sandi"', () {
+      expect(appLocalizations.password_visibility, 'Visibilitas kata sandi');
+    });    
+    
+    test('confirm_password_visibility should return "Visibilitas konfirmasi sandi"', () {
+      expect(appLocalizations.confirm_password_visibility, 'Visibilitas konfirmasi sandi');
+    });
+
+    test('hide_password should return "Sembunyikan kata sandi"', () {
+      expect(appLocalizations.hide_password, 'Sembunyikan kata sandi');
     });
 
     test(
@@ -605,9 +633,8 @@ void main() {
       expect(appLocalizations.close, 'Tutup');
     });
 
-    
     test('open_full_screen  returns correct "Buka Layar Penuh"', () {
-      expect(appLocalizations.open_full_screen , 'Buka Layar Penuh');
+      expect(appLocalizations.open_full_screen, 'Buka Layar Penuh');
     });
 
     test('coming_soon should return "Fitur Premium segera hadir!"', () {
