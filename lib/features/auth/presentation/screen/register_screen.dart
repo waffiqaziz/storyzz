@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:storyzz/core/data/models/user.dart';
+import 'package:storyzz/core/design/animation/animated_icon_switcher.dart';
 import 'package:storyzz/core/design/theme.dart';
 import 'package:storyzz/core/design/widgets/language_selector.dart';
 import 'package:storyzz/core/localization/l10n/app_localizations.dart';
@@ -172,10 +173,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       label: localizations.password,
                       prefixIcon: AmazingIconOutlined.lock,
                       suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword
+                        icon: AnimatedIconSwitcher(
+                          icon: _obscurePassword
                               ? AmazingIconFilled.eyeSlash
                               : AmazingIconFilled.eye,
+                          valueKey: _obscurePassword,
                           size: 26,
                         ),
                         onPressed: () {
@@ -206,11 +208,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       label: localizations.confirm_password,
                       prefixIcon: AmazingIconOutlined.lock,
                       suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscureConfirmPassword
+                        icon: AnimatedIconSwitcher(
+                          icon: _obscureConfirmPassword
                               ? AmazingIconFilled.eyeSlash
                               : AmazingIconFilled.eye,
                           size: 26,
+                          valueKey: _obscureConfirmPassword,
                         ),
                         onPressed: () {
                           setState(() {

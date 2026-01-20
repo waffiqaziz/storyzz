@@ -3,6 +3,7 @@ import 'package:amazing_icons/outlined.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/design/animation/animated_icon_switcher.dart';
 import 'package:storyzz/core/design/insets.dart';
 import 'package:storyzz/core/design/theme.dart';
 import 'package:storyzz/core/design/widgets/language_selector.dart';
@@ -81,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _showErrorSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        width: 500,
         behavior: SnackBarBehavior.floating,
         content: Text(message),
         backgroundColor: Theme.of(context).colorScheme.error,
@@ -173,10 +175,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       label: localizations.password,
                       prefixIcon: AmazingIconOutlined.lock,
                       suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword
+                        icon: AnimatedIconSwitcher(
+                          icon: _obscurePassword
                               ? AmazingIconFilled.eyeSlash
                               : AmazingIconFilled.eye,
+                          valueKey: _obscurePassword,
                           size: 26,
                         ),
                         onPressed: () {
