@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:storyzz/core/design/widgets/loading_view.dart';
 import 'package:storyzz/core/providers/settings_provider.dart';
 import 'package:storyzz/features/map/utils/map_style.dart';
 
@@ -66,10 +67,7 @@ class _StoryLocationMapState extends State<StoryLocationMap> {
       ).then((_) => mounted),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
-          return SizedBox(
-            height: widget.height,
-            child: Center(child: CircularProgressIndicator()),
-          );
+          return SizedBox(height: widget.height, child: const LoadingView());
         }
 
         return Container(
