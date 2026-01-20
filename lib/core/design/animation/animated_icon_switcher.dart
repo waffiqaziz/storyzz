@@ -17,7 +17,7 @@ class AnimatedIconSwitcher extends StatelessWidget {
     required this.valueKey,
     this.size,
     this.color,
-    this.duration = const Duration(milliseconds: 350),
+    this.duration = const Duration(milliseconds: 250),
   });
 
   @override
