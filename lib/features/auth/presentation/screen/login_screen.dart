@@ -174,17 +174,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: customInputDecoration(
                       label: localizations.password,
                       prefixIcon: AmazingIconOutlined.lock,
-                      suffixIcon: IconButton(
-                        icon: AnimatedIconSwitcher(
-                          icon: _obscurePassword
-                              ? AmazingIconFilled.eyeSlash
-                              : AmazingIconFilled.eye,
-                          valueKey: _obscurePassword,
-                          size: 26,
+                      suffixIcon: Tooltip(
+                        message: _obscurePassword
+                            ? localizations.show_password
+                            : localizations.hide_password,
+                        child: Semantics(
+                          button: true,
+                          label: localizations.password_visibility,
+                          value: _obscurePassword
+                              ? localizations.hidden
+                              : localizations.visible,
+                          excludeSemantics: true,
+                          child: IconButton(
+                            icon: AnimatedIconSwitcher(
+                              icon: !_obscurePassword
+                                  ? AmazingIconFilled.eyeSlash
+                                  : AmazingIconFilled.eye,
+                              valueKey: _obscurePassword,
+                              size: 26,
+                            ),
+                            onPressed: () {
+                              setState(
+                                () => _obscurePassword = !_obscurePassword,
+                              );
+                            },
+                          ),
                         ),
-                        onPressed: () {
-                          setState(() => _obscurePassword = !_obscurePassword);
-                        },
                       ),
                     ),
                     obscureText: _obscurePassword,

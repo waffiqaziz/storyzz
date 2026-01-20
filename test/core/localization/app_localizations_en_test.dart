@@ -58,6 +58,10 @@ void main() {
 
     test('email_form returns correct value', () {
       expect(appLocalizationsEn.email_form, 'Email form');
+    });    
+    
+    test('name_form returns correct value', () {
+      expect(appLocalizationsEn.name_form, 'Name form');
     });
 
     test('enter_email returns correct value', () {
@@ -81,6 +85,30 @@ void main() {
 
     test('enter_password returns correct value', () {
       expect(appLocalizationsEn.enter_password, 'Please enter your password');
+    });
+
+    test('password_visibility returns correct value', () {
+      expect(appLocalizationsEn.password_visibility, 'Password visibility');
+    });    
+    
+    test('confirm_password_visibility returns correct value', () {
+      expect(appLocalizationsEn.confirm_password_visibility, 'Confirm password visibility');
+    });
+
+    test('visible returns correct value', () {
+      expect(appLocalizationsEn.visible, 'visible');
+    });    
+    
+    test('hidden returns correct value', () {
+      expect(appLocalizationsEn.hidden, 'hidden');
+    });
+
+    test('show_password returns correct value', () {
+      expect(appLocalizationsEn.show_password, 'Show password');
+    });
+
+    test('hide_password returns correct value', () {
+      expect(appLocalizationsEn.hide_password, 'Hide password');
     });
 
     test('password_minimum returns correct value', () {

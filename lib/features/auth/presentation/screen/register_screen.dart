@@ -126,78 +126,103 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 isLoading: authProvider.isLoadingRegister,
                 fields: [
                   // name field
-                  TextFormField(
-                    enabled: !authProvider.isLoadingRegister,
-                    controller: _nameController,
-                    decoration: customInputDecoration(
-                      label: localizations.full_name,
-                      prefixIcon: AmazingIconOutlined.user,
+                  Semantics(
+                    label: localizations.name_form,
+                    textField: true,
+                    child: TextFormField(
+                      enabled: !authProvider.isLoadingRegister,
+                      controller: _nameController,
+                      decoration: customInputDecoration(
+                        label: localizations.full_name,
+                        prefixIcon: AmazingIconOutlined.user,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return localizations.enter_full_name;
+                        }
+                        return null;
+                      },
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return localizations.enter_full_name;
-                      }
-                      return null;
-                    },
                   ),
                   const SizedBox(height: 16),
 
                   // email Field
-                  TextFormField(
-                    enabled: !authProvider.isLoadingRegister,
-                    controller: _emailController,
-                    decoration: customInputDecoration(
-                      label: localizations.email,
-                      prefixIcon: AmazingIconOutlined.email,
+                  Semantics(
+                    label: localizations.email_form,
+                    textField: true,
+                    child: TextFormField(
+                      enabled: !authProvider.isLoadingRegister,
+                      controller: _emailController,
+                      decoration: customInputDecoration(
+                        label: localizations.email,
+                        prefixIcon: AmazingIconOutlined.email,
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return localizations.enter_email;
+                        }
+                        if (!RegExp(
+                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                        ).hasMatch(value)) {
+                          return localizations.enter_valid_email;
+                        }
+                        return null;
+                      },
                     ),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return localizations.enter_email;
-                      }
-                      if (!RegExp(
-                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                      ).hasMatch(value)) {
-                        return localizations.enter_valid_email;
-                      }
-                      return null;
-                    },
                   ),
                   const SizedBox(height: 16),
 
                   // password field
-                  TextFormField(
-                    enabled: !authProvider.isLoadingRegister,
-                    controller: _passwordController,
-                    decoration: customInputDecoration(
-                      label: localizations.password,
-                      prefixIcon: AmazingIconOutlined.lock,
-                      suffixIcon: IconButton(
-                        key: const Key('password_visibility_toggle'),
-                        icon: AnimatedIconSwitcher(
-                          icon: _obscurePassword
-                              ? AmazingIconFilled.eyeSlash
-                              : AmazingIconFilled.eye,
-                          valueKey: _obscurePassword,
-                          size: 26,
+                  Semantics(
+                    label: localizations.password_form,
+                    textField: true,
+                    child: TextFormField(
+                      enabled: !authProvider.isLoadingRegister,
+                      controller: _passwordController,
+                      decoration: customInputDecoration(
+                        label: localizations.password,
+                        prefixIcon: AmazingIconOutlined.lock,
+                        suffixIcon: Tooltip(
+                          message: _obscurePassword
+                              ? localizations.show_password
+                              : localizations.hide_password,
+                          child: Semantics(
+                            button: true,
+                            label: localizations.password_visibility,
+                            value: _obscurePassword
+                                ? localizations.hidden
+                                : localizations.visible,
+                            excludeSemantics: true,
+                            child: IconButton(
+                              key: const Key('password_visibility_toggle'),
+                              icon: AnimatedIconSwitcher(
+                                icon: !_obscurePassword
+                                    ? AmazingIconFilled.eyeSlash
+                                    : AmazingIconFilled.eye,
+                                valueKey: _obscurePassword,
+                                size: 26,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscurePassword = !_obscurePassword;
+                                });
+                              },
+                            ),
+                          ),
                         ),
-                        onPressed: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
                       ),
+                      obscureText: _obscurePassword,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return localizations.enter_password;
+                        }
+                        if (value.length < 8) {
+                          return localizations.password_minimum;
+                        }
+                        return null;
+                      },
                     ),
-                    obscureText: _obscurePassword,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return localizations.enter_password;
-                      }
-                      if (value.length < 8) {
-                        return localizations.password_minimum;
-                      }
-                      return null;
-                    },
                   ),
                   const SizedBox(height: 16),
 
@@ -208,20 +233,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     decoration: customInputDecoration(
                       label: localizations.confirm_password,
                       prefixIcon: AmazingIconOutlined.lock,
-                      suffixIcon: IconButton(
-                        key: const Key('confirm_password_visibility_toggle'),
-                        icon: AnimatedIconSwitcher(
-                          icon: _obscureConfirmPassword
-                              ? AmazingIconFilled.eyeSlash
-                              : AmazingIconFilled.eye,
-                          size: 26,
-                          valueKey: _obscureConfirmPassword,
+                      suffixIcon: Tooltip(
+                        message: _obscureConfirmPassword
+                            ? localizations.show_password
+                            : localizations.hide_password,
+                        child: Semantics(
+                          button: true,
+                          label: localizations.confirm_password_visibility,
+                          value: _obscureConfirmPassword
+                              ? localizations.hidden
+                              : localizations.visible,
+                          excludeSemantics: true,
+                          child: IconButton(
+                            key: const Key(
+                              'confirm_password_visibility_toggle',
+                            ),
+                            icon: AnimatedIconSwitcher(
+                              icon: !_obscureConfirmPassword
+                                  ? AmazingIconFilled.eyeSlash
+                                  : AmazingIconFilled.eye,
+                              size: 26,
+                              valueKey: _obscureConfirmPassword,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscureConfirmPassword =
+                                    !_obscureConfirmPassword;
+                              });
+                            },
+                          ),
                         ),
-                        onPressed: () {
-                          setState(() {
-                            _obscureConfirmPassword = !_obscureConfirmPassword;
-                          });
-                        },
                       ),
                     ),
                     obscureText: _obscureConfirmPassword,

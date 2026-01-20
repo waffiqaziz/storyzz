@@ -220,7 +220,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // After toggling, both fields should show the visibility icon
-      expect(find.byIcon(AmazingIconFilled.eye), findsNWidgets(2));
+      expect(find.byIcon(AmazingIconFilled.eyeSlash), findsNWidgets(2));
     });
 
     testWidgets('should show error for empty name', (tester) async {
