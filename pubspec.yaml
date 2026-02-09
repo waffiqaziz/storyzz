@@ -88,7 +88,7 @@ dev_dependencies:
 
   # code generator
   json_serializable: ^6.12.0
-  freezed: ^3.2.4
+  freezed: ^3.2.5
 
   mocktail: ^1.0.4
   mocktail_image_network: ^1.2.0
