@@ -43,7 +43,7 @@ dependencies:
   flutter_svg: ^2.2.3
 
   # location
-  google_maps_flutter: ^2.14.0
+  google_maps_flutter: ^2.14.2
   google_maps_flutter_web: ^0.5.14+2
   google_maps_flutter_android: ^2.18.12
   geolocator: ^14.0.2
