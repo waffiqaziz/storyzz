@@ -23,6 +23,8 @@ class SettingsProvider extends ChangeNotifier {
   Locale _locale = const Locale('en');
   Locale get locale => _locale;
 
+  final ValueNotifier<String?> languageNotifier = ValueNotifier<String?>(null);
+
   SettingsProvider(this._settingRepository) {
     _initializeSettings();
   }
@@ -41,6 +43,7 @@ class SettingsProvider extends ChangeNotifier {
       // get language setting
       final String savedLanguage = _settingRepository.getLanguage() ?? 'en';
       _locale = Locale(savedLanguage);
+      languageNotifier.value = savedLanguage;
 
       // create combined setting
       _setting = Setting(isDark: savedIsDark, locale: savedLanguage);
@@ -83,6 +86,8 @@ class SettingsProvider extends ChangeNotifier {
     try {
       await _settingRepository.setLocale(languageCode);
       _locale = Locale(languageCode);
+      languageNotifier.value = languageCode;
+
       if (_setting != null) {
         _setting = _setting!.copyWith(locale: languageCode);
       } else {

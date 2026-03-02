@@ -15,14 +15,9 @@ import 'package:storyzz/core/providers/settings_provider.dart';
 /// - [currentLanguageCode] indicates the currently selected language.
 /// - [isCompact] toggles between dialog and dropdown presentation.
 class LanguageSelector extends StatelessWidget {
-  final String currentLanguageCode;
   final bool isCompact;
 
-  const LanguageSelector({
-    super.key,
-    required this.currentLanguageCode,
-    this.isCompact = false,
-  });
+  const LanguageSelector({super.key, this.isCompact = false});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +55,7 @@ class LanguageSelector extends StatelessWidget {
         isDense: true,
         isExpanded: true,
         items: [
-          DropdownMenuItem<String>(
+          DropdownItem<String>(
             value: 'en',
             child: Row(
               mainAxisSize: .min,
@@ -79,7 +74,7 @@ class LanguageSelector extends StatelessWidget {
               ],
             ),
           ),
-          DropdownMenuItem<String>(
+          DropdownItem<String>(
             value: 'id',
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -99,7 +94,7 @@ class LanguageSelector extends StatelessWidget {
             ),
           ),
         ],
-        value: currentLanguageCode,
+        valueListenable: settingsProvider.languageNotifier,
         onChanged: (value) {
           if (value != null) {
             settingsProvider.setLocale(value);
@@ -134,7 +129,6 @@ class LanguageSelector extends StatelessWidget {
           ),
         ),
         menuItemStyleData: const MenuItemStyleData(
-          height: 40,
           padding: .only(left: 10, right: 10),
         ),
       ),

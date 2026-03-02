@@ -67,8 +67,8 @@ void main() {
 
     test('email_form should return "Kolom email"', () {
       expect(appLocalizations.email_form, 'Kolom email');
-    });    
-    
+    });
+
     test('name_form should return "Kolom nama"', () {
       expect(appLocalizations.name_form, 'Kolom nama');
     });
@@ -113,11 +113,17 @@ void main() {
 
     test('password_visibility should return "Visibilitas kata sandi"', () {
       expect(appLocalizations.password_visibility, 'Visibilitas kata sandi');
-    });    
-    
-    test('confirm_password_visibility should return "Visibilitas konfirmasi sandi"', () {
-      expect(appLocalizations.confirm_password_visibility, 'Visibilitas konfirmasi sandi');
     });
+
+    test(
+      'confirm_password_visibility should return "Visibilitas konfirmasi sandi"',
+      () {
+        expect(
+          appLocalizations.confirm_password_visibility,
+          'Visibilitas konfirmasi sandi',
+        );
+      },
+    );
 
     test('hide_password should return "Sembunyikan kata sandi"', () {
       expect(appLocalizations.hide_password, 'Sembunyikan kata sandi');
