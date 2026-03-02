@@ -75,10 +75,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       SettingsTile(
                         icon: Icon(AmazingIconOutlined.global),
                         title: localizations.language,
-                        trailing: LanguageSelector(
-                          currentLanguageCode: provider.locale.languageCode,
-                          isCompact: false,
-                        ),
+                        trailing: LanguageSelector(isCompact: false),
                       ),
                     ],
                   ),

@@ -108,10 +108,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       opacity: authProvider.isLoadingRegister ? 0.4 : 1.0,
                       child: IgnorePointer(
                         ignoring: authProvider.isLoadingRegister,
-                        child: LanguageSelector(
-                          currentLanguageCode: provider.locale.languageCode,
-                          isCompact: true,
-                        ),
+                        child: LanguageSelector(isCompact: true),
                       ),
                     ),
                   ),

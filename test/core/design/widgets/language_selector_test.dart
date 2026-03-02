@@ -48,9 +48,7 @@ void main() {
       when(() => mockAppProvider.openLanguageDialog()).thenAnswer((_) {});
 
       await tester.pumpWidget(
-        wrapWithMaterialApp(
-          LanguageSelector(currentLanguageCode: 'en', isCompact: true),
-        ),
+        wrapWithMaterialApp(LanguageSelector(isCompact: true)),
       );
 
       final iconButton = find.byIcon(Icons.language_rounded);
@@ -67,11 +65,12 @@ void main() {
         when(
           () => mockSettingsProvider.setLocale(any()),
         ).thenAnswer((_) async {});
+        when(
+          () => mockSettingsProvider.languageNotifier,
+        ).thenReturn(ValueNotifier('en'));
 
         await tester.pumpWidget(
-          wrapWithMaterialApp(
-            LanguageSelector(currentLanguageCode: 'en', isCompact: false),
-          ),
+          wrapWithMaterialApp(LanguageSelector(isCompact: false)),
         );
 
         await tester.tap(find.byType(DropdownButton2<String>));

@@ -26,9 +26,12 @@ void main() {
     when(() => mockSettingsProvider.setLocale(any())).thenAnswer((_) async {});
     when(() => mockSettingsProvider.setTheme(any())).thenAnswer((_) async {});
     when(() => mockSettingsProvider.locale).thenReturn(const Locale('en'));
-    when(() => mockSettingsProvider.setting).thenReturn(
-      const Setting(isDark: false, locale: 'en'), // or whatever your model is
-    );
+    when(
+      () => mockSettingsProvider.setting,
+    ).thenReturn(const Setting(isDark: false, locale: 'en'));
+    when(
+      () => mockSettingsProvider.languageNotifier,
+    ).thenReturn(ValueNotifier('en'));
   });
 
   setUpAll(() {

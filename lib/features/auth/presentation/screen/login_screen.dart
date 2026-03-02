@@ -120,10 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     opacity: authProvider.isLoadingLogin ? 0.4 : 1.0,
                     child: IgnorePointer(
                       ignoring: authProvider.isLoadingLogin,
-                      child: LanguageSelector(
-                        currentLanguageCode: provider.locale.languageCode,
-                        isCompact: true,
-                      ),
+                      child: LanguageSelector(isCompact: true),
                     ),
                   ),
                 ),
