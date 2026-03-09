@@ -40,7 +40,7 @@ dependencies:
   path: ^1.9.1
   camera: ^0.12.0
   image: ^4.8.0
-  flutter_svg: ^2.2.3
+  flutter_svg: ^2.2.4
 
   # location
   google_maps_flutter: ^2.14.2
