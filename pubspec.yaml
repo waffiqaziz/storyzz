@@ -43,9 +43,9 @@ dependencies:
   flutter_svg: ^2.2.4
 
   # location
-  google_maps_flutter: ^2.14.2
+  google_maps_flutter: ^2.16.0
   google_maps_flutter_web: ^0.6.2
-  google_maps_flutter_android: ^2.19.2
+  google_maps_flutter_android: ^2.19.3
   geolocator: ^14.0.2
   geocoding: ^4.0.0
 
@@ -84,10 +84,10 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.4
 
   # runner
-  build_runner: ^2.12.2
+  build_runner: ^2.13.1
 
   # code generator
-  json_serializable: ^6.13.0
+  json_serializable: ^6.13.1
   freezed: ^3.2.5
 
   mocktail: ^1.0.4
