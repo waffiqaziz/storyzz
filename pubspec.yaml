@@ -58,7 +58,7 @@ dependencies:
   universal_html: ^2.3.0
 
   # build variant
-  package_info_plus: ^9.0.0
+  package_info_plus: ^9.0.1
 
   pointer_interceptor: ^0.10.1+2
 
