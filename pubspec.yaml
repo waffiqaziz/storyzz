@@ -90,7 +90,7 @@ dev_dependencies:
   json_serializable: ^6.13.1
   freezed: ^3.2.5
 
-  mocktail: ^1.0.4
+  mocktail: ^1.0.5
   mocktail_image_network: ^1.2.0
 
 
