@@ -38,7 +38,7 @@ dependencies:
   amazing_icons: ^3.1.1
 
   # camera and image picker deps
-  image_picker: ^1.2.1
+  image_picker: ^1.2.2
   image_picker_for_web: ^3.1.1
   path: ^1.9.1
   camera: ^0.12.0
