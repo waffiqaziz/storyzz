@@ -152,7 +152,7 @@ void main() {
         await tester.pumpWidget(createWidgetUnderTest());
         await tester.pump(const Duration(milliseconds: 100));
 
-        expect(find.byType(CircularProgressIndicator), findsNWidgets(1));
+        expect(find.byKey(const Key('detail-image-loader')), findsOneWidget);
 
         await tester.pumpAndSettle();
 
