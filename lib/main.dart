@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:storyzz/app_root.dart';
+import 'package:storyzz/common/url_strategy.dart';
 import 'package:storyzz/core/utils/environment.dart';
 import 'package:storyzz/core/variant/build_configuration.dart';
-import 'package:storyzz/common/url_strategy.dart';
 
 void main() async {
   // ensure that plugin services are initialized before using any plugins.

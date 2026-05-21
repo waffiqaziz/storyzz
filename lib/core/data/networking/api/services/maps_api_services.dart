@@ -12,7 +12,7 @@ class MapsApiService {
 
   final http.Client _httpClient;
 
-  MapsApiService({required http.Client httpClient}) : _httpClient = httpClient;
+  MapsApiService({required this._httpClient});
 
   /// Reverse geocode to get address from latitude and longitude
   Future<GeocodingResponse> getAddressFromCoordinates(
