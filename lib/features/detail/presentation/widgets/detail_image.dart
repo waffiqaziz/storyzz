@@ -18,6 +18,7 @@ class DetailImage extends StatelessWidget {
           color: Colors.grey[200],
           child: Center(
             child: CircularProgressIndicator(
+              key: const Key('detail-image-loader'),
               value: loadingProgress.expectedTotalBytes != null
                   ? loadingProgress.cumulativeBytesLoaded /
                         loadingProgress.expectedTotalBytes!

@@ -27,11 +27,9 @@ class MapProvider extends ChangeNotifier {
 
   MapProvider({
     MapService? mapService,
-    required AuthProvider authProvider,
-    required StoryProvider storyProvider,
-  }) : _mapService = mapService ?? MapService(),
-       _authProvider = authProvider,
-       _storyProvider = storyProvider {
+    required this._authProvider,
+    required this._storyProvider,
+  }) : _mapService = mapService ?? MapService() {
     _setupScrollListener();
   }
 
