@@ -32,7 +32,7 @@ dependencies:
   url_launcher: ^6.3.2
 
   # UI
-  flutter_native_splash: ^2.4.7
+  flutter_native_splash: ^2.4.8
   readmore: ^3.0.0
   dropdown_button2: ^3.1.0
   amazing_icons: ^3.1.1
