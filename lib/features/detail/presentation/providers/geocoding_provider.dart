@@ -8,6 +8,7 @@ class GeocodingProvider extends ChangeNotifier {
 
   // injection for testing
   final Future<List<Placemark>> Function(double, double)? geocodingFunction;
+  final Geocoding geocoding = Geocoding();
 
   GeocodingProvider({this.geocodingFunction});
 
@@ -21,7 +22,7 @@ class GeocodingProvider extends ChangeNotifier {
     try {
       final placemarks = geocodingFunction != null
           ? await geocodingFunction!(latitude, longitude)
-          : await placemarkFromCoordinates(latitude, longitude);
+          : await geocoding.placemarkFromCoordinates(latitude, longitude);
 
       if (placemarks.isEmpty) {
         _state = const GeocodingState.error('No address found');
