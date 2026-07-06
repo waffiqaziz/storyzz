@@ -10,8 +10,18 @@ void main() {
   const validLat = 37.422;
   const validLon = -122.084;
 
+  final mockPlacemark = Placemark(
+    street: '123 Main St',
+    locality: 'San Francisco',
+    administrativeArea: 'CA',
+    postalCode: '94102',
+    country: 'USA',
+  );
+
   setUp(() {
-    provider = GeocodingProvider();
+    provider = GeocodingProvider(
+      geocodingFunction: (lat, lon) async => [mockPlacemark],
+    );
   });
 
   group('GeocodingProvider', () {
@@ -50,25 +60,12 @@ void main() {
     test(
       'fetchAddress should return loaded state with placemark and formatted address',
       () async {
-        // valid placemark
-        final mockPlacemark = Placemark(
-          street: '123 Main St',
-          locality: 'San Francisco',
-          administrativeArea: 'CA',
-          postalCode: '94102',
-          country: 'USA',
-        );
-
-        final testProvider = GeocodingProvider(
-          geocodingFunction: (validLat, validLon) async => [mockPlacemark],
-        );
-
         final states = <GeocodingState>[];
-        testProvider.addListener(() {
-          states.add(testProvider.state);
+        provider.addListener(() {
+          states.add(provider.state);
         });
 
-        await testProvider.fetchAddress(37.7749, -122.4194);
+        await provider.fetchAddress(37.7749, -122.4194);
 
         // from loading then loaded
         expect(states.length, 2);
@@ -76,7 +73,7 @@ void main() {
         expect(states[1], isA<GeocodingStateLoaded>());
 
         // verify loaded state contains placemark and formatted address
-        final loadedState = testProvider.state as GeocodingStateLoaded;
+        final loadedState = provider.state as GeocodingStateLoaded;
         expect(loadedState.placemark, mockPlacemark);
         expect(loadedState.formattedAddress, isNotEmpty);
       },
@@ -132,22 +129,7 @@ void main() {
     test(
       'fetchAddress should return error when placemarks are empty',
       () async {
-        final testProvider = GeocodingProvider(
-          geocodingFunction: (validLat, validLon) async => [],
-        );
-
-        await testProvider.fetchAddress(0.0, 0.0);
-
-        expect(
-          testProvider.state,
-          const GeocodingState.error('No address found'),
-        );
-      },
-    );
-
-    test(
-      'fetchAddress should return error when placemarks are empty',
-      () async {
+        // mock empty placemarks
         final testProvider = GeocodingProvider(
           geocodingFunction: (validLat, validLon) async => [],
         );
