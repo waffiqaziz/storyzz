@@ -39,7 +39,6 @@ dependencies:
 
   # camera and image picker deps
   image_picker: ^1.2.3
-  image_picker_for_web: ^3.1.1
   path: ^1.9.1
   camera: ^0.12.0+1
   image: ^4.9.1
@@ -47,8 +46,6 @@ dependencies:
 
   # location
   google_maps_flutter: ^2.17.1
-  google_maps_flutter_web: ^0.6.2+3
-  google_maps_flutter_android: ^2.19.12
   geolocator: ^14.0.3
   geocoding: ^5.0.0
 
