@@ -17,7 +17,7 @@ dependencies:
   # localization
   flutter_localizations:
     sdk: flutter
-  intl: ^0.20.2
+  intl: ^0.20.3
 
   shared_preferences: ^2.5.5
 
