@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:amazing_icons/filled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -53,6 +55,11 @@ void main() {
     final router = GoRouter(
       routes: [
         GoRoute(
+          path: '/login',
+          builder: (context, state) =>
+              const Scaffold(body: Text('Login Screen')),
+        ),
+        GoRoute(
           path: '/',
           builder: (context, state) => MultiProvider(
             providers: [
@@ -66,6 +73,11 @@ void main() {
             ],
             child: const Scaffold(body: RegisterScreen()),
           ),
+        ),
+        GoRoute(
+          path: '/login',
+          builder: (context, state) =>
+              const Scaffold(body: Text('Login Screen')),
         ),
       ],
     );
@@ -340,10 +352,12 @@ void main() {
         final dpi = tester.view.devicePixelRatio;
         tester.view.physicalSize = Size(412 * dpi, 1200 * dpi);
 
+        final registerCompleter = Completer<ApiResult<GeneralResponse>>();
         when(() => mockAuthProvider.isLoadingRegister).thenReturn(false);
         when(() => mockAuthProvider.register(userTest)).thenAnswer((_) async {
           when(() => mockAuthProvider.isLoadingRegister).thenReturn(true);
-          return mockRegisterResponseSuccess;
+          mockAuthProvider.notifyListeners();
+          return registerCompleter.future;
         });
 
         await tester.pumpWidget(createWidgetUnderTest());
