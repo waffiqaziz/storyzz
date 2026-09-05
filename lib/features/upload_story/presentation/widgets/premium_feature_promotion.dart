@@ -26,9 +26,8 @@ class PremiumFeaturePromotion extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               localizations.premium_feature,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: .bold),
+              style: Theme.of(context).textTheme.titleMedium
+                  ?.copyWith(fontWeight: .bold),
             ),
             const SizedBox(height: 8),
             Text(

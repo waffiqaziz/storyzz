@@ -62,9 +62,8 @@ class _StoryLocationMapState extends State<StoryLocationMap> {
 
     return FutureBuilder(
       // delay map build slightly to prevent error when rendering during a transition or dialog show
-      future: Future.delayed(
-        const Duration(milliseconds: 600),
-      ).then((_) => mounted),
+      future: Future.delayed(const Duration(milliseconds: 600))
+          .then((_) => mounted),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return SizedBox(height: widget.height, child: const LoadingView());

@@ -46,9 +46,8 @@ class _VersionDisplayState extends State<VersionDisplay> {
           message: tooltipText,
           child: Text(
             displayText,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.labelMedium
+                ?.copyWith(color: colorScheme.onSurfaceVariant),
           ),
         ),
       );
@@ -56,9 +55,8 @@ class _VersionDisplayState extends State<VersionDisplay> {
       return Center(
         child: Text(
           '${localizations.version}${_packageInfo!.version} (${_packageInfo!.buildNumber})',
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            color: colorScheme.onSurfaceVariant,
-          ),
+          style: Theme.of(context).textTheme.labelMedium
+              ?.copyWith(color: colorScheme.onSurfaceVariant),
         ),
       );
     }

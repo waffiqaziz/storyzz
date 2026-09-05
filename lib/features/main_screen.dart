@@ -109,9 +109,8 @@ class _MainScreenState extends State<MainScreen> {
           const SizedBox(width: 8),
           Text(
             'Storyzz',
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(fontWeight: .bold),
+            style: Theme.of(context).textTheme.titleLarge
+                ?.copyWith(fontWeight: .bold),
           ),
         ],
       ),

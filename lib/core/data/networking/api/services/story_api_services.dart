@@ -114,9 +114,8 @@ class StoryApiServices {
       if (size != null) queryParams['size'] = size.toString();
       queryParams['location'] = location.toString();
 
-      final uri = Uri.parse(
-        "$_baseUrl/stories",
-      ).replace(queryParameters: queryParams);
+      final uri = Uri.parse("$_baseUrl/stories")
+          .replace(queryParameters: queryParams);
 
       final response = await httpClient.get(
         uri,

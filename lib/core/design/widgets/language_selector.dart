@@ -65,9 +65,8 @@ class LanguageSelector extends StatelessWidget {
                 Flexible(
                   child: Text(
                     localizations.english,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(fontWeight: .bold),
+                    style: Theme.of(context).textTheme.bodyMedium
+                        ?.copyWith(fontWeight: .bold),
                     overflow: .ellipsis,
                   ),
                 ),
@@ -84,9 +83,8 @@ class LanguageSelector extends StatelessWidget {
                 Flexible(
                   child: Text(
                     localizations.indonesian,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(fontWeight: .bold),
+                    style: Theme.of(context).textTheme.bodyMedium
+                        ?.copyWith(fontWeight: .bold),
                     overflow: .ellipsis,
                   ),
                 ),

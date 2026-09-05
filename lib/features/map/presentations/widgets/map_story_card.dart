@@ -86,9 +86,8 @@ class MapStoryCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         story.name,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodyLarge?.copyWith(fontWeight: .bold),
+                        style: Theme.of(context).textTheme.bodyLarge
+                            ?.copyWith(fontWeight: .bold),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -96,9 +95,8 @@ class MapStoryCard extends StatelessWidget {
                     Flexible(
                       child: Text(
                         getTimeDifference(context, story.createdAt),
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.grey[600],
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall
+                            ?.copyWith(color: Colors.grey[600]),
                         maxLines: 1,
                       ),
                     ),

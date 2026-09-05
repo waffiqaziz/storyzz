@@ -26,15 +26,13 @@ class AuthorInfo extends StatelessWidget {
             children: [
               Text(
                 story.name,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: .bold),
+                style: Theme.of(context).textTheme.titleMedium
+                    ?.copyWith(fontWeight: .bold),
               ),
               Text(
                 getTimeDifference(context, story.createdAt),
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+                style: Theme.of(context).textTheme.bodySmall
+                    ?.copyWith(color: Colors.grey[600]),
               ),
             ],
           ),

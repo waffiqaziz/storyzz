@@ -159,9 +159,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         if (value == null || value.isEmpty) {
                           return localizations.enter_email;
                         }
-                        if (!RegExp(
-                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                        ).hasMatch(value)) {
+                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                            .hasMatch(value)) {
                           return localizations.enter_valid_email;
                         }
                         return null;

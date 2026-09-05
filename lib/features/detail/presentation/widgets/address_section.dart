@@ -47,9 +47,8 @@ class _AddressSectionState extends State<AddressSection> {
             const SizedBox(width: 8),
             Text(
               localizations.location,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: .bold),
+              style: Theme.of(context).textTheme.titleMedium
+                  ?.copyWith(fontWeight: .bold),
             ),
           ],
         ),

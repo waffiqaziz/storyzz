@@ -57,17 +57,15 @@ class SettingsTileState extends State<SettingsTile> {
                   children: [
                     Text(
                       widget.title,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.titleMedium?.copyWith(fontWeight: .w500),
+                      style: Theme.of(context).textTheme.titleMedium
+                          ?.copyWith(fontWeight: .w500),
                     ),
                     if (widget.subtitle != null) ...[
                       const SizedBox(height: 4),
                       Text(
                         widget.subtitle!,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.labelLarge?.copyWith(fontWeight: .w300),
+                        style: Theme.of(context).textTheme.labelLarge
+                            ?.copyWith(fontWeight: .w300),
                       ),
                     ],
                   ],

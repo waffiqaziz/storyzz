@@ -43,9 +43,8 @@ class AuthFormContainer extends StatelessWidget {
           // Subtitle
           Text(
             subtitle,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(color: Colors.grey.shade600),
+            style: Theme.of(context).textTheme.bodyLarge
+                ?.copyWith(color: Colors.grey.shade600),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),

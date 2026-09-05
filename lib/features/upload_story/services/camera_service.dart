@@ -111,9 +111,8 @@ class CameraService {
           errorMessage = _localizations.camera_used_by_other;
         }
 
-        ScaffoldMessenger.of(
-          _context!,
-        ).showSnackBar(SnackBar(content: Text(errorMessage)));
+        ScaffoldMessenger.of(_context!)
+            .showSnackBar(SnackBar(content: Text(errorMessage)));
       }
 
       provider.setRequestingPermission(false);

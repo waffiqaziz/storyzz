@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'setting.freezed.dart';
+
 // part 'setting.g.dart'; // uncomment JSON serialization
 
 @freezed
