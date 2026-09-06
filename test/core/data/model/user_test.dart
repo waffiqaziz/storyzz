@@ -37,47 +37,38 @@ void main() {
   });
 
   group('UserExtension', () {
-    test(
-      'toJsonString should correctly convert a User object to a JSON string',
-      () {
-        const user = User(
-          name: 'Test User',
-          email: 'test@example.com',
-          password: 'password123',
-          token: 'testToken',
-        );
+    test('toJsonString should correctly convert a User object to a JSON string', () {
+      const user = User(
+        name: 'Test User',
+        email: 'test@example.com',
+        password: 'password123',
+        token: 'testToken',
+      );
 
-        final jsonString = user.toJsonString();
-        final expectedJsonString =
-            '{"name":"Test User","email":"test@example.com","password":"password123","token":"testToken"}';
+      final jsonString = user.toJsonString();
+      final expectedJsonString =
+          '{"name":"Test User","email":"test@example.com","password":"password123","token":"testToken"}';
 
-        expect(jsonString, expectedJsonString);
-      },
-    );
+      expect(jsonString, expectedJsonString);
+    });
 
-    test(
-      'fromJsonString should correctly parse a JSON string into a User object',
-      () {
-        const jsonString =
-            '{"name":"Test User","email":"test@example.com","password":"password123","token":"testToken"}';
+    test('fromJsonString should correctly parse a JSON string into a User object', () {
+      const jsonString =
+          '{"name":"Test User","email":"test@example.com","password":"password123","token":"testToken"}';
 
-        final user = UserExtension.fromJsonString(jsonString);
+      final user = UserExtension.fromJsonString(jsonString);
 
-        expect(user.name, 'Test User');
-        expect(user.email, 'test@example.com');
-        expect(user.password, 'password123');
-        expect(user.token, 'testToken');
-      },
-    );
+      expect(user.name, 'Test User');
+      expect(user.email, 'test@example.com');
+      expect(user.password, 'password123');
+      expect(user.token, 'testToken');
+    });
 
-    test(
-      'fromJsonString should throw a FormatException when given an empty string',
-      () {
-        expect(
-          () => UserExtension.fromJsonString(''),
-          throwsA(isA<FormatException>()),
-        );
-      },
-    );
+    test('fromJsonString should throw a FormatException when given an empty string', () {
+      expect(
+        () => UserExtension.fromJsonString(''),
+        throwsA(isA<FormatException>()),
+      );
+    });
   });
 }

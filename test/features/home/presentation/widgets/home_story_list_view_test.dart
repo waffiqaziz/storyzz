@@ -42,9 +42,8 @@ void main() {
       // Default stubs
       when(() => mockAppService.getKIsWeb()).thenReturn(false);
       when(() => mockAuthProvider.user).thenReturn(testUser);
-      when(
-        () => mockStoryProvider.state,
-      ).thenReturn(StoryLoadState.loaded(testStories));
+      when(() => mockStoryProvider.state)
+          .thenReturn(StoryLoadState.loaded(testStories));
       when(() => mockStoryProvider.stories).thenReturn(testStories);
       when(() => mockStoryProvider.hasMoreStories).thenReturn(true);
       when(() => mockStoryProvider.isLoadingMore).thenReturn(false);
@@ -55,9 +54,8 @@ void main() {
           refresh: any(named: 'refresh'),
         ),
       ).thenAnswer((_) async => {});
-      when(
-        () => mockStoryProvider.refreshStories(user: any(named: 'user')),
-      ).thenAnswer((_) async => {});
+      when(() => mockStoryProvider.refreshStories(user: any(named: 'user')))
+          .thenAnswer((_) async => {});
     });
 
     setUpAll(() {
@@ -166,9 +164,8 @@ void main() {
       testWidgets('should show loading indicator when state is initial', (
         WidgetTester tester,
       ) async {
-        when(
-          () => mockStoryProvider.state,
-        ).thenReturn(const StoryLoadState.initial());
+        when(() => mockStoryProvider.state)
+            .thenReturn(const StoryLoadState.initial());
         when(() => mockStoryProvider.stories).thenReturn([]);
 
         await tester.pumpWidget(createTestWidget());
@@ -180,9 +177,8 @@ void main() {
       testWidgets(
         'should show loading indicator when loading with empty stories',
         (WidgetTester tester) async {
-          when(
-            () => mockStoryProvider.state,
-          ).thenReturn(const StoryLoadState.loading());
+          when(() => mockStoryProvider.state)
+              .thenReturn(const StoryLoadState.loading());
           when(() => mockStoryProvider.stories).thenReturn([]);
 
           await tester.pumpWidget(createTestWidget());
@@ -196,9 +192,8 @@ void main() {
         WidgetTester tester,
       ) async {
         const errorMessage = 'Failed to load stories';
-        when(
-          () => mockStoryProvider.state,
-        ).thenReturn(const StoryLoadState.error(errorMessage));
+        when(() => mockStoryProvider.state)
+            .thenReturn(const StoryLoadState.error(errorMessage));
         when(() => mockStoryProvider.stories).thenReturn([]);
 
         await tester.pumpWidget(createTestWidget());
@@ -217,9 +212,8 @@ void main() {
       testWidgets('should show empty view when stories list is empty', (
         WidgetTester tester,
       ) async {
-        when(
-          () => mockStoryProvider.state,
-        ).thenReturn(const StoryLoadState.loaded([]));
+        when(() => mockStoryProvider.state)
+            .thenReturn(const StoryLoadState.loaded([]));
         when(() => mockStoryProvider.stories).thenReturn([]);
 
         await tester.pumpWidget(createTestWidget());
@@ -246,9 +240,8 @@ void main() {
         'should show pagination loading indicator when isLoadingMore is true',
         (WidgetTester tester) async {
           when(() => mockStoryProvider.state.isLoaded).thenReturn(true);
-          when(
-            () => mockStoryProvider.state,
-          ).thenReturn(StoryLoadState.loaded(testStories));
+          when(() => mockStoryProvider.state)
+              .thenReturn(StoryLoadState.loaded(testStories));
           when(() => mockStoryProvider.stories).thenReturn(testStories);
           when(() => mockStoryProvider.isLoadingMore).thenReturn(true);
 
@@ -333,9 +326,8 @@ void main() {
           ),
         );
 
-        when(
-          () => mockStoryProvider.state,
-        ).thenReturn(StoryLoadState.loaded(manyStories));
+        when(() => mockStoryProvider.state)
+            .thenReturn(StoryLoadState.loaded(manyStories));
         when(() => mockStoryProvider.stories).thenReturn(manyStories);
         when(() => mockStoryProvider.hasMoreStories).thenReturn(true);
         when(() => mockStoryProvider.isLoadingMore).thenReturn(false);
@@ -360,9 +352,8 @@ void main() {
       testWidgets('should not load more when already loading', (
         WidgetTester tester,
       ) async {
-        when(
-          () => mockStoryProvider.state,
-        ).thenReturn(const StoryLoadState.loading());
+        when(() => mockStoryProvider.state)
+            .thenReturn(const StoryLoadState.loading());
         when(() => mockStoryProvider.isLoadingMore).thenReturn(true);
 
         await tester.pumpWidget(createTestWidget());
@@ -449,9 +440,8 @@ void main() {
         await tester.drag(find.byType(RefreshIndicator), const Offset(0, 300));
         await tester.pumpAndSettle();
 
-        verify(
-          () => mockStoryProvider.refreshStories(user: testUser),
-        ).called(1);
+        verify(() => mockStoryProvider.refreshStories(user: testUser))
+            .called(1);
       });
 
       testWidgets('should not refresh when user is null', (
@@ -487,9 +477,8 @@ void main() {
           await tester.tap(find.byIcon(Icons.refresh));
           await tester.pumpAndSettle();
 
-          verify(
-            () => mockStoryProvider.refreshStories(user: testUser),
-          ).called(1);
+          verify(() => mockStoryProvider.refreshStories(user: testUser))
+              .called(1);
         },
       );
     });
@@ -499,9 +488,8 @@ void main() {
         WidgetTester tester,
       ) async {
         const errorMessage = 'Network error';
-        when(
-          () => mockStoryProvider.state,
-        ).thenReturn(const StoryLoadState.error(errorMessage));
+        when(() => mockStoryProvider.state)
+            .thenReturn(const StoryLoadState.error(errorMessage));
         when(() => mockStoryProvider.stories).thenReturn([]);
 
         await tester.pumpWidget(createTestWidget());
@@ -520,9 +508,8 @@ void main() {
           await tester.tap(retryButton);
           await tester.pumpAndSettle();
 
-          verify(
-            () => mockStoryProvider.refreshStories(user: testUser),
-          ).called(1);
+          verify(() => mockStoryProvider.refreshStories(user: testUser))
+              .called(1);
         }
       });
     });
@@ -540,9 +527,8 @@ void main() {
         await tester.tap(find.byType(HomeStoryCard).first);
         await tester.pump();
 
-        verify(
-          () => mockAppProvider.openDetailScreen(testStories[0]),
-        ).called(1);
+        verify(() => mockAppProvider.openDetailScreen(testStories[0]))
+            .called(1);
       });
     });
   });

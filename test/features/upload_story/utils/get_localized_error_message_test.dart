@@ -77,9 +77,8 @@ void main() {
 
         expect(
           result,
-          AppLocalizations.of(
-            testContext,
-          )!.location_permissions_permanently_denied,
+          AppLocalizations.of(testContext)!
+              .location_permissions_permanently_denied,
         );
       },
     );

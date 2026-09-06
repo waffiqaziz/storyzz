@@ -55,9 +55,8 @@ void main() {
       });
 
       test('should handle errors gracefully', () async {
-        when(
-          () => mockAuthRepository.isLoggedIn(),
-        ).thenAnswer((_) async => false);
+        when(() => mockAuthRepository.isLoggedIn())
+            .thenAnswer((_) async => false);
 
         final result = await authProvider.isLogged();
 
@@ -70,12 +69,10 @@ void main() {
     group('logout', () {
       test('should handle successful logout', () async {
         when(() => mockAuthRepository.logout()).thenAnswer((_) async => true);
-        when(
-          () => mockAuthRepository.deleteUser(),
-        ).thenAnswer((_) async => true);
-        when(
-          () => mockAuthRepository.isLoggedIn(),
-        ).thenAnswer((_) async => false);
+        when(() => mockAuthRepository.deleteUser())
+            .thenAnswer((_) async => true);
+        when(() => mockAuthRepository.isLoggedIn())
+            .thenAnswer((_) async => false);
 
         await authProvider.logout();
 
@@ -86,9 +83,8 @@ void main() {
       });
 
       test('should handle logout error correctly', () async {
-        when(
-          () => mockAuthRepository.logout(),
-        ).thenThrow(Exception('Logout failed'));
+        when(() => mockAuthRepository.logout())
+            .thenThrow(Exception('Logout failed'));
 
         await authProvider.logout();
 
@@ -106,9 +102,8 @@ void main() {
 
     group('saveUser', () {
       test('should save user successfully', () async {
-        when(
-          () => mockAuthRepository.saveUser(testUser),
-        ).thenAnswer((_) async => true);
+        when(() => mockAuthRepository.saveUser(testUser))
+            .thenAnswer((_) async => true);
 
         final result = await authProvider.saveUser(testUser);
 
@@ -120,9 +115,8 @@ void main() {
 
     group('getUser', () {
       test('should get user successfully', () async {
-        when(
-          () => mockAuthRepository.getUser(),
-        ).thenAnswer((_) async => testUser);
+        when(() => mockAuthRepository.getUser())
+            .thenAnswer((_) async => testUser);
 
         await authProvider.getUser();
 
@@ -143,9 +137,8 @@ void main() {
       });
 
       test('should handle error', () async {
-        when(
-          () => mockAuthRepository.getUser(),
-        ).thenThrow(Exception('Network error'));
+        when(() => mockAuthRepository.getUser())
+            .thenThrow(Exception('Network error'));
 
         await authProvider.getUser();
 
@@ -170,12 +163,10 @@ void main() {
           ),
         );
 
-        when(
-          () => mockAuthRepository.loginRemote('test@test.com', 'password'),
-        ).thenAnswer((_) async => ApiResult.success(loginResponse));
-        when(
-          () => mockAuthRepository.isLoggedIn(),
-        ).thenAnswer((_) async => true);
+        when(() => mockAuthRepository.loginRemote('test@test.com', 'password'))
+            .thenAnswer((_) async => ApiResult.success(loginResponse));
+        when(() => mockAuthRepository.isLoggedIn())
+            .thenAnswer((_) async => true);
 
         final result = await authProvider.loginNetwork(
           'test@test.com',
@@ -192,9 +183,8 @@ void main() {
       test('should handle successful registration', () async {
         final response = GeneralResponse(error: false, message: 'Success');
 
-        when(
-          () => mockAuthRepository.register(testUser),
-        ).thenAnswer((_) async => ApiResult.success(response));
+        when(() => mockAuthRepository.register(testUser))
+            .thenAnswer((_) async => ApiResult.success(response));
 
         final result = await authProvider.register(testUser);
 

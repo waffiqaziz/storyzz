@@ -57,16 +57,14 @@ void main() {
   setUp(() {
     mockSettingsProvider = MockSettingsProvider();
     mockAddressProvider = MockAddressProvider();
-    when(
-      () => mockSettingsProvider.setting,
-    ).thenReturn(Setting(isDark: false, locale: "en"));
+    when(() => mockSettingsProvider.setting)
+        .thenReturn(Setting(isDark: false, locale: "en"));
   });
 
   group('StoryLocationMap', () {
     testWidgets('should renders GoogleMap widget', (WidgetTester tester) async {
-      when(
-        () => mockAddressProvider.state,
-      ).thenReturn(AddressLoadStateInitial());
+      when(() => mockAddressProvider.state)
+          .thenReturn(AddressLoadStateInitial());
 
       await tester.pumpWidget(createTestApp());
       await tester.pumpAndSettle();
@@ -78,9 +76,8 @@ void main() {
     testWidgets('should unfocus is called on pointer down', (
       WidgetTester tester,
     ) async {
-      when(
-        () => mockAddressProvider.state,
-      ).thenReturn(AddressLoadStateInitial());
+      when(() => mockAddressProvider.state)
+          .thenReturn(AddressLoadStateInitial());
 
       final focusNode = FocusNode();
       await tester.pumpWidget(

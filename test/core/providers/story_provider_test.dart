@@ -100,17 +100,16 @@ void main() {
         );
 
         // First page
-        when(
-          () => mockRepository.getStories(page: 1, size: 10, user: mockUser),
-        ).thenAnswer(
-          (_) async => ApiResult.success(
-            StoriesResponse(
-              error: false,
-              message: 'Success',
-              listStory: testTenStories,
-            ),
-          ),
-        );
+        when(() => mockRepository.getStories(page: 1, size: 10, user: mockUser))
+            .thenAnswer(
+              (_) async => ApiResult.success(
+                StoriesResponse(
+                  error: false,
+                  message: 'Success',
+                  listStory: testTenStories,
+                ),
+              ),
+            );
 
         await storyProvider.getStories(user: mockUser);
 
@@ -118,17 +117,16 @@ void main() {
         expect(storyProvider.stories.length, equals(10));
 
         // Second page
-        when(
-          () => mockRepository.getStories(page: 2, size: 10, user: mockUser),
-        ).thenAnswer(
-          (_) async => ApiResult.success(
-            StoriesResponse(
-              error: false,
-              message: 'Success',
-              listStory: testTenStories,
-            ),
-          ),
-        );
+        when(() => mockRepository.getStories(page: 2, size: 10, user: mockUser))
+            .thenAnswer(
+              (_) async => ApiResult.success(
+                StoriesResponse(
+                  error: false,
+                  message: 'Success',
+                  listStory: testTenStories,
+                ),
+              ),
+            );
 
         await storyProvider.getStories(user: mockUser);
 
@@ -137,17 +135,16 @@ void main() {
 
       test('should handle pagination under page size', () async {
         // First page
-        when(
-          () => mockRepository.getStories(page: 1, size: 10, user: mockUser),
-        ).thenAnswer(
-          (_) async => ApiResult.success(
-            StoriesResponse(
-              error: false,
-              message: 'Success',
-              listStory: testStories,
-            ),
-          ),
-        );
+        when(() => mockRepository.getStories(page: 1, size: 10, user: mockUser))
+            .thenAnswer(
+              (_) async => ApiResult.success(
+                StoriesResponse(
+                  error: false,
+                  message: 'Success',
+                  listStory: testStories,
+                ),
+              ),
+            );
 
         await storyProvider.getStories(user: mockUser);
 

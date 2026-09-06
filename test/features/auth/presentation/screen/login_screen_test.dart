@@ -138,9 +138,8 @@ void main() {
     });
 
     testWidgets('should call loginNetwork when form is valid', (tester) async {
-      when(
-        () => mockAuthProvider.loginNetwork(any(), any()),
-      ).thenAnswer((_) async => mockLoginResponseSuccess);
+      when(() => mockAuthProvider.loginNetwork(any(), any()))
+          .thenAnswer((_) async => mockLoginResponseSuccess);
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
 
       await tester.pumpWidget(createWidgetUnderTest());
@@ -162,9 +161,8 @@ void main() {
     testWidgets('should show error snackbar on login response failure', (
       tester,
     ) async {
-      when(
-        () => mockAuthProvider.loginNetwork(any(), any()),
-      ).thenAnswer((_) async => mockLoginResponseFailed);
+      when(() => mockAuthProvider.loginNetwork(any(), any()))
+          .thenAnswer((_) async => mockLoginResponseFailed);
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
 
       await tester.pumpWidget(createWidgetUnderTest());
@@ -187,9 +185,8 @@ void main() {
     ) async {
       final ApiResult<LoginResponse> mockLoginResponseFailed2 =
           ApiResult<LoginResponse>.error("Unknown error");
-      when(
-        () => mockAuthProvider.loginNetwork(any(), any()),
-      ).thenAnswer((_) async => mockLoginResponseFailed2);
+      when(() => mockAuthProvider.loginNetwork(any(), any()))
+          .thenAnswer((_) async => mockLoginResponseFailed2);
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => false);
 
       await tester.pumpWidget(createWidgetUnderTest());
@@ -282,12 +279,11 @@ void main() {
       (tester) async {
         // set return false initially, then true after login tap
         when(() => mockAuthProvider.isLoadingLogin).thenReturn(false);
-        when(() => mockAuthProvider.loginNetwork(any(), any())).thenAnswer((
-          _,
-        ) async {
-          when(() => mockAuthProvider.isLoadingLogin).thenReturn(true);
-          return mockLoginResponseSuccess;
-        });
+        when(() => mockAuthProvider.loginNetwork(any(), any()))
+            .thenAnswer((_) async {
+              when(() => mockAuthProvider.isLoadingLogin).thenReturn(true);
+              return mockLoginResponseSuccess;
+            });
         when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
 
         await tester.pumpWidget(createWidgetUnderTest());
@@ -316,9 +312,8 @@ void main() {
       required double width,
       required String screenType,
     }) async {
-      when(
-        () => mockAuthProvider.loginNetwork(any(), any()),
-      ).thenAnswer((_) async => mockLoginResponseSuccess);
+      when(() => mockAuthProvider.loginNetwork(any(), any()))
+          .thenAnswer((_) async => mockLoginResponseSuccess);
       when(() => mockAuthProvider.isLogged()).thenAnswer((_) async => true);
 
       await tester.pumpWidget(createWidgetUnderTest(width: width));

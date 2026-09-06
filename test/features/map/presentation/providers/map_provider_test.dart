@@ -59,9 +59,8 @@ void main() {
       when(() => authProvider.getUser()).thenAnswer((_) async {});
       when(() => authProvider.user).thenReturn(dumpTestUser);
 
-      when(
-        () => storyProvider.getStories(user: dumpTestUser),
-      ).thenAnswer((_) async {});
+      when(() => storyProvider.getStories(user: dumpTestUser))
+          .thenAnswer((_) async {});
       when(() => storyProvider.stories).thenReturn(stories);
 
       provider.isMapReady = true;

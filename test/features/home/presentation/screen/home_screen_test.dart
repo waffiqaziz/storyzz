@@ -32,14 +32,12 @@ void main() {
       testStories = dumpTestStoryList;
 
       // setup mock
-      when(
-        () => mockStoryProvider.state,
-      ).thenReturn(const StoryLoadState.initial());
+      when(() => mockStoryProvider.state)
+          .thenReturn(const StoryLoadState.initial());
       when(() => mockStoryProvider.hasMoreStories).thenReturn(true);
       when(() => mockAuthProvider.user).thenReturn(testUser);
-      when(
-        () => mockStoryProvider.state,
-      ).thenReturn(StoryLoadState.loaded(testStories));
+      when(() => mockStoryProvider.state)
+          .thenReturn(StoryLoadState.loaded(testStories));
       when(() => mockStoryProvider.stories).thenReturn(testStories);
       when(() => mockStoryProvider.hasMoreStories).thenReturn(true);
       when(() => mockStoryProvider.isLoadingMore).thenReturn(false);
@@ -87,9 +85,8 @@ void main() {
     ) async {
       when(() => mockAuthProvider.getUser()).thenAnswer((_) async => {});
       when(() => mockAuthProvider.user).thenReturn(testUser);
-      when(
-        () => mockStoryProvider.getStories(user: any(named: 'user')),
-      ).thenAnswer((_) async => {});
+      when(() => mockStoryProvider.getStories(user: any(named: 'user')))
+          .thenAnswer((_) async => {});
 
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
@@ -116,12 +113,10 @@ void main() {
     ) async {
       when(() => mockAuthProvider.getUser()).thenAnswer((_) async => {});
       when(() => mockAuthProvider.user).thenReturn(testUser);
-      when(
-        () => mockStoryProvider.getStories(user: any(named: 'user')),
-      ).thenAnswer((_) async => {});
-      when(
-        () => mockStoryProvider.state,
-      ).thenReturn(const StoryLoadState.loaded([]));
+      when(() => mockStoryProvider.getStories(user: any(named: 'user')))
+          .thenAnswer((_) async => {});
+      when(() => mockStoryProvider.state)
+          .thenReturn(const StoryLoadState.loaded([]));
       when(() => mockStoryProvider.hasMoreStories).thenReturn(true);
 
       await tester.pumpWidget(createTestWidget());
@@ -136,9 +131,8 @@ void main() {
         await tester.drag(scrollable.first, const Offset(0, -1000));
         await tester.pumpAndSettle();
 
-        verify(
-          () => mockStoryProvider.getStories(user: testUser),
-        ).called(greaterThanOrEqualTo(0));
+        verify(() => mockStoryProvider.getStories(user: testUser))
+            .called(greaterThanOrEqualTo(0));
       }
     });
 
@@ -147,12 +141,10 @@ void main() {
     ) async {
       when(() => mockAuthProvider.getUser()).thenAnswer((_) async => {});
       when(() => mockAuthProvider.user).thenReturn(testUser);
-      when(
-        () => mockStoryProvider.getStories(user: any(named: 'user')),
-      ).thenAnswer((_) async => {});
-      when(
-        () => mockStoryProvider.state,
-      ).thenReturn(const StoryLoadState.loading());
+      when(() => mockStoryProvider.getStories(user: any(named: 'user')))
+          .thenAnswer((_) async => {});
+      when(() => mockStoryProvider.state)
+          .thenReturn(const StoryLoadState.loading());
       when(() => mockStoryProvider.hasMoreStories).thenReturn(true);
 
       await tester.pumpWidget(createTestWidget());
@@ -177,12 +169,10 @@ void main() {
     ) async {
       when(() => mockAuthProvider.getUser()).thenAnswer((_) async => {});
       when(() => mockAuthProvider.user).thenReturn(testUser);
-      when(
-        () => mockStoryProvider.getStories(user: any(named: 'user')),
-      ).thenAnswer((_) async => {});
-      when(
-        () => mockStoryProvider.state,
-      ).thenReturn(const StoryLoadState.loaded([]));
+      when(() => mockStoryProvider.getStories(user: any(named: 'user')))
+          .thenAnswer((_) async => {});
+      when(() => mockStoryProvider.state)
+          .thenReturn(const StoryLoadState.loaded([]));
       when(() => mockStoryProvider.hasMoreStories).thenReturn(false);
 
       await tester.pumpWidget(createTestWidget());
@@ -221,9 +211,8 @@ void main() {
     ) async {
       when(() => mockAuthProvider.getUser()).thenAnswer((_) async => {});
       when(() => mockAuthProvider.user).thenReturn(testUser);
-      when(
-        () => mockStoryProvider.getStories(user: any(named: 'user')),
-      ).thenAnswer((_) async => {});
+      when(() => mockStoryProvider.getStories(user: any(named: 'user')))
+          .thenAnswer((_) async => {});
 
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();

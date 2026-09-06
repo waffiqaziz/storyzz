@@ -19,9 +19,8 @@ void main() {
     mockApiServices = MockApiServices();
     storyRepository = StoryRepository(mockApiServices);
 
-    when(
-      () => mockFile.openRead(),
-    ).thenAnswer((_) => Stream.value(Uint8List(0)));
+    when(() => mockFile.openRead())
+        .thenAnswer((_) => Stream.value(Uint8List(0)));
     when(() => mockFile.length()).thenAnswer((_) async => 100);
     when(() => mockFile.path).thenReturn('test.jpg');
   });

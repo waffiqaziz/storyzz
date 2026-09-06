@@ -52,19 +52,17 @@ void main() {
       MapsEnvironment.resetDependencies();
     });
 
-    test(
-      'getAddressFromCoordinates returns GeocodingResponse on successful API call',
-      () async {
-        final double lat = 37.7749;
-        final double lon = -122.4194;
+    test('getAddressFromCoordinates returns GeocodingResponse on successful API call', () async {
+      final double lat = 37.7749;
+      final double lon = -122.4194;
 
-        final expectedUri = Uri.https('geocode.maps.co', '/reverse', {
-          'lat': lat.toString(),
-          'lon': lon.toString(),
-          'api_key': 'test_api_key',
-        });
+      final expectedUri = Uri.https('geocode.maps.co', '/reverse', {
+        'lat': lat.toString(),
+        'lon': lon.toString(),
+        'api_key': 'test_api_key',
+      });
 
-        final mockResponseBody = '''
+      final mockResponseBody = '''
       {
         "place_id": 12345,
         "licence": "Data © OpenStreetMap contributors",
@@ -83,19 +81,17 @@ void main() {
       }
       ''';
 
-        when(
-          () => mockHttpClient.get(any()),
-        ).thenAnswer((_) async => http.Response(mockResponseBody, 200));
+      when(() => mockHttpClient.get(any()))
+          .thenAnswer((_) async => http.Response(mockResponseBody, 200));
 
-        final result = await mapsApiService.getAddressFromCoordinates(lat, lon);
+      final result = await mapsApiService.getAddressFromCoordinates(lat, lon);
 
-        verify(() => mockHttpClient.get(expectedUri)).called(1);
-        expect(result, isA<GeocodingResponse>());
-        expect(result.displayName, 'San Francisco, California, USA');
-        expect(result.address.city, 'San Francisco');
-        expect(result.address.country, 'USA');
-      },
-    );
+      verify(() => mockHttpClient.get(expectedUri)).called(1);
+      expect(result, isA<GeocodingResponse>());
+      expect(result.displayName, 'San Francisco, California, USA');
+      expect(result.address.city, 'San Francisco');
+      expect(result.address.country, 'USA');
+    });
 
     test(
       'getAddressFromCoordinates throws exception on non-200 response',
@@ -126,9 +122,8 @@ void main() {
         final double lat = 37.7749;
         final double lon = -122.4194;
 
-        when(
-          () => mockHttpClient.get(any()),
-        ).thenThrow(Exception('Connection failed'));
+        when(() => mockHttpClient.get(any()))
+            .thenThrow(Exception('Connection failed'));
 
         expect(
           () => mapsApiService.getAddressFromCoordinates(lat, lon),

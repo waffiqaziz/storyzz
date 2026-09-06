@@ -205,11 +205,10 @@ void main() {
       });
 
       test('should return error message on failed fetch', () async {
-        when(
-          () => mockHttpClient.get(any(), headers: any(named: 'headers')),
-        ).thenAnswer(
-          (_) async => http.Response('Failed to fetch stories', 500),
-        );
+        when(() => mockHttpClient.get(any(), headers: any(named: 'headers')))
+            .thenAnswer(
+              (_) async => http.Response('Failed to fetch stories', 500),
+            );
 
         final result = await apiServices.getStories(user: user);
 
@@ -297,51 +296,47 @@ void main() {
         skip: !kIsWeb,
       );
 
-      test(
-        'should return GeneralResponse on successful upload (mobile)',
-        () async {
-          final mockJsonResponse = jsonEncode(mockResponseSuccess);
+      test('should return GeneralResponse on successful upload (mobile)', () async {
+        final mockJsonResponse = jsonEncode(mockResponseSuccess);
 
-          when(() => mockAppService.getKIsWeb()).thenReturn(false);
-          when(
-            () => mockFile.openRead(),
-          ).thenAnswer((_) => Stream.value(Uint8List(0)));
-          when(() => mockFile.length()).thenAnswer((_) async => 100);
-          when(() => mockFile.path).thenReturn('test.jpg');
+        when(() => mockAppService.getKIsWeb()).thenReturn(false);
+        when(() => mockFile.openRead())
+            .thenAnswer((_) => Stream.value(Uint8List(0)));
+        when(() => mockFile.length()).thenAnswer((_) async => 100);
+        when(() => mockFile.path).thenReturn('test.jpg');
 
-          when(() => mockHttpClient.send(any())).thenAnswer((_) async {
-            final bodyBytes = utf8.encode(mockJsonResponse);
-            final stream = http.ByteStream.fromBytes(bodyBytes);
+        when(() => mockHttpClient.send(any())).thenAnswer((_) async {
+          final bodyBytes = utf8.encode(mockJsonResponse);
+          final stream = http.ByteStream.fromBytes(bodyBytes);
 
-            return http.StreamedResponse(
-              stream,
-              201,
-              contentLength: bodyBytes.length,
-              headers: {'content-type': 'application/json; charset=utf-8'},
-            );
-          });
-
-          final result = await apiServices.uploadStory(
-            token: token,
-            description: description,
-            photoFile: mockFile,
-            fileName: fileName,
+          return http.StreamedResponse(
+            stream,
+            201,
+            contentLength: bodyBytes.length,
+            headers: {'content-type': 'application/json; charset=utf-8'},
           );
+        });
 
-          expect(result, isA<ApiResult<GeneralResponse>>());
-          expect(
-            result.data,
-            isNotNull,
-            reason:
-                "Response data should not be null - Error message: ${result.message}",
-          );
-          if (result.data != null) {
-            expect(result.data!.error, false);
-            expect(result.data!.message, 'Story uploaded successfully');
-          }
-          expect(result.message, isNull);
-        },
-      );
+        final result = await apiServices.uploadStory(
+          token: token,
+          description: description,
+          photoFile: mockFile,
+          fileName: fileName,
+        );
+
+        expect(result, isA<ApiResult<GeneralResponse>>());
+        expect(
+          result.data,
+          isNotNull,
+          reason:
+              "Response data should not be null - Error message: ${result.message}",
+        );
+        if (result.data != null) {
+          expect(result.data!.error, false);
+          expect(result.data!.message, 'Story uploaded successfully');
+        }
+        expect(result.message, isNull);
+      });
 
       test('should return error message on failed upload', () async {
         final mockResponse = {'error': true, 'message': 'Upload failed'};
@@ -411,9 +406,8 @@ void main() {
           final mockFile = MockFile();
 
           when(() => mockAppService.getKIsWeb()).thenReturn(false);
-          when(
-            () => mockFile.openRead(),
-          ).thenAnswer((_) => Stream.value(Uint8List(0)));
+          when(() => mockFile.openRead())
+              .thenAnswer((_) => Stream.value(Uint8List(0)));
           when(() => mockFile.length()).thenAnswer((_) async => 100);
           when(() => mockFile.path).thenReturn('test.jpg');
 

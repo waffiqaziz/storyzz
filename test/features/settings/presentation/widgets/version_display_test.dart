@@ -60,9 +60,8 @@ void main() {
         expect(find.textContaining('42'), findsOneWidget);
         expect(find.byType(Tooltip), findsNothing);
 
-        verify(
-          () => mockAppService.getKIsWeb(),
-        ).called(greaterThanOrEqualTo(1));
+        verify(() => mockAppService.getKIsWeb())
+            .called(greaterThanOrEqualTo(1));
       },
     );
 
@@ -84,9 +83,8 @@ void main() {
 
         expect(find.textContaining('1.2.3'), findsOneWidget);
 
-        verify(
-          () => mockAppService.getKIsWeb(),
-        ).called(greaterThanOrEqualTo(1));
+        verify(() => mockAppService.getKIsWeb())
+            .called(greaterThanOrEqualTo(1));
       },
     );
 

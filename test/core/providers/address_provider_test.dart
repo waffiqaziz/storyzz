@@ -91,21 +91,20 @@ void main() {
     );
 
     test('reset should return state to initial', () async {
-      when(
-        () => mockMapsRepository.getAddressFromCoordinates(testLat, testLon),
-      ).thenAnswer(
-        (_) async => GeocodingResponse(
-          placeId: 1,
-          licence: "test",
-          osmType: "test",
-          osmId: 1,
-          lat: testLat.toString(),
-          lon: testLon.toString(),
-          displayName: testAddress,
-          address: GeocodingAddress(),
-          boundingbox: [],
-        ),
-      );
+      when(() => mockMapsRepository.getAddressFromCoordinates(testLat, testLon))
+          .thenAnswer(
+            (_) async => GeocodingResponse(
+              placeId: 1,
+              licence: "test",
+              osmType: "test",
+              osmId: 1,
+              lat: testLat.toString(),
+              lon: testLon.toString(),
+              displayName: testAddress,
+              address: GeocodingAddress(),
+              boundingbox: [],
+            ),
+          );
       await addressProvider.getAddressFromCoordinates(testLat, testLon);
 
       addressProvider.reset();

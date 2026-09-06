@@ -132,9 +132,8 @@ void main() {
     );
 
     testWidgets('should call register when form is valid', (tester) async {
-      when(
-        () => mockAuthProvider.register(userTest),
-      ).thenAnswer((_) async => mockRegisterResponseSuccess);
+      when(() => mockAuthProvider.register(userTest))
+          .thenAnswer((_) async => mockRegisterResponseSuccess);
 
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
@@ -159,9 +158,8 @@ void main() {
     testWidgets('should show error snackbar on registration failure', (
       tester,
     ) async {
-      when(
-        () => mockAuthProvider.register(userTest),
-      ).thenAnswer((_) async => mockRegisterResponseFailed);
+      when(() => mockAuthProvider.register(userTest))
+          .thenAnswer((_) async => mockRegisterResponseFailed);
 
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
@@ -189,9 +187,8 @@ void main() {
       final ApiResult<GeneralResponse> mockRegisterResponseError =
           ApiResult<GeneralResponse>.error("Email already exists");
 
-      when(
-        () => mockAuthProvider.register(userTest),
-      ).thenAnswer((_) async => mockRegisterResponseError);
+      when(() => mockAuthProvider.register(userTest))
+          .thenAnswer((_) async => mockRegisterResponseError);
 
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
@@ -392,9 +389,8 @@ void main() {
     testWidgets(
       'should trigger redirect to login and show success snackbar on successful registration',
       (tester) async {
-        when(
-          () => mockAuthProvider.register(any()),
-        ).thenAnswer((_) async => mockRegisterResponseSuccess);
+        when(() => mockAuthProvider.register(any()))
+            .thenAnswer((_) async => mockRegisterResponseSuccess);
 
         await tester.pumpWidget(createWidgetUnderTest());
         await tester.pumpAndSettle();

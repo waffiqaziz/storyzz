@@ -27,12 +27,10 @@ void main() {
     mockUploadProvider = MockUploadStoryProvider();
 
     when(() => mockAppProvider.closeUploadMapFullScreen()).thenReturn(null);
-    when(
-      () => mockUploadProvider.selectedLocation,
-    ).thenReturn(LatLng(10, 10)); // set default not null
-    when(
-      () => mockAddressProvider.state,
-    ).thenReturn(const AddressLoadState.initial());
+    when(() => mockUploadProvider.selectedLocation)
+        .thenReturn(LatLng(10, 10)); // set default not null
+    when(() => mockAddressProvider.state)
+        .thenReturn(const AddressLoadState.initial());
   });
 
   Widget createTestWidget() {
