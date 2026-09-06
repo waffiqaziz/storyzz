@@ -114,7 +114,7 @@ class WebUtils {
         inputElement.remove();
       });
 
-      return completer.future;
+      return await completer.future;
     } catch (e) {
       log('Fallback camera error: $e');
       if (context.mounted) {
