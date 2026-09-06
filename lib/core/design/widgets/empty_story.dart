@@ -21,9 +21,8 @@ class EmptyStory extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               AppLocalizations.of(context)!.no_stories,
-              style: Theme.of(
-                context,
-              ).textTheme.titleLarge?.copyWith(fontWeight: .bold),
+              style: Theme.of(context).textTheme.titleLarge
+                  ?.copyWith(fontWeight: .bold),
             ),
             const SizedBox(height: 8),
             Padding(

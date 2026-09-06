@@ -9,9 +9,8 @@ String getLocalizedErrorMessage(BuildContext context, String error) {
   } else if (error.contains('Location permissions are denied')) {
     return AppLocalizations.of(context)!.location_permissions_denied;
   } else if (error.contains('permanently denied')) {
-    return AppLocalizations.of(
-      context,
-    )!.location_permissions_permanently_denied;
+    return AppLocalizations.of(context)!
+        .location_permissions_permanently_denied;
   }
   return AppLocalizations.of(context)!.location_error;
 }

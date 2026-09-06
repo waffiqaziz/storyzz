@@ -23,9 +23,8 @@ class AddressSectionFormattedAddress extends StatelessWidget {
         ),
         Text(
           '$latText, $lonText',
-          style: Theme.of(
-            context,
-          ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+          style: Theme.of(context).textTheme.bodySmall
+              ?.copyWith(color: Colors.grey[600]),
         ),
       ],
     );

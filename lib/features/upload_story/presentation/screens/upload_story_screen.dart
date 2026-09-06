@@ -230,9 +230,8 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                           TextField(
                             controller: _captionController,
                             decoration: InputDecoration(
-                              hintText: AppLocalizations.of(
-                                context,
-                              )!.write_a_caption,
+                              hintText: AppLocalizations.of(context)!
+                                  .write_a_caption,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                               ),
@@ -317,9 +316,9 @@ class _UploadStoryScreenState extends State<UploadStoryScreen> {
                             : () => uploadProvider.reset(),
                         icon: Icon(
                           Icons.refresh,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.surfaceContainerLowest,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .surfaceContainerLowest,
                         ),
                         label: Text(AppLocalizations.of(context)!.change_image),
                       ),

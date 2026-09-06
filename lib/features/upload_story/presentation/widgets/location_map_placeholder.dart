@@ -18,17 +18,15 @@ class LocationMapPlaceholder extends StatelessWidget {
             Icon(
               Icons.touch_app,
               size: 40,
-              color: Theme.of(
-                context,
-              ).colorScheme.primary.withValues(alpha: 0.8),
+              color: Theme.of(context).colorScheme.primary
+                  .withValues(alpha: 0.8),
             ),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: Theme.of(
-                  context,
-                ).colorScheme.surface.withValues(alpha: 0.8),
+                color: Theme.of(context).colorScheme.surface
+                    .withValues(alpha: 0.8),
                 borderRadius: .circular(16),
               ),
               child: Text(

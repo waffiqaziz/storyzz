@@ -33,9 +33,8 @@ class LogoutConfirmationDialog extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: .circular(16.0)),
         title: Text(
           localizations.logout_confirmation,
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontWeight: .bold),
+          style: Theme.of(context).textTheme.titleLarge
+              ?.copyWith(fontWeight: .bold),
         ),
         content: Text(
           localizations.logout_confirmation_msg,
@@ -68,9 +67,9 @@ class LogoutConfirmationDialog extends StatelessWidget {
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.redAccent,
-              foregroundColor: Theme.of(
-                context,
-              ).colorScheme.surfaceContainerLowest,
+              foregroundColor: Theme.of(context)
+                  .colorScheme
+                  .surfaceContainerLowest,
             ),
             child: Text(
               localizations.logout,
