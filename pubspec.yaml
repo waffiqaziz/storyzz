@@ -61,7 +61,7 @@ dependencies:
 
   pointer_interceptor: ^0.10.1+2
 
-  go_router: ^18.0.0
+  go_router: ^18.0.1
 
   flutter_junitreport:
     git:
