@@ -77,31 +77,25 @@ void main() {
         expect(listenerCallCount, 1);
       });
 
-      test(
-        'setCameraInitialized updates isCameraInitialized and notifies listeners',
-        () {
-          int listenerCallCount = 0;
-          provider.addListener(() => listenerCallCount++);
+      test('setCameraInitialized updates isCameraInitialized and notifies listeners', () {
+        int listenerCallCount = 0;
+        provider.addListener(() => listenerCallCount++);
 
-          provider.setCameraInitialized(true);
+        provider.setCameraInitialized(true);
 
-          expect(provider.isCameraInitialized, true);
-          expect(listenerCallCount, 1);
-        },
-      );
+        expect(provider.isCameraInitialized, true);
+        expect(listenerCallCount, 1);
+      });
 
-      test(
-        'setRequestingPermission updates isRequestingPermission and notifies listeners',
-        () {
-          int listenerCallCount = 0;
-          provider.addListener(() => listenerCallCount++);
+      test('setRequestingPermission updates isRequestingPermission and notifies listeners', () {
+        int listenerCallCount = 0;
+        provider.addListener(() => listenerCallCount++);
 
-          provider.setRequestingPermission(true);
+        provider.setRequestingPermission(true);
 
-          expect(provider.isRequestingPermission, true);
-          expect(listenerCallCount, 1);
-        },
-      );
+        expect(provider.isRequestingPermission, true);
+        expect(listenerCallCount, 1);
+      });
 
       test('setCameras updates cameras and notifies listeners', () {
         int listenerCallCount = 0;

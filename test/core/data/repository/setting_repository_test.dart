@@ -17,19 +17,16 @@ void main() {
 
   group('saveSettingValue', () {
     test('should save setting values successfully', () async {
-      when(
-        () => mockPreferences.setBool(any(), any()),
-      ).thenAnswer((_) async => true);
-      when(
-        () => mockPreferences.setString(any(), any()),
-      ).thenAnswer((_) async => true);
+      when(() => mockPreferences.setBool(any(), any()))
+          .thenAnswer((_) async => true);
+      when(() => mockPreferences.setString(any(), any()))
+          .thenAnswer((_) async => true);
       final setting = Setting(isDark: true, locale: 'en');
 
       await settingRepository.saveSettingValue(setting);
 
-      verify(
-        () => mockPreferences.setBool(SettingsPrefsKeys.themeKey, true),
-      ).called(1);
+      verify(() => mockPreferences.setBool(SettingsPrefsKeys.themeKey, true))
+          .called(1);
       verify(
         () => mockPreferences.setString(SettingsPrefsKeys.languageKey, 'en'),
       ).called(1);
@@ -48,15 +45,13 @@ void main() {
 
   group('setTheme', () {
     test('should set theme successfully', () async {
-      when(
-        () => mockPreferences.setBool(any(), any()),
-      ).thenAnswer((_) async => true);
+      when(() => mockPreferences.setBool(any(), any()))
+          .thenAnswer((_) async => true);
 
       await settingRepository.setTheme(true);
 
-      verify(
-        () => mockPreferences.setBool(SettingsPrefsKeys.themeKey, true),
-      ).called(1);
+      verify(() => mockPreferences.setBool(SettingsPrefsKeys.themeKey, true))
+          .called(1);
     });
 
     test('should throw exception when setting theme fails', () async {
@@ -68,12 +63,10 @@ void main() {
 
   group('getSettingValue', () {
     test('should return setting with stored values', () {
-      when(
-        () => mockPreferences.getBool(SettingsPrefsKeys.themeKey),
-      ).thenReturn(false);
-      when(
-        () => mockPreferences.getString(SettingsPrefsKeys.languageKey),
-      ).thenReturn('id');
+      when(() => mockPreferences.getBool(SettingsPrefsKeys.themeKey))
+          .thenReturn(false);
+      when(() => mockPreferences.getString(SettingsPrefsKeys.languageKey))
+          .thenReturn('id');
 
       final result = settingRepository.getSettingValue();
 
@@ -82,12 +75,10 @@ void main() {
     });
 
     test('should return setting with default values when no stored values', () {
-      when(
-        () => mockPreferences.getBool(SettingsPrefsKeys.themeKey),
-      ).thenReturn(null);
-      when(
-        () => mockPreferences.getString(SettingsPrefsKeys.languageKey),
-      ).thenReturn(null);
+      when(() => mockPreferences.getBool(SettingsPrefsKeys.themeKey))
+          .thenReturn(null);
+      when(() => mockPreferences.getString(SettingsPrefsKeys.languageKey))
+          .thenReturn(null);
 
       final result = settingRepository.getSettingValue();
 
@@ -98,9 +89,8 @@ void main() {
 
   group('isDarkModeSet', () {
     test('should return true when theme is set', () {
-      when(
-        () => mockPreferences.containsKey(SettingsPrefsKeys.themeKey),
-      ).thenReturn(true);
+      when(() => mockPreferences.containsKey(SettingsPrefsKeys.themeKey))
+          .thenReturn(true);
 
       final result = settingRepository.isDarkModeSet();
 
@@ -108,9 +98,8 @@ void main() {
     });
 
     test('should return false when theme is not set', () {
-      when(
-        () => mockPreferences.containsKey(SettingsPrefsKeys.themeKey),
-      ).thenReturn(false);
+      when(() => mockPreferences.containsKey(SettingsPrefsKeys.themeKey))
+          .thenReturn(false);
 
       final result = settingRepository.isDarkModeSet();
 
@@ -120,9 +109,8 @@ void main() {
 
   group('setLocale', () {
     test('should set locale successfully', () async {
-      when(
-        () => mockPreferences.setString(any(), any()),
-      ).thenAnswer((_) async => true);
+      when(() => mockPreferences.setString(any(), any()))
+          .thenAnswer((_) async => true);
 
       await settingRepository.setLocale('id');
 
@@ -132,9 +120,8 @@ void main() {
     });
 
     test('should throw exception when setting locale fails', () async {
-      when(
-        () => mockPreferences.setString(any(), any()),
-      ).thenThrow(Exception());
+      when(() => mockPreferences.setString(any(), any()))
+          .thenThrow(Exception());
 
       expect(
         () => settingRepository.setLocale('id'),
@@ -145,9 +132,8 @@ void main() {
 
   group('getLanguage', () {
     test('should return stored language code', () {
-      when(
-        () => mockPreferences.getString(SettingsPrefsKeys.languageKey),
-      ).thenReturn('id');
+      when(() => mockPreferences.getString(SettingsPrefsKeys.languageKey))
+          .thenReturn('id');
 
       final result = settingRepository.getLanguage();
 
@@ -155,9 +141,8 @@ void main() {
     });
 
     test('should return null when no language is stored', () {
-      when(
-        () => mockPreferences.getString(SettingsPrefsKeys.languageKey),
-      ).thenReturn(null);
+      when(() => mockPreferences.getString(SettingsPrefsKeys.languageKey))
+          .thenReturn(null);
 
       final result = settingRepository.getLanguage();
 

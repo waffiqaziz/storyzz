@@ -46,25 +46,19 @@ void main() {
     when(() => mockUploadProvider.selectedLocation).thenReturn(null);
     when(() => mockLocationLoadingProvider.isLoading).thenReturn(false);
     when(() => mockLocationLoadingProvider.errorMessage).thenReturn(null);
-    when(
-      () => mockUploadProvider.toggleLocationIncluded(any()),
-    ).thenReturn(null);
+    when(() => mockUploadProvider.toggleLocationIncluded(any()))
+        .thenReturn(null);
     when(() => mockUploadProvider.setSelectedLocation(any())).thenReturn(null);
-    when(
-      () => mockLocationLoadingProvider.setIsLoading(any()),
-    ).thenReturn(null);
-    when(
-      () => mockLocationLoadingProvider.setErrorMessage(any()),
-    ).thenReturn(null);
-    when(
-      () => mockMapControllerProvider.animateCamera(any()),
-    ).thenAnswer((_) async => {});
-    when(
-      () => mockAddressProvider.getAddressFromCoordinates(any(), any()),
-    ).thenAnswer((_) async => {});
-    when(
-      () => mockAddressProvider.state,
-    ).thenReturn(const AddressLoadState.initial());
+    when(() => mockLocationLoadingProvider.setIsLoading(any()))
+        .thenReturn(null);
+    when(() => mockLocationLoadingProvider.setErrorMessage(any()))
+        .thenReturn(null);
+    when(() => mockMapControllerProvider.animateCamera(any()))
+        .thenAnswer((_) async => {});
+    when(() => mockAddressProvider.getAddressFromCoordinates(any(), any()))
+        .thenAnswer((_) async => {});
+    when(() => mockAddressProvider.state)
+        .thenReturn(const AddressLoadState.initial());
     when(() => mockAppProvider.openUploadMapFullScreen()).thenReturn(null);
   });
 
@@ -144,9 +138,8 @@ void main() {
     tester,
   ) async {
     when(() => mockUploadProvider.includeLocation).thenReturn(true);
-    when(
-      () => mockUploadProvider.selectedLocation,
-    ).thenReturn(const LatLng(1.0, 1.0));
+    when(() => mockUploadProvider.selectedLocation)
+        .thenReturn(const LatLng(1.0, 1.0));
     when(() => mockLocationLoadingProvider.isLoading).thenReturn(false);
 
     await tester.pumpWidget(createTestWidget());
@@ -158,9 +151,8 @@ void main() {
     tester,
   ) async {
     when(() => mockUploadProvider.includeLocation).thenReturn(true);
-    when(
-      () => mockUploadProvider.selectedLocation,
-    ).thenReturn(const LatLng(1.0, 1.0));
+    when(() => mockUploadProvider.selectedLocation)
+        .thenReturn(const LatLng(1.0, 1.0));
 
     await tester.pumpWidget(createTestWidget());
     await tester.tap(find.byIcon(AmazingIconOutlined.maximize4));
@@ -170,9 +162,8 @@ void main() {
 
   testWidgets('shows error message when error occurs', (tester) async {
     when(() => mockUploadProvider.includeLocation).thenReturn(true);
-    when(
-      () => mockLocationLoadingProvider.errorMessage,
-    ).thenReturn('Error occurred');
+    when(() => mockLocationLoadingProvider.errorMessage)
+        .thenReturn('Error occurred');
 
     await tester.pumpWidget(createTestWidget());
 
@@ -192,9 +183,8 @@ void main() {
     tester,
   ) async {
     when(() => mockUploadProvider.includeLocation).thenReturn(true);
-    when(
-      () => mockUploadProvider.selectedLocation,
-    ).thenReturn(const LatLng(1.0, 1.0));
+    when(() => mockUploadProvider.selectedLocation)
+        .thenReturn(const LatLng(1.0, 1.0));
 
     await tester.pumpWidget(createTestWidget());
 
@@ -205,9 +195,8 @@ void main() {
     'shows loading indicator at bottom when loading with existing location',
     (tester) async {
       when(() => mockUploadProvider.includeLocation).thenReturn(true);
-      when(
-        () => mockUploadProvider.selectedLocation,
-      ).thenReturn(const LatLng(1.0, 1.0));
+      when(() => mockUploadProvider.selectedLocation)
+          .thenReturn(const LatLng(1.0, 1.0));
       when(() => mockLocationLoadingProvider.isLoading).thenReturn(true);
 
       await tester.pumpWidget(createTestWidget());
@@ -219,9 +208,8 @@ void main() {
 
   testWidgets('animates camera when onMove is called', (tester) async {
     when(() => mockUploadProvider.includeLocation).thenReturn(true);
-    when(
-      () => mockUploadProvider.selectedLocation,
-    ).thenReturn(const LatLng(1.0, 1.0));
+    when(() => mockUploadProvider.selectedLocation)
+        .thenReturn(const LatLng(1.0, 1.0));
 
     await tester.pumpWidget(createTestWidget());
 

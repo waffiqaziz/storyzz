@@ -62,12 +62,10 @@ void main() {
       'full version shows dropdown and triggers onChanged on selection',
       (tester) async {
         when(() => mockAppProvider.openLanguageDialog()).thenAnswer((_) {});
-        when(
-          () => mockSettingsProvider.setLocale(any()),
-        ).thenAnswer((_) async {});
-        when(
-          () => mockSettingsProvider.languageNotifier,
-        ).thenReturn(ValueNotifier('en'));
+        when(() => mockSettingsProvider.setLocale(any()))
+            .thenAnswer((_) async {});
+        when(() => mockSettingsProvider.languageNotifier)
+            .thenReturn(ValueNotifier('en'));
 
         await tester.pumpWidget(
           wrapWithMaterialApp(LanguageSelector(isCompact: false)),

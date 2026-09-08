@@ -51,9 +51,8 @@ void main() {
     );
 
     test('should return null when service call throws exception', () async {
-      when(
-        () => mockMapsApiService.getAddressFromCoordinates(testLat, testLon),
-      ).thenThrow(Exception('Network error'));
+      when(() => mockMapsApiService.getAddressFromCoordinates(testLat, testLon))
+          .thenThrow(Exception('Network error'));
 
       final result = await repository.getAddressFromCoordinates(
         testLat,

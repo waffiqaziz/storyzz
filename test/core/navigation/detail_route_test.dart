@@ -43,31 +43,27 @@ void main() {
   });
 
   group('Detail route redirect logic', () {
-    test(
-      'should redirect to parent route when selectedStory is null and isFromDetail is true',
-      () {
-        when(() => mockAppProvider.selectedStory).thenReturn(null);
-        when(() => mockAppProvider.isFromDetail).thenReturn(true);
-        when(() => mockAppProvider.isDetailFullScreenMap).thenReturn(false);
+    test('should redirect to parent route when selectedStory is null and isFromDetail is true', () {
+      when(() => mockAppProvider.selectedStory).thenReturn(null);
+      when(() => mockAppProvider.isFromDetail).thenReturn(true);
+      when(() => mockAppProvider.isDetailFullScreenMap).thenReturn(false);
 
-        final detailRoute = appRouter.detailRoute('home');
-        final redirectFunction = detailRoute.redirect!;
+      final detailRoute = appRouter.detailRoute('home');
+      final redirectFunction = detailRoute.redirect!;
 
-        final mockState = MockGoRouterState();
-        when(() => mockState.pathParameters).thenReturn({'id': '123'});
-        when(() => mockState.uri).thenReturn(Uri.parse('/home/story/123'));
-        when(() => mockState.matchedLocation).thenReturn('/home/story/123');
-        when(() => mockState.fullPath).thenReturn('/home/story/:id');
+      final mockState = MockGoRouterState();
+      when(() => mockState.pathParameters).thenReturn({'id': '123'});
+      when(() => mockState.uri).thenReturn(Uri.parse('/home/story/123'));
+      when(() => mockState.matchedLocation).thenReturn('/home/story/123');
+      when(() => mockState.fullPath).thenReturn('/home/story/:id');
 
-        final result = redirectFunction(mockContext, mockState);
+      final result = redirectFunction(mockContext, mockState);
 
-        expect(result, '/home');
-        verify(
-          () => mockAppProvider.selectedStory,
-        ).called(greaterThanOrEqualTo(1));
-        verify(() => mockAppProvider.isFromDetail).called(1);
-      },
-    );
+      expect(result, '/home');
+      verify(() => mockAppProvider.selectedStory)
+          .called(greaterThanOrEqualTo(1));
+      verify(() => mockAppProvider.isFromDetail).called(1);
+    });
 
     testWidgets(
       'should redirect to parent route when selectedStory is null and isFromDetail is false',
@@ -146,9 +142,8 @@ void main() {
       final result = redirectFunction(mockContext, mockState);
 
       expect(result, null);
-      verify(
-        () => mockAppProvider.selectedStory,
-      ).called(greaterThanOrEqualTo(1));
+      verify(() => mockAppProvider.selectedStory)
+          .called(greaterThanOrEqualTo(1));
     });
 
     test('should use empty string for root route', () {

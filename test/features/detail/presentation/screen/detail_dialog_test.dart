@@ -46,15 +46,12 @@ void main() {
     launchedUrls = [];
 
     when(() => mockAppProvider.selectedStory).thenReturn(listStory);
-    when(
-      () => mockAddressProvider.state,
-    ).thenReturn(AddressLoadStateLoaded('123 Test Street, City, Country'));
-    when(
-      () => mockAddressProvider.getAddressFromCoordinates(any(), any()),
-    ).thenAnswer((_) async {});
-    when(
-      () => mockGeocodingProvider.fetchAddress(any(), any()),
-    ).thenAnswer((_) async {});
+    when(() => mockAddressProvider.state)
+        .thenReturn(AddressLoadStateLoaded('123 Test Street, City, Country'));
+    when(() => mockAddressProvider.getAddressFromCoordinates(any(), any()))
+        .thenAnswer((_) async {});
+    when(() => mockGeocodingProvider.fetchAddress(any(), any()))
+        .thenAnswer((_) async {});
     when(() => mockGeocodingProvider.state).thenReturn(
       GeocodingState.loaded(
         formattedAddress: "Address",

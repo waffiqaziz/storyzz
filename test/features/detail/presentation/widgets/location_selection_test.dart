@@ -41,15 +41,12 @@ void main() {
     mockGeocodingProvider = MockGeocodingProvider();
 
     when(() => mockAppProvider.selectedStory).thenReturn(listStory);
-    when(
-      () => mockAddressProvider.state,
-    ).thenReturn(AddressLoadStateLoaded('123 Test Street, City, Country'));
-    when(
-      () => mockAddressProvider.getAddressFromCoordinates(any(), any()),
-    ).thenAnswer((_) async {});
-    when(
-      () => mockGeocodingProvider.fetchAddress(any(), any()),
-    ).thenAnswer((_) async {});
+    when(() => mockAddressProvider.state)
+        .thenReturn(AddressLoadStateLoaded('123 Test Street, City, Country'));
+    when(() => mockAddressProvider.getAddressFromCoordinates(any(), any()))
+        .thenAnswer((_) async {});
+    when(() => mockGeocodingProvider.fetchAddress(any(), any()))
+        .thenAnswer((_) async {});
     when(() => mockGeocodingProvider.state).thenReturn(
       GeocodingState.loaded(
         formattedAddress: "Address",
@@ -170,9 +167,8 @@ void main() {
     testWidgets(
       'should fallback to address_not_available when state is initial',
       (WidgetTester tester) async {
-        when(
-          () => mockAddressProvider.state,
-        ).thenReturn(const AddressLoadState.initial());
+        when(() => mockAddressProvider.state)
+            .thenReturn(const AddressLoadState.initial());
 
         await tester.pumpWidget(createWidgetUnderTest());
         await tester.pumpAndSettle();

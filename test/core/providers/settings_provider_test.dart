@@ -21,9 +21,8 @@ void main() {
 
     // Setup default mock responses
     when(() => mockRepository.isDarkModeSet()).thenReturn(true);
-    when(
-      () => mockRepository.getSettingValue(),
-    ).thenReturn(Setting(isDark: true, locale: 'en'));
+    when(() => mockRepository.getSettingValue())
+        .thenReturn(Setting(isDark: true, locale: 'en'));
 
     TestWidgetsFlutterBinding
             .instance
@@ -49,9 +48,8 @@ void main() {
     });
 
     test('should handle initialization error', () {
-      when(
-        () => mockRepository.isDarkModeSet(),
-      ).thenThrow(Exception('Test error'));
+      when(() => mockRepository.isDarkModeSet())
+          .thenThrow(Exception('Test error'));
 
       provider = SettingsProvider(mockRepository);
 
@@ -61,9 +59,8 @@ void main() {
 
   group('saveSettingValue', () {
     test('should save settings successfully', () async {
-      when(
-        () => mockRepository.saveSettingValue(testSetting),
-      ).thenAnswer((_) async => {});
+      when(() => mockRepository.saveSettingValue(testSetting))
+          .thenAnswer((_) async => {});
 
       await provider.saveSettingValue(testSetting);
 
@@ -74,9 +71,8 @@ void main() {
     });
 
     test('should handle save error', () async {
-      when(
-        () => mockRepository.saveSettingValue(testSetting),
-      ).thenThrow(Exception('Test error'));
+      when(() => mockRepository.saveSettingValue(testSetting))
+          .thenThrow(Exception('Test error'));
 
       await provider.saveSettingValue(testSetting);
 
@@ -96,9 +92,8 @@ void main() {
     });
 
     test('should handle theme update error', () async {
-      when(
-        () => mockRepository.setTheme(false),
-      ).thenThrow(Exception('Test error'));
+      when(() => mockRepository.setTheme(false))
+          .thenThrow(Exception('Test error'));
 
       await provider.setTheme(false);
 
@@ -119,9 +114,8 @@ void main() {
   // TODO: missing test
   group('setLocale', () {
     test('should handle locale update error when preferences fails', () async {
-      when(
-        () => mockRepository.setLocale('es'),
-      ).thenThrow(Exception("Failed setting locale."));
+      when(() => mockRepository.setLocale('es'))
+          .thenThrow(Exception("Failed setting locale."));
 
       await provider.setLocale('es');
 

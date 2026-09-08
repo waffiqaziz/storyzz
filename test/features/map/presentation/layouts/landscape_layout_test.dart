@@ -36,18 +36,15 @@ void main() {
     when(() => mockMapProvider.isMapReady).thenReturn(false);
     when(() => mockMapProvider.selectedMapType).thenReturn(MapType.normal);
     when(() => mockMapProvider.scrollController).thenReturn(ScrollController());
-    when(
-      () => mockMapProvider.markers,
-    ).thenReturn({Marker(markerId: MarkerId('123'))});
+    when(() => mockMapProvider.markers)
+        .thenReturn({Marker(markerId: MarkerId('123'))});
     when(() => mockStoryProvider.isLoadingMore).thenReturn(false);
     when(() => mockSettingsProvider.locale).thenReturn(const Locale('en'));
-    when(
-      () => mockSettingsProvider.setting,
-    ).thenReturn(Setting(isDark: true, locale: 'en'));
+    when(() => mockSettingsProvider.setting)
+        .thenReturn(Setting(isDark: true, locale: 'en'));
     when(() => mockStoryProvider.stories).thenReturn(dumpTestStoryList);
-    when(
-      () => mockStoryProvider.state,
-    ).thenReturn(StoryLoadState.loaded(dumpTestStoryList));
+    when(() => mockStoryProvider.state)
+        .thenReturn(StoryLoadState.loaded(dumpTestStoryList));
   });
 
   group('LandscapeLayout', () {

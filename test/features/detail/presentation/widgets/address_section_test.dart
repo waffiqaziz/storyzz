@@ -61,18 +61,16 @@ void main() {
         placemark: Placemark(),
       ),
     );
-    when(
-      () => mockGeocodingProvider.fetchAddress(any(), any()),
-    ).thenAnswer((_) async {});
+    when(() => mockGeocodingProvider.fetchAddress(any(), any()))
+        .thenAnswer((_) async {});
   });
 
   group('AddressSection', () {
     testWidgets('should renders initial state with latitude and longitude', (
       WidgetTester tester,
     ) async {
-      when(
-        () => mockGeocodingProvider.state,
-      ).thenReturn(GeocodingState.initial());
+      when(() => mockGeocodingProvider.state)
+          .thenReturn(GeocodingState.initial());
 
       await tester.pumpWidget(createTestApp());
       await tester.pumpAndSettle();
@@ -87,9 +85,8 @@ void main() {
     testWidgets('should renders loading state correctly', (
       WidgetTester tester,
     ) async {
-      when(
-        () => mockGeocodingProvider.state,
-      ).thenReturn(GeocodingState.loading());
+      when(() => mockGeocodingProvider.state)
+          .thenReturn(GeocodingState.loading());
 
       await tester.pumpWidget(createTestApp());
       await tester.pump();
@@ -119,9 +116,8 @@ void main() {
     testWidgets('should renders error state correctly', (
       WidgetTester tester,
     ) async {
-      when(
-        () => mockGeocodingProvider.state,
-      ).thenReturn(GeocodingState.error("error"));
+      when(() => mockGeocodingProvider.state)
+          .thenReturn(GeocodingState.error("error"));
 
       await tester.pumpWidget(createTestApp());
       await tester.pumpAndSettle();

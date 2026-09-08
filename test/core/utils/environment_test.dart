@@ -85,15 +85,13 @@ void main() {
 
     test('initialize calls loadEnvFile when not on web platform', () async {
       when(() => mockEnvironmentProvider.isWebPlatform).thenReturn(false);
-      when(
-        () => mockEnvironmentProvider.loadEnvFile(any()),
-      ).thenAnswer((_) async {});
+      when(() => mockEnvironmentProvider.loadEnvFile(any()))
+          .thenAnswer((_) async {});
 
       await MapsEnvironment.initialize();
 
-      verify(
-        () => mockEnvironmentProvider.loadEnvFile("assets/.env"),
-      ).called(1);
+      verify(() => mockEnvironmentProvider.loadEnvFile("assets/.env"))
+          .called(1);
     });
 
     test('initialize does not call loadEnvFile when on web platform', () async {
@@ -116,43 +114,36 @@ void main() {
       },
     );
 
-    test(
-      'mapsCoApiKey returns fallback when JS API key is null and on web platform',
-      () {
-        when(() => mockEnvironmentProvider.isWebPlatform).thenReturn(true);
-        when(() => mockJsContextWrapper.getApiKey()).thenReturn(null);
+    test('mapsCoApiKey returns fallback when JS API key is null and on web platform', () {
+      when(() => mockEnvironmentProvider.isWebPlatform).thenReturn(true);
+      when(() => mockJsContextWrapper.getApiKey()).thenReturn(null);
 
-        expect(MapsEnvironment.mapsCoApiKey, equals('NO_API_KEY'));
-      },
-    );
+      expect(MapsEnvironment.mapsCoApiKey, equals('NO_API_KEY'));
+    });
 
-    test(
-      'mapsCoApiKey returns value from environment provider when not on web platform',
-      () {
-        when(() => mockEnvironmentProvider.isWebPlatform).thenReturn(false);
-        when(
-          () => mockEnvironmentProvider.getEnvValue(
-            'GEOCODE_API_KEY',
-            fallback: 'NO_API_KEY',
-          ),
-        ).thenReturn('env_api_key');
+    test('mapsCoApiKey returns value from environment provider when not on web platform', () {
+      when(() => mockEnvironmentProvider.isWebPlatform).thenReturn(false);
+      when(
+        () => mockEnvironmentProvider.getEnvValue(
+          'GEOCODE_API_KEY',
+          fallback: 'NO_API_KEY',
+        ),
+      ).thenReturn('env_api_key');
 
-        expect(MapsEnvironment.mapsCoApiKey, equals('env_api_key'));
+      expect(MapsEnvironment.mapsCoApiKey, equals('env_api_key'));
 
-        verify(
-          () => mockEnvironmentProvider.getEnvValue(
-            'GEOCODE_API_KEY',
-            fallback: 'NO_API_KEY',
-          ),
-        ).called(1);
-      },
-    );
+      verify(
+        () => mockEnvironmentProvider.getEnvValue(
+          'GEOCODE_API_KEY',
+          fallback: 'NO_API_KEY',
+        ),
+      ).called(1);
+    });
 
     test('mapsCoApiKey handles exception from JS context', () {
       when(() => mockEnvironmentProvider.isWebPlatform).thenReturn(true);
-      when(
-        () => mockJsContextWrapper.getApiKey(),
-      ).thenThrow(Exception('JS Error'));
+      when(() => mockJsContextWrapper.getApiKey())
+          .thenThrow(Exception('JS Error'));
 
       expect(MapsEnvironment.mapsCoApiKey, equals('NO_API_KEY'));
     });

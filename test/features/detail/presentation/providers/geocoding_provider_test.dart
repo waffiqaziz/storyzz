@@ -57,27 +57,24 @@ void main() {
       );
     });
 
-    test(
-      'fetchAddress should return loaded state with placemark and formatted address',
-      () async {
-        final states = <GeocodingState>[];
-        provider.addListener(() {
-          states.add(provider.state);
-        });
+    test('fetchAddress should return loaded state with placemark and formatted address', () async {
+      final states = <GeocodingState>[];
+      provider.addListener(() {
+        states.add(provider.state);
+      });
 
-        await provider.fetchAddress(37.7749, -122.4194);
+      await provider.fetchAddress(37.7749, -122.4194);
 
-        // from loading then loaded
-        expect(states.length, 2);
-        expect(states[0], const GeocodingState.loading());
-        expect(states[1], isA<GeocodingStateLoaded>());
+      // from loading then loaded
+      expect(states.length, 2);
+      expect(states[0], const GeocodingState.loading());
+      expect(states[1], isA<GeocodingStateLoaded>());
 
-        // verify loaded state contains placemark and formatted address
-        final loadedState = provider.state as GeocodingStateLoaded;
-        expect(loadedState.placemark, mockPlacemark);
-        expect(loadedState.formattedAddress, isNotEmpty);
-      },
-    );
+      // verify loaded state contains placemark and formatted address
+      final loadedState = provider.state as GeocodingStateLoaded;
+      expect(loadedState.placemark, mockPlacemark);
+      expect(loadedState.formattedAddress, isNotEmpty);
+    });
 
     test(
       'fetchAddress with invalid coordinates should handle gracefully',

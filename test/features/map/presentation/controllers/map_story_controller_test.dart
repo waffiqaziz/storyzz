@@ -100,13 +100,11 @@ void main() {
     ) async {
       when(() => mockAuthProvider.getUser()).thenAnswer((_) async => {});
       when(() => mockAuthProvider.user).thenReturn(mockUser);
-      when(
-        () => mockStoryProvider.getStories(user: any(named: 'user')),
-      ).thenAnswer((_) async => {});
+      when(() => mockStoryProvider.getStories(user: any(named: 'user')))
+          .thenAnswer((_) async => {});
       when(() => mockStoryProvider.stories).thenReturn([dumpTestlistStory1]);
-      when(
-        () => mockMapController.animateCamera(any()),
-      ).thenAnswer((_) async {});
+      when(() => mockMapController.animateCamera(any()))
+          .thenAnswer((_) async {});
 
       await tester.pumpWidget(createTestWidget(Container()));
 
@@ -117,9 +115,8 @@ void main() {
       await tester.pump();
 
       verify(() => mockAuthProvider.getUser()).called(1);
-      verify(
-        () => mockStoryProvider.getStories(user: any(named: 'user')),
-      ).called(1);
+      verify(() => mockStoryProvider.getStories(user: any(named: 'user')))
+          .called(1);
 
       controller.dispose();
     });
@@ -141,13 +138,11 @@ void main() {
 
     testWidgets('refreshStories updates data and markers', (tester) async {
       when(() => mockAuthProvider.user).thenReturn(mockUser);
-      when(
-        () => mockStoryProvider.refreshStories(user: any(named: 'user')),
-      ).thenAnswer((_) async => {});
+      when(() => mockStoryProvider.refreshStories(user: any(named: 'user')))
+          .thenAnswer((_) async => {});
       when(() => mockStoryProvider.stories).thenReturn([dumpTestlistStory1]);
-      when(
-        () => mockMapController.animateCamera(any()),
-      ).thenAnswer((_) async {});
+      when(() => mockMapController.animateCamera(any()))
+          .thenAnswer((_) async {});
 
       await tester.pumpWidget(createTestWidget(Container()));
 
@@ -157,9 +152,8 @@ void main() {
       await controller.refreshStories();
       await tester.pump();
 
-      verify(
-        () => mockStoryProvider.refreshStories(user: any(named: 'user')),
-      ).called(1);
+      verify(() => mockStoryProvider.refreshStories(user: any(named: 'user')))
+          .called(1);
 
       controller.dispose();
     });
@@ -187,9 +181,8 @@ void main() {
       tester,
     ) async {
       when(() => mockStoryProvider.stories).thenReturn([dumpTestlistStory1]);
-      when(
-        () => mockMapController.animateCamera(any()),
-      ).thenAnswer((_) async {});
+      when(() => mockMapController.animateCamera(any()))
+          .thenAnswer((_) async {});
 
       await tester.pumpWidget(createTestWidget(Container()));
 
@@ -205,9 +198,8 @@ void main() {
     });
 
     testWidgets('onStoryTap animates camera to story location', (tester) async {
-      when(
-        () => mockMapController.animateCamera(any()),
-      ).thenAnswer((_) async {});
+      when(() => mockMapController.animateCamera(any()))
+          .thenAnswer((_) async {});
       when(() => mockStoryProvider.stories).thenReturn([]);
 
       await tester.pumpWidget(createTestWidget(Container()));
@@ -230,9 +222,8 @@ void main() {
         lon: null,
       );
       when(() => mockStoryProvider.stories).thenReturn([dumpTestlistStory1]);
-      when(
-        () => mockMapController.animateCamera(any()),
-      ).thenAnswer((_) async {});
+      when(() => mockMapController.animateCamera(any()))
+          .thenAnswer((_) async {});
 
       await tester.pumpWidget(createTestWidget(Container()));
 
@@ -243,9 +234,8 @@ void main() {
 
       reset(mockMapController);
 
-      when(
-        () => mockMapController.animateCamera(any()),
-      ).thenAnswer((_) async {});
+      when(() => mockMapController.animateCamera(any()))
+          .thenAnswer((_) async {});
 
       controller.onStoryTap(storyWithoutLocation);
 
@@ -271,9 +261,8 @@ void main() {
     testWidgets('updateMarkersFromStories updates markers via map service', (
       tester,
     ) async {
-      when(
-        () => mockMapController.animateCamera(any()),
-      ).thenAnswer((_) async {});
+      when(() => mockMapController.animateCamera(any()))
+          .thenAnswer((_) async {});
       when(() => mockStoryProvider.stories).thenReturn([]);
 
       await tester.pumpWidget(createTestWidget(Container()));
@@ -294,9 +283,8 @@ void main() {
     testWidgets('shows snackbar when less than 25% stories have location', (
       tester,
     ) async {
-      when(
-        () => mockMapController.animateCamera(any()),
-      ).thenAnswer((_) async {});
+      when(() => mockMapController.animateCamera(any()))
+          .thenAnswer((_) async {});
       when(() => mockStoryProvider.stories).thenReturn([]);
 
       await tester.pumpWidget(createTestWidget(Container()));
@@ -328,9 +316,8 @@ void main() {
     testWidgets('marker tap callback triggers camera animation', (
       tester,
     ) async {
-      when(
-        () => mockMapController.animateCamera(any()),
-      ).thenAnswer((_) async {});
+      when(() => mockMapController.animateCamera(any()))
+          .thenAnswer((_) async {});
       when(() => mockStoryProvider.stories).thenReturn([]);
 
       await tester.pumpWidget(createTestWidget(Container()));
@@ -350,18 +337,15 @@ void main() {
       tester,
     ) async {
       when(() => mockAuthProvider.user).thenReturn(mockUser);
-      when(
-        () => mockStoryProvider.state,
-      ).thenReturn(StoryLoadState.loaded(dumpTestStoryList));
+      when(() => mockStoryProvider.state)
+          .thenReturn(StoryLoadState.loaded(dumpTestStoryList));
       when(() => mockStoryProvider.hasMoreStories).thenReturn(true);
-      when(
-        () => mockStoryProvider.getStories(user: any(named: 'user')),
-      ).thenAnswer((_) async => {});
+      when(() => mockStoryProvider.getStories(user: any(named: 'user')))
+          .thenAnswer((_) async => {});
       when(() => mockStoryProvider.stories).thenReturn([dumpTestlistStory1]);
       when(() => mockStoryProvider.stories).thenReturn([dumpTestlistStory1]);
-      when(
-        () => mockMapController.animateCamera(any()),
-      ).thenAnswer((_) async {});
+      when(() => mockMapController.animateCamera(any()))
+          .thenAnswer((_) async {});
 
       await tester.pumpWidget(
         createTestWidget(
@@ -410,17 +394,15 @@ void main() {
       ];
 
       for (final testCase in testCases) {
-        when(
-          () => mockAuthProvider.user,
-        ).thenReturn(testCase['user'] as MockUser?);
+        when(() => mockAuthProvider.user)
+            .thenReturn(testCase['user'] as MockUser?);
         when(() => mockStoryProvider.state).thenReturn(
           testCase['loading'] as bool
               ? StoryLoadState.loading()
               : StoryLoadState.loaded(dumpTestStoryList),
         );
-        when(
-          () => mockStoryProvider.hasMoreStories,
-        ).thenReturn(testCase['hasMore'] as bool);
+        when(() => mockStoryProvider.hasMoreStories)
+            .thenReturn(testCase['hasMore'] as bool);
 
         await tester.pumpWidget(
           createTestWidget(

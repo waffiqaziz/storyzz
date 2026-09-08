@@ -37,15 +37,12 @@ void main() {
       expect(appLocalizations.change_map_type, 'Ganti tema peta');
     });
 
-    test(
-      'direct_story_access_not_support should return "Akses langsung ke cerita tidak didukung. Dialihkan ke beranda."',
-      () {
-        expect(
-          appLocalizations.direct_story_access_not_support,
-          'Akses langsung ke cerita tidak didukung. Dialihkan ke beranda.',
-        );
-      },
-    );
+    test('direct_story_access_not_support should return "Akses langsung ke cerita tidak didukung. Dialihkan ke beranda."', () {
+      expect(
+        appLocalizations.direct_story_access_not_support,
+        'Akses langsung ke cerita tidak didukung. Dialihkan ke beranda.',
+      );
+    });
 
     test('welcome_back should return "Selamat Datang Kembali"', () {
       expect(appLocalizations.welcome_back, 'Selamat Datang Kembali');
@@ -77,15 +74,12 @@ void main() {
       expect(appLocalizations.enter_email, 'Mohon masukkan alamat email Anda');
     });
 
-    test(
-      'enter_valid_email should return "Mohon masukkan alamat email yang valid"',
-      () {
-        expect(
-          appLocalizations.enter_valid_email,
-          'Mohon masukkan alamat email yang valid',
-        );
-      },
-    );
+    test('enter_valid_email should return "Mohon masukkan alamat email yang valid"', () {
+      expect(
+        appLocalizations.enter_valid_email,
+        'Mohon masukkan alamat email yang valid',
+      );
+    });
 
     test('password should return "Kata Sandi"', () {
       expect(appLocalizations.password, 'Kata Sandi');
@@ -115,29 +109,23 @@ void main() {
       expect(appLocalizations.password_visibility, 'Visibilitas kata sandi');
     });
 
-    test(
-      'confirm_password_visibility should return "Visibilitas konfirmasi sandi"',
-      () {
-        expect(
-          appLocalizations.confirm_password_visibility,
-          'Visibilitas konfirmasi sandi',
-        );
-      },
-    );
+    test('confirm_password_visibility should return "Visibilitas konfirmasi sandi"', () {
+      expect(
+        appLocalizations.confirm_password_visibility,
+        'Visibilitas konfirmasi sandi',
+      );
+    });
 
     test('hide_password should return "Sembunyikan kata sandi"', () {
       expect(appLocalizations.hide_password, 'Sembunyikan kata sandi');
     });
 
-    test(
-      'password_minimum should return "Kata sandi harus terdiri dari minimal 8 karakter"',
-      () {
-        expect(
-          appLocalizations.password_minimum,
-          'Kata sandi harus terdiri dari minimal 8 karakter',
-        );
-      },
-    );
+    test('password_minimum should return "Kata sandi harus terdiri dari minimal 8 karakter"', () {
+      expect(
+        appLocalizations.password_minimum,
+        'Kata sandi harus terdiri dari minimal 8 karakter',
+      );
+    });
 
     test('forgot_password should return "Lupa Kata Sandi?"', () {
       expect(appLocalizations.forgot_password, 'Lupa Kata Sandi?');
@@ -310,29 +298,23 @@ void main() {
       expect(appLocalizations.no_user_data, 'Data pengguna tidak tersedia');
     });
 
-    test(
-      'error_loading_stories should return "Terjadi kesalahan saat memuat cerita:"',
-      () {
-        expect(
-          appLocalizations.error_loading_stories,
-          'Terjadi kesalahan saat memuat cerita:',
-        );
-      },
-    );
+    test('error_loading_stories should return "Terjadi kesalahan saat memuat cerita:"', () {
+      expect(
+        appLocalizations.error_loading_stories,
+        'Terjadi kesalahan saat memuat cerita:',
+      );
+    });
 
     test('no_stories should return "Tidak ada cerita yang tersedia"', () {
       expect(appLocalizations.no_stories, 'Tidak ada cerita yang tersedia');
     });
 
-    test(
-      'pull_to_refresh should return "Tarik ke bawah untuk menyegarkan atau ketuk tombol + untuk menambahkan cerita baru"',
-      () {
-        expect(
-          appLocalizations.pull_to_refresh,
-          'Tarik ke bawah untuk menyegarkan atau ketuk tombol + untuk menambahkan cerita baru',
-        );
-      },
-    );
+    test('pull_to_refresh should return "Tarik ke bawah untuk menyegarkan atau ketuk tombol + untuk menambahkan cerita baru"', () {
+      expect(
+        appLocalizations.pull_to_refresh,
+        'Tarik ke bawah untuk menyegarkan atau ketuk tombol + untuk menambahkan cerita baru',
+      );
+    });
 
     test('logout_success should return "Berhasil keluar"', () {
       expect(appLocalizations.logout_success, 'Berhasil keluar');
@@ -427,73 +409,55 @@ void main() {
       expect(appLocalizations.change_image, 'Ganti Gambar');
     });
 
-    test(
-      'image_too_large should return "Ukuran gambar terlalu besar. Ukuran maksimum adalah 1MB."',
-      () {
-        expect(
-          appLocalizations.image_too_large,
-          'Ukuran gambar terlalu besar. Ukuran maksimum adalah 1MB.',
-        );
-      },
-    );
+    test('image_too_large should return "Ukuran gambar terlalu besar. Ukuran maksimum adalah 1MB."', () {
+      expect(
+        appLocalizations.image_too_large,
+        'Ukuran gambar terlalu besar. Ukuran maksimum adalah 1MB.',
+      );
+    });
 
-    test(
-      'error_taking_picture should return "Terjadi kesalahan saat mengambil gambar:"',
-      () {
-        expect(
-          appLocalizations.error_taking_picture,
-          'Terjadi kesalahan saat mengambil gambar:',
-        );
-      },
-    );
+    test('error_taking_picture should return "Terjadi kesalahan saat mengambil gambar:"', () {
+      expect(
+        appLocalizations.error_taking_picture,
+        'Terjadi kesalahan saat mengambil gambar:',
+      );
+    });
 
-    test(
-      'error_picking_image should return "Terjadi kesalahan saat memilih gambar:"',
-      () {
-        expect(
-          appLocalizations.error_picking_image,
-          'Terjadi kesalahan saat memilih gambar:',
-        );
-      },
-    );
+    test('error_picking_image should return "Terjadi kesalahan saat memilih gambar:"', () {
+      expect(
+        appLocalizations.error_picking_image,
+        'Terjadi kesalahan saat memilih gambar:',
+      );
+    });
 
     test('error_accessing_camera should return "Akses kamera ditolak"', () {
       expect(appLocalizations.error_accessing_camera, 'Akses kamera ditolak');
     });
 
-    test(
-      'error_initializing_camera should return "Terjadi kesalahan saat menyiapkan kamera:"',
-      () {
-        expect(
-          appLocalizations.error_initializing_camera,
-          'Terjadi kesalahan saat menyiapkan kamera:',
-        );
-      },
-    );
+    test('error_initializing_camera should return "Terjadi kesalahan saat menyiapkan kamera:"', () {
+      expect(
+        appLocalizations.error_initializing_camera,
+        'Terjadi kesalahan saat menyiapkan kamera:',
+      );
+    });
 
-    test(
-      'error_switching_camera should return "Terjadi kesalahan saat mengganti kamera:"',
-      () {
-        expect(
-          appLocalizations.error_switching_camera,
-          'Terjadi kesalahan saat mengganti kamera:',
-        );
-      },
-    );
+    test('error_switching_camera should return "Terjadi kesalahan saat mengganti kamera:"', () {
+      expect(
+        appLocalizations.error_switching_camera,
+        'Terjadi kesalahan saat mengganti kamera:',
+      );
+    });
 
     test('camera_access_denied should return "Akses ke kamera ditolak:"', () {
       expect(appLocalizations.camera_access_denied, 'Akses ke kamera ditolak:');
     });
 
-    test(
-      'camera_used_by_other should return "Kamera sedang digunakan oleh aplikasi atau tab lain. Silakan tutup aplikasi kamera lainnya dan coba kembali."',
-      () {
-        expect(
-          appLocalizations.camera_used_by_other,
-          'Kamera sedang digunakan oleh aplikasi atau tab lain. Silakan tutup aplikasi kamera lainnya dan coba kembali.',
-        );
-      },
-    );
+    test('camera_used_by_other should return "Kamera sedang digunakan oleh aplikasi atau tab lain. Silakan tutup aplikasi kamera lainnya dan coba kembali."', () {
+      expect(
+        appLocalizations.camera_used_by_other,
+        'Kamera sedang digunakan oleh aplikasi atau tab lain. Silakan tutup aplikasi kamera lainnya dan coba kembali.',
+      );
+    });
 
     test(
       'please_select_image should return "Mohon pilih gambar terlebih dahulu"',
@@ -505,15 +469,12 @@ void main() {
       },
     );
 
-    test(
-      'please_write_caption should return "Mohon isi keterangan terlebih dahulu"',
-      () {
-        expect(
-          appLocalizations.please_write_caption,
-          'Mohon isi keterangan terlebih dahulu',
-        );
-      },
-    );
+    test('please_write_caption should return "Mohon isi keterangan terlebih dahulu"', () {
+      expect(
+        appLocalizations.please_write_caption,
+        'Mohon isi keterangan terlebih dahulu',
+      );
+    });
 
     test('story_upload_success should return "Cerita berhasil diunggah"', () {
       expect(appLocalizations.story_upload_success, 'Cerita berhasil diunggah');
@@ -559,25 +520,19 @@ void main() {
       expect(appLocalizations.use_current_location, 'Gunakan saat ini');
     });
 
-    test(
-      'location_error should return "Tidak dapat mengakses lokasi Anda. Silakan periksa izin Anda."',
-      () {
-        expect(
-          appLocalizations.location_error,
-          'Tidak dapat mengakses lokasi Anda. Silakan periksa izin Anda.',
-        );
-      },
-    );
+    test('location_error should return "Tidak dapat mengakses lokasi Anda. Silakan periksa izin Anda."', () {
+      expect(
+        appLocalizations.location_error,
+        'Tidak dapat mengakses lokasi Anda. Silakan periksa izin Anda.',
+      );
+    });
 
-    test(
-      'location_services_disabled should return "Layanan lokasi dinonaktifkan."',
-      () {
-        expect(
-          appLocalizations.location_services_disabled,
-          'Layanan lokasi dinonaktifkan.',
-        );
-      },
-    );
+    test('location_services_disabled should return "Layanan lokasi dinonaktifkan."', () {
+      expect(
+        appLocalizations.location_services_disabled,
+        'Layanan lokasi dinonaktifkan.',
+      );
+    });
 
     test(
       'location_permissions_denied should return "Izin lokasi ditolak."',
@@ -589,29 +544,23 @@ void main() {
       },
     );
 
-    test(
-      'location_permissions_permanently_denied should return "Izin lokasi ditolak secara permanen. Harap aktifkan di pengaturan perangkat Anda. Atau anda bisa menentukan lokasi secara manual"',
-      () {
-        expect(
-          appLocalizations.location_permissions_permanently_denied,
-          'Izin lokasi ditolak secara permanen. Harap aktifkan di pengaturan perangkat Anda. Atau anda bisa menentukan lokasi secara manual',
-        );
-      },
-    );
+    test('location_permissions_permanently_denied should return "Izin lokasi ditolak secara permanen. Harap aktifkan di pengaturan perangkat Anda. Atau anda bisa menentukan lokasi secara manual"', () {
+      expect(
+        appLocalizations.location_permissions_permanently_denied,
+        'Izin lokasi ditolak secara permanen. Harap aktifkan di pengaturan perangkat Anda. Atau anda bisa menentukan lokasi secara manual',
+      );
+    });
 
     test('premium_feature should return "Fitur Premium"', () {
       expect(appLocalizations.premium_feature, 'Fitur Premium');
     });
 
-    test(
-      'upgrade_to_add_location should return "Tingkatkan ke Premium untuk menambahkan lokasi ke cerita Anda"',
-      () {
-        expect(
-          appLocalizations.upgrade_to_add_location,
-          'Tingkatkan ke Premium untuk menambahkan lokasi ke cerita Anda',
-        );
-      },
-    );
+    test('upgrade_to_add_location should return "Tingkatkan ke Premium untuk menambahkan lokasi ke cerita Anda"', () {
+      expect(
+        appLocalizations.upgrade_to_add_location,
+        'Tingkatkan ke Premium untuk menambahkan lokasi ke cerita Anda',
+      );
+    });
 
     test('upgrade_now should return "Tingkatkan Sekarang"', () {
       expect(appLocalizations.upgrade_now, 'Tingkatkan Sekarang');
@@ -621,15 +570,12 @@ void main() {
       expect(appLocalizations.get_premium, 'Dapatkan Fitur Premium');
     });
 
-    test(
-      'premium_benefits_description should return "Tingkatkan ke Storyzz Premium untuk menikmati fitur tambahan menambahkan lokasi ke cerita Anda!"',
-      () {
-        expect(
-          appLocalizations.premium_benefits_description,
-          'Tingkatkan ke Storyzz Premium untuk menikmati fitur tambahan menambahkan lokasi ke cerita Anda!',
-        );
-      },
-    );
+    test('premium_benefits_description should return "Tingkatkan ke Storyzz Premium untuk menikmati fitur tambahan menambahkan lokasi ke cerita Anda!"', () {
+      expect(
+        appLocalizations.premium_benefits_description,
+        'Tingkatkan ke Storyzz Premium untuk menikmati fitur tambahan menambahkan lokasi ke cerita Anda!',
+      );
+    });
 
     test('upgrade should return "Tingkatkan"', () {
       expect(appLocalizations.upgrade, 'Tingkatkan');
@@ -655,15 +601,12 @@ void main() {
       expect(appLocalizations.page_not_found, 'Halaman Tidak Ditemukan');
     });
 
-    test(
-      'page_not_found_description should return "Halaman yang Anda cari tidak ada atau telah dipindahkan."',
-      () {
-        expect(
-          appLocalizations.page_not_found_description,
-          'Halaman yang Anda cari tidak ada atau telah dipindahkan.',
-        );
-      },
-    );
+    test('page_not_found_description should return "Halaman yang Anda cari tidak ada atau telah dipindahkan."', () {
+      expect(
+        appLocalizations.page_not_found_description,
+        'Halaman yang Anda cari tidak ada atau telah dipindahkan.',
+      );
+    });
 
     test('go_to_home should return "Kembali ke Beranda"', () {
       expect(appLocalizations.go_to_home, 'Kembali ke Beranda');

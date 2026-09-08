@@ -139,9 +139,8 @@ void main() {
     when(() => mockAuthProvider.errorMessage).thenReturn('');
 
     when(() => mockSettingsProvider.locale).thenReturn(const Locale('en'));
-    when(
-      () => mockSettingsProvider.languageNotifier,
-    ).thenReturn(ValueNotifier('en'));
+    when(() => mockSettingsProvider.languageNotifier)
+        .thenReturn(ValueNotifier('en'));
 
     when(() => mockStoryProvider.state).thenReturn(
       StoryLoadState.loaded([

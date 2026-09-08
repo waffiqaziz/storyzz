@@ -65,9 +65,8 @@ void main() {
 
     test('animateCamera calls controller animateCamera', () async {
       const position = CameraPosition(target: LatLng(0, 0), zoom: 10);
-      when(
-        () => mockController.animateCamera(any()),
-      ).thenAnswer((_) async => Future.value());
+      when(() => mockController.animateCamera(any()))
+          .thenAnswer((_) async => Future.value());
 
       provider.setMapController(mockController);
       await provider.animateCamera(position);
@@ -79,9 +78,8 @@ void main() {
       'animateCamera handles errors when controller throws exception',
       () async {
         const position = CameraPosition(target: LatLng(0, 0), zoom: 10);
-        when(
-          () => mockController.animateCamera(any()),
-        ).thenThrow(Exception('Camera animation failed'));
+        when(() => mockController.animateCamera(any()))
+            .thenThrow(Exception('Camera animation failed'));
 
         provider.setMapController(mockController);
 

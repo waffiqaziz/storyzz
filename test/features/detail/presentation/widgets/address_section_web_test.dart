@@ -47,9 +47,8 @@ void main() {
     testWidgets('should renders initial state with latitude and longitude', (
       WidgetTester tester,
     ) async {
-      when(
-        () => mockAddressProvider.state,
-      ).thenReturn(AddressLoadStateInitial());
+      when(() => mockAddressProvider.state)
+          .thenReturn(AddressLoadStateInitial());
 
       await tester.pumpWidget(createTestApp());
       await tester.pumpAndSettle();
@@ -63,9 +62,8 @@ void main() {
     testWidgets('should renders loading state correctly', (
       WidgetTester tester,
     ) async {
-      when(
-        () => mockAddressProvider.state,
-      ).thenReturn(AddressLoadStateLoading());
+      when(() => mockAddressProvider.state)
+          .thenReturn(AddressLoadStateLoading());
 
       await tester.pumpWidget(createTestApp());
       await tester.pump();
@@ -77,9 +75,8 @@ void main() {
     testWidgets('should renders loaded state with formatted address', (
       WidgetTester tester,
     ) async {
-      when(
-        () => mockAddressProvider.state,
-      ).thenReturn(AddressLoadStateLoaded('123 Test Street, City, Country'));
+      when(() => mockAddressProvider.state)
+          .thenReturn(AddressLoadStateLoaded('123 Test Street, City, Country'));
 
       await tester.pumpWidget(createTestApp());
       await tester.pumpAndSettle();
@@ -92,9 +89,8 @@ void main() {
     testWidgets('should renders error state correctly', (
       WidgetTester tester,
     ) async {
-      when(
-        () => mockAddressProvider.state,
-      ).thenReturn(AddressLoadStateError("error"));
+      when(() => mockAddressProvider.state)
+          .thenReturn(AddressLoadStateError("error"));
 
       await tester.pumpWidget(createTestApp());
       await tester.pumpAndSettle();
