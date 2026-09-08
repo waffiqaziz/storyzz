@@ -108,7 +108,7 @@ jobs:
         uses: hrishikesh-kadam/setup-lcov@6c1aa0cc9e1c02f9f58f01ac599f1064ccc83470
 
       - name: Report Code Coverage
-        uses: zgosalvez/github-actions-report-lcov@00810fe31a127d403ad812ab09e1250e97638b8c
+        uses: zgosalvez/github-actions-report-lcov@72cb85c549acad28913c9607dbd04af41bec7980
         with:
           coverage-files: coverage/lcov.info
           update-comment: true
