@@ -40,7 +40,7 @@ dependencies:
   image_picker: ^1.2.3
   path: ^1.9.1
   camera: ^0.12.1
-  image: ^4.9.2
+  image: ^4.10.1
   flutter_svg: ^2.3.0
 
   # location
