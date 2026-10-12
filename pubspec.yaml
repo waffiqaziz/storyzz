@@ -28,7 +28,7 @@ dependencies:
   http_parser: ^4.1.2
 
   # direct link
-  url_launcher: ^6.3.2
+  url_launcher: ^6.3.3
 
   # UI
   flutter_native_splash: ^2.4.8
