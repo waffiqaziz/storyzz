@@ -24,11 +24,11 @@ cd storyzz
 This project uses FVM (Flutter Version Management) to ensure consistency across
 development environments.
 
-Install and use the required Flutter version `3.47.2` via FVM:
+Install and use the required Flutter version `3.47.7` via FVM:
 
 ```bash
-fvm install 3.47.2
-fvm use 3.47.2
+fvm install 3.47.7
+fvm use 3.47.7
 ```
 
 ### 3. Install dependencies
